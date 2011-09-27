@@ -9,6 +9,18 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 
 from base import BaseHandler
 
+class RootHandler(BaseHandler):
+    def get(self):
+        self.render("base.html")
+
+class TestHandler(BaseHandler):
+    def get(self):
+        self.render("google.html")
+
+class FeedbackHandler(BaseHandler):
+    def get(self):
+        self.render("feedback.html")
+
 class Error404Handler(BaseHandler):
     def get(self):
         self.write('404 not found')

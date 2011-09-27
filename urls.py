@@ -9,5 +9,8 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 
 from handler import *
 
-handlers =  [(r".*", Error404Handler),
+handlers = [(r"/", RootHandler),
+            (r"/t", TestHandler),
+            (r"/feedback", FeedbackHandler),
+            (r".*", Error404Handler),
             ]
