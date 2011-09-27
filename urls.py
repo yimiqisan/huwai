@@ -10,7 +10,12 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 from handler import *
 
 handlers = [(r"/", RootHandler),
-            (r"/t", TestHandler),
             (r"/feedback", FeedbackHandler),
+            (r"/account/login", LoginHandler),
+            (r"/account/register", RegisterHandler),
+            (r"/account/logout", LogoutHandler),
+            (r"/account/profile", ProfileHandler),
+            (r"/account/setting", SettingHandler),
+            (r"/t", TestHandler),
             (r".*", Error404Handler),
             ]

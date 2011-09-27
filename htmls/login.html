@@ -1,0 +1,18 @@
+{% extends google.html %}
+
+{% block static %}
+	<link rel="stylesheet" href="{{ static_url('css/profile.css') }}">
+{% end %}
+{% block leftnav %}
+	<div>
+		<a href="/account/register">注册</a><br/><br/><br/>
+		<a href="/">回首页</a>
+	</div>
+{% end %}
+{% block center_col %}
+	<form action="/account/login" method="post">
+		email: <input type="email" name="email"/><br/><br/>
+		passwd:<input type="password" name="passwd"/><br/><br/>
+		<input type="submit" value="login">
+	</form>
+{% end %}

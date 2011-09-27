@@ -23,4 +23,4 @@ class FeedbackHandler(BaseHandler):
 
 class Error404Handler(BaseHandler):
     def get(self):
-        self.write('404 not found')
+        self.render("404.html")
