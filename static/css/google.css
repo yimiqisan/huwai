@@ -428,7 +428,7 @@ li.g{margin-top:0;margin-bottom:20px}
 @media only screen and (min-width:1222px){#center_col,#foot{margin-left:212px;padding:0 8px}}
 #subform_ctrl{font-size:11px;min-height:19px;z-index:99;margin-right:480px;position:relative;}
 #subform_ctrl a.gl{color:#12c}
-#center_col{clear:both}
+#center_col{clear:both;min-height:500px;}
 #brs p{margin:0;padding-top:5px}
 .brs_col{display:inline-block;float:left;font-size:small;white-space:nowrap;padding-right:16px;margin-top:-1px;padding-bottom:1px}
 #tads,#tadsb,#tadsto{margin-bottom:11px!important;z-index:0}

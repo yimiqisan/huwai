@@ -11,7 +11,7 @@ from base import BaseHandler
 
 class RootHandler(BaseHandler):
     def get(self):
-        self.render("base.html")
+        self.render("index.html")
 
 class TestHandler(BaseHandler):
     def get(self):
