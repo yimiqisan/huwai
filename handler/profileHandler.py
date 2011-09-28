@@ -15,7 +15,17 @@ class LoginHandler(BaseHandler):
         self.render('login.html')
         
     def post(self):
-        self.render('login.html')
+        u = User()
+        n = self.get_argument('nick', None)
+        if n is None:return self.render('login.html', **{'warning': '请先报上名号'})
+        p = self.get_argument('password', None)
+        if p is None:return self.render('login.html', **{'warning': '您接头暗号是？'})
+        r = u._api.login(n, p)
+        if r[0]:
+            self.set_secure_cookie("user", n, 1)
+            self.redirect('/account/profile')
+        else:
+            return self.render('login.html', **{'warning': r[1]})
     
 class RegisterHandler(BaseHandler):
     def get(self):
@@ -23,31 +33,25 @@ class RegisterHandler(BaseHandler):
     
     def post(self):
         u = User()
-        cek_ret = u._api.check_reg(**self.request.arguments)
-        if cek_ret[0]:
-            info = cek_ret[1]
-            email = info['email']
-        else:
-            return self.render('register.html', **{'warning': cek_ret[1]})
-        ret = u._api.create(**info)
-        if ret[0]:
-            u.whois('email', email)
-            n = u.nick.encode('utf-8') if u.nick else u.email
+        n = self.get_argument('nick', None)
+        if n is None:return self.render('register.html', **{'warning': '请先报上名号'})
+        p = self.get_argument('password', None)
+        if p is None:return self.render('register.html', **{'warning': '您接头暗号是？'})
+        r = u._api.register(n, p)
+        if r[0]:
             self.set_secure_cookie("user", n, 1)
-            self.SESSION['uid']=u._id
-            at = u.added.get('access_token', None)
-            self.set_access_token(u.sina_id, at)
-            self.skip_page()
+            self.redirect('/account/profile')
         else:
-            self.render('register.html', **{'warning': ret[1]})
+            return self.render('register.html', **{'warning': r[1]})
     
 class LogoutHandler(BaseHandler):
     def get(self):
-        self.redirct('/')
+        self.clear_cookie("user")
+        self.redirect('/')
     
 class ProfileHandler(BaseHandler):
     def get(self):
-        self.redirct('profile.html')
+        self.render('profile.html')
     
 class SettingHandler(BaseHandler):
     def get(self):

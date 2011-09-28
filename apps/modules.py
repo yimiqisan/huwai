@@ -31,13 +31,13 @@ class UserDoc(Document):
     structure = {
             '_id': unicode,
             'nick': unicode,
-            'passwd':unicode,
+            'password':unicode,
             'email':unicode,
             'created':datetime,
             'added':dict,
             'added_id':unicode,
     }
-    required_fields = ['_id', 'nick', 'passwd', 'created']
+    required_fields = ['_id', 'nick', 'password', 'created']
     default_values = {'_id':uuid.uuid4().hex, 'created':datetime.utcnow}
     
     use_schemaless = True

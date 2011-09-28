@@ -11,10 +11,10 @@ import uuid
 
 from huwai.config import DB_CON, DB_NAME
 from modules import UserDoc, IdDoc
-#from tools import trans_64
+from tools import trans_64
 
 def get_uuid():
-    return uuid.uuid4().hex
+    return unicode(uuid.uuid4().hex)
 
 class Added_id(object):
     ''' get autoincrement　id '''
@@ -38,7 +38,7 @@ class API(object):
         self.collection = collection
         self.doc = doc
         self.keys = self.doc.structure.keys()
-        self.pop('added')
+        self.keys.remove('added')
         
     def _init_doc(self, id):
         try:
@@ -115,10 +115,20 @@ class API(object):
         return (True, objs, info)
         
     def one(self, **kwargs):
-        return self.collection.one(kwargs)
+        try:
+            r = self.collection.one(kwargs)
+        except Exception, e:
+            logging.info(e)
+            return (False, e)
+        return (True, r)
         
     def find(self, **kwargs):
-        return self.collection.find(kwargs)
+        try:
+            r = self.collection.find(kwargs)
+        except Exception, e:
+            logging.info(e)
+            return (False, e)
+        return (True, r)
         
     def exist(self, key, value):
         try:
@@ -143,12 +153,18 @@ class UserAPI(API):
     def is_email_exist(self, email):
         return self.exist("email", email)
     
-    def check_reg(self, nick, password):
-        pass
+    def register(self, nick, password):
+        r = self.is_nick_exist(nick)
+        if r:return (False, '名号已经被占用')
+        return self.create(nick=nick, password=password)
     
-    
-    
-    
+    def login(self, nick, password):
+        r = self.is_nick_exist(nick)
+        if not r:return (False, '查无此人')
+        c = self.one(nick=nick)
+        if c[0] and (c[1]['password'] == password):
+            return (True, c[1])
+        return (False, '用户名或密码错误')
     
     
     

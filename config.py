@@ -9,6 +9,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 import os
 import redis
 from mongokit import Connection
+from logging import basicConfig, DEBUG
 
 #config settings
 settings = dict(
@@ -19,7 +20,7 @@ settings = dict(
         autoescape="xhtml_escape",
 #        ui_modules=uimodules,
 #        ui_methods=uimethods,
-        xsrf_cookies=True,
+#        xsrf_cookies=True,
         debug=True,
         cache_engine=redis.Redis(host='localhost', port=6379, db=1),
 )
@@ -29,3 +30,15 @@ DB_NAME = 'huwai'
 MONGO_HOST = 'localhost'
 MONGO_PORT = 27017
 DB_CON = Connection(host=MONGO_HOST, port=MONGO_PORT)
+
+#session initialize settings
+SESSION_SET = {
+    "SESSION_EXPIRE_TIME": 86400,    # sessions are valid for 86400 seconds (24 hours)
+    "REDIS_URL": {'ip': 'localhost', 'port': 6379, 'db': 0, },
+}
+
+#loggging config
+basicConfig(filename = 'app.log',
+            format = '%(asctime)s %(module)s %(lineno)s %(message)s',
+            level = DEBUG
+)

@@ -21,7 +21,7 @@
 							{% if current_user %}
 								<a class="gbzt" id="gb_119" href=""><span class="gbtb2"></span><span class="gbts">{{current_user}}</span></a>
 							{% else %}
-								<a class="gbzt" id="gb_119" href=""><span class="gbtb2"></span><span class="gbts">+您</span></a>
+								<a class="gbzt" id="gb_119" href=""><span class="gbtb2"></span><span class="gbts">您</span></a>
 							{% end %}
 						</li>
 						<li class="gbt"><a class="gbzt gbp1 gbz0l" id="gb_1" href=""><span class="gbtb2"></span><span class="gbts">活动</span></a></li>
@@ -170,7 +170,10 @@
 								{% block leftnav %}{% end %}
 							</div>
 						</div>   
-						<div id="center_col">{% block center_col %}{% end %}</div>  
+						<div id="center_col">
+							{% if warning %}<div id="warning" style="color:red;">{{ warning }}</div>{% end %}
+							{% block center_col %}{% end %}
+						</div>  
 						<div style="" id="rhscol"></div>   
 					</div>
 					<!-- end of center_col -->

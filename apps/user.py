@@ -27,3 +27,4 @@ class User(object):
             self.uid = self.info['_id']
         else:
             self.uid = self.info = None
+        
