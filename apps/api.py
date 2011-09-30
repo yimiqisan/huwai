@@ -10,7 +10,7 @@ import logging
 import uuid
 
 from huwai.config import DB_CON, DB_NAME
-from modules import UserDoc, IdDoc
+from modules import IdDoc, UserDoc, MediaLineDoc
 from tools import trans_64
 
 def get_uuid():
@@ -136,7 +136,7 @@ class API(object):
         except Exception, e:
             logging.info(e)
             raise Exception
-        
+
 
 class UserAPI(API):
     def __init__(self):
@@ -165,8 +165,17 @@ class UserAPI(API):
         if c[0] and (c[1]['password'] == password):
             return (True, c[1])
         return (False, '用户名或密码错误')
+
+
+class TimeLineAPI(API):
+    def __init__(self):
+        DB_CON.register([MediaLineDoc])
+        datastore = DB_CON[DB_NAME]
+        col_name = MediaLineDoc.__collection__
+        collection = datastore[col_name]
+        doc = collection.MediaLineDoc()
+        API.__init__(self, col_name=col_name, collection=collection, doc=doc)
+        
     
-    
-    
-    
+
     
