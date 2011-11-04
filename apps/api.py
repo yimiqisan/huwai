@@ -10,7 +10,7 @@ import logging
 import uuid
 
 from huwai.config import DB_CON, DB_NAME
-from modules import IdDoc, UserDoc, MediaLineDoc
+from modules import IdDoc, UserDoc, TimeLineDoc
 from tools import trans_64
 
 def get_uuid():
@@ -153,29 +153,31 @@ class UserAPI(API):
     def is_email_exist(self, email):
         return self.exist("email", email)
     
-    def register(self, nick, password):
-        r = self.is_nick_exist(nick)
-        if r:return (False, '名号已经被占用')
-        return self.create(nick=nick, password=password)
-    
-    def login(self, nick, password):
-        r = self.is_nick_exist(nick)
-        if not r:return (False, '查无此人')
-        c = self.one(nick=nick)
-        if c[0] and (c[1]['password'] == password):
-            return (True, c[1])
-        return (False, '用户名或密码错误')
-
 
 class TimeLineAPI(API):
     def __init__(self):
-        DB_CON.register([MediaLineDoc])
+        DB_CON.register([TimeLineDoc])
         datastore = DB_CON[DB_NAME]
-        col_name = MediaLineDoc.__collection__
+        col_name = TimeLineDoc.__collection__
         collection = datastore[col_name]
-        doc = collection.MediaLineDoc()
+        doc = collection.TimeLineDoc()
         API.__init__(self, col_name=col_name, collection=collection, doc=doc)
         
-    
+    def save(self, column, subject, content, owner=None, nick=u'匿名'):
+        return super(TimeLineAPI, self).create(owner=owner, column=column, subject=subject, content=content, nick=nick)
+        
+    def list(self, owner=None, column=None, subject=None):
+        kwargs = {}
+        if owner:kwargs['owner']=owner
+        if owner:kwargs['column']=column
+        if owner:kwargs['subject']=subject
+        r = self.find(**kwargs)
+        if r[0]:
+            l = [{'nick':i['added']['nick'], 'content':i['content']} for i in r[1]]
+            return (True, l)
+        else:
+            return (False, r[1])
 
-    
+        
+        
+        

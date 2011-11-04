@@ -27,4 +27,36 @@ class User(object):
             self.uid = self.info['_id']
         else:
             self.uid = self.info = None
+    
+    def register(self, nick, password):
+        r = self._api.is_nick_exist(nick)
+        if r:return (False, '名号已被占用')
+        info = {'nick':nick, 'password':password}
+        c = self._api.create(**info)
+        if c[0]:
+            self.info = info
+            return (True, info)
+        else:
+            self.info = None
+            return c
+    
+    def login(self, nick, password):
+        r = self._api.is_nick_exist(nick)
+        if not r:return (False, '查无此人')
+        c = self._api.one(nick=nick)
+        if c[0] and (c[1]['password'] == password):
+            self.info = c[1]
+            return (True, c[1])
+        self.info = None
+        return (False, '用户名或密码错误')
+
+
+
+
+
+
+
+
+
+
         
