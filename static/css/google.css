@@ -1,5 +1,5 @@
 body{color:#000;margin:3px 0}
-body,#leftnav,#tbdi,#hidden_modes,#hmp{background:#D6EED8}
+body,#leftnav,#tbdi,#hidden_modes,#hmp{background:#D6EED8;}
 #gb{font:13px/27px Arial,sans-serif;height:30px}
 #gbz,#gbg{position:absolute;white-space:nowrap;top:0;height:30px;z-index:1000}
 #gbz{left:0;padding-left:4px}
