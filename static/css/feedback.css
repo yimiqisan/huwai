@@ -1,0 +1,6 @@
+#feedback {width:600px;}
+<li><strong>名字:</strong><p>想说啥就说点啥，不说也没关系</p><span>X</span></li><hr/>
+#feedback li {margin:2px 2px; padding:3px 3px;position:absolute;}
+#feedback li strong, #feedback li p, #feedback li span{float:left;margin-left:5px;}
+#feedback li span a{color:gray;}
+#feedback li span a:hover{color:white;background:green;}
