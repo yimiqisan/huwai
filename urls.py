@@ -11,6 +11,7 @@ from handler import *
 
 handlers = [(r"/", RootHandler),
             (r"/feedback", FeedbackHandler),
+            (r"/google9f2d915bcc519f6e.html", GoogleWebMasterHandler),
             (r"/account/login", LoginHandler),
             (r"/account/register", RegisterHandler),
             (r"/account/logout", LogoutHandler),

@@ -45,7 +45,9 @@ class Error404Handler(BaseHandler):
     def get(self):
         self.render("404.html")
     
-    
+class GoogleWebMasterHandler(BaseHandler):
+    def get(self):
+        self.write('google-site-verification: google9f2d915bcc519f6e.html')
     
     
     
