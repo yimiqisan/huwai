@@ -24,6 +24,17 @@ class IdDoc(Document):
     use_schemaless = True
     use_dot_notation=True
 
+class MappingDoc(Document):
+    __collection__ = 'mapping'
+    __database__ = DB_NAME
+
+    structure = {
+                '_id':  unicode,
+                'image':unicode,
+    }
+    use_schemaless = True
+    use_dot_notation=True
+
 class UserDoc(Document):
     __collection__ = 'people'
     __database__ = DB_NAME
@@ -33,36 +44,35 @@ class UserDoc(Document):
             'nick': unicode,
             'password':unicode,
             'email':unicode,
+            'domain':unicode,
             'created':datetime,
             'added':dict,
-            'added_id':unicode,
+            'added_id':int,
     }
     required_fields = ['_id', 'nick', 'password', 'created']
-    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.utcnow}
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
     
     use_schemaless = True
     use_dot_notation=True
-
 
 class TimeLineDoc(Document):
     __collection__ = 'timeline'
     __database__ = DB_NAME
-    
+        
     structure = {
             '_id':      unicode,
             'owner':    unicode,
-            'column': unicode,
-            'subject':  unicode,
             'created':  datetime,
             'added':    dict,
-            'added_id': unicode,
+            'added_id': int,
             'content':  unicode,
             'at_list':  list,
+            'topic':    unicode,
+            'channel':  IS(u'normal', u'reply', u'weibo', u'map', u'keys'),
     }
     
-    required_fields = ['_id', 'created']
-    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.utcnow}
+    required_fields = ['_id', 'created', 'content']
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
     
     use_schemaless = True
     use_dot_notation=True
-

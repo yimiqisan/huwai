@@ -1,101 +1,64 @@
 {% extends google.html %}
 
 {% block static %}
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/style.css') }}" media="screen">
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/reset.css') }}" media="screen">
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/text.css') }}" media="screen">
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/grid.css') }}" media="screen">
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/jqueryui.css') }}" media="screen">
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/main.css') }}" media="screen">
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/layout_fixed.css') }}" media="screen">
-	
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/theme/theme_light.css') }}" media="screen">
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/layout_fixed.css') }}" media="screen">
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/header_top.css') }}" media="screen">
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/theme/theme_red.css') }}" media="screen">
-	
-	<script type="text/javascript" src="{{ static_url('js/jquery.min.js') }}"></script>
-	<script type="text/javascript" src="{{ static_url('js/jquery-ui.min.js') }}"></script>
-	<script type="text/javascript" src="{{ static_url('js/jquery.uniform.js') }}"></script>
-	<script type="text/javascript" src="{{ static_url('js/jquery.ui.totop.js') }}"></script>
-	
-	<script type="text/javascript" src="{{ static_url('js/adminica_ui.js') }}"></script>
+	<link rel="stylesheet" href="{{ static_url('css/feedback.css') }}">
+	<script src="{{ static_url('js/jquery.min.js') }}" type="text/javascript"></script>
+	<style type="text/css">
+		.htab {width:600px;}
+		.xbar {height:30px;padding:10px 10px 0 10px;background:#070;margin-bottom:20px;}
+		.xbar a, .xbar span{height:20px;float:right;margin:5px 10px 0 0;padding:3px;color:#EEE;}
+		.xbar a:hover{color:#FFF;background:#888;}
+		.xbar span {background:#FFF;color:#000;}
+		.htab form {padding:10px;}
+		
+		.m {font-size: 14px;line-height: 120%;color: #060;}
+		.n {min-width:200px;padding-left:30px;}
+		body, td, th {font: 12px Arial,Helvetica,sans-serif;line-height: 162%;}
+		table {border-collapse: collapse;border: 0;padding: 0;margin: 0;}
+		tbody {display: table-row-group;vertical-align: middle;border-color: inherit;}
+		tr {display: table-row;vertical-align: inherit;border-color: inherit;}
+		td[valign=top] {vertical-align: top;}
+		td[align=right] {text-align: -webkit-right;}
+	</style>
 {% end %}
 {% block leftnav %}
-	<div id="topbar">
-		<div class="main_container container_8 clearfix">
-			<div class="box grid_8">
-				<h2 class="box_head grad_colour">Accordion with Heading</h2>
-				<a href="#" class="grabber">&nbsp;</a>
-				<a href="#" class="toggle">&nbsp;</a>
-				<div class="toggle_container">
-					<ul class="block content_accordion">
-						<li>
-							<a href="#" class="handle">&nbsp;</a>
-							<h3 class="bar">First Heading</h3>
-							<div class="content">
-								<h1>Primary Heading</h1>
-								<p>Lorem Ipsum is simply dummy text of the <a href="#" title="This is a tooltip">printing industry</a>. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> 
-		
-								<h2>Secondary Heading</h2>
-								<p>Lorem Ipsum is simply dummy text of the printing industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> 				
-							</div>
-						</li>
-						<li>
-							<a href="#" class="handle">&nbsp;</a>
-							<h3 class="bar">Second Heading</h3>
-							<div class="content">
-								<p>Content goes here</p>
-							</div>
-						</li>
-						<li>
-							<a href="#" class="handle">&nbsp;</a>
-							<h3 class="bar">Third Heading</h3>
-							<div class="content">
-								<p>Content goes here</p>
-							</div>
-						</li>
-						<li>
-							<a href="#" class="handle">&nbsp;</a>
-							<h3 class="bar">Fourth Heading</h3>
-							<div class="content">
-								<p>Content goes here</p>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
 {% end %}
 {% block center_col %}
-	<div id="wrapper">
-			<div id="main_container" class="main_container container_16 clearfix">
-				<div class="box grid_8 tabs">
-					<ul class="tab_header grad_colour clearfix">
-						<li><a href="#tabs-1">Quicklinks</a></li>
-						<li><a href="#tabs-2">Content</a></li>
-					</ul>
-					<a href="#" class="grabber">&nbsp;</a>
-					<a href="#" class="toggle">&nbsp;</a>
-					<div class="toggle_container">
-						<div id="tabs-1" class="block no_padding">
-							<ul class="full_width">
-								<li>Aenean tempor ullamcorper</li>
-								<li>Rutrum commodo, vehicula tempus</li>
-								<li><a href="#">Curabitur nec arcu</a></li>
-								<li>Donec sollicitudin mi sit amet mauris</li>
-							</ul>
-						</div>
-						<div id="tabs-2" class="block">
-							<div class="content">
-								<h1>Primary Heading</h1>
-								<p>Lorem Ipsum is simply dummy text of the <a href="#" title="This is a tooltip">printing industry</a>. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> 
-								<h2>Secondary Heading</h2>
-								<p>Lorem Ipsum is simply dummy text of the printing industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> 					</div>
-						</div>
-					</div>
-				</div>
-			</div>
+	<div class="htab">
+		<div class="xbar">
+			<a style="display:none" href="/mail/setting">邮件提醒</a>
+			<a style="display:none" href="/alert">消息提示</a>
+			<a href="/weibo/setting">微博绑定</a>
+			<span class="now">基本设置</span>
+		</div>
+		<div class="clear"></div>
+		<form name="content-form" method="post">
+			<table style="clear:both" width="100%" align="center" cellpadding="5">
+				<tr>
+					<td class="m" valign="top" align="right">名号: </td><td class="n" valign="top">一米七三</td>
+				</tr>
+				<tr style="display:none">
+					<td class="m" valign="top" align="right">我的域名:</td><td class="n" valign="top">qisan</td>
+				</tr>
+				<tr style="display:none">
+					<td class="m" valign="top" align="right">头像:</td><td class="n" valign="top"></td>
+				</tr>
+				<tr>
+					<td class="m" valign="top" align="right">常居地:</td><td class="n" valign="top">北京</td>
+				</tr>
+				<tr style="display:none">
+					<td class="m" valign="top" align="right">绑定邮箱:</td><td class="n" valign="top">yimiqisan@gmail.com</td>
+				</tr>
+				<tr>
+					<td class="m" valign="top" align="right">登录密码:</td><td class="n" valign="top"><a href="">更改</a></td>
+				</tr>
+				<tr>
+					<td class="m" valign="top" align="right">手机号:</td><td class="n" valign="top">15210904820</td>
+				</tr>
+				<tr>
+					<td class="m"></td><td class="n"><input name="submit" type="submit" value="更新设置" tabindex="8"></td>
+				</tr>
+			</table>
+		</form>
 	</div>
 {% end %}

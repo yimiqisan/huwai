@@ -7,8 +7,14 @@ Created by 刘 智勇 on 2011-09-28.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 
-from api import UserAPI
 
+import logging
+import uuid
+from datetime import datetime
+
+from huwai.config import DB_CON, DB_NAME
+from modules import UserDoc
+from api import API
 
 class User(object):
     def __init__(self, api=None):
@@ -50,6 +56,27 @@ class User(object):
         self.info = None
         return (False, '用户名或密码错误')
 
+
+class UserAPI(API):
+    def __init__(self):
+        DB_CON.register([UserDoc])
+        datastore = DB_CON[DB_NAME]
+        col_name = UserDoc.__collection__
+        collection = datastore[col_name]
+        doc = collection.UserDoc()
+        API.__init__(self, col_name=col_name, collection=collection, doc=doc)
+        
+    def is_nick_exist(self, nick):
+        return self.exist("nick", nick)
+    
+    def is_email_exist(self, email):
+        return self.exist("email", email)
+        
+    def change_pwd(self):
+        pass
+        
+    def check_email(self):
+        pass
 
 
 

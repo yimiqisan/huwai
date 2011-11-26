@@ -1,0 +1,7 @@
+body { font-family:Verdana; font-size:14px; margin:0;}
+.blue a{  text-decoration:none; cursor:pointer;}
+.blue a:hover{text-decoration:none;}
+#mergin1{margin:0 auto;}
+#container {margin:0 auto; width:900px;}
+#sidebar {margin-top: 15px; margin-bottom: 15px;  float:right; width:200px;  height:500px; background:aliceblue;}
+#content {margin-top: 15px;margin-bottom: 15px; float:left; width:695px;  background:aliceblue;}

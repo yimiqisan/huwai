@@ -8,6 +8,16 @@
 	<link rel="stylesheet" href="{{ static_url('css/base.css') }}">
 	<link rel="stylesheet" href="{{ static_url('css/google.css') }}">
 	{% block static %}{% end %}
+	<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-26927861-1']);
+	_gaq.push(['_trackPageview']);
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	</script>
 </head>
 <body style="" class="" dir="ltr" data-feedly-processed="yes" id="srp" onload="try{if(!google.j.b){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.focus()}}catch(e){};if(document.images)new Image().src='/images/nav_logo86.png'" alink="#d14836" bgcolor="#ffffff" link="#1122cc" text="#222222" vlink="#6611cc">
 	<textarea id="csi" style="display: none;"></textarea>
@@ -95,7 +105,7 @@
 											<span class=gbps2>未绑定安全邮箱</span>
 											<ol class=gbmcc>
 												<li class=gbmtc><a id=gbmplp class="gbml1 gbp1" href="/account/profile">个人资料</a></li>
-												<li class=gbmtc><a class=gbml1 href="/account/setting">账户设置</a></li>
+												<li class=gbmtc><a class=gbml1 href="">账户设置</a></li>
 												<li class=gbmtc><a class=gbml1 href="/account/logout">退出账户</a></li>
 											</ol>
 										</div>
