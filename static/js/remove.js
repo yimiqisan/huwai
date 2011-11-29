@@ -3,9 +3,10 @@ $(document).ready(function() {
     if (!window.console.log) window.console.log = function() {};
 
     $(".remove").click(function() {
-        var $p = $(this).parent().parent();
-        var $this = $(this);
-        var args = {'id': $p.attr("id").replace("m-","")};
+        var did = $(this).attr("id");
+        var mid = did.replace("d-", "m-");
+        var $p = $("#"+mid);
+        var args = {'id': did.replace("d-","")};
         $.ajax({
             url: "/a/remove", 
             type: "POST", 

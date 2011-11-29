@@ -1,99 +1,98 @@
 $(document).ready(function() {
     if (!window.console) window.console = {};
     if (!window.console.log) window.console.log = function() {};
-
-    $("#replyform").live("submit", function() {
-        newReply($(this));
-        return false;
-    });
-    $("#replyform").live("keypress", function(e) {
-        if (e.keyCode == 13) {
-            newReply($(this));
-            return false;
-        }
-    });
-    $("#reply").select();
-    
+    var extend_id = null;
     $(".reply").click(function() {
-        showReply($(this));
+        click_id = $(this).parent().parent().attr("id");
+        if (extend_id == click_id) {
+            Reply.hide($(this));
+        }else{
+            $('#'+extend_id).find(".extend").hide();
+            Reply.show($(this));
+            extend_id = click_id;
+        }
         return false;
     });
-    
-    
 });
 
-function showReply(e) {
-    var $p = $(e).parent().parent();
-    var args = {'id': $p.attr('id').replace("m-","")}
-    $.postJSON("/a/reply", "GET", args, function(response) {
-        if (response.error){
-            return alert(response.error);
-        }
-        $p.append("<ul class='rep-list'></ul>")
-        for (var i=0; i<response.length; i++) {
-            $(".rep-list").append(response[i]);
-        }
-    });
-
-};
-
-function hideReply() {
+var Reply = {
+    show: function(e){
+        var $p = $(e).parent().parent();
+        var id = $p.attr('id');
+        var args = {'id': id.replace("m-","")}
+        $.postJSON("/a/reply", "GET", args, function(response) {
+            if (response.error){
+                return alert(response.error);
+            }
+            var $cur = $('#'+id);
+            $cur.find(".extend").remove();
+            $cur.append("<div class='extend'><ul class='rep-list'></ul></div>");
+            for (var i=0; i<response.length; i++) {
+                $cur.find(".rep-list").append(response[i]);
+            }
+            $cur.find(".extend").append("<form action='/a/reply' method='post' id='replyform'><input name='content' id='reply' style='margin-left:100px;height:20px;width:450px;' /><input type='submit' value='回复'/></form>");
+            Reply.submit($("#replyform"));
+        });
+    },
     
-};
-
-function newReply(form) {
-    var message = form.formToDict();
-    var disabled = form.find("input[type=submit]");
-    disabled.disable();
-    $.postJSON("/a/reply", "POST", message, function(response) {
-        if (response.error){
+    hide: function(e){
+        var $p = $(e).parent().parent();
+        $p.find(".extend").toggle();
+    },
+    
+    submit: function(e){
+        $("#replyform").live("submit", function() {
+            Reply.insert(e);
+            return false;
+        });
+        $("#replyform").live("keypress", function() {
+            if (e.keyCode == 13) {
+                Reply.insert(e);
+                return false;
+            }
+        });
+        $("#reply").select();
+    },
+    
+    insert: function(form){
+        var message = form.formToDict();
+        message["to"] = form.parent().parent().attr("id").replace("m-", "");
+        var disabled = form.find("input[type=submit]");
+        disabled.disable();
+        $.postJSON("/a/reply", "POST", message, function(response) {
+            if (response.error){
+                disabled.enable();
+                return alert(response.error);
+            }
+            var existing = $("#r-" + response.id);
+            if (existing.length > 0) return;
+            var node = $(response.html);
+            node.hide();
+            $(".rep-list").append(node);
+            node.slideDown();
+            form.find("#reply").val("").select();
             disabled.enable();
-            return alert(response.error);
-        }
-        insertReply(response);
-        form.find("#reply").val("").select();
-        disabled.enable();
-    });
-};
+        });
+    },
+    
+    remove: function(did) {
+        var mid = did.replace("d-", "mr-");
+        var $p = $("#"+mid);
+        var args = {'id': did.replace("d-","")};
+        $.ajax({
+            url: "/a/remove", 
+            type: "POST", 
+            dataType: "text",
+            data: $.param(args), 
+            beforeSend: function() {
+                $p.css("color", "#D6EED8");
+            },
+            success: function() {
+                $p.slideUp(300, function() {$p.remove();})
+            }
+        });
+    }
 
-function insertReply(message) {
-    var existing = $("#m" + message.id);
-    if (existing.length > 0) return;
-    var node = $(message.html);
-    node.hide();
-    $("#inbox").append(node);
-    node.slideDown();
 }
 
-jQuery.postJSON = function(url, type, args, callback) {
-    $.ajax({url: url, data: $.param(args), dataType: "text", type: type,
-            success: function(response) {
-        if (callback) callback(eval("(" + response + ")"));
-    }, error: function(response) {
-        console.log("ERROR:", response)
-    }});
-};
 
-jQuery.fn.formToDict = function() {
-    var fields = this.serializeArray();
-    var json = {}
-    for (var i = 0; i < fields.length; i++) {
-        json[fields[i].name] = fields[i].value;
-    }
-    if (json.next) delete json.next;
-    return json;
-};
-
-jQuery.fn.disable = function() {
-    this.enable(false);
-    return this;
-};
-
-jQuery.fn.enable = function(opt_enable) {
-    if (arguments.length && !opt_enable) {
-        this.attr("disabled", "disabled");
-    } else {
-        this.removeAttr("disabled");
-    }
-    return this;
-};

@@ -15,8 +15,7 @@ from apps.tools import session
 
 class RootHandler(BaseHandler):
     def get(self):
-        self.redirect("/event")
-        #self.render("index.html")
+        self.render("index.html")
 
 class TestHandler(BaseHandler):
     def get(self):
@@ -24,14 +23,16 @@ class TestHandler(BaseHandler):
 
 class AjaxReplyHandler(BaseHandler):
     CHANNEL = u'reply'
+    @session
     def get(self):
+        uid = self.SESSION['uid']
         tid = self.get_argument("id")
         tl = TimeLine()
-        r = tl._api.list(topic=tid, channel=self.CHANNEL)
+        r = tl._api.list(cuid=uid, topic=tid, channel=self.CHANNEL)
         if r[0]:
             htmls = []
             for i in r[1]:
-                htmls.append(self.render_string("reply.html", reply=i))
+                htmls.append(self.render_string("reply.html", reply=i, uid=uid))
             return self.write(json.dumps(htmls))
         else:
             return self.write({'error':'save error'})
@@ -39,15 +40,15 @@ class AjaxReplyHandler(BaseHandler):
     @session
     def post(self):
         uid = self.SESSION['uid']
-        message = self.preserve(uid)
-        if message:
-            message["html"] = self.render_string("message.html", message=message)
+        reply = self.preserve(uid)
+        if reply:
+            reply["html"] = self.render_string("reply.html", reply=reply)
         else:
             return self.write({'error':'save error'})
         if self.get_argument("next", None):
             self.redirect(self.get_argument("next"))
         else:
-            self.write(message)
+            self.write(reply)
     
     def preserve(self, uid):
         to = self.get_argument("to")
@@ -57,7 +58,7 @@ class AjaxReplyHandler(BaseHandler):
         kwargs = {'nick':nick}
         r = tl._api.save(c, owner=uid, tid=to, channel=self.CHANNEL, **kwargs)
         if r[0]:
-            kwargs.update({'id':r[1], 'content':c, 'owner': uid})
+            kwargs.update({'id':r[1], 'content':c, 'owner': uid, 'is_own':True})
             return kwargs
         else:
             return None
@@ -68,7 +69,7 @@ class AjaxRemoveHandler(BaseHandler):
         tl = TimeLine()
         uid = self.SESSION['uid']
         rid = self.get_argument("id", None)
-        tl._api.remove(rid)
+        r = tl._api.remove(rid)
         self.write('ok')
 
 class FeedbackHandler(BaseHandler):

@@ -27,6 +27,7 @@ class TimeLine(object):
 
 
 class TimeLineAPI(API):
+    DEFAULT_CUR_UID = '948a55d68e1b4317804e4650a9505641'
     def __init__(self):
         DB_CON.register([TimeLineDoc])
         datastore = DB_CON[DB_NAME]
@@ -66,20 +67,23 @@ class TimeLineAPI(API):
         at_list = self._flt_at(content)
         return super(TimeLineAPI, self).create(owner=owner, content=content, at_list=at_list, topic=tid, channel=channel, **kwargs)
     
-    def list(self, owner=None, topic=None, channel=None, at=None):
+    def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
+        return [{'id':i['_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner']), 'nick':i['added'].get('nick', '匿名驴友'), 'content':i['content'], 'created':i['created'].strftime('%Y-%m-%d %X')} for i in result]
+    
+    def list(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None):
         kwargs = {}
         if owner:kwargs['owner']=owner
-#        if topic:kwargs['topic']=topic
+        if topic:kwargs['topic']=topic
         if at:kwargs['at_list']=at
         if channel:kwargs['channel']=channel#{'$in':channel}
         r = self.find(**kwargs)
         if r[0]:
-            l = [{'id':i['_id'], 'nick':i['added'].get('nick', '匿名驴友'), 'content':i['content'], 'created':i['created'].strftime('%Y-%m-%d %X')} for i in r[1]]
+            l = self._output_format(result=r[1], cuid=cuid)
             return (True, l)
         else:
             return (False, r[1])
     
-    def extend(self, owner=None, topic=None, channel=None, at=None, cursor=None, limit=20, order_by='added_id', order=-1):
+    def extend(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None, cursor=None, limit=20, order_by='added_id', order=-1):
         kwargs = {}
         if owner:kwargs['owner']=owner
         if topic:kwargs['topic']=topic
@@ -91,12 +95,12 @@ class TimeLineAPI(API):
         kwargs['order']=order
         r = super(TimeLineAPI, self).extend(**kwargs)
         if r[0]:
-            l = [{'id':i['_id'], 'nick':i['added'].get('nick', '匿名驴友'), 'content':i['content'], 'created':i['created'].strftime('%Y-%m-%d %X')} for i in r[1]]
+            l = self._output_format(result=r[1], cuid=cuid)
             return (True, l)
         else:
             return (False, r[1])
     
-    def page(self, owner=None, topic=None, channel=None, at=None, page=1, pglen=10, cursor=None, limit=20, order_by='added_id', order=-1):
+    def page(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None, page=1, pglen=10, cursor=None, limit=20, order_by='added_id', order=-1):
         kwargs = {}
         if owner:kwargs['owner']=owner
         if topic:kwargs['topic']=topic
@@ -110,7 +114,7 @@ class TimeLineAPI(API):
         kwargs['order']=order
         r = super(TimeLineAPI, self).page(**kwargs)
         if r[0]:
-            l = [{'id':i['_id'], 'nick':i['added'].get('nick', '匿名驴友'), 'content':i['content'], 'created':i['created'].strftime('%Y-%m-%d %X')} for i in r[1]]
+            l = self._output_format(result=r[1], cuid=cuid)
             return (True, l, r[2])
         else:
             return (False, r[1])

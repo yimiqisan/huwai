@@ -13,9 +13,11 @@ from apps.tools import session
 from datetime import datetime
 
 class WeiboHandler(BaseHandler):
+    @session
     def get(self):
+        uid = self.SESSION['uid']
         tl = TimeLine()
-        r = tl._api.page()
+        r = tl._api.page(cuid=uid)
         if r[0]:
             return self.render("weibo.html", **{'messages': r[1]})
         else:
@@ -39,7 +41,7 @@ class AjaxWeiboNewHandler(BaseHandler):
         uid = self.SESSION['uid']
         message = self.preserve(uid)
         if message:
-            message["html"] = self.render_string("message.html", message=message)
+            message["html"] = self.render_string("message.html", message=message, uid=uid)
         else:
             return self.write({'error':'save error'})
         if self.get_argument("next", None):
@@ -53,7 +55,7 @@ class AjaxWeiboNewHandler(BaseHandler):
         kwargs = {'nick':self.current_user}
         r = tl._api.save(c, owner=uid, channel=u'weibo', **kwargs)
         if r[0]:
-            kwargs.update({'id':r[1], 'content':c, 'owner': uid})
+            kwargs.update({'id':r[1], 'content':c, 'owner': uid, 'is_own':True})
             return kwargs
         else:
             return None

@@ -6,3 +6,6 @@
 
 .rep-list {display:block;margin-bottom:3px;}
 .show-reply {display:inline-block; list-style:none; width:400px; height:20px; margin:2px 2px 2px 100px; padding:5px 3px;}
+
+.reply {display:none;}
+.remove {display:none;}

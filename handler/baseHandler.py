@@ -8,6 +8,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 
 from tornado.web import RequestHandler
+from apps.tools import session
 
 class BaseHandler(RequestHandler):
     @property
@@ -20,8 +21,9 @@ class BaseHandler(RequestHandler):
         
     def get_current_user(self):
         return self.get_secure_cookie("user")
-        
+    
+    @session
     def render(self, template_name, **kwargs):
-        if 'warning' not in kwargs.keys():
-            kwargs['warning'] = None
+        kwargs['uid'] = self.SESSION['uid']
+        kwargs['warning'] = kwargs.get('warning', None)
         super(BaseHandler, self).render(template_name, **kwargs)
