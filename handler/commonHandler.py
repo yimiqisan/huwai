@@ -73,13 +73,15 @@ class AjaxRemoveHandler(BaseHandler):
         self.write('ok')
 
 class FeedbackHandler(BaseHandler):
+    @session
     def get(self):
+        uid = self.SESSION['uid']
         tl = TimeLine()
         r = tl._api.list(topic='feedback')
         if r[0]:
-            return self.render("feedback.html", **{'messages': r[1]})
+            return self.render("feedback.html", messages=r[1])
         else:
-            return self.render("feedback.html", **{'warning': r[1]})
+            return self.render("feedback.html", warning=r[1])
     
     @session
     def post(self):
@@ -101,9 +103,4 @@ class Error404Handler(BaseHandler):
 class GoogleWebMasterHandler(BaseHandler):
     def get(self):
         self.write('google-site-verification: google9f2d915bcc519f6e.html')
-
-
-
-
-
 

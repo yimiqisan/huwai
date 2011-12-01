@@ -34,10 +34,13 @@ class User(object):
         else:
             self.uid = self.info = None
     
-    def register(self, nick, password):
+    def register(self, nick, email, password, **kwargs):
         r = self._api.is_nick_exist(nick)
         if r:return (False, '名号已被占用')
-        info = {'nick':nick, 'password':password}
+        r = self._api.is_email_exist(email)
+        if r:return (False, '邮箱已被占用')
+        info = {'nick':nick, 'email':email, 'password':password}
+        info.update(kwargs)
         c = self._api.create(**info)
         if c[0]:
             self.info = info

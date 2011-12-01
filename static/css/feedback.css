@@ -1,7 +1,7 @@
 #inbox {width:600px; display:block;}
 .message {display:inline-block; list-style:none; width:600px; min-height:20px; margin-top:6px; padding:3px 3px;}
-.message strong, .message p{float:left;margin-left:5px;}
-.message a{float:right;margin-right:5px;color:gray;}
+.message strong, .message p{display:block;margin-left:5px;line-height:22px;font-size:14px;}
+.message a{margin-right:5px;color:gray;}
 .message a:hover{color:white;background:green;}
 
 .rep-list {display:block;margin-bottom:3px;}

@@ -1,14 +1,14 @@
 {% extends google.html %}
 
 {% block static %}
-	<link rel="stylesheet" href="{{ static_url('css/xxx.css') }}">
+	<link rel="stylesheet" href="{{ static_url('css/feedback.css') }}">
 	{% block static-added %}{% end %}
 {% end %}
 {% block leftnav %}{% end %}
 {% block center_col %}
-	<ul id="weibo">
+	<ul id="inbox">
 		{% for m in messages %}
-			{% module Template("message.html", message=m) %}
+			{% module Template("message.html", message=m, uid=uid) %}
 		{% end %}
 	</ul>
 

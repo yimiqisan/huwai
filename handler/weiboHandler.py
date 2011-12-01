@@ -17,7 +17,7 @@ class WeiboHandler(BaseHandler):
     def get(self):
         uid = self.SESSION['uid']
         tl = TimeLine()
-        r = tl._api.page(cuid=uid)
+        r = tl._api.page(cuid=uid, channel=[u'weibo'])
         if r[0]:
             return self.render("weibo.html", **{'messages': r[1]})
         else:
@@ -52,7 +52,8 @@ class AjaxWeiboNewHandler(BaseHandler):
     def preserve(self, uid):
         c = self.get_argument("content")
         tl = TimeLine()
-        kwargs = {'nick':self.current_user}
+        nick = self.current_user if uid else u'匿名驴友'
+        kwargs = {'nick':nick}
         r = tl._api.save(c, owner=uid, channel=u'weibo', **kwargs)
         if r[0]:
             kwargs.update({'id':r[1], 'content':c, 'owner': uid, 'is_own':True})

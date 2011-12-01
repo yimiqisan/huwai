@@ -2,20 +2,18 @@
 
 {% block static %}
 	<link rel="stylesheet" href="{{ static_url('css/feedback.css') }}"></link>
-	<script src="{{ static_url('js/jquery.min.js') }}" type="text/javascript"></script>
-	<script src="{{ static_url('js/reply.js') }}" type="text/javascript"></script>
 	{% block static-added %}{% end %}
 {% end %}
 {% block leftnav %}{% end %}
 {% block center_col %}
 	<ul id="inbox">
 		{% for m in messages %}
-			{% module Template("message.html", message=m) %}
+			{% module Template("message.html", message=m, uid=uid) %}
 		{% end %}
 	</ul>
 	<div>
-		<form action="/a/reply?next=/feedback" method="post" id="replyform">
-			<input name="content" id="reply" style="margin-left:100px;height:20px;width:450px;"/>
+		<form action="/feedback?next=/feedback" method="post" id="replyform">
+			<input name="content" style="margin-left:100px;height:20px;width:450px;"/>
 			<input type="hidden" name="to" value="feedback"/>
 			<input type="submit" value="回复"/>
 			{% module xsrf_form_html() %}

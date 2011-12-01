@@ -1,0 +1,29 @@
+{% extends google.html %}
+
+{% block static %}
+	<link rel="stylesheet" href="{{ static_url('css/profile.css') }}">
+{% end %}
+{% block leftnav %}
+	<div>
+		<a href="/">回首页</a>
+	</div>
+{% end %}
+{% block center_col %}
+<div style="float:left; width:300px;">
+	<h3>设置安全邮箱与密码</h3><br/><br/>
+	<form action="/account/thirdpart?atc=reg" method="post">
+		绰号:<input type="text" name="nick" value="{{ nick }}"/><br/><br/>
+		email:<input type="email" name="email"/><br/><br/>
+		密码:<input type="password" name="password"/><br/><br/>
+		<input type="submit" value="注册">
+	</form>
+</div>
+<div style="float:left; width:300px;">
+	<h3>绑定已有账号</h3><br/><br/>
+	<form action="/account/thirdpart?atc=bind" method="post">
+		绰号: <input type="text" name="nick"/><br/><br/>
+		密码:<input type="password" name="password"/><br/><br/>
+		<input type="submit" value="login">
+	</form>
+</div>
+{% end %}

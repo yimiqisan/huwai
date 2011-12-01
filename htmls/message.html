@@ -1,7 +1,7 @@
 <li class="message" id="m-{{ message['id'] }}">
 	<div>
-		<b>{{ message['nick'] }}: </b>{{ message['content'] }}
 		{% if message['is_own'] %}<a class="remove" id="d-{{ message['id'] }}">X</a>{% end %}
+		<p><a>{{ message['nick'] }}: </a>{{ message['content'] }}</p>
 		{% if uid %}<a class="reply" id="r-{{ message['id'] }}">回复</a>{% end %}
 	</div>
 </li>

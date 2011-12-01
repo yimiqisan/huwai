@@ -146,8 +146,8 @@ class API(object):
         order_by = kwargs.pop('order_by', 'added_id')
         order = kwargs.pop('order', -1)
         try:
-            objs=self.collection.find(**kwargs).sort(order_by, order).skip(start).limit(limit)
-            cnt=self.collection.count(**kwargs)
+            objs=self.collection.find(kwargs).sort(order_by, order).skip(start).limit(limit)
+            cnt=100#self.collection.count(kwargs)
         except Exception, e:
             return (False, e)
         #get page additional infomation
@@ -166,37 +166,6 @@ class API(object):
         info['end_page'] = total_page		
         return (True, objs, info)
     
-    
-    def page_old(self, **kwargs):
-        page = kwargs.pop('page', 1)
-        pglen = kwargs.pop('pglen', 10)
-        limit = kwargs.pop('page', 20)
-        order_by = kwargs.pop('order_by', 'added_id')
-        order = kwargs.pop('order', 1)
-        try:
-            objs=self.collection.find(kwargs).sort(order_by, order)
-            cnt = len(objs)
-        except:
-            return (False, 'search error')
-        start = (page-1)*limit
-        end = start+limit
-        objs = objs[start:] if end>cnt else objs[start:end]
-        #get page additional infomation
-        info = {}
-        total_page = cnt/limit
-        if (cnt%limit) != 0:total_page+=1
-        info['total_page'] = total_page
-        info['has_pre'] = (page>1)
-        info['start_page'] = 1
-        info['pre_page'] = max(1, page-1)
-        info['page'] = page
-        info['page_list'] = range(max(1, min(page-4, total_page-pglen+1)), min(max(page+1+pglen/2, pglen+1), total_page+1))
-        info['has_eps'] = (total_page>max(page+1+pglen/2, pglen+1)>pglen)
-        info['has_next'] = (page<total_page)
-        info['next_page'] = min(page+1, total_page)
-        info['end_page'] = total_page		
-        return (True, objs, info)
-        
     def one(self, **kwargs):
         try:
             r = self.collection.one(kwargs)

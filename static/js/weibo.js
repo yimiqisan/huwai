@@ -44,6 +44,7 @@ function insertWeibo(message) {
     node.hide();
     $(node).insertBefore("#inbox .message:first");
     node.slideDown();
+    hoverWeibo();
 };
 
 function getLenWeibo(){

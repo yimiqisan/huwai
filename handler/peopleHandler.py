@@ -17,7 +17,7 @@ class PeopleHandler(BaseHandler):
     def get(self):
         uid = self.SESSION['uid']
         tl = TimeLine()
-        r = tl._api.list(owner=uid)
+        r = tl._api.list(cuid=uid, owner=uid)
         if r[0]:
             return self.render("people.html", **{'messages': r[1]})
         else:
