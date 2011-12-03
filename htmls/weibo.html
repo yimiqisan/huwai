@@ -12,7 +12,9 @@
 {% block leftnav %}{% end %}
 {% block center_col %}
 	<div>
-		<div class="num" node-type="num" style="display: block;font-size:16px;">还可以输入<span style="font-size:24px;color:#ff9933;" id="num">140</span> 字</div>
+		<div class="num" node-type="num" style="display: block;font-size:16px;">还可以输入
+			<span style="font-size:24px;color:#ff9933;" id="num">140</span> 字
+		</div>
 		<form action="/weibo" method="post" id="weiboform">
 			<textarea rows="5" cols="60" name="content" id="weibo-content"></textarea>
 			<input type="submit" value="回复" style="height:20px;"/>
@@ -20,9 +22,9 @@
 		</form>
 	</div>
 	<br><hr>
-	<ul id="inbox">
+	<div class="feed_lists W_linka W_texta" id="inbox">
 		{% for m in messages %}
-			{% module Template("message.html", message=m, uid=uid) %}
+			{% module Template("message_new.html", message=m, uid=uid) %}
 		{% end %}
-	</ul>
+	</div>
 {% end %}

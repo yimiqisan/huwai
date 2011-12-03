@@ -9,3 +9,42 @@
 
 .reply {display:none;}
 .remove {display:none;}
+
+
+
+
+.B_box_comment .W_main_c, .B_mention_me .W_main_c {padding-top: 32px;padding-bottom: 30px;}
+.W_main_c {padding-right: 30px;padding-left: 30px;float: left;width: 540px;padding: 0 22px 0 23px;overflow: hidden;min-height: 800px;}
+.feed_lists {margin: -3px 0 0;overflow: hidden;}
+.feed_list {padding: 0 0 15px 0;margin: 0 0 17px;zoom: 1;border-bottom-width: 1px;border-bottom-style: dotted;}
+.W_texta, a.W_texta {color: #444;cursor: default;}
+.W_linecolor, .feed_list, .feed_lists{ border-color: #F1F1F1; }
+a{color: #0078B6;text-decoration: none;}
+p {display: block;-webkit-margin-before: 1em;-webkit-margin-after: 1em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;}
+em, i {font-style: normal;font-weight: normal;}
+dl {display: block;-webkit-margin-before: 1em;-webkit-margin-after: 1em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;}
+dd {display: block;-webkit-margin-start: 40px;}
+dt {display: block;}
+.feed_list .face {float: left;display: inline;width: 50px;padding: 3px 0 6px;}
+.feed_list .face img {display: block;}
+.feed_list .content {word-wrap: break-word;font-size: 14px;margin: 0 0 0 60px;line-height: 22px;font-size: 14px;line-height: 22px;}
+.feed_list .content a {word-wrap: break-word;}
+.feed_list_content {margin:0;}
+.feed_list .W_close_color {text-align: right;float: right;font-size: 12px;}
+.feed_list .hover {visibility: display;}
+.feed_list .content p {padding-bottom: 10px;}
+.feed_list .content p.W_info {padding: 3px 0 0;}
+.feed_list .W_info a.date {margin: 0 20px 0 0;}
+a.W_close_color {cursor: pointer;width: 11px;height: 11px;overflow: hidden;display: inline-block;background-position: 0 -11px;background-image: url(http://img.t.sinajs.cn/t4/skin/skin001/images/close.gif?id=1321455890875);}
+.W_textb, a.W_textb {color: #B8B7B7;cursor: default;}
+.feed_list .W_info {font-size: 12px;margin:0;}
+.feed_list .W_info span {float: right;display: inline;}
+.W_linkb a, a.W_linkb {color: #9ABBC8;}
+.W_vline {margin: 0 5px;color: #F1F1F1;}
+.clear {clear: both;height: 0;font: 0/0 Arial;visibility: hidden;}
+
+
+
+
+
+

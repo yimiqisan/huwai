@@ -38,14 +38,13 @@ class LoginHandler(BaseHandler):
 class ThirdPartHandler(BaseHandler):
     @session
     def get(self):
-        return self.render('thirdpart.html', nick='朋友仔')
         CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/account/thirdpart'
         client = APIClient(config.SINA_CONSUME_KEY, config.SINA_CONSUME_SECRET, CALLBACK_URL)
         code = self.get_argument('code', None)
         if code:
             r = client.request_access_token(code)
             access_token = r.access_token
-            self.SESSION['sina_request_token'] = request_token
+            self.SESSION['sina_request_token'] = access_token
             client.set_access_token(access_token, r.expires_in)
             sinfo = client.account__profile__basic()
             self.render('thirdpart.html', nick=sinfo['name'])
