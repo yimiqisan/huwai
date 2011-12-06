@@ -46,7 +46,7 @@ class ThirdPartHandler(BaseHandler):
             access_token = r.access_token
             self.SESSION['sina_request_token'] = access_token
             client.set_access_token(access_token, r.expires_in)
-            sinfo = client.account__profile__basic()
+            sinfo = client.get.account__profile__basic()
             self.render('thirdpart.html', nick=sinfo['name'])
         else:
             url = client.get_authorize_url()

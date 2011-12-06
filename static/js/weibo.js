@@ -12,11 +12,9 @@ $(document).ready(function() {
 });
 
 function hoverWeibo(){
-    $(".message").hover(function(){
-            $(this).find(".reply:first").show();
+    $(".feed_list").hover(function(){
             $(this).find(".remove:first").show();
         },function(){
-            $(this).find(".reply:first").hide();
             $(this).find(".remove:first").hide();
         });
 };
@@ -42,7 +40,7 @@ function insertWeibo(message) {
     if (existing.length > 0) return;
     var node = $(message.html);
     node.hide();
-    $(node).insertBefore("#inbox .message:first");
+    $(node).insertBefore("#inbox .feed_list:first");
     node.slideDown();
     hoverWeibo();
 };

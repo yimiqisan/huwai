@@ -1,8 +1,19 @@
-<li class="message" id="m-{{ message['id'] }}">
-	<div>
-		{% if message['is_own'] %}<a class="remove" id="d-{{ message['id'] }}">X</a>{% end %}
-		<p><a>{{ message['nick'] }}: </a>{{ message['content'] }}</p>
-		{% if uid %}<a class="reply" id="r-{{ message['id'] }}">回复</a>{% end %}
-	</div>
-</li>
-
+<dl class="feed_list W_linecolor message" id="m-{{ message['id'] }}">
+	<dt class="face">
+		<a href="" title="一米七三2010"><img usercard="id={{ message['owner'] }}" title="{{ message['nick'] }}" alt="" width="50" height="50" src=""></a>
+	</dt>
+	<dd class="content">
+		<p class="feed_list_content">
+			<a title="{{ message['nick'] }}" href="">{{ message['nick'] }}</a>：
+			<em>{{ message['content'] }}</em>
+		</p>
+		<p class="W_info W_linkb W_textb">
+			<span>
+				<em><a href="javascript:void(0);" class="remove" id="d-{{ message['id'] }}">删除</a><i class="W_vline">|</i></em>
+				<a href="javascript:void(0);" class="reply" id="r-{{ message['id'] }}">回复</a>
+			</span>
+			<a title="{{ message['created'] }}" class="date">{{ message['created'] }}</a>
+		</p>
+	</dd>
+	<dd class="clear"></dd>
+</dl>

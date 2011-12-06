@@ -24,7 +24,7 @@
 	<br><hr>
 	<div class="feed_lists W_linka W_texta" id="inbox">
 		{% for m in messages %}
-			{% module Template("message_new.html", message=m, uid=uid) %}
+			{% module Template("message.html", message=m, uid=uid) %}
 		{% end %}
 	</div>
 {% end %}
