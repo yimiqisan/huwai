@@ -11,6 +11,7 @@ import json
 
 from baseHandler import BaseHandler
 from apps.timeline import TimeLine
+from apps.pstore import Pstore
 from apps.tools import session
 
 class RootHandler(BaseHandler):
@@ -19,7 +20,8 @@ class RootHandler(BaseHandler):
 
 class TestHandler(BaseHandler):
     def get(self):
-        self.render("test.html")
+        pid = self.get_argument("pid", None)
+        self.render("test.html", pid=pid)
 
 class AjaxReplyHandler(BaseHandler):
     CHANNEL = u'reply'
@@ -71,6 +73,25 @@ class AjaxRemoveHandler(BaseHandler):
         rid = self.get_argument("id", None)
         r = tl._api.remove(rid)
         self.write('ok')
+
+class UploadImageHandler(BaseHandler):
+    @session
+    def get(self):
+        pid = self.get_argument("pid", None)
+        self.render('upload_image.html', pid=pid)
+    
+    def post(self):
+        p = Pstore()
+        u = self.request.files['attach'][0]
+        pid = str(p.put(u['body']))
+        self.redirect('/upload_image?pid='+pid)
+
+class ShowImageHandler(BaseHandler):
+    def get(self, id):
+        print id
+        p = Pstore()
+        d = p.get_by_id(id)
+        self.write(d.read())
 
 class FeedbackHandler(BaseHandler):
     @session

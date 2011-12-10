@@ -1,0 +1,15 @@
+{% extends google.html %}
+
+{% block static %}
+{% end %}
+{% block leftnav %}
+{% end %}
+{% block center_col %}
+<p>
+	<form name="demoForm" id="demoForm" method="post" enctype="multipart/form-data" action="/upload_image">
+		<p>上传文件: <input type="file" name="attach" /></p>
+		<p><input type="submit" value="Submit" /></p>
+	</form>
+</p>
+<img src="/showimage/{{ pid }}"/>
+{% end %}

@@ -78,7 +78,9 @@ class TimeLineAPI(API):
         if channel:kwargs['channel']={'$in':channel}
         r = self.find(**kwargs)
         if r[0]:
-            l = self._output_format(result=r[1], cuid=cuid)
+            kw = {'result':r[1]}
+            if cuid:kw['cuid']=cuid
+            l = self._output_format(**kw)
             return (True, l)
         else:
             return (False, r[1])
@@ -95,7 +97,9 @@ class TimeLineAPI(API):
         kwargs['order']=order
         r = super(TimeLineAPI, self).extend(**kwargs)
         if r[0]:
-            l = self._output_format(result=r[1], cuid=cuid)
+            kw = {'result':r[1]}
+            if cuid:kw['cuid']=cuid
+            l = self._output_format(**kw)
             return (True, l)
         else:
             return (False, r[1])
@@ -114,7 +118,9 @@ class TimeLineAPI(API):
         kwargs['order']=order
         r = super(TimeLineAPI, self).page(**kwargs)
         if r[0]:
-            l = self._output_format(result=r[1], cuid=cuid)
+            kw = {'result':r[1]}
+            if cuid:kw['cuid']=cuid
+            l = self._output_format(**kw)
             return (True, l, r[2])
         else:
             return (False, r[1])
