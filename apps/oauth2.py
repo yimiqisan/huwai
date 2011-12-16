@@ -56,7 +56,7 @@ def _encode_params(**kw):
     '''
     args = []
     for k, v in kw.iteritems():
-        qv = v.encode('utf-8') if isinstance(v, unicode) else v
+        qv = v.encode('utf-8') if isinstance(v, unicode) else str(v)
         args.append('%s=%s' % (k, urllib.quote(qv)))
     return '&'.join(args)
 

@@ -6,10 +6,10 @@
 {% end %}
 {% block center_col %}
 <p>
-	<form name="demoForm" id="demoForm" method="post" enctype="multipart/form-data" action="/upload_image">
-		<p>上传文件: <input type="file" name="attach" /></p>
+	<form name="demoForm" id="demoForm" method="post" enctype="multipart/form-data" action="/image/upload">
+		<p>上传文件: <input type="file" name="upload" /></p>
 		<p><input type="submit" value="Submit" /></p>
 	</form>
 </p>
-<img src="/showimage/{{ pid }}"/>
+<img src="/image/avatar/{{ pid }}"/>&nbsp<img src="/image/avatar/{{ pid }}_100"/>&nbsp<img src="/image/avatar/{{ pid }}_50"/>&nbsp<img src="/image/avatar/{{ pid }}_30"/>
 {% end %}

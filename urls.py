@@ -29,8 +29,8 @@ handlers = [(r"/", RootHandler),
             (r"/a/reply", AjaxReplyHandler),
             (r"/a/remove", AjaxRemoveHandler),
             
-            (r"/upload_image", UploadImageHandler),
-            (r"/showimage/(.*)", ShowImageHandler),
+            (r"/image/upload", UploadImageHandler),
+            (r"/image/avatar/?(\w*)", AvatarHandler),
             
             (r"/google9f2d915bcc519f6e.html", GoogleWebMasterHandler),
             (r"/t", TestHandler),
