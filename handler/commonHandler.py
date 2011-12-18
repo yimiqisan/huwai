@@ -31,10 +31,10 @@ class AjaxReplyHandler(BaseHandler):
         tid = self.get_argument("id")
         tl = TimeLine()
         #r = tl._api.list(cuid=uid, topic=tid, channel=self.CHANNEL)
-        r = tl._api.list(cuid=uid)
+        r = tl._api.list(cuid=uid, topic=tid)
         if r[0]:
             htmls = []
-            for i in r[1][:1]:
+            for i in r[1]:
                 htmls.append(self.render_string("reply.html", reply=i, uid=uid))
             return self.write(json.dumps(htmls))
         else:
@@ -61,7 +61,7 @@ class AjaxReplyHandler(BaseHandler):
         kwargs = {'nick':nick}
         r = tl._api.save(c, owner=uid, tid=to, channel=self.CHANNEL, **kwargs)
         if r[0]:
-            kwargs.update({'id':r[1], 'content':c, 'owner': uid, 'is_own':True})
+            kwargs.update({'id':r[1], 'content':c, 'owner': uid, 'is_own':True, 'tid': to})
             return kwargs
         else:
             return None

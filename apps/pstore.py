@@ -122,4 +122,9 @@ def image_font():
     draw.text((10, 10), "hello", font=font)
     font = ImageFont.truetype("arial.ttf", 15)
     draw.text((10, 25), "world", font=font)
-
+    
+    
+if __name__ == '__main__':
+    import _imaging
+    core = _imaging
+    print getattr(core, "zip_decoder")

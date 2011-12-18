@@ -107,7 +107,7 @@ visibility: hidden;
 .W_textc {
 color: #777;
 }
-#reply, .feed_list .repeat .input textarea {
+.reply-content, .feed_list .repeat .input textarea {
 color: #595959;
 height: 20px;
 overflow: hidden;
@@ -180,7 +180,7 @@ text-align: center;
 
 .comment_list {
 padding-top: 8px;
-margin-top: 8px;
+margin:8px 0 0;
 overflow: hidden;
 clear: both;
 border-top-width: 1px;
@@ -238,6 +238,7 @@ display: block;
 line-height: 21px;
 }
 .feed_list .content p.info {
+margin: 5px 0 0;
 padding: 3px 0 0;
 _padding-left: 3px;
 }

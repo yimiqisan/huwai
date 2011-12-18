@@ -1,11 +1,11 @@
-<dl id="mr-{{ reply['id'] }}" class="comment_list W_linecolor">
+<dl id="m-{{ reply['id'] }}" class="comment_list W_linecolor">
 	<dt><a href=""><img width="30" height="30" alt="一米七三2010" src=""></a></dt>
 	<dd>
 		<a href="">{{ reply['nick'] }}</a>：{{ reply['content'] }} (10秒前)
 		<p class="info W_textb">
 			<span class="W_linkb">
-				<em><a onclick="Reply.remove('d-{{ reply["id"] }}');" href="javascript:;" class="" id="d-{{ reply['id'] }}">删除</a><i class="W_vline">|</i></em>
-				<a class="reply" id="r-{{ reply['id'] }}" style="" >回复</a></span></p>
+				<em><a onclick="delItem(this);return false;" href="#" id="d-{{ reply['id'] }}">删除</a><i class="W_vline">|</i></em>
+				<a onclick="Reply.reply(this);return false;" href="#" id="r-{{ reply['id'] }}" nick="{{ reply['nick'] }}" to="{{ reply['tid'] }}" >回复</a></span></p>
 	</dd>
 	<dd class="clear"></dd>
 </dl>

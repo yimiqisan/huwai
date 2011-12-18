@@ -9,8 +9,8 @@
 		</p>
 		<p class="W_info W_linkb W_textb">
 			<span>
-				{% if message['is_own'] %}<em><a href="javascript:void(0);" class="remove" id="d-{{ message['id'] }}">删除</a><i class="W_vline">|</i></em>{% end %}
-				{% if uid %}<a href="javascript:void(0);" class="reply" id="r-{{ message['id'] }}">回复</a>{% end %}
+				{% if message['is_own'] %}<em><a href="#" onclick="delItem(this);return false;" class="remove" id="d-{{ message['id'] }}">删除</a><i class="W_vline">|</i></em>{% end %}
+				{% if uid %}<a href="#" onclick="Reply.toggle(this);return false;" class="reply" id="r-{{ message['id'] }}">回复</a>{% end %}
 			</span>
 			<a title="{{ message['created'] }}" class="date">{{ message['created'] }}</a>
 		</p>

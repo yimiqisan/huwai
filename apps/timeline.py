@@ -68,7 +68,7 @@ class TimeLineAPI(API):
         return super(TimeLineAPI, self).create(owner=owner, content=content, at_list=at_list, topic=tid, channel=channel, **kwargs)
     
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
-        return [{'id':i['_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', '匿名驴友'), 'content':i['content'], 'created':i['created'].strftime('%Y-%m-%d %X')} for i in result]
+        return [{'id':i['_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', '匿名驴友'), 'tid':i.get('topic', None), 'content':i['content'], 'created':i['created'].strftime('%Y-%m-%d %X')} for i in result]
     
     def list(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None):
         kwargs = {}
