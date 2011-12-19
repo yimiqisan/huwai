@@ -1,5 +1,6 @@
 function delItem(e) {
     var mid = $(e).attr('id').replace('d-', 'm-');
+    alert(mid);
     var $p = $("#"+mid);
     var args = {'id': mid.replace('m-', '')};
     $.ajax({
@@ -62,6 +63,7 @@ var Reply = {
     },
     
     insert: function(form, id) {
+        if ($('#m-'+id+' .reply-content').val() == ""){return false;}
         var message = form.formToDict();
         message["to"] = id
         var disabled = form.find("input[type=submit]");
@@ -75,7 +77,7 @@ var Reply = {
             if (existing.length > 0) return;
             var node = $(response.html);
             node.hide();
-            $(".rep-list").append(node);
+            $("#m-"+id+" .rep-list").append(node);
             node.slideDown();
             form.find(".reply-content").val("").select();
             disabled.enable();

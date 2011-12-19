@@ -82,7 +82,26 @@ class API(object):
         except Exception:
             logging.info(e)
             raise Exception
-        
+    
+    def _escape_created(self, n, c):
+        e = unicode(n-c)
+        if ',' in e:
+            a, x = e.split(',', 1)
+            d = a.split(' ')[0]
+            if int(d) > 5:
+                r = c.strftime('%Y-%m-%d %X')
+            else:
+                r = a.replace('days', u'天前')
+        else:
+            h, m, s = e.split(':')
+            if int(h) != 0:
+                r = unicode(int(h))+u'小时前'
+            elif int(m) != 0:
+                r = unicode(int(m))+u'分钟前'
+            else:
+                r = unicode(int(float(s)))+u'秒前'
+        return r
+    
     def create(self, **kwargs):
         for k, v in kwargs.items():
             if k in self.keys:

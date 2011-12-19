@@ -61,7 +61,7 @@ class AjaxReplyHandler(BaseHandler):
         kwargs = {'nick':nick}
         r = tl._api.save(c, owner=uid, tid=to, channel=self.CHANNEL, **kwargs)
         if r[0]:
-            kwargs.update({'id':r[1], 'content':c, 'owner': uid, 'is_own':True, 'tid': to})
+            kwargs.update({'id':r[1], 'content':c, 'owner': uid, 'is_own':True, 'tid': to, 'created':'刚刚'})
             return kwargs
         else:
             return None
