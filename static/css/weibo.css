@@ -1,0 +1,111 @@
+#inbox {width:600px; display:block;background:white;padding: 20px 50px 10px 20px;}
+.show-reply {display:inline-block; list-style:none; width:400px; height:20px; margin:2px 2px 2px 100px; padding:5px 3px;}
+.remove{display:none;}
+a:link{text-decoration:none;}
+a:visited {text-decoration:none;}
+a:hover {text-decoration:none;}
+a:active {text-decoration:none;}
+
+
+.clearfix {display: block;}
+.clearfix::after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.B_box_comment .W_main_c, .B_mention_me .W_main_c {padding-top: 32px;padding-bottom: 30px;}
+.W_main_c {padding-right: 30px;padding-left: 30px;float: left;width: 540px;padding: 0 22px 0 23px;overflow: hidden;min-height: 800px;}
+.feed_lists {margin: -3px 0 0;overflow: hidden;}
+.feed_list {padding: 0 0 15px 0;margin: 0 0 17px;zoom: 1;border-bottom-width: 1px;border-bottom-style: dotted;}
+.W_texta, a.W_texta {color: #444;cursor: default;}
+.W_linecolor, .feed_list, .feed_lists{ border-color: #F1F1F1; }
+a{color: #0078B6;text-decoration: none;}
+p {display: block;-webkit-margin-before: 1em;-webkit-margin-after: 1em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;}
+em, i {font-style: normal;font-weight: normal;}
+dl {display: block;-webkit-margin-before: 1em;-webkit-margin-after: 1em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;}
+dd {display: block;-webkit-margin-start: 40px;}
+dt {display: block;}
+.feed_list .face {float: left;display: inline;width: 50px;padding: 3px 0 6px;}
+.feed_list .face img {display: block;}
+.feed_list .content {word-wrap: break-word;font-size: 14px;margin: 0 0 0 60px;line-height: 22px;font-size: 14px;line-height: 22px;}
+.feed_list .content a {word-wrap: break-word;}
+.feed_list_content {margin:0;}
+.feed_list .W_close_color {text-align: right;float: right;font-size: 12px;}
+.feed_list .content p {padding-bottom: 10px;}
+.feed_list .content p.W_info {padding: 3px 0 0;}
+.feed_list .W_info a.date {margin: 0 20px 0 0;}
+a.W_close_color {cursor: pointer;width: 11px;height: 11px;overflow: hidden;display: inline-block;background-position: 0 -11px;background-image: url(http://img.t.sinajs.cn/t4/skin/skin001/images/close.gif?id=1321455890875);}
+.W_textb, a.W_textb {color: #B8B7B7;cursor: default;}
+.feed_list .W_info {font-size: 12px;margin:0;}
+.feed_list .W_info span {float: right;display: inline;}
+.W_linkb a, a.W_linkb {color: #9ABBC8;}
+.W_vline {margin: 0 5px;color: #F1F1F1;}
+.clear {clear: both;height: 0;font: 0/0 Arial;visibility: hidden;}
+
+
+.W_bgcolor, .big_comment_list .feed_repeat, .comment_list .repeat, .feed_list .comment, .Grp_feed_list .comment, .feed_lists .favorites, .feed_list .repeat, .Grp_feed_list .repeat, .nfBox .tag_show li a.tag:hover, .tab_c .current, .tab_second, .person_info_list dt, .interPer .mf_cont, .topic_list .tpc_dtl_cont, .activities_list .tpc_dtl_cont, .topic_block ul .hover, .icon_mbmore, .M_rightNote, .M_activities .Actpic, .photos_list ul li.up_info a, .suggested_follows .title, .suggested_follows .func, .W_pages_minibtn a, .W_pages_comment a, .private_SRLr .content, .notice_board .notice_board_cont {background: #FBFBFB;}
+.feed_list .repeat {border-width: 1px;border-style: solid;zoom: 1;line-height: 20px;padding: 15px 20px 13px;_padding: 0 20px 13px;font-size: 12px;margin: 10px 0 7px;-moz-border-radius: 3px;-webkit-border-radius: 3px;}
+.W_linedot, .W_linesol, .W_border, .W_line_r, .W_linecolor, .feed_list, .feed_lists .feed_list_new, .B_one_feed .tab_b, .B_one_feed_other .tab_b, .feed_list .expand div.vote .vote_text_list li, .big_comment_list dl.list, .Grp_feed_list, .user_atten, .declist, .interPer .pop_users .line, .index_title h3, .feed_list .expand p, .feed_list .repeat .more, .feed_list .expand div.extend, .feed_list .expand div.extend .participation, .feed_list .expand div.extend .interest, .feed_list .expand div.vote, .Grp_comment_list, .Grp_feed_list .repeat .more, .Grp_feed_list .expand p, .send_private_msg .send_p_list .send_list li, .send_private_msg .send_handle, a.magic_thumb, .photos_list ul li a, .suggested_follows .bg, .profile_album .photo_list dt a, .user_atten li {border-color: #E1E4E5;}
+.W_textc {color: #777;}
+.feed_list .repeat .arrow {margin-left: 430px;}
+.feed_list .comment dd.arrow, .feed_list .repeat .arrow {_display: none;width: 25px;margin: -25px 0 0 0;height: 11px;overflow: hidden;}
+.feed_list .repeat {line-height: 20px;font-size: 12px;}
+.feed_list .comment dd.arrow *, .feed_list .repeat .arrow * {font-family: "SimSun";overflow: hidden;font-size: 21px;display: block;height: 10px;}
+.W_vline, .W_sline, .W_arrline, .W_arrline_mini {color: #E1E4E5;}
+address, caption, cite, code, dfn, em, i, th, var {font-style: normal;font-weight: normal;}
+.feed_list .comment dd.arrow span, .feed_list .repeat .arrow span {margin: -9px 0 0;}
+.feed_list .repeat .input {padding: 15px 0 0;}
+.clearfix {display: block;}
+.clearfix::after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.W_textc {color: #777;}
+.reply-content, .feed_list .repeat .input textarea {color: #595959;height: 20px;overflow: hidden;width: 428px;border: 1px solid #C6C6C6;padding: 4px 4px 0;font-size: 12px;margin: 0 0 3px;}
+textarea {resize: none;}
+.feed_list .repeat .input .btn {text-align: right;padding-bottom: 0;}
+.feed_list .content a {word-wrap: break-word;}
+a, .W_linka a, a.W_linka, a.W_gotop, .W_gotop span {color: #0078B6;}
+.W_btn_b, .W_btn_b span, .W_btn_b_disable, .W_btn_b_disable span {cursor: pointer;background: url(http://img.t.sinajs.cn/t4/style/images/common/btn.png?id=1323328404357) no-repeat;color: white;display: inline-block;padding: 0 0 0 2px;height: 24px;line-height: 23px;line-height: 24px	9;}.feed_list .repeat .input .btn {text-align: right;}
+.W_btn_b span, .W_btn_b_disable span {
+background-position: right -24px;
+padding: 0 10px 0 8px;
+min-width: 37px;
+text-align: center;
+}
+.btn_noloading .loading {
+display: none;
+}
+.W_btn_a .loading, .W_btn_b .loading, .W_btn_c .loading, .W_btn_d .loading, .W_btn_gp .loading, .W_btn_a_disable .loading {background: url(http://img.t.sinajs.cn/t4/style/images/common/loading.gif?id=1323328404357) no-repeat;float: left;height: 15px;vertical-align: middle;margin: 5px 4px 0 0;_margin: 5px 1px 0 0;width: 15px;}
+strong, b {font-weight: bolder;}
+.W_btn_b span, .W_btn_b_disable span {text-align: center;}
+.W_btn_b, .W_btn_b span, .W_btn_b_disable, .W_btn_b_disable span {cursor: pointer;color: white;line-height: 23px;line-height: 24px 9;}
+.W_btn_b span, .W_btn_b_disable span {text-align: center;}
+
+.comment_list {padding-top: 8px;margin:8px 0 0;overflow: hidden;clear: both;border-top-width: 1px;border-top-style: dotted;_zoom: 1;}
+.feed_list .repeat dt {padding: 5px 0 0 0;}
+.feed_list .comment_list dt {margin-top: 0;}
+.comment_list dt {float: left;display: inline;width: 30px;padding: 3px 0 0;}
+.feed_list .content a {word-wrap: break-word;}
+a, .W_linka a, a.W_linka, a.W_gotop, .W_gotop span {color: #0078B6;}
+.comment_list dt img {display: block;}
+fieldset, img {border: 0;}
+img[width=30] {width: 30px;}
+img[height=30] {height: 30px;}
+a, .W_linka a, a.W_linka, a.W_gotop, .W_gotop span {color: #0078B6;}
+.feed_list .comment_list dd {width: auto;}
+.comment_list dd {margin: 0 0 0 40px;line-height: 21px;width: 490px;word-wrap: break-word;zoom: 1;}
+dd {display: block;-webkit-margin-start: 40px;}
+.comment_list dd {line-height: 21px;}
+.feed_list .content p.info {margin: 5px 0 0;padding: 3px 0 0;_padding-left: 3px;}
+.comment_list dd .info {padding: 0;line-height: 15px;overflow: hidden;background: white;color: black;border-color: white;}
+.feed_list .info {font-size: 12px;}
+.W_textb, a.W_textb {color: #999;}
+.W_textb, a.W_textb {cursor: default;}
+.feed_list .info span {float: right;display: inline;}
+.comment_list dd .info {line-height: 15px;}
+.feed_list .info {font-size: 12px;}
+.comment_list dd .info {line-height: 15px;}
+.feed_list .info {font-size: 12px;}
+.feed_list .content a {word-wrap: break-word;}
+.W_linkb a, a.W_linkb {color: #7AA5B9;}
+.feed_list .info span .W_vline {margin: 0 5px;}
+.W_vline, .W_sline, .W_arrline, .W_arrline_mini {color: #E1E4E5;}
+.feed_list .content a {word-wrap: break-word;}
+.W_linkb a, a.W_linkb {color: #7AA5B9;}
+.comment_list dd.clear {line-height: 0;}
+.feed_list .comment_list dd {width: auto;}
+.clear {clear: both;height: 0;font: 0/0 Arial;visibility: hidden;}

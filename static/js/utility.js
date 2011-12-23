@@ -58,7 +58,7 @@ var Reply = {
                 return false;
             }
         });
-        //$("#reply").select();
+        $('#'+id+' .reply-content').select();
     },
     
     insert: function(form, id) {

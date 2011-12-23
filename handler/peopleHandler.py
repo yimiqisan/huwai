@@ -19,9 +19,9 @@ class PeopleHandler(BaseHandler):
         tl = TimeLine()
         r = tl._api.list(cuid=uid, owner=uid)
         if r[0]:
-            return self.render("people.html", **{'messages': r[1]})
+            return self.render("profile/people.html", **{'messages': r[1]})
         else:
-            return self.render("people.html", **{'warning': r[1], 'messages':[]})
+            return self.render("profile/people.html", **{'warning': r[1], 'messages':[]})
     
     @session
     def post(self):
@@ -33,4 +33,4 @@ class PeopleHandler(BaseHandler):
         if r[0]:
             return self.redirect("/people")
         else:
-            return self.render("people.html", **{'warning': r[1], 'messages':[]})
+            return self.render("profile/people.html", **{'warning': r[1], 'messages':[]})

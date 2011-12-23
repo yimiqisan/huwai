@@ -13,7 +13,7 @@ handlers = [(r"/", RootHandler),
             (r"/people", PeopleHandler),
             
             (r"/weibo", WeiboHandler),
-            (r"/weibo/a/new", AjaxWeiboNewHandler),
+            (r"/a/weibo", AjaxWeiboHandler),
             
             (r"/account/login", LoginHandler),
             (r"/account/thirdpart", ThirdPartHandler),

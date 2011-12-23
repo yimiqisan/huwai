@@ -17,21 +17,21 @@ from baseHandler import BaseHandler
 
 class EventHandler(BaseHandler):
     def get(self):
-        self.render("event_show.html")
+        self.render("event/event_show.html")
     
     def post(self):
         pass
 
 class EventPublishHandler(BaseHandler):
     def get(self):
-        self.render("event_publish.html")
+        self.render("event/event_publish.html")
     
     def post(self):
         pass
 
 class EventListHandler(BaseHandler):
     def get(self):
-        self.render("event_list.html")
+        self.render("event/event_list.html")
 
 class EventCheckHandler(BaseHandler):
     def get(self):
@@ -51,7 +51,7 @@ class EventCrawlerHandler(BaseHandler):
             entries1.append(stra[i])
             entries2.append(stra[i+l])
             #handler data for outputing
-        self.render("event.html", entries1=entries1, entries2=entries2, entries=stra)
+        self.render("event/event.html", entries1=entries1, entries2=entries2, entries=stra)
 
     def get_spider_events(self, page=1, number=8, data="all"):
         conn = Connection()

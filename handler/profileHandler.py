@@ -18,7 +18,7 @@ from apps.oauth2 import APIClient
 
 class LoginHandler(BaseHandler):
     def get(self):
-        self.render('login.html')
+        self.render('profile/login.html')
     
     @session
     def post(self):
@@ -33,7 +33,7 @@ class LoginHandler(BaseHandler):
             self.SESSION['uid']=u._id
             self.redirect('/account/profile')
         else:
-            return self.render('login.html', **{'warning': r[1]})
+            return self.render('profile/login.html', **{'warning': r[1]})
 
 class ThirdPartHandler(BaseHandler):
     @session
@@ -47,7 +47,7 @@ class ThirdPartHandler(BaseHandler):
             self.SESSION['sina_request_token'] = access_token
             client.set_access_token(access_token, r.expires_in)
             sinfo = client.get.account__profile__basic()
-            self.render('thirdpart.html', nick=sinfo['name'])
+            self.render('profile/thirdpart.html', nick=sinfo['name'])
         else:
             url = client.get_authorize_url()
             self.redirect(url)
@@ -70,7 +70,7 @@ class ThirdPartHandler(BaseHandler):
                 self.SESSION['uid']=u._id
                 self.redirect('/account/profile')
             else:
-                return self.render('thirdpart.html', **{'warning': r[1]})
+                return self.render('profile/thirdpart.html', **{'warning': r[1]})
         elif a == 'bind':
             r = u.login(n, p)
             if r[0]:
@@ -79,13 +79,13 @@ class ThirdPartHandler(BaseHandler):
                 self.SESSION['uid']=u._id
                 self.redirect('/account/profile')
             else:
-                return self.render('thirdpart.html', **{'warning': r[1]})
+                return self.render('profile/thirdpart.html', **{'warning': r[1]})
         else:
-            return self.render('thirdpart.html', **{'warning': '系统晕了，不知道您是绑定还是注册！'})
+            return self.render('profile/thirdpart.html', **{'warning': '系统晕了，不知道您是绑定还是注册！'})
 
 class RegisterHandler(BaseHandler):
     def get(self):
-        self.render('register.html')
+        self.render('profile/register.html')
 
     @session
     def post(self):
@@ -102,7 +102,7 @@ class RegisterHandler(BaseHandler):
             self.SESSION['uid']=u._id
             self.redirect('/account/profile')
         else:
-            return self.render('register.html', **{'warning': r[1]})
+            return self.render('profile/register.html', **{'warning': r[1]})
     
 class LogoutHandler(BaseHandler):
     @session
@@ -114,13 +114,13 @@ class LogoutHandler(BaseHandler):
 class ProfileHandler(BaseHandler):
     @session
     def get(self):
-        self.render('profile.html')
+        self.render('profile/profile.html')
     
 class SettingHandler(BaseHandler):
     @session
     def get(self):
-        self.render('setting.html')
+        self.render('profile/setting.html')
     
     @session
     def post(self):
-        self.render('setting.html')
+        self.render('profile/setting.html')

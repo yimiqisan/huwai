@@ -6,6 +6,7 @@ weiboHandler.py
 Created by 刘 智勇 on 2011-11-18.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
+import json
 
 from baseHandler import BaseHandler
 from apps.timeline import TimeLine
@@ -19,9 +20,9 @@ class WeiboHandler(BaseHandler):
         tl = TimeLine()
         r = tl._api.page(cuid=uid, channel=[u'weibo'])
         if r[0]:
-            return self.render("weibo.html", **{'messages': r[1]})
+            return self.render("weibo/weibo.html", **{'messages': r[1]})
         else:
-            return self.render("weibo.html", **{'warning': r[1], 'messages': []})
+            return self.render("weibo/weibo.html", **{'warning': r[1], 'messages': []})
     
     @session
     def post(self):
@@ -33,15 +34,28 @@ class WeiboHandler(BaseHandler):
         if r[0]:
             return self.redirect("/weibo")
         else:
-            return self.render("weibo.html", **{'warning': r[1], 'messages': []})
+            return self.render("weibo/weibo.html", **{'warning': r[1], 'messages': []})
 
-class AjaxWeiboNewHandler(BaseHandler):
+class AjaxWeiboHandler(BaseHandler):
+    @session
+    def get(self):
+        uid = self.SESSION['uid']
+        tl = TimeLine()
+        r = tl._api.page(cuid=uid, channel=[u'weibo'])
+        if r[0]:
+            htmls = []
+            for i in r[1]:
+                htmls.append(self.render_string("weibo/message.html", message=i, uid=uid))
+            return self.write(json.dumps(htmls))
+        else:
+            return self.write({'error':'save error'})
+    
     @session
     def post(self):
         uid = self.SESSION['uid']
         message = self.preserve(uid)
         if message:
-            message["html"] = self.render_string("message.html", message=message, uid=uid)
+            message["html"] = self.render_string("weibo/message.html", message=message, uid=uid)
         else:
             return self.write({'error':'save error'})
         if self.get_argument("next", None):

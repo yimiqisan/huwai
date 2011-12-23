@@ -27,7 +27,7 @@ class AjaxReplyHandler(BaseHandler):
         if r[0]:
             htmls = []
             for i in r[1]:
-                htmls.append(self.render_string("reply.html", reply=i, uid=uid))
+                htmls.append(self.render_string("weibo/reply.html", reply=i, uid=uid))
             return self.write(json.dumps(htmls))
         else:
             return self.write({'error':'save error'})
@@ -37,7 +37,7 @@ class AjaxReplyHandler(BaseHandler):
         uid = self.SESSION['uid']
         reply = self.preserve(uid)
         if reply:
-            reply["html"] = self.render_string("reply.html", reply=reply)
+            reply["html"] = self.render_string("weibo/reply.html", reply=reply)
         else:
             return self.write({'error':'save error'})
         if self.get_argument("next", None):
