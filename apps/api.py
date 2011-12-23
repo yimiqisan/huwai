@@ -90,6 +90,8 @@ class API(object):
             d = a.split(' ')[0]
             if int(d) > 5:
                 r = c.strftime('%Y-%m-%d %X')
+            elif int(d) == 1:
+                r = a.replace('day', u'天前')
             else:
                 r = a.replace('days', u'天前')
         else:
@@ -122,6 +124,15 @@ class API(object):
     def remove(self, id):
         if not id:return False
         return self.collection.remove(id)
+        
+    def drops(self, **kwages):
+        try:
+            return self.collection.remove(kwargs)
+        except Exception, e:
+            logging.info(e)
+            return False
+        return True
+
         
     def drop_table(self):
         self.datastroe.drop_collection(self.col_name)

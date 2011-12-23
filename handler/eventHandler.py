@@ -14,7 +14,34 @@ import uuid
 
 from baseHandler import BaseHandler
 
+
 class EventHandler(BaseHandler):
+    def get(self):
+        self.render("event_show.html")
+    
+    def post(self):
+        pass
+
+class EventPublishHandler(BaseHandler):
+    def get(self):
+        self.render("event_publish.html")
+    
+    def post(self):
+        pass
+
+class EventListHandler(BaseHandler):
+    def get(self):
+        self.render("event_list.html")
+
+class EventCheckHandler(BaseHandler):
+    def get(self):
+        pass
+    
+    def post(self):
+        pass
+
+
+class EventCrawlerHandler(BaseHandler):
     def get(self):
         stra = self.get_spider_events()
         l=len(stra)/2

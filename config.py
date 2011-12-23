@@ -11,6 +11,8 @@ import redis
 from mongokit import Connection
 from logging import basicConfig, DEBUG
 
+SITE_ID = u'917d450c728b4f62b6ac9bac1beb01ba'
+
 #config settings
 settings = dict(
         template_path=os.path.join(os.path.dirname(__file__), "htmls"),

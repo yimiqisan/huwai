@@ -1,6 +1,5 @@
 function delItem(e) {
     var mid = $(e).attr('id').replace('d-', 'm-');
-    alert(mid);
     var $p = $("#"+mid);
     var args = {'id': mid.replace('m-', '')};
     $.ajax({

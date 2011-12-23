@@ -22,12 +22,16 @@ handlers = [(r"/", RootHandler),
             (r"/account/profile", ProfileHandler),
             (r"/account/setting", SettingHandler),
             
+            (r"/event/c", EventCrawlerHandler),
             (r"/event", EventHandler),
+            (r"/event/publish", EventPublishHandler),
+            (r"/event/list", EventListHandler),
 
             (r"/feedback", FeedbackHandler),
             
             (r"/a/reply", AjaxReplyHandler),
             (r"/a/remove", AjaxRemoveHandler),
+            (r"/a/toggle", AjaxToggleHandler),
             
             (r"/image/upload", UploadImageHandler),
             (r"/image/avatar/?(\w*)", AvatarHandler),
