@@ -6,6 +6,7 @@ PeopleHandler.py
 Created by 刘 智勇 on 2011-11-19.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
+from tornado.web import addslash
 
 from baseHandler import BaseHandler
 from apps.timeline import TimeLine
@@ -13,6 +14,7 @@ from apps.tools import session
 
 
 class PeopleHandler(BaseHandler):
+    @addslash
     @session
     def get(self):
         uid = self.SESSION['uid']
@@ -23,6 +25,7 @@ class PeopleHandler(BaseHandler):
         else:
             return self.render("profile/people.html", **{'warning': r[1], 'messages':[]})
     
+    @addslash
     @session
     def post(self):
         uid = self.SESSION['uid']

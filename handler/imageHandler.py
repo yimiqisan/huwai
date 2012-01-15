@@ -6,6 +6,7 @@ imageHandler.py
 Created by 刘 智勇 on 2011-09-24.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
+from tornado.web import addslash
 
 from baseHandler import BaseHandler
 from apps.pstore import AvatarProcessor, AttachProcessor
@@ -19,7 +20,7 @@ class AvatarHandler(BaseHandler):
         kwargs = {}
         kwargs['version']=v
         self.write(p.display(fn, **kwargs))
-    
+
 class UploadImageHandler(BaseHandler):
     def get(self):
         pid = self.get_argument("pid", None)
@@ -32,4 +33,38 @@ class UploadImageHandler(BaseHandler):
         f=self.request.files['upload'][0]
         r = p.process(f['body'])
         self.redirect('/image/upload?pid='+r)
+    
+class AjaxAvatarHandler(BaseHandler):
+    @session
+    def post(self):
+    #    uid = self.SESSION['uid']
+        uid = self.get_argument('uid', None)
+        p=AvatarProcessor(uid)
+        f=self.request.files['upload'][0]
+        r = p.process(f['body'])
+        return self.write(r)
+
+class AjaxImageHandler(BaseHandler):
+    @session
+    def post(self):
+        uid = self.SESSION['uid']
+        p=AttachProcessor()
+        f=self.request.files['upload'][0]
+        r = p.process(f['body'])
+        return self.write(r)
+
+class AjaxImageCheckHandler(BaseHandler):
+    def post(self):
+        return True
+
+
+
+
+
+
+
+
+
+
+
 

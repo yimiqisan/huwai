@@ -7,6 +7,7 @@ Created by 刘 智勇 on 2011-11-18.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 import json
+from tornado.web import addslash
 
 from baseHandler import BaseHandler
 from apps.timeline import TimeLine
@@ -14,39 +15,26 @@ from apps.tools import session
 from datetime import datetime
 
 class WeiboHandler(BaseHandler):
+    @addslash
     @session
     def get(self):
-        uid = self.SESSION['uid']
-        tl = TimeLine()
-        r = tl._api.page(cuid=uid, channel=[u'weibo'])
-        if r[0]:
-            return self.render("weibo/weibo.html", **{'messages': r[1]})
-        else:
-            return self.render("weibo/weibo.html", **{'warning': r[1], 'messages': []})
-    
-    @session
-    def post(self):
-        uid = self.SESSION['uid']
-        c = self.get_argument('content', None)
-        n = self.get_secure_cookie("user") if uid else u'匿名驴友'
-        tl = TimeLine()
-        r = tl._api.save(c, owner=uid, nick=n)
-        if r[0]:
-            return self.redirect("/weibo")
-        else:
-            return self.render("weibo/weibo.html", **{'warning': r[1], 'messages': []})
+        return self.render("weibo/weibo.html")
 
 class AjaxWeiboHandler(BaseHandler):
     @session
     def get(self):
         uid = self.SESSION['uid']
+        cursor = self.get_argument('cursor', None)
+        maintype = self.get_argument('maintype', None)
+#        subtype = self.get_argument('subtype', None)
+        if cursor:cursor=int(cursor)
         tl = TimeLine()
-        r = tl._api.page(cuid=uid, channel=[u'weibo'])
+        r = tl._api.extend(cuid=uid, channel=[u'weibo'], cursor=cursor, topic=maintype)
         if r[0]:
             htmls = []
             for i in r[1]:
                 htmls.append(self.render_string("weibo/message.html", message=i, uid=uid))
-            return self.write(json.dumps(htmls))
+            return self.write(json.dumps({'htmls':htmls, 'info':r[1], 'cursor': r[2]}))
         else:
             return self.write({'error':'save error'})
     

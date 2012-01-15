@@ -125,14 +125,14 @@ class API(object):
         if not id:return False
         return self.collection.remove(id)
         
-    def drops(self, **kwages):
+    def drops(self, **kwargs):
         try:
-            return self.collection.remove(kwargs)
+            self.collection.remove(kwargs)
         except Exception, e:
+            print e
             logging.info(e)
             return False
         return True
-
         
     def drop_table(self):
         self.datastroe.drop_collection(self.col_name)
@@ -142,8 +142,8 @@ class API(object):
         items.update(kwargs)
         keyl_l = items.keys()
         for k in keyl_l:
-            if k not in self.keys():
-                items['added'][k]=items.pop(k)
+            if k not in self.keys:
+                items['added']={k:items.pop(k)}
         try:
             self.collection.update({"_id":id}, {"$set":items})
         except Exception, e:
@@ -161,9 +161,9 @@ class API(object):
         elif cursor and (order > 0):
             kwargs.update({order_by:{'$gt':cursor}})
         try:
+            objs= self.collection.find(kwargs).sort(order_by, order).limit(limit)
 #            kwargs.update({'created':{'$lt':datetime.now()}})
-            objs= self.collection.find(**kwargs).sort(order_by, order).limit(limit)
-#            objs= self.collection.find(**kwargs).sort('created', 1).limit(limit)
+#            objs= self.collection.find(kwargs).sort('created', 1).limit(limit)
         except:
             return (False, 'search error')
         return (True, objs)

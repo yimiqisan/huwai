@@ -12,8 +12,10 @@ import json
 
 from baseHandler import BaseHandler
 from apps.timeline import TimeLine
+from apps.behavior import Behavior
 from apps.pstore import Pstore
 from apps.tools import session
+
 
 class AjaxReplyHandler(BaseHandler):
     CHANNEL = u'reply'
@@ -39,11 +41,11 @@ class AjaxReplyHandler(BaseHandler):
         if reply:
             reply["html"] = self.render_string("weibo/reply.html", reply=reply)
         else:
-            return self.write({'error':'save error'})
+            return self.write(json.dumps({'error':'save error'}))
         if self.get_argument("next", None):
             self.redirect(self.get_argument("next"))
         else:
-            self.write(reply)
+            self.write(json.dumps(reply))
     
     def preserve(self, uid):
         to = self.get_argument("to")
@@ -65,9 +67,9 @@ class AjaxRemoveHandler(BaseHandler):
         uid = self.SESSION['uid']
         rid = self.get_argument("id", None)
         r = tl._api.remove(rid)
-        self.write('ok')
+        self.write(json.dumps('ok'))
 
-class AjaxToggleHandler(BaseHandler):
+class AjaxToggleStateHandler(BaseHandler):
     @session
     def post(self):
         uid = self.SESSION['uid']
@@ -75,13 +77,29 @@ class AjaxToggleHandler(BaseHandler):
         k = self.get_argument("kind", None)
         m = self.get_argument("mark", None)
         s = b._api.state(uid, k, m)
-        if s[0]:
+        if s[0] and s[1]:
             id = s[1]['_id']
-            r = b._api.remove(id)
+            r = b._api.cancel(uid, k, m)
         else:
             r = b._api.ok(uid, k, m)
-        self.write(r)
+        self.write(json.dumps(r))
 
+class AjaxToggleInputHandler(BaseHandler):
+    @session
+    def post(self):
+        uid = self.SESSION['uid']
+        b = Behavior()
+        k = self.get_argument("kind", None)
+        m = self.get_argument("mark", None)
+        return self.write(json.dumps('ok'))
+        
+        s = b._api.state(uid, k, m)
+        if s[0] and s[1]:
+            id = s[1]['_id']
+            r = b._api.cancel(uid, k, m)
+        else:
+            r = b._api.ok(uid, k, m)
+        self.write(json.dumps(r))
     
     
     

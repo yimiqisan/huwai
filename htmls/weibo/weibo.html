@@ -10,5 +10,15 @@
 {% end %}
 {% block leftnav %}{% end %}
 {% block center_col %}
-	<div id="weibo"><div>
+	<div class="num" node-type="num" style="display: block;font-size:16px;">还可以输入
+		<span style="font-size:24px;color:#ff9933;" id="num">140</span> 字
+	</div>
+	<form action="/weibo" method="post" id="weiboform">
+		<textarea rows="5" cols="60" name="content" id="weibo-content"></textarea>
+		<input type="submit" value="回复" style="height:20px;"/>
+		<input type="hidden" name="_xsrf" value="ca61c7cf01cf4097bd14c959c519637a"/>
+	</form><br><hr>
+	<div class="feed_lists" id="weibo" maintype="" subtype="">
+		<div class="bottom feed_list"><a href="#" style="display:block;text-align:center;" onclick="Weibo.extend(this);return false;"></a><input type="hidden" value="0"/></div>
+	</div>
 {% end %}

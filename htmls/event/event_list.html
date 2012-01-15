@@ -1,9 +1,26 @@
-{% extends google.html %}
+{% extends ../google.html %}
 
 {% block static %}
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/layout.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/event.css') }}"/>
 {% end %}
-{% block leftnav %}{% end %}
+{% block leftnav %}
+<div><a href="/event/puba/">创建活动</a></div>
+{% end %}
 {% block center_col %}
-list
+	<div id="index">
+		<div id="event_list">
+			{% for i in event_list %}
+				<dl class="">
+					<dt><a href="/event/{{ i['id'] }}/" target="_blank"><img src="/image/avatar/{{ i['logo'] }}_100" width=100 height=100 /></a></dt>
+					<dd>
+						<h1><a href="/event/{{ i['id'] }}/" target="_blank" title="{{ i['title'] }}">{{ i['title'] }}</a></h1>
+						<p><span>发 起 人：<font><a href="">{{ i['nick'] }}</a></font></span></p>
+						<p><span>活动地点：{{ i['place'] }}</span></p>
+						<p><span>活动时间：{{ i['date'] }}</span></p>
+						<p><span>关注程度：<font>0</font>人感兴趣/<font>0</font>人参与</span></p>
+					</dd>
+				</dl>
+			{% end %}
+		</div>
+	</div>
 {% end %}

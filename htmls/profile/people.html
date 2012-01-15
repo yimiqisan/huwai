@@ -1,4 +1,4 @@
-{% extends google.html %}
+{% extends ../google.html %}
 
 {% block static %}
 	<link rel="stylesheet" href="{{ static_url('css/feedback.css') }}">
@@ -8,7 +8,7 @@
 {% block center_col %}
 	<ul id="inbox">
 		{% for m in messages %}
-			{% module Template("message.html", message=m, uid=uid) %}
+			{% module Template("weibo/message.html", message=m, uid=uid) %}
 		{% end %}
 	</ul>
 

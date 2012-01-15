@@ -1,0 +1,13 @@
+{% extends google.html %}
+
+{% block static %}
+	<link rel="stylesheet" href="{{ static_url('css/index.css') }}">
+{% end %}
+{% block leftnav %}
+	{% if leftnav %}<div>{% for i in leftnav %}<a href="{{ i[0] }}">{{ i[1] }}</a>{% end %}</div>{% end %}
+{% end %}
+{% block center_col %}
+	<pre style="color:orange; font-size:40px; min-height:200px;">{{ alert }}</pre>
+	<form><textarea rows=3 cols=50></textarea><br/><input type="submit" value="提意见"></form>
+	&nbsp&nbsp&nbsp<a style="font-size:16px;" href="/">ok<a>
+{% end %}

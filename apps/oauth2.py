@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+__version__ = '1.02'
 __author__ = 'Liao Xuefeng (askxuefeng@gmail.com)'
 
 '''
@@ -98,7 +99,7 @@ Content-Type: text/plain
     data.append('--%s--\r\n' % boundary)
     return '\r\n'.join(data), boundary
 
-_CONTENT_TYPES = { '.png': 'image/png', '.gif': 'image/gif', '.jpg': 'images/jpeg', '.jpeg': 'images/jpeg', '.jpe': 'images/jpeg' }
+_CONTENT_TYPES = { '.png': 'image/png', '.gif': 'image/gif', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.jpe': 'image/jpeg' }
 
 def _guess_content_type(ext):
     return _CONTENT_TYPES.get(ext, 'application/octet-stream')
@@ -172,7 +173,7 @@ class APIClient(object):
 
     def set_access_token(self, access_token, expires_in):
         self.access_token = str(access_token)
-        self.expires = time.time() + expires_in
+        self.expires = expires_in
 
     def get_authorize_url(self, display='default'):
         '''
@@ -190,6 +191,7 @@ class APIClient(object):
                 client_secret = self.client_secret, \
                 redirect_uri = self.redirect_uri, \
                 code = code, grant_type = 'authorization_code')
+        r.expires_in += int(time.time())
         return r
 
     def is_expires(self):

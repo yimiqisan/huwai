@@ -57,7 +57,7 @@ class Pstore(object):
 class ImageProcessor(object):
     def __init__(self, uid=None):
         self.uid = uid
-        self.sz_l = [100]
+        self.sz_l = [300, 100]
         self.p = Pstore()
         self.max_sz = 600
     
@@ -87,7 +87,8 @@ class ImageProcessor(object):
             data = self._thumbnail(im, self.max_sz)
         self.p.put(data, filename=ofn, size=-1)
         for sz in self.sz_l:
-            fn = self._get_fn(sz)
+            print ofn, sz
+            fn = ofn+'_'+str(sz)
             data = self._thumbnail(im, sz)
             self.p.put(data, filename=fn)
         return ofn
@@ -100,31 +101,16 @@ class ImageProcessor(object):
             r = self.p.get_version(filename=fn, **kwargs)
         return r[1]
 
-
 class AvatarProcessor(ImageProcessor):
     def __init__(self, uid=None):
         self.uid = uid
-        self.sz_l = [100, 50, 30]
+        self.sz_l = [100, 80, 50, 30]
         self.p = Pstore()
         self.max_sz = 600
     
     def _get_fn(self, suffix=None):
         return self.uid+'_'+str(suffix) if suffix else self.uid
 
-
 class AttachProcessor(ImageProcessor):
     pass
 
-def image_font():
-    import ImageFont, ImageDraw
-    draw = ImageDraw.Draw(image)
-    font = ImageFont.load("arial.pil")
-    draw.text((10, 10), "hello", font=font)
-    font = ImageFont.truetype("arial.ttf", 15)
-    draw.text((10, 25), "world", font=font)
-    
-    
-if __name__ == '__main__':
-    import _imaging
-    core = _imaging
-    print getattr(core, "zip_decoder")

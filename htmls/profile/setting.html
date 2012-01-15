@@ -1,8 +1,31 @@
-{% extends google.html %}
+{% extends ../google.html %}
 
 {% block static %}
 	<link rel="stylesheet" href="{{ static_url('css/feedback.css') }}">
-	<script src="{{ static_url('js/jquery.min.js') }}" type="text/javascript"></script>
+	<script language="javascript" src="{{ static_url('js/jquery.min.js') }}" type="text/javascript"></script>
+	<script language="javascript" src="{{ static_url('js/jquery.uploadify.min.js') }}" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$("#poster").uploadify({
+				swf				: '{{ static_url("js/uploadify.swf") }}',
+				uploader		: '/a/avatar?uid={{uid}}',
+				checkExisting	: '/a/image/check',
+				buttonText		: '点击上传',
+				cancelImage		: '{{ static_url("img/uploadify-cancel.png") }}',
+				auto			: true,
+				scriptData		: {'uid':'{{ uid }}'},
+				fileObjName		: 'upload',
+				onUploadSuccess : function (file, data, response) {
+					//$('#poster').html('<img src="/image/avatar/'+data+'_300"/>');
+					$('#poster').html('<input type="hidden" value="'+data+'"/><img src="/image/avatar/'+data+'_100"/>');
+					$('#poster_queue').hide();
+					},
+				onError			: function (event, queueID, fileObj){alert("文件:" + fileObj.name + " 上传失败");}
+			});
+		})
+	</script>
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/uploadify.css') }}"/>
+	
 	<style type="text/css">
 		.htab {width:600px;}
 		.xbar {height:30px;padding:10px 10px 0 10px;background:#070;margin-bottom:20px;}
@@ -28,34 +51,34 @@
 		<div class="xbar">
 			<a style="display:none" href="/mail/setting">邮件提醒</a>
 			<a style="display:none" href="/alert">消息提示</a>
-			<a href="/weibo/setting">微博绑定</a>
+			<a style="display:none" href="/weibo/setting">微博绑定</a>
 			<span class="now">基本设置</span>
 		</div>
 		<div class="clear"></div>
 		<form name="content-form" method="post">
 			<table style="clear:both" width="100%" align="center" cellpadding="5">
-				<tr>
+				<tr style="display:none">
 					<td class="m" valign="top" align="right">名号: </td><td class="n" valign="top">一米七三</td>
 				</tr>
 				<tr style="display:none">
 					<td class="m" valign="top" align="right">我的域名:</td><td class="n" valign="top">qisan</td>
 				</tr>
-				<tr style="">
-					<td class="m" valign="top" align="right">头像:</td><td class="n" valign="top"></td>
-				</tr>
 				<tr>
+					<td class="m" valign="top" align="right">头像:</td><td class="n" valign="top"><div id="poster">Uploadify</div></td>
+				</tr>
+				<tr style="display:none">
 					<td class="m" valign="top" align="right">常居地:</td><td class="n" valign="top">北京</td>
 				</tr>
 				<tr style="display:none">
 					<td class="m" valign="top" align="right">绑定邮箱:</td><td class="n" valign="top">yimiqisan@gmail.com</td>
 				</tr>
-				<tr>
+				<tr style="display:none">
 					<td class="m" valign="top" align="right">登录密码:</td><td class="n" valign="top"><a href="">更改</a></td>
 				</tr>
-				<tr>
+				<tr style="display:none">
 					<td class="m" valign="top" align="right">手机号:</td><td class="n" valign="top">15210904820</td>
 				</tr>
-				<tr>
+				<tr style="display:none">
 					<td class="m"></td><td class="n"><input name="submit" type="submit" value="更新设置" tabindex="8"></td>
 				</tr>
 			</table>

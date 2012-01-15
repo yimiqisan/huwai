@@ -1,4 +1,4 @@
-{% extends google.html %}
+{% extends ../google.html %}
 
 {% block static %}
 	<link rel="stylesheet" href="{{ static_url('css/profile.css') }}">
@@ -10,10 +10,10 @@
 	</div>
 {% end %}
 {% block center_col %}
-	<form action="/account/login" method="post">
+	<form action="/account/login/" method="post">
 		绰号: <input type="text" name="nick"/><br/><br/>
 		密码:<input type="password" name="password"/><br/><br/>
 		<input type="submit" value="login">
 	</form>
-	<br/><br/><a href="/account/thirdpart">新浪微博账号</a>
+	<br/><br/><a href="/account/thirdpart/">新浪微博账号</a>
 {% end %}

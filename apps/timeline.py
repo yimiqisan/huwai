@@ -14,7 +14,7 @@ import time
 
 from huwai.config import DB_CON, DB_NAME
 from modules import TimeLineDoc
-from api import API
+from api import API, Mapping
 
 class TimeLine(object):
     def __init__(self, api=None):
@@ -25,7 +25,6 @@ class TimeLine(object):
             return self.info[key]
         else:
             return None
-
 
 class TimeLineAPI(API):
     DEFAULT_CUR_UID = '948a55d68e1b4317804e4650a9505641'
@@ -70,7 +69,14 @@ class TimeLineAPI(API):
     
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         now = datetime.now()
-        return [{'id':i['_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', '匿名驴友'), 'tid':i.get('topic', None), 'content':i['content'], 'created':self._escape_created(now, i['created'])} for i in result]
+        if isinstance(result, dict):
+            return {'id':result['_id'], 'added_id':result['added_id'], 'owner':result['owner'], 'is_own':(cuid==result['owner'] if result['owner'] else True), 'nick':result['added'].get('nick', '匿名驴友'), 'tid':result.get('topic', None), 'content':result['content'], 'created':self._escape_created(now, result['created'])}
+        return [{'id':i['_id'], 'added_id':i['added_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', '匿名驴友'), 'tid':i.get('topic', None), 'content':i['content'], 'created':self._escape_created(now, i['created'])} for i in result]
+    
+    def get(self, id):
+        r = self.one(_id=id)
+        if (r[0] and r[1]):return (True, self._output_format(result=r[1]))
+        return r
     
     def list(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None):
         kwargs = {}
@@ -102,7 +108,8 @@ class TimeLineAPI(API):
             kw = {'result':r[1]}
             if cuid:kw['cuid']=cuid
             l = self._output_format(**kw)
-            return (True, l)
+            added_id = min(l[0]['added_id'], l[-1]['added_id']) if len(l)!=0 else -1
+            return (True, l, added_id)
         else:
             return (False, r[1])
     

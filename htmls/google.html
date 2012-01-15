@@ -9,16 +9,6 @@
 	<link rel="stylesheet" href="{{ static_url('css/base.css') }}">
 	<link rel="stylesheet" href="{{ static_url('css/google.css') }}">
 	{% block static %}{% end %}
-	<script type="text/javascript">
-	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-26927861-1']);
-	_gaq.push(['_trackPageview']);
-	(function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	})();
-	</script>
 </head>
 <body style="" class="" dir="ltr" data-feedly-processed="yes" id="srp" onload="try{if(!google.j.b){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.focus()}}catch(e){};if(document.images)new Image().src='/images/nav_logo86.png'" alink="#d14836" bgcolor="#ffffff" link="#1122cc" text="#222222" vlink="#6611cc">
 	<textarea id="csi" style="display: none;"></textarea>
@@ -36,8 +26,8 @@
 								<a class="gbzt" id="gb_119" href="/people"><span class="gbtb2"></span><span class="gbts">您</span></a>
 							{% end %}
 						</li>
-						<li class="gbt"><a class="gbzt gbp1 gbz0l" id="gb_1" href="/event/c"><span class="gbtb2"></span><span class="gbts">活动</span></a></li>
-						<li class="gbt"><a class="gbzt" id="hw1" href="/weibo"><span class="gbtb2"></span><span class="gbts">轻微博</span></a></li>
+						<li class="gbt"><a class="gbzt gbz0l" id="gb_1" href="/event/list" onclick="switchNavi(this);return false;"><span class="gbtb2"></span><span class="gbts">活动</span></a></li>
+						<li class="gbt"><a class="gbzt" id="hw1" href="/weibo" onclick="switchNavi(this);return false;"><span class="gbtb2"></span><span class="gbts">轻微博</span></a></li>
 						<li class="gbt"><a class="gbzt" id="hw2" href=""><span class="gbtb2"></span><span class="gbts">知道</span></a></li>
 						<li class="gbt"><a class="gbzt" id="hw3" href=""><span class="gbtb2"></span><span class="gbts">地图</span></a></li>
 						<li class="gbt"><a class="gbzt" id="hw4" href=""><span class="gbtb2"></span><span class="gbts">相册</span></a></li>
@@ -106,7 +96,7 @@
 											<span class=gbps2>未绑定安全邮箱</span>
 											<ol class=gbmcc>
 												<li class=gbmtc><a id=gbmplp class="gbml1 gbp1" href="/account/profile">个人资料</a></li>
-												<li class=gbmtc><a class=gbml1 href="">账户设置</a></li>
+												<li class=gbmtc><a class=gbml1 href="/account/setting/">账户设置</a></li>
 												<li class=gbmtc><a class=gbml1 href="/account/logout">退出账户</a></li>
 											</ol>
 										</div>
@@ -169,7 +159,9 @@
 		<div>  
 			<div id="cnt">   
 				<div style="" id="appbar">  
-					<div id="ab_name">远航户外</div>  
+					<div id="ab_name">远航户外
+						{% if warning %}<span id="warning" style="color:red;font-size:12px;">{{ warning }}</span>{% end %}
+					</div>  
 					<div id="sbfrm_l"></div>
 					<ol id="ab_ctls"></ol> 
 				</div> 
@@ -183,7 +175,6 @@
 							</div>
 						</div>   
 						<div id="center_col">
-							{% if warning %}<div id="warning" style="color:red;">{{ warning }}</div>{% end %}
 							{% block center_col %}{% end %}
 						</div>  
 						<div style="" id="rhscol"></div>   

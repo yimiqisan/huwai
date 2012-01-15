@@ -8,6 +8,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 from huwai import config
 
+from tornado.web import addslash
 from baseHandler import BaseHandler
 
 from apps.user import User
@@ -17,9 +18,11 @@ from apps.oauth2 import APIClient
 
 
 class LoginHandler(BaseHandler):
+    @addslash
     def get(self):
         self.render('profile/login.html')
     
+    @addslash
     @session
     def post(self):
         n = self.get_argument('nick', None)
@@ -36,6 +39,7 @@ class LoginHandler(BaseHandler):
             return self.render('profile/login.html', **{'warning': r[1]})
 
 class ThirdPartHandler(BaseHandler):
+    @addslash
     @session
     def get(self):
         CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/account/thirdpart'
@@ -52,6 +56,7 @@ class ThirdPartHandler(BaseHandler):
             url = client.get_authorize_url()
             self.redirect(url)
     
+    @addslash
     @session
     def post(self):
         a = self.get_argument('act', None)
@@ -84,9 +89,11 @@ class ThirdPartHandler(BaseHandler):
             return self.render('profile/thirdpart.html', **{'warning': '系统晕了，不知道您是绑定还是注册！'})
 
 class RegisterHandler(BaseHandler):
+    @addslash
     def get(self):
         self.render('profile/register.html')
-
+    
+    @addslash
     @session
     def post(self):
         n = self.get_argument('nick', None)
@@ -105,6 +112,7 @@ class RegisterHandler(BaseHandler):
             return self.render('profile/register.html', **{'warning': r[1]})
     
 class LogoutHandler(BaseHandler):
+    @addslash
     @session
     def get(self):
         self.clear_cookie("user")
@@ -112,15 +120,19 @@ class LogoutHandler(BaseHandler):
         self.redirect('/')
     
 class ProfileHandler(BaseHandler):
+    @addslash
     @session
     def get(self):
         self.render('profile/profile.html')
     
 class SettingHandler(BaseHandler):
+    @addslash
     @session
     def get(self):
-        self.render('profile/setting.html')
+        uid = self.SESSION['uid']
+        self.render('profile/setting.html', uid=uid)
     
+    @addslash
     @session
     def post(self):
         self.render('profile/setting.html')

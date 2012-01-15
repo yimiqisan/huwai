@@ -44,7 +44,7 @@ basicConfig(filename = 'app.log',
             format = '%(asctime)s %(module)s %(lineno)s %(message)s',
             level = DEBUG
 )
-
+TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 #thirdpart key list
 SINA_CONSUME_KEY = '3821263454'
@@ -63,3 +63,9 @@ RENREN_CONSUME_SECRET = 'bab6147970dd49ab99b81fe105017123'
 
 TX_CONSUME_KEY = '801072901'
 TX_CONSUME_SECRET = 'd8721f9490268e6edf4ddb3687a6ffda'
+
+TAOBAO_APP_KEY = '12484169'
+TAOBAO_APP_SECRET = '8520cdb2c1ef7ff1c287944c4adfc4ac'
+
+TAOBAO_TEST_KEY = '12484169'
+TAOBAO_TEST_SECRET = 'sandbox2c1ef7ff1c287944c4adfc4ac'

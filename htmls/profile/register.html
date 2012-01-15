@@ -1,4 +1,4 @@
-{% extends google.html %}
+{% extends ../google.html %}
 
 {% block static %}
 	<link rel="stylesheet" href="{{ static_url('css/profile.css') }}">
@@ -10,7 +10,7 @@
 	</div>
 {% end %}
 {% block center_col %}
-	<form action="/account/register" method="post">
+	<form action="/account/register/" method="post">
 	绰号:<input type="text" name="nick"/><br/><br/>
 	email:<input type="email" name="email"/><br/><br/>
 	密码:<input type="password" name="password"/><br/><br/>

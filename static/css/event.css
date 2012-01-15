@@ -1,0 +1,27 @@
+/* event publish */
+#event{margin:5px;}
+#event h1{font:bold 30px/30px Arial;}
+#event form{display:block;font-size:16px;margin:5px 5px;padding:20px 20px;width:400px;}
+.event_li{position:relative; margin-bottom:25px;padding-top:10px;display:block;}
+.event_li .needed{color:orange;}
+.event_li .eleft, .event_li .eright{float:left;}
+.event_li .eleft{width:100px;}
+.event_li .eright{width:300px;}
+
+/* event list */
+#event_list{position:relative;width:800px;display:block;}
+#event_list dl{position:relative;margin:15px;}
+#event_list dl, #event_list dt, #event_list dd{display:block;float:left;}
+#event_list dt, #event_list dd{margin-left:5px;}
+
+/* event show */
+#event_show{position:relative;width:800px;display:block;}
+#event_show .left{float:left;width:500px;}
+#event_show .left .poster img{width:300px; height:300px;float:left;}
+#event_show .left .operate{display:block;float:left;padding:10px;}
+#event_weibo{float:left;width:500px;}
+#event_show .right{float:right;min-width:300px;}
+#event_show .right h1{font-size:20px;margin:5px;padding-left:3px;}
+#event_show .right em{margin-left:10px;}
+#event_show .user_list{position:relative; max-width:300px;}
+#event_show .user_list li{margin:3px 3px;float:left;}

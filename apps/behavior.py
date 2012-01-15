@@ -35,16 +35,27 @@ class BehaviorAPI(API):
         doc = collection.BehaviorDoc()
         API.__init__(self, col_name=col_name, collection=collection, doc=doc)
     
+    def _output_map(self, input):
+        ret_d = {'id':input['_id'], 'owner':input['owner'], 'kind':input['kind'], 'mark':input['mark'], 'created':input['created']}
+        for k, v in input['added']:
+            ret_d[k] = v
+        return ret_d
+    
+    def _output_format(self, result=[]):
+        if isinstance(result, dict):
+            return self._output_map(result)
+        return map(self._output_map, result)
+    
     def state(self, owner, kind, mark):
         return self.one(owner=owner, kind=kind, mark=mark)
     
     def ok(self, owner, kind, mark, **kwargs):
         r = self.state(owner, kind, mark)
-        return r if r[0] else self.create(owner=owner, kind=kind, mark=mark, **kwargs)
+        return r if (r[0] and r[1]) else self.create(owner=owner, kind=kind, mark=mark, **kwargs)
     
     def edit(self, owner, kind, mark, **kwargs):
         r = self.state(owner, kind, mark)
-        if r[0]:
+        if (r[0] and r[1]):
             id = r[1]['_id']
             return super(BehaviorAPI, self).edit(id, **kwargs)
         else:
@@ -52,5 +63,16 @@ class BehaviorAPI(API):
     
     def cancel(self, owner, kind, mark):
         return self.drops(owner=owner, kind=kind, mark=mark)
+    
+    def list(self, owner=None, kind=None, mark=None):
+        kwargs = {}
+        if owner:kwargs['owner'] = owner
+        if kind:kwargs['kind'] = kind
+        if mark:kwargs['mark'] = mark
+        r = self.find(**kwargs)
+        if r[0]:
+            return self._output_format(result=r[1])
+        else:
+            return None
 
 

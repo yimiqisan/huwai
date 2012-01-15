@@ -11,7 +11,7 @@ from commonHandler import RootHandler, TestHandler, FeedbackHandler, Error404Han
 from profileHandler import LoginHandler, ThirdPartHandler, RegisterHandler, LogoutHandler, ProfileHandler, SettingHandler
 from weiboHandler import WeiboHandler, AjaxWeiboHandler
 from peopleHandler import PeopleHandler
-from eventHandler import EventHandler, EventPublishHandler, EventCheckHandler, EventListHandler, EventCrawlerHandler
-from imageHandler import UploadImageHandler, AvatarHandler
-from ajaxHandler import AjaxReplyHandler, AjaxRemoveHandler, AjaxToggleHandler
-
+from eventHandler import EventHandler, EventPubaHandler, EventPubbHandler, EventCheckHandler, EventListHandler, EventCrawlerHandler
+from imageHandler import UploadImageHandler, AvatarHandler, AjaxAvatarHandler, AjaxImageHandler, AjaxImageCheckHandler
+from ajaxHandler import AjaxReplyHandler, AjaxRemoveHandler, AjaxToggleStateHandler, AjaxToggleInputHandler
+from checkHandler import CheckEventHandler

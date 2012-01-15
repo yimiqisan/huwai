@@ -68,7 +68,7 @@ class TimeLineDoc(Document):
             'content':  unicode,
             'at_list':  list,
             'topic':    unicode,
-            'channel':  IS(u'normal', u'reply', u'weibo', u'map', u'keys'),
+            'channel':  IS(u'normal', u'reply', u'weibo', u'map', u'keys', u'e_schedule', u'e_spend', u'e_declare', u'e_attention'),
     }
     required_fields = ['_id', 'created', 'content']
     default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
@@ -86,8 +86,9 @@ class EventDoc(Document):
             'created':  datetime,
             'added':    dict,
             'added_id': int,
-            'logo':    unicode,
+            'logo':     unicode,
             'title':    unicode,
+            'members':  dict,
             'tags':     list,
             'club':     unicode,
             'is_merc':  bool,
@@ -103,15 +104,14 @@ class EventDoc(Document):
             'attention_tl': unicode,
             
             'deadline': datetime,
-            'fr':     int,
+            'fr':       int,
             'to':       int,
             'when':     datetime,
             'where':    unicode,
-            'linkway':  dict,
             
             'check':    bool,
     }
-    required_fields = ['_id', 'owner', 'created', 'title', 'tags', 'is_merc', 'level', 'date', 'place', 'schedule_tl']
+    required_fields = ['_id', 'owner', 'created', 'title', 'tags', 'is_merc', 'level', 'date', 'place']
     default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now(), 'fr':0, 'to':30}
     
     use_schemaless = True
@@ -127,7 +127,7 @@ class BehaviorDoc(Document):
             'created':  datetime,
             'added':    dict,
             'added_id': int,
-            'kind':  IS(u'like', u'join'),
+            'kind':  IS(u'like', u'join', u'follow'),
             'mark':  unicode,
     }
     required_fields = ['_id', 'created', 'kind', 'mark']
