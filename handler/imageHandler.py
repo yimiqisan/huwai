@@ -21,6 +21,15 @@ class AvatarHandler(BaseHandler):
         kwargs['version']=v
         self.write(p.display(fn, **kwargs))
 
+class AttachHandler(BaseHandler):
+    def get(self, fn=None):
+        if not fn:return
+        v = self.get_argument('v', None)
+        p=AttachProcessor()
+        kwargs = {}
+        kwargs['version']=v
+        self.write(p.display(fn, **kwargs))
+
 class UploadImageHandler(BaseHandler):
     def get(self):
         pid = self.get_argument("pid", None)

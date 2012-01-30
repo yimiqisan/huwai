@@ -152,6 +152,7 @@ class API(object):
         return (True, keyl_l)
     
     def extend(self, **kwargs):
+        print kwargs
         cursor = kwargs.pop('cursor', None)
         limit = kwargs.pop('limit', 20)
         order = kwargs.pop('order', -1)
@@ -177,7 +178,7 @@ class API(object):
         order = kwargs.pop('order', -1)
         try:
             objs=self.collection.find(kwargs).sort(order_by, order).skip(start).limit(limit)
-            cnt=100#self.collection.count(kwargs)
+            cnt=self.collection.find(kwargs).count()
         except Exception, e:
             return (False, e)
         #get page additional infomation
@@ -195,6 +196,13 @@ class API(object):
         info['next_page'] = min(page+1, total_page)
         info['end_page'] = total_page		
         return (True, objs, info)
+    
+    def count(self, **kwargs):
+        try:
+            cnt=self.collection.find(kwargs).count()
+        except Exception, e:
+            return -1
+        return cnt
     
     def one(self, **kwargs):
         try:

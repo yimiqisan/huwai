@@ -1,14 +1,20 @@
-{% extends google.html %}
+{% extends box.html %}
 
-{% block static %}
-	<link rel="stylesheet" href="{{ static_url('css/index.css') }}">
-{% end %}
-{% block leftnav %}{% end %}
-{% block center_col %}
-	<div id="index">
-		<h1 style="font-size:20px;">无兄弟，不墨脱</h1>
-		<embed src="http://player.youku.com/player.php/sid/XMjc3NjI2MDAw/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
-		<br/><br/><br/>
-		<span><a href="/feedback" style="color:green;font-size:40px;">说说你心中的户外网站吧</a></span>	
+{% block static %}{% end %}
+{% block box %}
+	<div class="agrbox boxmg lucency" style="width:400px;height:300px;">
+		<div style="margin:10px 0 0 10px;">
+			<from action="" method="POST">
+				<input type=text style="width:300px;height:30px;"/>&nbsp&nbsp<input type=submit  value="获取邀请"/>
+			</from>
+		</div><br/>
+		<div style="margin-left:10px;">
+			<a style="background:#F0FFF0;" href="/account/thirdpart/"><img src="{{static_url('img/sina24.png')}}"/></a>&nbsp&nbsp&nbsp&nbsp
+		</div></br>
+		<form action="/account/login/" method="POST">
+			<span>绰号：</span><input name="nick" type=text style="width:300px;height:30px;"/><br/><br/>
+			<span>密码：</span><input name="password" type=password style="width:300px;height:30px;"/><br/><br/>
+			<input type=submit  value="登陆"/>
+		</form>
 	</div>
 {% end %}

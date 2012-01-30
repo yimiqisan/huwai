@@ -16,9 +16,9 @@ var Weibo = {
         Weibo.hover();
         Weibo.load();
     },
-
+    
     info: function(e) {
-        $("#weibo").append('<div id="info"><table><tr></tr></table></div>');
+        $("#weibo .wb_items").append('<div id="info"><table><tr></tr></table></div>');
         if (e.has_pre){$("#info table tr").append('<td><a href="">&lt;&lt;</a></td><td><a href="">&lt;</a></td>');}
         else{$("#info table tr").append('<td></td>');}
         for (var i=0; i<e.page_list.length; i++){$("#info table tr").append('<td><a href="" target="_self">'+e.page_list[i]+'</a></td>');}
@@ -31,11 +31,11 @@ var Weibo = {
         var e = $('#weibo .bottom');
         if ($(e).find('input').val()=='-1'){$(e).find('a').text('没有更多的了');return false;}
         var args = {'cursor': $(e).find('input').val()};
-        var mtp = $('#weibo').attr('maintype');
-        var stp = $('#weibo').attr('subtype');
+        var mtp = $('#weibo .wb_items').attr('maintype');
+        var stp = $('#weibo .wb_items').attr('subtype');
         if (mtp){args.maintype=mtp;}
         if (stp){args.subtype=stp;}
-        $(e).addClass('loading');
+        $(e).find('a').addClass('loading');
         $.postJSON("/a/weibo", "GET", args, function(response) {
             if (response.error){
                 return alert(response.error);
@@ -45,19 +45,19 @@ var Weibo = {
                 $(htmls[i]).insertBefore(e);
             }
             $(e).find('input').val(response.cursor);
-            $(e).removeClass('loading');
+            $(e).find('a').removeClass('loading');
         });
     },
     
     hover: function(){
-        $("#weibo").hover(function(){
-            $(".feed_list").hover(function(){
+        $("#weibo .wb_items").hover(function(){
+            $(".wb_item").hover(function(){
                 $(this).find(".remove:first").show();
             },function(){
                 $(this).find(".remove:first").hide();
             });
         },function(){
-            $(".feed_list").hover(function(){
+            $(".wb_item").hover(function(){
                 $(this).find(".remove:first").show();
             },function(){
                 $(this).find(".remove:first").hide();
@@ -70,7 +70,7 @@ var Weibo = {
             form.find("#weibo-content").select();
             return;
         }
-        var title = $("#weibo").attr("title");
+        var title = $("#weibo .wb_items").attr("title");
         if (title){
             var content = form.find("#weibo-content").val()
             if (content.indexOf(title)<0) {
@@ -103,7 +103,7 @@ var Weibo = {
         if (existing.length > 0) return;
         var node = $(message.html);
         node.hide();
-        $(node).insertBefore("#weibo .feed_list:first");
+        $(node).insertBefore("#weibo .wb_item:first");
         node.slideDown();
         Weibo.hover();
     },
@@ -127,13 +127,3 @@ var Weibo = {
         });
     }
 };
-
-
-
-
-
-
-
-
-
-

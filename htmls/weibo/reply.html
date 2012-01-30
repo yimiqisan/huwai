@@ -1,11 +1,13 @@
-<dl id="m-{{ reply['id'] }}" class="comment_list W_linecolor">
-	<dt><a href=""><img width="30" height="30" alt="一米七三2010" src="/image/avatar/{{ reply['owner'] }}_30"></a></dt>
+<dl id="m-{{ reply['id'] }}" class="comment_list">
+	<dt><a href=""><img width="30" height="30" alt="{{ reply['nick'] }}" src="/image/avatar/{{ reply['owner'] }}_30"></a></dt>
 	<dd>
 		<a href="">{{ reply['nick'] }}</a>：{{ reply['content'] }} ({{ reply['created'] }})
-		<p class="info W_textb">
-			<span class="W_linkb">
-				<em><a onclick="delItem(this);return false;" href="#" id="d-{{ reply['id'] }}">删除</a><i class="W_vline">|</i></em>
-				<a onclick="Reply.reply(this);return false;" href="#" id="r-{{ reply['id'] }}" nick="{{ reply['nick'] }}" to="{{ reply['tid'] }}" >回复</a></span></p>
+		<p class="info">
+			<span>
+				<em><a onclick="delItem(this);return false;" href="#" id="d-{{ reply['id'] }}">删除</a><i class="wb_vline">|</i></em>
+				<a onclick="Reply.reply(this);return false;" href="#" id="r-{{ reply['id'] }}" nick="{{ reply['nick'] }}" to="{{ reply['tid'] }}">回复</a>
+			</span>
+		</p>
 	</dd>
 	<dd class="clear"></dd>
 </dl>

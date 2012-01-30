@@ -17,7 +17,10 @@ from apps.tools import session
 
 class RootHandler(BaseHandler):
     def get(self):
-        self.render("index.html")
+        if self.current_user:
+            self.redirect('/account/profile/')
+        else:
+            self.render("index.html")
 
 class TestHandler(BaseHandler):
     @addslash

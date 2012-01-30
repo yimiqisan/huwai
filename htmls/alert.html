@@ -1,13 +1,12 @@
-{% extends google.html %}
+{% extends frame.html %}
 
 {% block static %}
-	<link rel="stylesheet" href="{{ static_url('css/index.css') }}">
+	{% block static-added %}{% end %}
 {% end %}
-{% block leftnav %}
-	{% if leftnav %}<div>{% for i in leftnav %}<a href="{{ i[0] }}">{{ i[1] }}</a>{% end %}</div>{% end %}
+{% block bodyleft %}
+	<div class="gybox" style="width:500px;min-height:300px;margin:100px auto;">
+		<pre style="color:orange;font-size:40px;margin:0 auto;text-align:center;">{{ alert }}</pre>
+		<form><textarea rows=3 cols=60></textarea><br/><input type="submit" value="提意见">&nbsp&nbsp&nbsp<a style="font-size:16px;" href="/">没意见<a></form>
+	</div>
 {% end %}
-{% block center_col %}
-	<pre style="color:orange; font-size:40px; min-height:200px;">{{ alert }}</pre>
-	<form><textarea rows=3 cols=50></textarea><br/><input type="submit" value="提意见"></form>
-	&nbsp&nbsp&nbsp<a style="font-size:16px;" href="/">ok<a>
-{% end %}
+{% block bodyright %}{% end %}

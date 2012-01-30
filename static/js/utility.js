@@ -1,9 +1,8 @@
-function switchNavi(e) {
-    window.location.href=$(e).attr("href");
-    var pt = $(e).parent().parent().parent();
-    pt.find("ol li .gbz0l").removeClass("gbz0l");
-    $(e).addClass("gbz0l");
-}
+function setTab(name,cursel,n){for(i=1;i<=n;i++){var menu=document.getElementById(name+i);var con=document.getElementById("con_"+name+"_"+i);menu.className=i==cursel?"hover":"";con.style.display=i==cursel?"block":"none";}}
+
+function showUinfo(e) {
+    $("#userinfo ul").toggle();
+};
 
 function delItem(e) {
     var mid = $(e).attr('id').replace('d-', 'm-');
@@ -182,13 +181,12 @@ function _(a,b){
     PLACE_L2L1={},PLACE_L3L2={},
     function(){function a(a,b){var c,d,e,f,g;for(d in a){e=0,c=a[d],f=c.length,g=parseInt(d,16);for(;e<f;++e)b[parseInt(c[e],16)]=g}}a(PLACE_L1L2,PLACE_L2L1),a(PLACE_L2L3,PLACE_L3L2)}()
 
-
 var Reply = {
     toggle: function(e) {
         mid = $(e).attr('id').replace('r-', 'm-');
         var isHas = $('#'+mid).hasClass('disp-re');
         if (isHas) {
-            $('#'+mid+' .rep-list').toggle();
+            $('#'+mid+' .wb_rep_list').toggle();
         }else{
             Reply.list(mid);
             $('#'+mid).addClass('disp-re');
@@ -202,10 +200,10 @@ var Reply = {
                 return alert(response.error);
             }
             var $cur = $('#'+id+' .content');
-            $cur.find(".rep-list").remove();
-            $cur.append('<div node-type="feed_list_repeat" class="repeat W_textc W_linecolor W_bgcolor rep-list"><div node-type="commentList" class="input clearfix"><form action="/a/reply" method="post" class="replyform"><input name="content" class="reply-content" style="width:80%;margin:0 0 3px 0; padding：4px 4px 0 4px; border: 1px solid rgb(198, 198, 198); font-size: 12px; font-family: Tahoma, 宋体; word-wrap: break-word; line-height: 18px; outline-style: none; outline-width: initial; outline-color: initial; overflow-x: hidden; overflow-y: hidden; height: 22px;" /><input style="margin-top:5px;float:right;" type="submit" value="回复"/></form><div class="action clearfix" node-type="widget"></div></div><div class="comment_lists" node-type="feed_list_commentList"></div></div>');
+            $cur.find(".wb_rep_list").remove();
+            $cur.append('<div class="wb_rep_list"><div class="input clearfix"><form action="/a/reply" method="post" class="replyform"><input name="content" class="reply-content" style="width:80%;margin:0 0 3px 0; padding：4px 4px 0 4px; border: 1px solid rgb(198, 198, 198); font-size: 12px; font-family: Tahoma, 宋体; word-wrap: break-word; line-height: 18px; outline-style: none; outline-width: initial; outline-color: initial; overflow-x: hidden; overflow-y: hidden; height: 22px;"><input style="margin-top:5px;float:right;" type="submit" value="回复"></form><div class="action clearfix"></div></div></div>');
             for (var i=0; i<response.length; i++) {
-                $cur.find(".rep-list").append(response[i]);
+                $cur.find(".wb_rep_list").append(response[i]);
             }
             Reply.submit(id);
         });
@@ -243,7 +241,7 @@ var Reply = {
             if (existing.length > 0) return;
             var node = $(response.html);
             node.hide();
-            $("#m-"+id+" .rep-list").append(node);
+            $("#m-"+id+" .wb_rep_list").append(node);
             node.slideDown();
             form.find(".reply-content").val("").select();
             disabled.enable();

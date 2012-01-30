@@ -87,7 +87,6 @@ class ImageProcessor(object):
             data = self._thumbnail(im, self.max_sz)
         self.p.put(data, filename=ofn, size=-1)
         for sz in self.sz_l:
-            print ofn, sz
             fn = ofn+'_'+str(sz)
             data = self._thumbnail(im, sz)
             self.p.put(data, filename=fn)

@@ -134,4 +134,22 @@ class TimeLineAPI(API):
         else:
             return (False, r[1])
         
-        
+    def abbr(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None, order_by='added_id', order=-1):
+        kwargs = {}
+        if topic:kwargs['topic']=topic
+        if channel:kwargs['channel']={'$in':channel}
+        c = super(TimeLineAPI, self).count(**kwargs)
+        if c == 0:
+            return (False, u'抢沙发啦', False)
+        elif c == 1:
+            rt = self.extend(cuid=cuid, topic=topic, channel=channel, limit=1, order=1)
+            return (rt[1][0]['content'], '点击留言', False)
+        elif c== 2:
+            rt = self.extend(cuid=cuid, topic=topic, channel=channel, limit=2, order=1)
+            return (rt[1][0]['content'], '共2条留言', rt[1][1]['content'])
+        elif c>2:
+            rt = self.extend(cuid=cuid, topic=topic, channel=channel, limit=1, order=1)
+            rb = self.extend(cuid=cuid, topic=topic, channel=channel, limit=1, order=-1)
+            return (rt[1][0]['content'], '共'+str(c)+'条留言', rb[1][0]['content'])
+        else:
+            return c        

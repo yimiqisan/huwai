@@ -17,6 +17,7 @@ import uuid
 
 from apps.tools import session
 from apps.event import Event
+from apps.timeline import TimeLine
 from apps.behavior import Behavior
 
 from baseHandler import BaseHandler
@@ -78,7 +79,7 @@ class EventPubbHandler(BaseHandler):
     @session
     def post(self):
         uid = self.SESSION['uid']
-        eid = self.get_argument('eid', '3f88dd869fd343e6bbe4061e22d8dec2')
+        eid = self.get_argument('eid', None)
         l = ["fr", "to"]
         d = {}
         for n in l:d[n] = self.get_argument(n, None)
@@ -100,9 +101,13 @@ class EventListHandler(BaseHandler):
         r = e._api.list()
         l = []
         if r[0]:
-            self.render("event/event_list.html", event_list=r[1])
+            t = TimeLine()
+            for i in r[1]:
+                i['tl'] = t._api.abbr(topic=i['tid'], channel=[u'weibo'])
+                l.append(i)
+            self.render("event/event_list.html", event_list=l)
         else:
-            self.render("event/event_list.html", event_list=[], warning=r[1])
+            self.render("event/event_list.html", event_list=l, warning=r[1])
 
 class EventCheckHandler(BaseHandler):
     @addslash

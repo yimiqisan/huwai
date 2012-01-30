@@ -1,26 +1,28 @@
-{% extends ../google.html %}
+{% extends ../frame.html %}
 
 {% block static %}
-	<link rel="stylesheet" type="text/css" href="{{ static_url('css/event.css') }}"/>
+	{% block static-added %}{% end %}
 {% end %}
-{% block leftnav %}
-<div><a href="/event/puba/">创建活动</a></div>
-{% end %}
-{% block center_col %}
-	<div id="index">
-		<div id="event_list">
-			{% for i in event_list %}
-				<dl class="">
-					<dt><a href="/event/{{ i['id'] }}/" target="_blank"><img src="/image/avatar/{{ i['logo'] }}_100" width=100 height=100 /></a></dt>
-					<dd>
-						<h1><a href="/event/{{ i['id'] }}/" target="_blank" title="{{ i['title'] }}">{{ i['title'] }}</a></h1>
-						<p><span>发 起 人：<font><a href="">{{ i['nick'] }}</a></font></span></p>
-						<p><span>活动地点：{{ i['place'] }}</span></p>
-						<p><span>活动时间：{{ i['date'] }}</span></p>
-						<p><span>关注程度：<font>0</font>人感兴趣/<font>0</font>人参与</span></p>
-					</dd>
-				</dl>
-			{% end %}
+{% block bodyleft %}
+	<div id="showlist">
+		{% for e in event_list %}
+		<div class="stream">
+			<h4><a href="/event/{{e['id']}}">{{e['title']}}</a></h4>
+			<a style="background:#EDEDED;" href="/event/{{e['id']}}"><img width=200 height=200 src="/image/attach/{{e['logo']}}_300"/></a>
+			<ul>
+				{% if e['tl'][0] %}<li>{{e['tl'][0]}}</li>{% end %}
+				<li><a href="/event/{{e['id']}}/">{{e['tl'][1]}}</a></li>
+				{% if e['tl'][2] %}<li>{{e['tl'][2]}}</li>{% end %}
+			</ul>
 		</div>
+		{% end %}
 	</div>
+{% end %}
+{% block bodyright %}
+   <div class="apkbox boxmg" style="width:200px;"><p><a>粉色</a></p></div>
+   <div class="ardbox boxmg" style="width:200px;"><p><a>紫色</a></p></div>
+   <div class="ablbox boxmg" style="width:200px;"><p><a>蓝色</a></p></div>
+   <div class="agrbox boxmg" style="width:200px;"><p><a>绿色</a></p></div>
+   <div class="aylbox boxmg" style="width:200px;"><p><a>黄色</a></p></div>
+   <div class="abrbox boxmg" style="width:200px;"><p><a>棕色</a></p></div>
 {% end %}

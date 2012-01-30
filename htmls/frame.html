@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="description" content="">
+		<meta name="robots" content="noodp"><title>远航户外</title>
+		<script src="{{ static_url('js/jquery.min.js') }}" type="text/javascript"></script>
+		<script src="{{ static_url('js/plugin/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
+		<script src="{{ static_url('js/jquery.own.js') }}" type="text/javascript"></script>
+		<script src="{{ static_url('js/utility.js') }}" type="text/javascript"></script>
+		<script language="javascript" type="text/javascript">
+			$(document).ready(function() {
+				$('.fancybox').fancybox();
+			})
+		</script>
+		<link rel="stylesheet" href="{{ static_url('css/frame.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ static_url('css/jquery.fancybox.css') }}" media="screen"/>
+		{% block static %}{% end %}
+	</head>
+	<body>
+		<div id="shell">
+			<div id="header">
+				<img width=200 height=50 src="{{static_url('img/logo.png')}}"/>
+				<div id="navi" class="grbox boxmg">
+					<span><a href="/weibo/">微博</a></span>
+					<span><a href="/event/">活动</a></span>
+					<span><a href="">相册</a></span>
+					<span><a href="">地图</a></span>
+					<span><a href="">装备</a></span>
+					<input type="text" value="活动 相册" style="border:1px solid #D6D6D6;color:#C0C0C0;background:#F5F5F5;height:28px;width:200px;"/>
+					&nbsp&nbsp<input type="submit" value="搜索"/>
+				</div>
+				<div id="opt" class="ylbox boxmg">
+				{% if current_user %}
+					<span><a>邮</a></span>
+					<span><a>私</a></span>
+					<span id="userinfo">
+						<a onclick="showUinfo(this);return false;" href="#">一米七三<img width=30 height=30 src="/image/avatar/{{uid}}_30"/></a>
+						<ul>
+							<li><a href="/account/profile/"><img width=30 height=30 src="/image/avatar/{{uid}}_30"/><span>主页</span></a></li>
+							<li><a href="/account/setting/"><img width=30 height=30 src="/image/avatar/{{uid}}_30"/><span>设置</span></a></li>
+							<li><a href="/account/logout/?next={{ request.uri }}"><img width=30 height=30 src="/image/avatar/{{uid}}_30"/><span>退出</span></a></li>
+						</ul>
+					</span>
+				{% else %}
+					<span><a class="fancybox fancybox.ajax" href="/account/login/?next={{ request.uri }}">登陆</a></span>
+					<span><a  class="fancybox fancybox.frame" href="/account/thirdpart/"><img src="{{static_url('img/sina_24x24.png')}}"/></a></span>
+					<span><a class="fancybox fancybox.ajax" href="/account/register/?next={{ request.uri }}">注册</a></span>
+				{% end %}
+				</div>
+			</div>
+			<div id="bodier">
+				<div id="left">
+					{% if title %}<div id="title">{{title}}</div>{% end %}
+					{% block bodyleft %}{% end %}
+				</div>
+				<div id="right">
+					{% if warning %}<div class="apkbox boxmg" style="width:200px;"><p><span id="warning" style="color:red;font-size:12px;">{{ warning }}</span></p></div>{% end %}
+					{% block bodyright %}{% end %}
+				</div>
+			</div>
+			<div id="footer">
+				<ul>
+					<li><a>免责声明</a></li>
+					<li><a>诚聘英才</a></li>
+					<li><a>联系方式</a></li>
+					<li><a>网站地图</a></li>
+					<li><a>备案</a></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

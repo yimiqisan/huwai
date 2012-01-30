@@ -1,9 +1,6 @@
-{% extends ../google.html %}
+{% extends ../frame.html %}
 
 {% block static %}
-	<script language="javascript" src="{{ static_url('js/jquery.min.js') }}" type="text/javascript"></script>
-	<script language="javascript" src="{{ static_url('js/jquery.own.js') }}" type="text/javascript"></script>
-	<script language="javascript" src="{{ static_url('js/utility.js') }}" type="text/javascript"></script>
 	<script language="javascript" src="{{ static_url('js/jquery.uploadify.min.js') }}" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
@@ -26,15 +23,11 @@
 	</script>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/event.css') }}"/>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/uploadify.css') }}"/>
+	{% block static-added %}{% end %}
 {% end %}
-{% block leftnav %}
-	<div>
-		<a href="/event/list">活动列表</a>
-	</div>
-{% end %}
-{% block center_col %}
+{% block bodyleft %}
+	<div id="subnavi" class="gybox"><span style="float:left;display:block;background:#F5F5F5;">活动信息</span><a style="float:left;display:block;margin:auto 250px;">报名信息</a><a style="float:left;display:block;">等待审核</a></div>
 	<div id="event">
-		<h1>活动发布</h1>
 		<form method="POST" action="/event/puba/">
 			<div class="event_li"><label class="eleft">标题<em class="needed">*</em></label><div class="eright"><input type="text" name="title"></div></div>
 			<div class="event_li"><label class="eleft">宣传海报<em class="needed">*</em></label><div class="eright">
@@ -60,4 +53,12 @@
 			<div class="event_li"><label class="eleft"><em class="needed"></em></label><div class="eright"><input type="submit" value="提交"></div></div>
 		</form>
 	</div>
+{% end %}
+{% block bodyright %}
+	<div class="apkbox boxmg" style="width:200px;"><p><a>粉色</a></p></div>
+	<div class="ardbox boxmg" style="width:200px;"><p><a>紫色</a></p></div>
+	<div class="ablbox boxmg" style="width:200px;"><p><a>蓝色</a></p></div>
+	<div class="agrbox boxmg" style="width:200px;"><p><a>绿色</a></p></div>
+	<div class="aylbox boxmg" style="width:200px;"><p><a>黄色</a></p></div>
+	<div class="abrbox boxmg" style="width:200px;"><p><a>棕色</a></p></div>
 {% end %}

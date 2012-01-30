@@ -1,19 +1,15 @@
-{% extends ../google.html %}
+{% extends ../box.html %}
 
-{% block static %}
-	<link rel="stylesheet" href="{{ static_url('css/profile.css') }}">
-{% end %}
-{% block leftnav %}
-	<div>
-		<a href="/account/register">注册</a><br/><br/><br/>
-		<a href="/">回首页</a>
+{% block static %}{% end %}
+{% block box %}
+	<div class="agrbox boxmg lucency" style="width:400px;height:300px;">
+		<div style="margin:10px 0 0 10px;">
+			<form action="/account/login/" method="POST">
+				<span>绰号：</span><input name="nick" type=text style="width:300px;height:30px;"/><br/><br/>
+				<span>密码：</span><input name="password" type=password style="width:300px;height:30px;"/><br/><br/>
+				<input name="next" type=hidden value="{{ n }}"/>
+				<input type=submit  value="登陆"/>
+			</form>
+		</div><br/>
 	</div>
-{% end %}
-{% block center_col %}
-	<form action="/account/login/" method="post">
-		绰号: <input type="text" name="nick"/><br/><br/>
-		密码:<input type="password" name="password"/><br/><br/>
-		<input type="submit" value="login">
-	</form>
-	<br/><br/><a href="/account/thirdpart/">新浪微博账号</a>
 {% end %}

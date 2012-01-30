@@ -7,7 +7,7 @@ Created by 刘 智勇 on 2011-11-18.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 import json
-from tornado.web import addslash
+from tornado.web import addslash, authenticated
 
 from baseHandler import BaseHandler
 from apps.timeline import TimeLine
@@ -26,7 +26,7 @@ class AjaxWeiboHandler(BaseHandler):
         uid = self.SESSION['uid']
         cursor = self.get_argument('cursor', None)
         maintype = self.get_argument('maintype', None)
-#        subtype = self.get_argument('subtype', None)
+        subtype = self.get_argument('subtype', None)
         if cursor:cursor=int(cursor)
         tl = TimeLine()
         r = tl._api.extend(cuid=uid, channel=[u'weibo'], cursor=cursor, topic=maintype)

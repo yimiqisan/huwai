@@ -20,7 +20,8 @@ from apps.oauth2 import APIClient
 class LoginHandler(BaseHandler):
     @addslash
     def get(self):
-        self.render('profile/login.html')
+        n = self.get_argument('next', '')
+        self.render('profile/login.html', n=n)
     
     @addslash
     @session
@@ -29,12 +30,13 @@ class LoginHandler(BaseHandler):
         if n is None:return self.render('login.html', **{'warning': '请先报上名号'})
         p = self.get_argument('password', None)
         if p is None:return self.render('login.html', **{'warning': '您接头暗号是？'})
+        nt = self.get_argument('next', None)
         u = User()
         r = u.login(n, p)
         if r[0]:
             self.set_secure_cookie("user", n, 1)
             self.SESSION['uid']=u._id
-            self.redirect('/account/profile')
+            self.redirect(nt) if nt else self.redirect('/account/profile')
         else:
             return self.render('profile/login.html', **{'warning': r[1]})
 
@@ -97,11 +99,11 @@ class RegisterHandler(BaseHandler):
     @session
     def post(self):
         n = self.get_argument('nick', None)
-        if n is None:return self.render('register.html', **{'warning': '请先报上名号'})
+        if n is None:return self.render('profile/register.html', **{'warning': '请先报上名号'})
         e= self.get_argument('email', None)
-        if e is None:return self.render('register.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码'})
+        if e is None:return self.render('profile/register.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码'})
         p = self.get_argument('password', None)
-        if p is None:return self.render('register.html', **{'warning': '您接头暗号是？'})
+        if p is None:return self.render('profile/register.html', **{'warning': '您接头暗号是？'})
         u = User()
         r = u.register(n, e, p)
         if r[0]:
@@ -117,13 +119,18 @@ class LogoutHandler(BaseHandler):
     def get(self):
         self.clear_cookie("user")
         del self.SESSION['uid']
-        self.redirect('/')
-    
+        nt = self.get_argument('next', None)
+        self.redirect(nt) if nt else self.redirect('/')
+
 class ProfileHandler(BaseHandler):
     @addslash
     @session
     def get(self):
-        self.render('profile/profile.html')
+        if self.current_user:
+            title = self.current_user+'的主页'
+            self.render('profile/profile.html', title=title)
+        else:
+            self.redirect('/')
     
 class SettingHandler(BaseHandler):
     @addslash

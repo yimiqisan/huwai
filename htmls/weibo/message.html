@@ -1,18 +1,15 @@
-<dl class="feed_list W_linecolor message" id="m-{{ message['id'] }}">
+<dl class="wb_item" id="m-{{ message['id'] }}">
 	<dt class="face">
-		<a href="" title="一米七三2010"><img usercard="id={{ message['owner'] }}" title="{{ message['nick'] }}" alt="" width="50" height="50" src="/image/avatar/{{ message['owner'] }}_50"></a>
+		<a href="" title="{{ message['nick'] }}"><img title="{{ message['nick'] }}" alt="{{ message['nick'] }}" width=50 height=50 src="/image/avatar/{{ message['owner'] }}_50"/></a>
 	</dt>
 	<dd class="content">
-		<p class="feed_list_content">
-			<a title="{{ message['nick'] }}" href="">{{ message['nick'] }}</a>：
-			<em>{{ message['content'] }}</em>
-		</p>
-		<p class="W_info W_linkb W_textb">
+		<p class="wb_item_content"><a title="{{ message['nick'] }}" href="">{{ message['nick'] }}</a>：<em>{{ message['content'] }}</em></p>
+		<p class="wb_opt">
 			<span>
-				{% if message['is_own'] %}<em><a href="#" onclick="delItem(this);return false;" class="remove" id="d-{{ message['id'] }}">删除</a><i class="W_vline">|</i></em>{% end %}
-				{% if uid %}<a href="#" onclick="Reply.toggle(this);return false;" class="reply" id="r-{{ message['id'] }}">回复</a>{% end %}
+				{% if message['is_own'] %}<em><a onclick="delItem(this);return false;" id="d-{{ message['id'] }}" class="remove">删除</a><i class="wb_vline">|</i></em>{% end %}
+				{% if uid %}<a onclick="Reply.toggle(this);return false;" id="r-{{ message['id'] }}" class="wb_reply">回复</a>{% end %}
 			</span>
-			<a title="{{ message['created'] }}" class="date">{{ message['created'] }}</a>
+			<d title="{{ message['created'] }}" class="date">{{ message['created'] }}</d>
 		</p>
 	</dd>
 	<dd class="clear"></dd>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="description" content="">
+		<meta name="robots" content="noodp"><title>远航户外</title>
+		<link rel="stylesheet" href="{{ static_url('css/frame.css') }}">
+		{% block static %}{% end %}
+	</head>
+	<body>
+		{% if warning %}<span id="warning" style="color:red;font-size:12px;">{{ warning }}</span>{% end %}
+		<div id="box">{% block box %}{% end %}</div>
+	</body>
+</html>

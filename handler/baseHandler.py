@@ -26,10 +26,10 @@ class BaseHandler(RequestHandler):
     def render(self, template_name, **kwargs):
         kwargs['uid'] = self.SESSION['uid']
         kwargs['warning'] = kwargs.get('warning', None)
+        kwargs['title'] = kwargs.get('title', None)
         super(BaseHandler, self).render(template_name, **kwargs)
     
     @session
     def render_alert(self, msg, **kwargs):
         kwargs['alert']=msg
-        kwargs['leftnav']=kwargs.get('leftnav', [])
         self.render('alert.html', **kwargs)

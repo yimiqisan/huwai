@@ -1,8 +1,6 @@
-{% extends ../google.html %}
+{% extends ../frame.html %}
 
 {% block static %}
-	<link rel="stylesheet" href="{{ static_url('css/feedback.css') }}">
-	<script language="javascript" src="{{ static_url('js/jquery.min.js') }}" type="text/javascript"></script>
 	<script language="javascript" src="{{ static_url('js/jquery.uploadify.min.js') }}" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
@@ -25,63 +23,60 @@
 		})
 	</script>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/uploadify.css') }}"/>
-	
-	<style type="text/css">
-		.htab {width:600px;}
-		.xbar {height:30px;padding:10px 10px 0 10px;background:#070;margin-bottom:20px;}
-		.xbar a, .xbar span{height:20px;float:right;margin:5px 10px 0 0;padding:3px;color:#EEE;}
-		.xbar a:hover{color:#FFF;background:#888;}
-		.xbar span {background:#FFF;color:#000;}
-		.htab form {padding:10px;}
-		
-		.m {font-size: 14px;line-height: 120%;color: #060;}
-		.n {min-width:200px;padding-left:30px;}
-		body, td, th {font: 12px Arial,Helvetica,sans-serif;line-height: 162%;}
-		table {border-collapse: collapse;border: 0;padding: 0;margin: 0;}
-		tbody {display: table-row-group;vertical-align: middle;border-color: inherit;}
-		tr {display: table-row;vertical-align: inherit;border-color: inherit;}
-		td[valign=top] {vertical-align: top;}
-		td[align=right] {text-align: -webkit-right;}
-	</style>
+	{% block static-added %}{% end %}
 {% end %}
-{% block leftnav %}
-{% end %}
-{% block center_col %}
-	<div class="htab">
-		<div class="xbar">
-			<a style="display:none" href="/mail/setting">邮件提醒</a>
-			<a style="display:none" href="/alert">消息提示</a>
-			<a style="display:none" href="/weibo/setting">微博绑定</a>
-			<span class="now">基本设置</span>
+{% block bodyleft %}
+	<div id="tab">
+		<div class="Menubox">
+			<ul>
+				<li id="one1" onclick="setTab('one',1,4)" class="hover">基本设置</li>
+				<li id="one2" onclick="setTab('one',2,4)" style="display:none;">消息提示</li>
+				<li id="one3" onclick="setTab('one',3,4)" style="display:none;">微博绑定</li>
+				<li id="one4" onclick="setTab('one',4,4)" style="display:none;">邮件提醒</li>
+			</ul>
 		</div>
-		<div class="clear"></div>
-		<form name="content-form" method="post">
-			<table style="clear:both" width="100%" align="center" cellpadding="5">
-				<tr style="display:none">
-					<td class="m" valign="top" align="right">名号: </td><td class="n" valign="top">一米七三</td>
-				</tr>
-				<tr style="display:none">
-					<td class="m" valign="top" align="right">我的域名:</td><td class="n" valign="top">qisan</td>
-				</tr>
-				<tr>
-					<td class="m" valign="top" align="right">头像:</td><td class="n" valign="top"><div id="poster">Uploadify</div></td>
-				</tr>
-				<tr style="display:none">
-					<td class="m" valign="top" align="right">常居地:</td><td class="n" valign="top">北京</td>
-				</tr>
-				<tr style="display:none">
-					<td class="m" valign="top" align="right">绑定邮箱:</td><td class="n" valign="top">yimiqisan@gmail.com</td>
-				</tr>
-				<tr style="display:none">
-					<td class="m" valign="top" align="right">登录密码:</td><td class="n" valign="top"><a href="">更改</a></td>
-				</tr>
-				<tr style="display:none">
-					<td class="m" valign="top" align="right">手机号:</td><td class="n" valign="top">15210904820</td>
-				</tr>
-				<tr style="display:none">
-					<td class="m"></td><td class="n"><input name="submit" type="submit" value="更新设置" tabindex="8"></td>
-				</tr>
-			</table>
-		</form>
+		<div class="contentbox">
+			<div id="con_one_1" class="hover">
+				<form name="content-form" method="post">
+					<table style="clear:both" width="100%" align="center" cellpadding="5">
+						<tr style="display:none">
+							<td class="m" valign="top" align="right">名号: </td><td class="n" valign="top">一米七三</td>
+						</tr>
+						<tr style="display:none">
+							<td class="m" valign="top" align="right">我的域名:</td><td class="n" valign="top">qisan</td>
+						</tr>
+						<tr>
+							<td class="m" valign="top" align="right">{%if uid%}<img src="/image/avatar/{{uid}}_30"/>{% end %}&nbsp&nbsp&nbsp头像:</td><td class="n" valign="top"><div id="poster">Uploadify</div></td>
+						</tr>
+						<tr style="display:none">
+							<td class="m" valign="top" align="right">常居地:</td><td class="n" valign="top">北京</td>
+						</tr>
+						<tr style="display:none">
+							<td class="m" valign="top" align="right">绑定邮箱:</td><td class="n" valign="top">yimiqisan@gmail.com</td>
+						</tr>
+						<tr style="display:none">
+							<td class="m" valign="top" align="right">登录密码:</td><td class="n" valign="top"><a href="">更改</a></td>
+						</tr>
+						<tr style="display:none">
+							<td class="m" valign="top" align="right">手机号:</td><td class="n" valign="top">15210904820</td>
+						</tr>
+						<tr>
+							<td class="m"></td><td class="n"><input name="submit" type="submit" value="更新设置" tabindex="8"></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<div id="con_one_2" style="display:none">消息提示</div>
+			<div id="con_one_3" style="display:none">微博绑定</div>
+			<div id="con_one_4" style="display:none">邮件提醒</div>
+		</div>
 	</div>
+{% end %}
+{% block bodyright %}
+   <div class="apkbox boxmg" style="width:200px;"><p><a>粉色</a></p></div>
+   <div class="ardbox boxmg" style="width:200px;"><p><a>紫色</a></p></div>
+   <div class="ablbox boxmg" style="width:200px;"><p><a>蓝色</a></p></div>
+   <div class="agrbox boxmg" style="width:200px;"><p><a>绿色</a></p></div>
+   <div class="aylbox boxmg" style="width:200px;"><p><a>黄色</a></p></div>
+   <div class="abrbox boxmg" style="width:200px;"><p><a>棕色</a></p></div>
 {% end %}

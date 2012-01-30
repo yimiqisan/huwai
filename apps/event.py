@@ -111,7 +111,8 @@ class EventAPI(API):
     
     def _output_format(self, owner=None, result=[]):
         merc_f = lambda x: u'商业性质' if x else u'非商业性质'
-        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added']['tid'], 'is_join':self._is_joined(i['owner'], i['_id']), 'nick':i['added'].get('nick', '匿名驴友'), 'created':i['created'], 'logo':i['logo'], 'title':i['title'], 'members':i['members'], 'tags':i['tags'], 'club':i['club'], 'is_merc':merc_f(i['is_merc']), 'level':i['level'], 'route':i['route'], 'place':i['place'], 'date':i['date'], 'schedule_tl':self._tl_get(i['schedule_tl']), 'spend_tl':self._tl_get(i['spend_tl']), 'equip':i['equip'], 'declare_tl':self._tl_get(i['declare_tl']), 'attention_tl':self._tl_get(i['attention_tl']), 'deadline':i['deadline'], 'fr':i['fr'], 'to':i['to'], 'when':i['when'], 'where':i['where']}
+        club_f = lambda x: u'公开' if x==u'site' else u'xx俱乐部'
+        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added']['tid'], 'is_join':self._is_joined(i['owner'], i['_id']), 'nick':i['added'].get('nick', '匿名驴友'), 'created':i['created'], 'logo':i['logo'], 'title':i['title'], 'members':i['members'], 'tags':i['tags'], 'club':club_f(i['club']), 'is_merc':merc_f(i['is_merc']), 'level':i['level'], 'route':i['route'], 'place':i['place'], 'date':i['date'], 'schedule_tl':self._tl_get(i['schedule_tl']), 'spend_tl':self._tl_get(i['spend_tl']), 'equip':i['equip'], 'declare_tl':self._tl_get(i['declare_tl']), 'attention_tl':self._tl_get(i['attention_tl']), 'deadline':i['deadline'], 'fr':i['fr'], 'to':i['to'], 'when':i['when'], 'where':i['where']}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)
