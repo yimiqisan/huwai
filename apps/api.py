@@ -129,7 +129,6 @@ class API(object):
         try:
             self.collection.remove(kwargs)
         except Exception, e:
-            print e
             logging.info(e)
             return False
         return True
@@ -152,7 +151,6 @@ class API(object):
         return (True, keyl_l)
     
     def extend(self, **kwargs):
-        print kwargs
         cursor = kwargs.pop('cursor', None)
         limit = kwargs.pop('limit', 20)
         order = kwargs.pop('order', -1)

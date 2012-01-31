@@ -16,6 +16,7 @@ handlers = [(r"/", RootHandler),
             (r"/a/weibo", AjaxWeiboHandler),
             
             (r"/account/login/", LoginHandler),
+            (r"/account/invite/", InviteHandler),
             (r"/account/thirdpart/", ThirdPartHandler),
             (r"/account/register/", RegisterHandler),
             (r"/account/logout/", LogoutHandler),

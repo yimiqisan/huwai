@@ -15,7 +15,7 @@
 				fileObjName		: 'upload',
 				onUploadSuccess : function (file, data, response) {
 					//$('#poster').html('<img src="/image/avatar/'+data+'_300"/>');
-					$('#poster').html('<input type="hidden" value="'+data+'"/><img src="/image/avatar/'+data+'_100"/>');
+					$('#poster').html('<input type="hidden" value="'+data+'"/><img src="/image/avatar/'+data+'_30"/>');
 					$('#poster_queue').hide();
 					},
 				onError			: function (event, queueID, fileObj){alert("文件:" + fileObj.name + " 上传失败");}

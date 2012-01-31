@@ -16,6 +16,8 @@ from huwai.config import DB_CON, DB_NAME
 from modules import UserDoc
 from api import API
 
+from mail import TmpTable, Mail
+
 class User(object):
     def __init__(self, api=None):
         self._api = api if api else UserAPI()
@@ -33,6 +35,16 @@ class User(object):
             self.uid = self.info['_id']
         else:
             self.uid = self.info = None
+    
+    def is_invited(self, id):
+        t = TmpTable()
+        return t._api.check(id)
+    
+    def invite(self, email):
+        m = Mail(email)
+        t = TmpTable()
+        r = t._api.set(email)
+        return m.send('ni hao ma', 'invite', r[1])
     
     def register(self, nick, email, password, **kwargs):
         r = self._api.is_nick_exist(nick)

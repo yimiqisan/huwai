@@ -1,12 +1,9 @@
-{% extends frame.html %}
+{% extends box.html %}
 
-{% block static %}
-	{% block static-added %}{% end %}
-{% end %}
-{% block bodyleft %}
+{% block static %}{% end %}
+{% block box %}
 	<div class="gybox" style="width:500px;min-height:300px;margin:100px auto;">
 		<pre style="color:orange;font-size:40px;margin:0 auto;text-align:center;">{{ alert }}</pre>
 		<form><textarea rows=3 cols=60></textarea><br/><input type="submit" value="提意见">&nbsp&nbsp&nbsp<a style="font-size:16px;" href="/">没意见<a></form>
 	</div>
 {% end %}
-{% block bodyright %}{% end %}

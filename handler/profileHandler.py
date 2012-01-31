@@ -40,6 +40,21 @@ class LoginHandler(BaseHandler):
         else:
             return self.render('profile/login.html', **{'warning': r[1]})
 
+class InviteHandler(BaseHandler):
+    @addslash
+    def get(self):
+        self.write('invite')
+    
+    @addslash
+    def post(self):
+        mail = self.get_argument('mail')
+        u = User()
+        r = u.invite(mail)
+        if r[0]:
+            return self.render_alert(u"发送成功")
+        else:
+            return self.render('index.html', **{'warning': '邀请邮件发送失败'})
+
 class ThirdPartHandler(BaseHandler):
     @addslash
     @session
@@ -93,17 +108,23 @@ class ThirdPartHandler(BaseHandler):
 class RegisterHandler(BaseHandler):
     @addslash
     def get(self):
-        self.render('profile/register.html')
+        icode = self.get_argument('icode', None)
+        u = User()
+        r = u.is_invited(icode)
+        if r:
+            return self.render('profile/register.html', email=r)
+        else:
+            return self.render_alert(u"邀请不可用")
     
     @addslash
     @session
     def post(self):
-        n = self.get_argument('nick', None)
-        if n is None:return self.render('profile/register.html', **{'warning': '请先报上名号'})
         e= self.get_argument('email', None)
-        if e is None:return self.render('profile/register.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码'})
+        if e is None:return self.render('profile/register.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码', 'email':e})
+        n = self.get_argument('nick', None)
+        if n is None:return self.render('profile/register.html', **{'warning': '请先报上名号', 'email':e})
         p = self.get_argument('password', None)
-        if p is None:return self.render('profile/register.html', **{'warning': '您接头暗号是？'})
+        if p is None:return self.render('profile/register.html', **{'warning': '您接头暗号是？', 'email':e})
         u = User()
         r = u.register(n, e, p)
         if r[0]:
@@ -111,7 +132,7 @@ class RegisterHandler(BaseHandler):
             self.SESSION['uid']=u._id
             self.redirect('/account/profile')
         else:
-            return self.render('profile/register.html', **{'warning': r[1]})
+            return self.render('profile/register.html', **{'warning': r[1], 'email':e})
     
 class LogoutHandler(BaseHandler):
     @addslash

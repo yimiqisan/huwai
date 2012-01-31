@@ -120,7 +120,7 @@ class EventDoc(Document):
 class BehaviorDoc(Document):
     __collection__ = 'behavior'
     __database__ = DB_NAME
-        
+    
     structure = {
             '_id':      unicode,
             'owner':    unicode,
@@ -136,8 +136,23 @@ class BehaviorDoc(Document):
     use_schemaless = True
     use_dot_notation=True
     
+class TmpTableDoc(Document):
+    __collection__ = 'tmptable'
+    __database__ = DB_NAME
     
+    structure = {
+            '_id':      unicode,
+            'email':    unicode,
+            'created':  datetime,
+            'added':    dict,
+            'added_id': int,
+    }
+    required_fields = ['_id', 'created']
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
     
+    use_schemaless = True
+    use_dot_notation=True
+
     
     
     
