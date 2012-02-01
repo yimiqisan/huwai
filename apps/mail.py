@@ -66,7 +66,7 @@ class Mail(object):
     
     def get_template(self, no, code):
         if (no=='invite'):
-            return '''Hello,<br/>click this url for register http://127.0.0.1:8000/account/register/?icode=%s<br/>'''%code
+            return '''Hello,<br/>click this url for register http://www.yuanhang.info/account/register/?icode=%s<br/>'''%code
         else:
             return ''' no thing '''
     

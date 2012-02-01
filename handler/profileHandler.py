@@ -27,9 +27,9 @@ class LoginHandler(BaseHandler):
     @session
     def post(self):
         n = self.get_argument('nick', None)
-        if n is None:return self.render('login.html', **{'warning': '请先报上名号'})
+        if n is None:return self.render('login.html', **{'warning': '请先报上名号', 'n':n})
         p = self.get_argument('password', None)
-        if p is None:return self.render('login.html', **{'warning': '您接头暗号是？'})
+        if p is None:return self.render('login.html', **{'warning': '您接头暗号是？', 'n':n})
         nt = self.get_argument('next', None)
         u = User()
         r = u.login(n, p)
@@ -38,7 +38,7 @@ class LoginHandler(BaseHandler):
             self.SESSION['uid']=u._id
             self.redirect(nt) if nt else self.redirect('/account/profile')
         else:
-            return self.render('profile/login.html', **{'warning': r[1]})
+            return self.render('profile/login.html', **{'warning': r[1], 'n':n})
 
 class InviteHandler(BaseHandler):
     @addslash
@@ -54,56 +54,6 @@ class InviteHandler(BaseHandler):
             return self.render_alert(u"发送成功")
         else:
             return self.render('index.html', **{'warning': '邀请邮件发送失败'})
-
-class ThirdPartHandler(BaseHandler):
-    @addslash
-    @session
-    def get(self):
-        CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/account/thirdpart'
-        client = APIClient(config.SINA_CONSUME_KEY, config.SINA_CONSUME_SECRET, CALLBACK_URL)
-        code = self.get_argument('code', None)
-        if code:
-            r = client.request_access_token(code)
-            access_token = r.access_token
-            self.SESSION['sina_request_token'] = access_token
-            client.set_access_token(access_token, r.expires_in)
-            sinfo = client.get.account__profile__basic()
-            self.render('profile/thirdpart.html', nick=sinfo['name'])
-        else:
-            url = client.get_authorize_url()
-            self.redirect(url)
-    
-    @addslash
-    @session
-    def post(self):
-        a = self.get_argument('act', None)
-        n = self.get_argument('nick', None)
-        if n is None:return self.render('thirdpart.html', **{'warning': '请先报上名号'})
-        p = self.get_argument('password', None)
-        if p is None:return self.render('thirdpart.html', **{'warning': '您接头暗号是？'})
-        u = User()
-        sina_request_token = self.SESSION['sina_request_token']
-        if a == 'reg':
-            e= self.get_argument('email', None)
-            if e is None:return self.render('thirdpart.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码'})
-            r = u.register(n, e, p, sina_tk=sina_request_token)
-            if r[0]:
-                self.set_secure_cookie("user", n, 1)
-                self.SESSION['uid']=u._id
-                self.redirect('/account/profile')
-            else:
-                return self.render('profile/thirdpart.html', **{'warning': r[1]})
-        elif a == 'bind':
-            r = u.login(n, p)
-            if r[0]:
-                u._api.edit(u._id, sina_tk=sina_request_token)
-                self.set_secure_cookie("user", n, 1)
-                self.SESSION['uid']=u._id
-                self.redirect('/account/profile')
-            else:
-                return self.render('profile/thirdpart.html', **{'warning': r[1]})
-        else:
-            return self.render('profile/thirdpart.html', **{'warning': '系统晕了，不知道您是绑定还是注册！'})
 
 class RegisterHandler(BaseHandler):
     @addslash
@@ -141,7 +91,7 @@ class LogoutHandler(BaseHandler):
         self.clear_cookie("user")
         del self.SESSION['uid']
         nt = self.get_argument('next', None)
-        self.redirect(nt) if nt else self.redirect('/')
+        self.redirect('/')
 
 class ProfileHandler(BaseHandler):
     @addslash

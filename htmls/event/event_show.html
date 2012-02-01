@@ -7,19 +7,21 @@
 {% block bodyleft %}
 	<div id="showdetail">
 		<img width=300 height=300 src="/image/avatar/{{logo}}_300"/>
-		<p>发起人：{{ nick }}</p>
-		<p>发布日期：{{ created }}</p>
-		<p>户外标签：{{ tags }}</p>
-		<p>性质：{{ is_merc }}、{{ club }}、{{ level }}</p>
-		<p>路线：{{ route }}</p>
-		<p>活动地点：{{ place }}</p>
-		<p>活动开始时间：{{ date }}</p>
-		<hr/>
-		<p>报名截止时间：{{ deadline }}</p>
-		<p>报名人数：{{ fr }} 到 {{ to }}</p>
-		<p>集合时间：{{ when }}</p>
-		<p>集合地点：{{ where }}</p>
-		<br><br>
+		<div style="background:#D8BFD8;">
+			<p>发起人：{{ nick }}</p>
+			<p>发布日期：{{ created }}</p>
+			<p style="display:none;">户外标签：{{ tags }}</p>
+			<p>性质：{{ is_merc }}、{{ club }}、{{ level }}</p>
+			<p style="display:none;">路线：{{ route }}</p>
+			<p>活动地点：{{ place }}</p>
+			<p>活动开始时间：{{ date }}</p>
+		</div>
+		<div style="background:#B0C4DE;">
+			<p>报名截止时间：{{ deadline }}</p>
+			<p>报名人数：{{ fr }} 到 {{ to }}</p>
+			<p>集合时间：{{ when }}</p>
+			<p>集合地点：{{ where }}</p>
+		</div>
 		<p>计划安排：{{ schedule_tl }}</p>
 		<p>花费统计：{{ spend_tl }}</p>
 		<p style="display:none;">装备要求：{{ equip }}</p>

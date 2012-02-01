@@ -7,9 +7,9 @@ $(document).ready(function() {
 var Weibo = {
     init: function(){
         $("#weiboform").live("submit", function() {
-            Weibo.new($(this));
+            Weibo.news($(this));
             return false;
-        });
+        })
         Weibo.getLen();
         $("#weibo-content").select();
         Weibo.extend();

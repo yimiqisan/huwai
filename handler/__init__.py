@@ -8,7 +8,8 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 
 from commonHandler import RootHandler, TestHandler, FeedbackHandler, Error404Handler, GoogleWebMasterHandler
-from profileHandler import LoginHandler, InviteHandler, ThirdPartHandler, RegisterHandler, LogoutHandler, ProfileHandler, SettingHandler
+from profileHandler import LoginHandler, InviteHandler, RegisterHandler, LogoutHandler, ProfileHandler, SettingHandler
+from thirdpartHandler import SinaHandler, QqHandler
 from weiboHandler import WeiboHandler, AjaxWeiboHandler
 from peopleHandler import PeopleHandler
 from eventHandler import EventHandler, EventPubaHandler, EventPubbHandler, EventCheckHandler, EventListHandler, EventCrawlerHandler

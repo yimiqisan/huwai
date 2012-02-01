@@ -7,7 +7,7 @@ Created by 刘 智勇 on 2011-09-24.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 
-from tornado.web import addslash
+from tornado.web import addslash, authenticated
 
 from mongokit import *
 import datetime
@@ -25,6 +25,7 @@ from baseHandler import BaseHandler
 ISO_TIME_FORMAT_YMDHM = '%Y%m%d:%H:%M'
 
 class EventHandler(BaseHandler):
+    @authenticated
     @addslash
     def get(self, id):
         e = Event()
@@ -41,6 +42,7 @@ class EventHandler(BaseHandler):
         pass
 
 class EventPubaHandler(BaseHandler):
+    @authenticated
     @addslash
     def get(self):
         self.render("event/event_puba.html")
@@ -65,6 +67,7 @@ class EventPubaHandler(BaseHandler):
             return self.render("event/event_puba.html", **{'warning': r[1]})
 
 class EventPubbHandler(BaseHandler):
+    @authenticated
     @addslash
     @session
     def get(self):
@@ -95,6 +98,7 @@ class EventPubbHandler(BaseHandler):
             return self.render("event/event_pubb.html", **{'warning': r[1]})
 
 class EventListHandler(BaseHandler):
+    @authenticated
     @addslash
     def get(self):
         e = Event()

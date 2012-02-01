@@ -17,11 +17,13 @@ handlers = [(r"/", RootHandler),
             
             (r"/account/login/", LoginHandler),
             (r"/account/invite/", InviteHandler),
-            (r"/account/thirdpart/", ThirdPartHandler),
             (r"/account/register/", RegisterHandler),
             (r"/account/logout/", LogoutHandler),
             (r"/account/profile/", ProfileHandler),
             (r"/account/setting/", SettingHandler),
+            
+            (r"/thirdpart/sina/", SinaHandler),
+            (r"/thirdpart/qq/", QqHandler),
             
             (r"/event/c/", EventCrawlerHandler),
             (r"/event/(.{32})/", EventHandler),
