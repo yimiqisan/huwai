@@ -6,6 +6,8 @@ profile.py
 Created by 刘 智勇 on 2011-09-24.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
+
+import logging
 from huwai import config
 
 import tornado
@@ -14,7 +16,7 @@ from baseHandler import BaseHandler
 
 from apps.user import User
 from apps.tools import session
-from apps.oauth2 import APIClient
+from apps.oauth2 import APIClient, QQGraphMixin
 
 
 class LoginHandler(BaseHandler):
@@ -43,17 +45,16 @@ class QQLoginHandler(LoginHandler, QQGraphMixin):
     @session
     @tornado.web.asynchronous
     def get(self):
+        CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/auth/qq/'
         code = self.get_argument('code', False)
         if code:
-            self.get_authenticated_user(redirect_uri='/auth/qq/',client_id=config.QQ_CONSUME_KEY,client_secret=config.QQ_CONSUME_SECRET,code=code,\
+            self.get_authenticated_user(redirect_uri=CALLBACK_URL,client_id=config.QQ_CONSUME_KEY,client_secret=config.QQ_CONSUME_SECRET,code=code,\
                 callback=self.async_callback(self._on_login))
         else:
-            self.authorize_redirect(redirect_uri='/auth/qq/',client_id=config.QQ_CONSUME_KEY,extra_params={"display":"default", "response_type":"code"})
+            self.authorize_redirect(redirect_uri=CALLBACK_URL,client_id=config.QQ_CONSUME_KEY,extra_params={"display":"default", "response_type":"code"})
     
     def _on_login(self, user):
-        print user
-        logging.error(user)
-        self.finish()
+        self.write(user)
 
 class QQHandler(BaseHandler, QQGraphMixin):
     @tornado.web.authenticated
@@ -64,7 +65,7 @@ class QQHandler(BaseHandler, QQGraphMixin):
             post_args={"message": "I am posting from my Tornado application!"},
             access_token=self.current_user["access_token"],
             callback=self.async_callback(self._on_post))
-
+    
     def _on_post(self, new_entry):
         if not new_entry:
             # Call failed; perhaps missing permission?
