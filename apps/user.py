@@ -29,9 +29,9 @@ class User(object):
             return None
     
     def whois(self, k, v):
-        ret = self._api.one(**{key:value})
-        if ret:
-            self.info = ret
+        c = self._api.one(**{k:v})
+        if c[0]:
+            self.info = c[1]
             self.uid = self.info['_id']
         else:
             self.uid = self.info = None

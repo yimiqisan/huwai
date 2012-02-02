@@ -71,10 +71,7 @@ class QQLoginHandler(LoginHandler, QQGraphMixin):
         self.finish()
         
     def _on_register(self, response):
-        print response
         self.render('profile/thirdpart.html', nick=response['nickname'], photo=response['figureurl_2'])
-        self.finish()
-
 
 class QQHandler(BaseHandler, QQGraphMixin):
     @tornado.web.authenticated
@@ -93,47 +90,24 @@ class QQHandler(BaseHandler, QQGraphMixin):
             return
         self.finish("Posted a message!")
 
-
-
-
-
-
-
 class ThirdPartHandler(BaseHandler):
-    @addslash
-    @session
-    def get(self):
-        return self.render('profile/thirdpart.html', nick='name')
-        
-        CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/account/thirdpart/'
-        client = APIClient(config.SINA_CONSUME_KEY, config.SINA_CONSUME_SECRET, CALLBACK_URL)
-        code = self.get_argument('code', None)
-        if code:
-            r = client.request_access_token(code)
-            access_token = r.access_token
-            self.SESSION['sina_request_token'] = access_token
-            client.set_access_token(access_token, r.expires_in)
-            sinfo = client.get.account__profile__basic()
-            self.render('profile/thirdpart.html', nick=sinfo['name'])
-        else:
-            url = client.get_authorize_url()
-            self.redirect(url)
-    
     @addslash
     @session
     def post(self):
         a = self.get_argument('act', None)
         n = self.get_argument('nick', None)
-        if n is None:return self.render('thirdpart.html', **{'warning': '请先报上名号'})
+        if n is None:return self.render('profile/thirdpart.html', **{'warning': '请先报上名号'})
         p = self.get_argument('password', None)
-        if p is None:return self.render('thirdpart.html', **{'warning': '您接头暗号是？'})
+        if p is None:return self.render('profile/thirdpart.html', **{'warning': '您接头暗号是？'})
+        o = self.get_argument('photo', None)
         u = User()
-        sina_request_token = self.SESSION['sina_request_token']
+#        sina_request_token = self.SESSION['sina_request_token']
         if a == 'reg':
             e= self.get_argument('email', None)
-            if e is None:return self.render('thirdpart.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码'})
-            r = u.register(n, e, p, sina_tk=sina_request_token)
+            if e is None:return self.render('profile/thirdpart.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码'})
+            r = u.register(n, e, p)
             if r[0]:
+                if o:print o
                 self.set_secure_cookie("user", n, 1)
                 self.SESSION['uid']=u._id
                 self.redirect('/account/profile')
@@ -142,7 +116,7 @@ class ThirdPartHandler(BaseHandler):
         elif a == 'bind':
             r = u.login(n, p)
             if r[0]:
-                u._api.edit(u._id, sina_tk=sina_request_token)
+                u._api.edit(u._id)
                 self.set_secure_cookie("user", n, 1)
                 self.SESSION['uid']=u._id
                 self.redirect('/account/profile')
