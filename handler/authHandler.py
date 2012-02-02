@@ -20,7 +20,14 @@ from apps.oauth2 import APIClient, QQGraphMixin
 
 
 class LoginHandler(BaseHandler):
-    pass
+    @session
+    def is_authed(self, key, value):
+        u = User()
+        u.whois(key, value)
+        if u.uid is None:
+            return False
+        else:
+            return u
 
 class SinaLoginHandler(LoginHandler):
     @addslash
@@ -53,8 +60,21 @@ class QQLoginHandler(LoginHandler, QQGraphMixin):
         else:
             self.authorize_redirect(redirect_uri=CALLBACK_URL,client_id=config.QQ_CONSUME_KEY,extra_params={"display":"default", "response_type":"code"})
     
-    def _on_login(self, user):
-        self.write(user)
+    def _on_login(self, response):
+        u = self.is_authed('qqid', response['openid'])
+        if u:
+            self.set_secure_cookie("user", n, 1)
+            self.SESSION['uid']=u._id
+            self.redirect(nt) if nt else self.redirect('/account/profile')
+        else:
+            self.qq_request(path="/user/get_user_info", callback=self.async_callback(self._on_get_user_info, self._on_register, response['fields']), access_token=response['session']["access_token"], openid=response['openid'], oauth_consumer_key=response['client_id'], fields=",".join(response['fields']))
+        self.finish()
+        
+    def _on_register(self, response):
+        print response
+        self.render('profile/thirdpart.html', nick=response['nickname'], photo=response['figureurl_2'])
+        self.finish()
+
 
 class QQHandler(BaseHandler, QQGraphMixin):
     @tornado.web.authenticated
@@ -72,6 +92,11 @@ class QQHandler(BaseHandler, QQGraphMixin):
             self.authorize_redirect()
             return
         self.finish("Posted a message!")
+
+
+
+
+
 
 
 class ThirdPartHandler(BaseHandler):

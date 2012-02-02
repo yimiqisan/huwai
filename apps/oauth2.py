@@ -229,7 +229,7 @@ class QQGraphMixin(OAuth2Mixin):
             "client_secret": client_secret,
             "extra_params" : {"grant_type":"authorization_code"},
             }
-        fields = set(['id', 'name', 'first_name', 'last_name', 'locale', 'picture', 'link'])
+        fields = set(['nickname', 'figureurl_2', 'gender'])
         if extra_fields: fields.update(extra_fields)
         http.fetch(self._oauth_request_token_url(**args), self.async_callback(self._on_access_token, redirect_uri, client_id, client_secret, callback, fields))
     
@@ -254,16 +254,20 @@ class QQGraphMixin(OAuth2Mixin):
         self.qq_request(path="/oauth2.0/me", callback=self.async_callback(self._on_get_open_id, callback, session, fields), access_token=session["access_token"], fields=",".join(fields))
     
     def _on_get_open_id(self, callback, session, fields, reps):
-        self.qq_request(path="/user/get_user_info", callback=self.async_callback(self._on_get_user_info, callback, session, fields), access_token=session["access_token"], openid=reps['openid'], oauth_consumer_key=reps['client_id'], fields=",".join(fields))
+        if reps is None:
+            callback(None)
+            return
+        reps['session'] = session
+        reps['fields'] = fields
+        callback(reps)
     
-    def _on_get_user_info(self, callback, session, fields, user):
+    def _on_get_user_info(self, callback, fields, user):
         if user is None:
             callback(None)
             return
         fieldmap = {}
         for field in fields:
             fieldmap[field] = user.get(field)
-        fieldmap.update({"access_token": session["access_token"], "session_expires": session.get("expires")})
         callback(fieldmap)
 
     def qq_request(self, path, callback, access_token=None, post_args=None, **args):
@@ -282,12 +286,12 @@ class QQGraphMixin(OAuth2Mixin):
         else:
             http.fetch(url, callback=callback)
 
-    def _on_qq_request(self, callback, response):
+    def _on_qq_request(self, call_back, response):
         body = response.body
-        body = body.replace(';','')
+        body = ''.join(body.replace(';','').split())
         r = eval(body)
         if hasattr(r, 'error'):
             logging.logging("Error response %s fetching %s", r.error_description, response.request.url)
-            callback(None)
+            call_back(None)
             return
-        callback(r)
+        call_back(r)

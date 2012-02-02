@@ -46,6 +46,7 @@ class UserDoc(Document):
             'email':unicode,
             'domain':unicode,
             'created':datetime,
+            'qqid':unicode,
             'added':dict,
             'added_id':int,
     }

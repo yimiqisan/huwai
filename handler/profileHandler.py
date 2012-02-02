@@ -16,7 +16,6 @@ from apps.tools import session
 from apps.oauth2 import APIClient
 
 
-
 class LoginHandler(BaseHandler):
     @addslash
     def get(self):
