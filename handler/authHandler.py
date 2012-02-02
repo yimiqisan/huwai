@@ -17,6 +17,7 @@ from baseHandler import BaseHandler
 from apps.user import User
 from apps.tools import session
 from apps.oauth2 import APIClient, QQGraphMixin
+from apps.pstore import AvatarProcessor
 
 
 class LoginHandler(BaseHandler):
@@ -55,8 +56,7 @@ class QQLoginHandler(LoginHandler, QQGraphMixin):
         CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/auth/qq/'
         code = self.get_argument('code', False)
         if code:
-            self.get_authenticated_user(redirect_uri=CALLBACK_URL,client_id=config.QQ_CONSUME_KEY,client_secret=config.QQ_CONSUME_SECRET,code=code,\
-                callback=self.async_callback(self._on_login))
+            self.get_authenticated_user(redirect_uri=CALLBACK_URL,client_id=config.QQ_CONSUME_KEY,client_secret=config.QQ_CONSUME_SECRET,code=code, callback=self.async_callback(self._on_login))
         else:
             self.authorize_redirect(redirect_uri=CALLBACK_URL,client_id=config.QQ_CONSUME_KEY,extra_params={"display":"default", "response_type":"code"})
     
@@ -65,13 +65,15 @@ class QQLoginHandler(LoginHandler, QQGraphMixin):
         if u:
             self.set_secure_cookie("user", n, 1)
             self.SESSION['uid']=u._id
-            self.redirect(nt) if nt else self.redirect('/account/profile')
+            self.redirect('/account/profile')
         else:
+            response['fields']['qqid'] = response['openid']
             self.qq_request(path="/user/get_user_info", callback=self.async_callback(self._on_get_user_info, self._on_register, response['fields']), access_token=response['session']["access_token"], openid=response['openid'], oauth_consumer_key=response['client_id'], fields=",".join(response['fields']))
         self.finish()
-        
+    
     def _on_register(self, response):
-        self.render('profile/thirdpart.html', nick=response['nickname'], photo=response['figureurl_2'])
+        extra_args = {'photo':response['figureurl_2'], 'qqid':response['qqid']}
+        self.render('profile/thirdpart.html', extra_args=extra_args, nick=response['nickname'])
 
 class QQHandler(BaseHandler, QQGraphMixin):
     @tornado.web.authenticated
@@ -93,21 +95,26 @@ class QQHandler(BaseHandler, QQGraphMixin):
 class ThirdPartHandler(BaseHandler):
     @addslash
     @session
+    def get(self):
+        self.render('profile/thirdpart.html', **{'nick': '', 'photo': None})
+        
+    @addslash
+    @session
     def post(self):
         a = self.get_argument('act', None)
         n = self.get_argument('nick', None)
         if n is None:return self.render('profile/thirdpart.html', **{'warning': '请先报上名号'})
         p = self.get_argument('password', None)
         if p is None:return self.render('profile/thirdpart.html', **{'warning': '您接头暗号是？'})
-        o = self.get_argument('photo', None)
+        extra = self.get_argument('extra', None)
+        print type(extra), extra
         u = User()
-#        sina_request_token = self.SESSION['sina_request_token']
         if a == 'reg':
             e= self.get_argument('email', None)
             if e is None:return self.render('profile/thirdpart.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码'})
             r = u.register(n, e, p)
             if r[0]:
-                if o:print o
+                if o:self.save_avatar(o)
                 self.set_secure_cookie("user", n, 1)
                 self.SESSION['uid']=u._id
                 self.redirect('/account/profile')
@@ -124,3 +131,15 @@ class ThirdPartHandler(BaseHandler):
                 return self.render('profile/thirdpart.html', **{'warning': r[1]})
         else:
             return self.render('profile/thirdpart.html', **{'warning': '系统晕了，不知道您是绑定还是注册！'})
+    
+    def save_avatar(self, photo_url):
+        http = tornado.httpclient.AsyncHTTPClient()
+        http.fetch(photo_url, self.async_callback(self._on_callback))
+    
+    @session
+    def _on_save_avatar(self, response):
+        uid = self.SESSION['uid']
+        p=AvatarProcessor(uid)
+        r = p.process(response.body)
+        self.finish()
+

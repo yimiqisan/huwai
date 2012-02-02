@@ -30,7 +30,7 @@ class User(object):
     
     def whois(self, k, v):
         c = self._api.one(**{k:v})
-        if c[0]:
+        if c[0] and c[1]:
             self.info = c[1]
             self.uid = self.info['_id']
         else:

@@ -3,19 +3,21 @@
 {% block static %}{% end %}
 {% block box %}
 	<div class="agrbox boxmg lucency" style="width:400px;height:300px;">
-		<div style="margin:10px 0 0 10px;">
+		<div style="margin:10px 0 0 10px;display:none;">
 			<form action="/account/invite/" method="POST">
 				<input type="text" name="mail" style="width:300px;height:30px;"/>&nbsp&nbsp<input type="submit" value="获取邀请"/>
 			</form>
 		</div><br/>
 		<div style="margin-left:10px;">
 			<a style="background:#F0FFF0;" href="/auth/sina/"><img src="{{static_url('img/sina24.png')}}"/></a>&nbsp&nbsp&nbsp&nbsp
-	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a style="background:#F0FFF0;" href="/auth/qq/"><img src="{{static_url('img/qq24.png')}}"/></a>
+	<a style="background:#F0FFF0;" href="/auth/qq/"><img src="{{static_url('img/qq24.png')}}"/></a>
+	&nbsp&nbsp<a style="background:#F0FFF0;color:red;" href="/account/login/">登陆</a>
 		</div></br>
-		<form action="/account/login/" method="POST">
-			<span>绰号：</span><input name="nick" type=text style="width:300px;height:30px;"/><br/><br/>
-			<span>密码：</span><input name="password" type=password style="width:300px;height:30px;"/><br/><br/>
-			<input type=submit  value="登陆"/>
+		<form action="/account/register/" method="POST">
+			<span>&nbsp&nbsp&nbsp绰号：</span><input name="nick" type=text style="width:300px;height:30px;"/><br/><br/>
+			<span>&nbsp&nbsp&nbsp邮箱：</span><input name="email" type=text style="width:300px;height:30px;"/><br/><br/>
+			<span>&nbsp&nbsp&nbsp密码：</span><input name="password" type=password style="width:300px;height:30px;"/><br/><br/>
+			<div style="padding-left:320px;"><input type=submit value="注册"/></div>
 		</form>
 	</div>
 {% end %}

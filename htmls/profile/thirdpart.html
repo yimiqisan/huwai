@@ -4,11 +4,11 @@
 {% block box %}
 	<div class="agrbox boxmg lucency" style="width:400px;height:300px;">
 		<div style="margin:10px 0 0 10px;">
-			<form action="/account/thirdpart?atc=reg" method="POST">
+			<form action="/account/thirdpart/?act=reg" method="POST">
 				<span>绰号：</span><input name="nick" type=text value="{{ nick }}" style="width:300px;height:30px;"/><br/><br/>
 				<span>邮箱：</span><input name="email" type=text style="width:300px;height:30px;"/><br/><br/>
 				<span>密码：</span><input name="password" type=password style="width:300px;height:30px;"/><br/><br/>
-				<input name="photo" type=hidden value="{{ photo }}"/>
+				<input name="extra" type=hidden value="{{ extra_args }}"/>
 				<input type=submit  value="完善信息"/>
 			</form>
 		</div><br/>
