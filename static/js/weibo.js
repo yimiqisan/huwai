@@ -7,7 +7,7 @@ $(document).ready(function() {
 var Weibo = {
     init: function(){
         $("#weiboform").live("submit", function() {
-            Weibo.news($(this));
+            Weibo.new($(this));
             return false;
         })
         Weibo.getLen();

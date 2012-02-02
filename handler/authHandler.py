@@ -63,13 +63,11 @@ class QQLoginHandler(LoginHandler, QQGraphMixin):
     def _on_login(self, response):
         u = self.is_authed('qqid', response['openid'])
         if u:
-            self.set_secure_cookie("user", n, 1)
+            self.set_secure_cookie("user", u.nick, 1)
             self.SESSION['uid']=u._id
             self.redirect('/account/profile')
         else:
-            response['fields']['qqid'] = response['openid']
-            self.qq_request(path="/user/get_user_info", callback=self.async_callback(self._on_get_user_info, self._on_register, response['fields']), access_token=response['session']["access_token"], openid=response['openid'], oauth_consumer_key=response['client_id'], fields=",".join(response['fields']))
-        self.finish()
+            self.qq_request(path="/user/get_user_info", callback=self.async_callback(self._on_get_user_info, self._on_register, response['fields'], response['openid']), access_token=response['session']["access_token"], openid=response['openid'], oauth_consumer_key=response['client_id'], fields=",".join(response['fields']))
     
     def _on_register(self, response):
         extra_args = {'photo':response['figureurl_2'], 'qqid':response['qqid']}
@@ -96,30 +94,31 @@ class ThirdPartHandler(BaseHandler):
     @addslash
     @session
     def get(self):
-        self.render('profile/thirdpart.html', **{'nick': '', 'photo': None})
+        self.render('profile/thirdpart.html', **{'nick': '', 'extra': None})
         
     @addslash
     @session
     def post(self):
         a = self.get_argument('act', None)
-        n = self.get_argument('nick', None)
-        if n is None:return self.render('profile/thirdpart.html', **{'warning': '请先报上名号'})
-        p = self.get_argument('password', None)
-        if p is None:return self.render('profile/thirdpart.html', **{'warning': '您接头暗号是？'})
         extra = self.get_argument('extra', None)
-        print type(extra), extra
+        n = self.get_argument('nick', None)
+        if n is None:return self.render('profile/thirdpart.html', **{'warning': '请先报上名号', 'nick': nick, 'extra': extra})
+        p = self.get_argument('password', None)
+        if p is None:return self.render('profile/thirdpart.html', **{'warning': '您接头暗号是？', 'nick': nick, 'extra': extra})
+        if extra: extra=eval(extra)
         u = User()
         if a == 'reg':
             e= self.get_argument('email', None)
-            if e is None:return self.render('profile/thirdpart.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码'})
+            if e is None:return self.render('profile/thirdpart.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码', 'nick': nick, 'extra': extra})
             r = u.register(n, e, p)
             if r[0]:
-                if o:self.save_avatar(o)
                 self.set_secure_cookie("user", n, 1)
-                self.SESSION['uid']=u._id
+                self.SESSION['uid']=r[1]
+                if extra.has_key('photo'):self.save_avatar(extra['photo'])
+                if extra.has_key('qqid'):u._api.edit(r[1], qqid=extra['qqid'])
                 self.redirect('/account/profile')
             else:
-                return self.render('profile/thirdpart.html', **{'warning': r[1]})
+                return self.render('profile/thirdpart.html', **{'warning': r[1], 'nick': nick, 'extra': extra})
         elif a == 'bind':
             r = u.login(n, p)
             if r[0]:
@@ -130,11 +129,11 @@ class ThirdPartHandler(BaseHandler):
             else:
                 return self.render('profile/thirdpart.html', **{'warning': r[1]})
         else:
-            return self.render('profile/thirdpart.html', **{'warning': '系统晕了，不知道您是绑定还是注册！'})
+            return self.render('profile/thirdpart.html', **{'warning': '系统晕了，不知道您是绑定还是注册！', 'nick': nick, 'extra': extra})
     
     def save_avatar(self, photo_url):
         http = tornado.httpclient.AsyncHTTPClient()
-        http.fetch(photo_url, self.async_callback(self._on_callback))
+        http.fetch(photo_url, self.async_callback(self._on_save_avatar))
     
     @session
     def _on_save_avatar(self, response):

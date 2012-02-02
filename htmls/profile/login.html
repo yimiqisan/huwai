@@ -3,12 +3,12 @@
 {% block static %}{% end %}
 {% block box %}
 	<div class="agrbox boxmg lucency" style="width:400px;height:300px;">
-		<div style="margin:10px 0 0 10px;">
+		<div style="margin:60px 0 0 10px;">
 			<form action="/account/login/" method="POST">
 				<span>绰号：</span><input name="nick" type=text style="width:300px;height:30px;"/><br/><br/>
 				<span>密码：</span><input name="password" type=password style="width:300px;height:30px;"/><br/><br/>
 				<input name="next" type=hidden value="{{ n }}"/>
-				<input type=submit  value="登陆"/>
+				<div style="padding-left:320px;"><input type=submit value="登陆"/></div>
 			</form>
 		</div><br/>
 	</div>

@@ -57,6 +57,7 @@ class InviteHandler(BaseHandler):
 class RegisterHandler(BaseHandler):
     @addslash
     def get(self):
+        return self.render('profile/register.html')
         icode = self.get_argument('icode', None)
         u = User()
         r = u.is_invited(icode)
@@ -78,7 +79,7 @@ class RegisterHandler(BaseHandler):
         r = u.register(n, e, p)
         if r[0]:
             self.set_secure_cookie("user", n, 1)
-            self.SESSION['uid']=u._id
+            self.SESSION['uid']=r[1]
             self.redirect('/account/profile')
         else:
             return self.render('profile/register.html', **{'warning': r[1], 'email':e})

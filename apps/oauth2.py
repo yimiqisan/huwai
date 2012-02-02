@@ -229,7 +229,7 @@ class QQGraphMixin(OAuth2Mixin):
             "client_secret": client_secret,
             "extra_params" : {"grant_type":"authorization_code"},
             }
-        fields = set(['nickname', 'figureurl_2', 'gender'])
+        fields = set(['nickname', 'figureurl_2', 'gender', 'qqid'])
         if extra_fields: fields.update(extra_fields)
         http.fetch(self._oauth_request_token_url(**args), self.async_callback(self._on_access_token, redirect_uri, client_id, client_secret, callback, fields))
     
@@ -261,10 +261,11 @@ class QQGraphMixin(OAuth2Mixin):
         reps['fields'] = fields
         callback(reps)
     
-    def _on_get_user_info(self, callback, fields, user):
+    def _on_get_user_info(self, callback, fields, openid, user):
         if user is None:
             callback(None)
             return
+        user['qqid'] = openid
         fieldmap = {}
         for field in fields:
             fieldmap[field] = user.get(field)

@@ -56,10 +56,9 @@ class User(object):
         c = self._api.create(**info)
         if c[0]:
             self.info = info
-            return (True, info)
         else:
             self.info = None
-            return c
+        return c
     
     def login(self, nick, password):
         r = self._api.is_nick_exist(nick)
