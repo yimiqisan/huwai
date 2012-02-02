@@ -17,6 +17,10 @@ import urllib
 import urllib2
 import logging
 
+def callback(s):
+    ''' for qq callback '''
+    return s
+
 def _obj_hook(pairs):
     '''
     convert json object to python object.
@@ -125,7 +129,14 @@ def _http_call(url, method, authorization, **kw):
         req.add_header('Content-Type', 'multipart/form-data; boundary=%s' % boundary)
     resp = urllib2.urlopen(req)
     body = resp.read()
-    r = json.loads(body, object_hook=_obj_hook)
+    try:
+        r = json.loads(body, object_hook=_obj_hook)
+    except:
+        if body.startswith('callback'):
+            body = body.replace(';','')
+            r = _obj_hook(eval(body))
+        else:
+            r = _obj_hook(dict([b.split('=') for b in body.split('&')]))
     if hasattr(r, 'error_code'):
         raise APIError(r.error_code, getattr(r, 'error', ''), getattr(r, 'request', ''))
     return r
@@ -190,7 +201,7 @@ class APIClient(object):
                 client_secret = self.client_secret, \
                 redirect_uri = redirect, \
                 code = code, grant_type = 'authorization_code')
-        r.expires_in += int(time.time())
+        r.expires_in = int(r.expires_in) + int(time.time())
         return r
 
     def is_expires(self):
@@ -198,3 +209,216 @@ class APIClient(object):
 
     def __getattr__(self, attr):
         return getattr(self.get, attr)
+
+
+from tornado.auth import OAuth2Mixin
+from tornado import httpclient
+from tornado import escape
+
+class QQGraphMixin(OAuth2Mixin):
+    """QQ authentication using the new Graph API and OAuth2."""
+    _OAUTH_ACCESS_TOKEN_URL = "https://graph.qq.com/oauth2.0/token?"
+    _OAUTH_AUTHORIZE_URL = "https://graph.qq.com/oauth2.0/authorize?"
+    _OAUTH_NO_CALLBACKS = False
+    def get_authenticated_user(self, redirect_uri, client_id, client_secret, code, callback, extra_fields=None):
+        http = httpclient.AsyncHTTPClient()
+        args = {
+            "redirect_uri": redirect_uri,
+            "code": code,
+            "client_id": client_id,
+            "client_secret": client_secret,
+            }
+        fields = set(['id', 'name', 'first_name', 'last_name', 'locale', 'picture', 'link'])
+        if extra_fields: fields.update(extra_fields)
+        http.fetch(self._oauth_request_token_url(**args), self.async_callback(self._on_access_token, redirect_uri, client_id, client_secret, callback, fields))
+    
+    def _on_access_token(self, redirect_uri, client_id, client_secret, callback, fields, response):
+        if response.error:
+            logging.warning('QQ auth error: %s' % str(response))
+            callback(None)
+            return
+        args = escape.parse_qs_bytes(escape.native_str(response.body))
+        session = {
+            "access_token": args["access_token"][-1],
+            "expires": args.get("expires")
+        }
+        self.qq_request(
+            path="/me",
+            callback=self.async_callback(self._on_get_user_info, callback, session, fields), access_token=session["access_token"], fields=",".join(fields)
+        )
+    
+    def _on_get_user_info(self, callback, session, fields, user):
+        if user is None:
+            callback(None)
+            return
+        fieldmap = {}
+        for field in fields:
+            fieldmap[field] = user.get(field)
+        fieldmap.update({"access_token": session["access_token"], "session_expires": session.get("expires")})
+        callback(fieldmap)
+
+    def qq_request(self, path, callback, access_token=None, post_args=None, **args):
+        url = "https://graph.qq.com/oauth2.0" + path
+        all_args = {}
+        if access_token:
+            all_args["access_token"] = access_token
+            all_args.update(args)
+            all_args.update(post_args or {})
+        if all_args: url += "?" + urllib.urlencode(all_args)
+        callback = self.async_callback(self._on_qq_request, callback)
+        http = httpclient.AsyncHTTPClient()
+        if post_args is not None:
+            http.fetch(url, method="POST", body=urllib.urlencode(post_args),
+                       callback=callback)
+        else:
+            http.fetch(url, callback=callback)
+
+    def _on_qq_request(self, callback, response):
+        if response.error:
+            logging.warning("Error response %s fetching %s", response.error,
+                            response.request.url)
+            callback(None)
+            return
+        callback(escape.json_decode(response.body))
+
+
+class FacebookGraphMixin(OAuth2Mixin):
+    """Facebook authentication using the new Graph API and OAuth2."""
+    _OAUTH_ACCESS_TOKEN_URL = "https://graph.facebook.com/oauth/access_token?"
+    _OAUTH_AUTHORIZE_URL = "https://graph.facebook.com/oauth/authorize?"
+    _OAUTH_NO_CALLBACKS = False
+
+    def get_authenticated_user(self, redirect_uri, client_id, client_secret,
+                              code, callback, extra_fields=None):
+      """Handles the login for the Facebook user, returning a user object.
+
+      Example usage::
+
+          class FacebookGraphLoginHandler(LoginHandler, tornado.auth.FacebookGraphMixin):
+            @tornado.web.asynchronous
+            def get(self):
+                if self.get_argument("code", False):
+                    self.get_authenticated_user(
+                      redirect_uri='/auth/facebookgraph/',
+                      client_id=self.settings["facebook_api_key"],
+                      client_secret=self.settings["facebook_secret"],
+                      code=self.get_argument("code"),
+                      callback=self.async_callback(
+                        self._on_login))
+                    return
+                self.authorize_redirect(redirect_uri='/auth/facebookgraph/',
+                                        client_id=self.settings["facebook_api_key"],
+                                        extra_params={"scope": "read_stream,offline_access"})
+
+            def _on_login(self, user):
+              logging.error(user)
+              self.finish()
+
+      """
+      http = httpclient.AsyncHTTPClient()
+      args = {
+        "redirect_uri": redirect_uri,
+        "code": code,
+        "client_id": client_id,
+        "client_secret": client_secret,
+      }
+
+      fields = set(['id', 'name', 'first_name', 'last_name',
+                    'locale', 'picture', 'link'])
+      if extra_fields: fields.update(extra_fields)
+
+      http.fetch(self._oauth_request_token_url(**args),
+          self.async_callback(self._on_access_token, redirect_uri, client_id,
+                              client_secret, callback, fields))
+
+    def _on_access_token(self, redirect_uri, client_id, client_secret,
+                        callback, fields, response):
+      if response.error:
+          logging.warning('Facebook auth error: %s' % str(response))
+          callback(None)
+          return
+
+      args = escape.parse_qs_bytes(escape.native_str(response.body))
+      session = {
+          "access_token": args["access_token"][-1],
+          "expires": args.get("expires")
+      }
+
+      self.facebook_request(
+          path="/me",
+          callback=self.async_callback(
+              self._on_get_user_info, callback, session, fields),
+          access_token=session["access_token"],
+          fields=",".join(fields)
+          )
+
+
+    def _on_get_user_info(self, callback, session, fields, user):
+        if user is None:
+            callback(None)
+            return
+
+        fieldmap = {}
+        for field in fields:
+            fieldmap[field] = user.get(field)
+
+        fieldmap.update({"access_token": session["access_token"], "session_expires": session.get("expires")})
+        callback(fieldmap)
+
+    def facebook_request(self, path, callback, access_token=None,
+                           post_args=None, **args):
+        """Fetches the given relative API path, e.g., "/btaylor/picture"
+
+        If the request is a POST, post_args should be provided. Query
+        string arguments should be given as keyword arguments.
+
+        An introduction to the Facebook Graph API can be found at
+        http://developers.facebook.com/docs/api
+
+        Many methods require an OAuth access token which you can obtain
+        through authorize_redirect() and get_authenticated_user(). The
+        user returned through that process includes an 'access_token'
+        attribute that can be used to make authenticated requests via
+        this method. Example usage::
+
+            class MainHandler(tornado.web.RequestHandler,
+                              tornado.auth.FacebookGraphMixin):
+                @tornado.web.authenticated
+                @tornado.web.asynchronous
+                def get(self):
+                    self.facebook_request(
+                        "/me/feed",
+                        post_args={"message": "I am posting from my Tornado application!"},
+                        access_token=self.current_user["access_token"],
+                        callback=self.async_callback(self._on_post))
+
+                def _on_post(self, new_entry):
+                    if not new_entry:
+                        # Call failed; perhaps missing permission?
+                        self.authorize_redirect()
+                        return
+                    self.finish("Posted a message!")
+
+        """
+        url = "https://graph.facebook.com" + path
+        all_args = {}
+        if access_token:
+            all_args["access_token"] = access_token
+            all_args.update(args)
+            all_args.update(post_args or {})
+        if all_args: url += "?" + urllib.urlencode(all_args)
+        callback = self.async_callback(self._on_facebook_request, callback)
+        http = httpclient.AsyncHTTPClient()
+        if post_args is not None:
+            http.fetch(url, method="POST", body=urllib.urlencode(post_args),
+                       callback=callback)
+        else:
+            http.fetch(url, callback=callback)
+
+    def _on_facebook_request(self, callback, response):
+        if response.error:
+            logging.warning("Error response %s fetching %s", response.error,
+                            response.request.url)
+            callback(None)
+            return
+        callback(escape.json_decode(response.body))

@@ -22,8 +22,8 @@ handlers = [(r"/", RootHandler),
             (r"/account/profile/", ProfileHandler),
             (r"/account/setting/", SettingHandler),
             
-            (r"/thirdpart/sina/", SinaHandler),
-            (r"/thirdpart/qq/", QqHandler),
+            (r"/auth/sina/", SinaLoginHandler),
+            (r"/auth/qq/", QQLoginHandler),
             
             (r"/event/c/", EventCrawlerHandler),
             (r"/event/(.{32})/", EventHandler),

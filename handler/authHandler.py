@@ -8,6 +8,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 from huwai import config
 
+import tornado
 from tornado.web import addslash
 from baseHandler import BaseHandler
 
@@ -16,11 +17,14 @@ from apps.tools import session
 from apps.oauth2 import APIClient
 
 
-class SinaHandler(BaseHandler):
+class LoginHandler(BaseHandler):
+    pass
+
+class SinaLoginHandler(LoginHandler):
     @addslash
     @session
     def get(self):
-        CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/thirdpart/sina/'
+        CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/auth/sina/'
         client = APIClient(config.SINA_CONSUME_KEY, config.SINA_CONSUME_SECRET, CALLBACK_URL)
         code = self.get_argument('code', None)
         if code:
@@ -34,24 +38,39 @@ class SinaHandler(BaseHandler):
             url = client.get_authorize_url()
             self.redirect(url)
 
-class QqHandler(BaseHandler):
+class QQLoginHandler(LoginHandler, QQGraphMixin):
     @addslash
     @session
+    @tornado.web.asynchronous
     def get(self):
-        CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/thirdpart/qq/'
-        client = APIClient(config.QQ_CONSUME_KEY, config.QQ_CONSUME_SECRET, CALLBACK_URL, domain='graph.qq.com', version='2.0', access_token='token')
-        code = self.get_argument('code', None)
+        code = self.get_argument('code', False)
         if code:
-            r = client.request_access_token(code)
-            access_token = r.access_token
-            self.SESSION['qq_request_token'] = access_token
-            client.set_access_token(access_token, r.expires_in)
-            sinfo = client.get.me()
-            print sinfo
-            ## TO DO SAVE
+            self.get_authenticated_user(redirect_uri='/auth/qq/',client_id=config.QQ_CONSUME_KEY,client_secret=config.QQ_CONSUME_SECRET,code=code,\
+                callback=self.async_callback(self._on_login))
         else:
-            url = client.get_authorize_url()
-            self.redirect(url)
+            self.authorize_redirect(redirect_uri='/auth/qq/',client_id=config.QQ_CONSUME_KEY,extra_params={"display":"default", "response_type":"code"})
+    
+    def _on_login(self, user):
+        print user
+        logging.error(user)
+        self.finish()
+
+class QQHandler(BaseHandler, QQGraphMixin):
+    @tornado.web.authenticated
+    @tornado.web.asynchronous
+    def get(self):
+        self.qq_request(
+            "/me/feed",
+            post_args={"message": "I am posting from my Tornado application!"},
+            access_token=self.current_user["access_token"],
+            callback=self.async_callback(self._on_post))
+
+    def _on_post(self, new_entry):
+        if not new_entry:
+            # Call failed; perhaps missing permission?
+            self.authorize_redirect()
+            return
+        self.finish("Posted a message!")
 
 
 class ThirdPartHandler(BaseHandler):
