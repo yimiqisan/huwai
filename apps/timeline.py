@@ -15,6 +15,7 @@ import time
 from huwai.config import DB_CON, DB_NAME
 from modules import TimeLineDoc
 from api import API, Mapping
+import case
 
 class TimeLine(object):
     def __init__(self, api=None):
@@ -65,6 +66,9 @@ class TimeLineAPI(API):
     def save(self, content, owner=None, tid=None, channel=u'normal', **kwargs):
         if tid is None:tid = self._flt_tpc(content)
         at_list = self._flt_at(content)
+        # alert-2 lines
+        c = case.get_case_object()
+        for at in at_list:c.fire('a_reply', to=at)
         return super(TimeLineAPI, self).create(owner=owner, content=content, at_list=at_list, topic=tid, channel=channel, **kwargs)
     
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):

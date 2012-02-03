@@ -4,5 +4,12 @@
 	{% block static-added %}{% end %}
 {% end %}
 {% block bodyleft %}
+	<div id="showlist">
+		<ul>
+		{% for a in alert_list %}
+			<li>{{a}}</li>
+		{% end %}
+		</ul>
+	</div>
 {% end %}
 {% block bodyright %}{% end %}

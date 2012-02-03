@@ -91,8 +91,12 @@ class UserAPI(API):
         
     def check_email(self):
         pass
-
-
+    
+    def nick2id(self, nick):
+        r = self.one(nick=nick)
+        if r[0] and r[1]:
+            return r[1]['_id']
+        return None
 
 
 

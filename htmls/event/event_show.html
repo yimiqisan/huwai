@@ -45,9 +45,6 @@
 	</div>
 {% end %}
 {% block bodyright %}
-	<div class="apkbox boxmg" style="width:200px;"><p><a>红色</a></p></div>
-	<div class="ardbox boxmg" style="width:200px;"><p><a>紫色</a></p></div>
-	<div class="ablbox boxmg" style="width:200px;"><p><a>蓝色</a></p></div>
 	<div class="agrbox boxmg" style="width:200px;"><p>
 		{% if is_join %}
 			{% module Template("util/state_toggle.html", id=id, kind='join', switch='报名参加', value='退出活动') %}
@@ -55,6 +52,4 @@
 			{% module Template("util/state_toggle.html", id=id, kind='join', switch='退出活动', value='报名参加') %}
 		{% end %}
 	</p></div>
-	<div class="aylbox boxmg" style="width:200px;"><p><a>黄色</a></p></div>
-	<div class="abrbox boxmg" style="width:200px;"><p><a>棕色</a></p></div>
 {% end %}

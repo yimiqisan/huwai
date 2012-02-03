@@ -71,7 +71,7 @@ class QQLoginHandler(LoginHandler, QQGraphMixin):
     
     def _on_register(self, response):
         extra_args = {'photo':response['figureurl_2'], 'qqid':response['qqid']}
-        self.render('profile/thirdpart.html', extra_args=extra_args, nick=response['nickname'])
+        self.render('profile/thirdpart.html', extra=extra_args, nick=response['nickname'])
 
 class QQHandler(BaseHandler, QQGraphMixin):
     @tornado.web.authenticated
@@ -94,7 +94,7 @@ class ThirdPartHandler(BaseHandler):
     @addslash
     @session
     def get(self):
-        self.render('profile/thirdpart.html', **{'nick': '', 'extra': None})
+        self.render('profile/thirdpart.html', **{'nick': '', 'extra': {}})
         
     @addslash
     @session
@@ -102,14 +102,14 @@ class ThirdPartHandler(BaseHandler):
         a = self.get_argument('act', None)
         extra = self.get_argument('extra', None)
         n = self.get_argument('nick', None)
-        if n is None:return self.render('profile/thirdpart.html', **{'warning': '请先报上名号', 'nick': nick, 'extra': extra})
+        if n is None:return self.render('profile/thirdpart.html', **{'warning': '请先报上名号', 'nick': n, 'extra': extra})
         p = self.get_argument('password', None)
-        if p is None:return self.render('profile/thirdpart.html', **{'warning': '您接头暗号是？', 'nick': nick, 'extra': extra})
+        if p is None:return self.render('profile/thirdpart.html', **{'warning': '您接头暗号是？', 'nick': n, 'extra': extra})
         if extra: extra=eval(extra)
         u = User()
         if a == 'reg':
             e= self.get_argument('email', None)
-            if e is None:return self.render('profile/thirdpart.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码', 'nick': nick, 'extra': extra})
+            if e is None:return self.render('profile/thirdpart.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码', 'nick': n, 'extra': extra})
             r = u.register(n, e, p)
             if r[0]:
                 self.set_secure_cookie("user", n, 1)
@@ -118,18 +118,11 @@ class ThirdPartHandler(BaseHandler):
                 if extra.has_key('qqid'):u._api.edit(r[1], qqid=extra['qqid'])
                 self.redirect('/account/profile')
             else:
-                return self.render('profile/thirdpart.html', **{'warning': r[1], 'nick': nick, 'extra': extra})
+                return self.render('profile/thirdpart.html', **{'warning': r[1], 'nick': n, 'extra': extra})
         elif a == 'bind':
-            r = u.login(n, p)
-            if r[0]:
-                u._api.edit(u._id)
-                self.set_secure_cookie("user", n, 1)
-                self.SESSION['uid']=u._id
-                self.redirect('/account/profile')
-            else:
-                return self.render('profile/thirdpart.html', **{'warning': r[1]})
+            pass
         else:
-            return self.render('profile/thirdpart.html', **{'warning': '系统晕了，不知道您是绑定还是注册！', 'nick': nick, 'extra': extra})
+            return self.render('profile/thirdpart.html', **{'warning': '系统晕了，不知道您是绑定还是注册！', 'nick': n, 'extra': extra})
     
     def save_avatar(self, photo_url):
         http = tornado.httpclient.AsyncHTTPClient()
