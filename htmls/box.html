@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="{{ static_url('css/frame.css') }}">
 		{% block static %}{% end %}
 	</head>
-	<body>
+	<body style="background-image: url({{ static_url('img/bg.png') }});background-repeat: repeat;background-attachment: fixed;background-position: left top;">
 		{% if warning %}<span id="warning" style="color:red;font-size:12px;">{{ warning }}</span>{% end %}
 		<div id="box">{% block box %}{% end %}</div>
 	</body>

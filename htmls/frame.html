@@ -18,10 +18,10 @@
 		<link rel="stylesheet" type="text/css" href="{{ static_url('css/jquery.fancybox.css') }}" media="screen"/>
 		{% block static %}{% end %}
 	</head>
-	<body>
+	<body style="background-image: url({{ static_url('img/bg.png') }});background-repeat: repeat;background-attachment: fixed;background-position: left top;">
 		<div id="shell">
 			<div id="header">
-				<img width=200 height=50 src="{{static_url('img/logo.png')}}"/>
+				<img width=200 height=50 src="{{static_url('img/logo.png')}}" title="远航户外"/>
 				<div id="navi" class="grbox boxmg">
 					<span><a href="/weibo/">微博</a></span>
 					<span><a href="/event/">活动</a></span>
