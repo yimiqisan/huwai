@@ -36,14 +36,7 @@ class CheckEventHandler(BaseHandler):
     def _content_filter(self, l):
         rl = []
         for i in l:
-            i['is_merc']=u'商业性质' if i['is_merc'] else u'非商业性质'
-            i['created']=i['created'].strftime(TIME_FORMAT)
-            i['date']=i['date'].strftime(TIME_FORMAT)
-            i['tags']=''.join(i['tags']) if i['tags'][0] else ''
             i['equip']=''.join(i['equip']) if i['equip'][0] else ''
-            i['club']= u'网站' if (i['club']==u'site') else u'小组内部'
-            i['deadline']=i['deadline'].strftime(TIME_FORMAT)
-            i['when']=i['when'].strftime(TIME_FORMAT)
             i['members'] = ';'.join(i['members'].values())
             d={'id':i['id'], 'from':i['nick'], 'detail':self.render_string('util/event_item.html', **i)}
             rl.append(d)

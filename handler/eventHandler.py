@@ -58,7 +58,6 @@ class EventPubaHandler(BaseHandler):
         date = datetime.datetime.strptime(timestr, ISO_TIME_FORMAT_YMDHM)
         e = Event()
         is_merc = d['is_merc'] is u'no_merc'
-        d['place'] = u'place'
         nick = self.current_user if uid else u'匿名驴友'
         r = e._api.save_step_one(uid, d['logo'], d['title'], [d['tags']], is_merc, float(d['level']), date, d['place'], d['schedule_tl'], nick=nick, members={'name':d['members']}, club=d['club'], route=u'route', spend_tl=d['spend_tl'], equip=[d['equip']], declare_tl=d['declare_tl'], attention_tl=d['attention_tl'])
         if r[0]:

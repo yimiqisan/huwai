@@ -44,7 +44,7 @@
 			</div>
 			<div class="event_li" style="display:none;"><label class="eleft">路线<em class="needed">*</em></label><div class="eright">route</div></div>
 			<div class="event_li"><label class="eleft">日期<em class="needed">*</em></label><div class="eright"><script>toggleDate("begin_time", 0,0,0)</script></div></div>
-			<div class="event_li" style="display:none;"><label for="" class="eleft">地点<em class="needed">*</em></label><div class="eright">place</div></div>
+			<div class="event_li"><label for="" class="eleft">地点<em class="needed">*</em></label><div class="eright"><input type="text" name="members" value=""></div></div>
 			<div class="event_li"><label class="eleft">行程安排<em class="needed">*</em></label><div class="eright"><textarea name="schedule_tl" rows="5" cols="60"></textarea></div></div>
 			<div class="event_li"><label class="eleft">费用明细<em class="needed">*</em></label><div class="eright"><textarea name="spend_tl" rows="3" cols="60"></textarea></div></div>
 			<div class="event_li"><label class="eleft">装备要求<em class="needed"></em></label><div class="eright"><textarea name="equip" rows="3" cols="60"></textarea></div></div>
@@ -54,11 +54,4 @@
 		</form>
 	</div>
 {% end %}
-{% block bodyright %}
-	<div class="apkbox boxmg" style="width:200px;"><p><a>粉色</a></p></div>
-	<div class="ardbox boxmg" style="width:200px;"><p><a>紫色</a></p></div>
-	<div class="ablbox boxmg" style="width:200px;"><p><a>蓝色</a></p></div>
-	<div class="agrbox boxmg" style="width:200px;"><p><a>绿色</a></p></div>
-	<div class="aylbox boxmg" style="width:200px;"><p><a>黄色</a></p></div>
-	<div class="abrbox boxmg" style="width:200px;"><p><a>棕色</a></p></div>
-{% end %}
+{% block bodyright %}{% end %}
