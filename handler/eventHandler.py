@@ -121,7 +121,7 @@ class EventListHandler(BaseHandler):
             for i in r[1]:
                 i['tl'] = t._api.abbr(topic=i['tid'], channel=[u'weibo'])
                 l.append(i)
-            self.render("event/event_list.html", event_list=l)
+            self.render("event/event_list.html", event_list=l, title="活动列表")
         else:
             self.render("event/event_list.html", event_list=l, warning=r[1])
 
