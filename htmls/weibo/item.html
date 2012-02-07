@@ -1,0 +1,17 @@
+{% extends ../frame.html %}
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {Reply.toggle($(".wb_item"));})
+	</script>
+	{% block static-added %}{% end %}
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/weibo.css') }}"/>
+{% end %}
+{% block bodyleft %}
+	<div id="weibo_item" class="wb_items">
+		{% if message %}
+			{% module Template("weibo/message.html", message=message, uid=uid) %}
+		{% end %}
+	</div>
+{% end %}
+{% block bodyright %}{% end %}

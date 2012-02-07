@@ -20,6 +20,19 @@ class WeiboHandler(BaseHandler):
     def get(self):
         return self.render("weibo/weibo.html", title=u"微博")
 
+class WeiboItemHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self, id):
+        uid = self.SESSION['uid']
+        tl = TimeLine()
+        r = tl._api.get(id)
+        if r[0] and r[1]:
+            message = {'nick':r[1]['nick'], 'id':r[1]['id'], 'content':r[1]['content'], 'owner': r[1]['owner'], 'is_own':r[1]['is_own'], 'created':r[1]['created']}
+            return self.render("weibo/item.html", title=u"微博", message=message, uid=uid, id=id)
+        else:
+            return self.render("weibo/item.html", title=u"微博", message=None, uid=uid, id=None, warning='此条微博不存在或已删除！')
+
 class AjaxWeiboHandler(BaseHandler):
     @session
     def get(self):

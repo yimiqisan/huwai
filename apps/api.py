@@ -136,15 +136,23 @@ class API(object):
     def drop_table(self):
         self.datastroe.drop_collection(self.col_name)
         
+    def _edit_added(self, id, **addeds):
+        r = self.one(_id=id)
+        if r[0]:
+            addeds.update(r[1].get('added', {}))
+            self.collection.update({"_id":id}, {'$set':{'added':addeds}})
+        
     def edit(self, id, *args, **kwargs):
         items=dict(args)
         items.update(kwargs)
         keyl_l = items.keys()
+        addeds = {}
         for k in keyl_l:
             if k not in self.keys:
-                items['added']={k:items.pop(k)}
+                addeds[k]=items.pop(k)
         try:
             self.collection.update({"_id":id}, {"$set":items})
+            if (len(addeds)>0):self._edit_added(id, **addeds)
         except Exception, e:
             logging.info(e)
             return(False, unicode(e))

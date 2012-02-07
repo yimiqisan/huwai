@@ -27,6 +27,7 @@ class Behavior(object):
             return None
 
 class BehaviorAPI(API):
+    DEFAULT_CUR_UID = '948a55d68e1b4317804e4650a9505641'
     def __init__(self):
         DB_CON.register([BehaviorDoc])
         datastore = DB_CON[DB_NAME]
@@ -35,16 +36,16 @@ class BehaviorAPI(API):
         doc = collection.BehaviorDoc()
         API.__init__(self, col_name=col_name, collection=collection, doc=doc)
     
-    def _output_map(self, input):
-        ret_d = {'id':input['_id'], 'owner':input['owner'], 'kind':input['kind'], 'mark':input['mark'], 'created':input['created']}
-        for k, v in input['added']:
-            ret_d[k] = v
+    def _output_map(self, input, cuid):
+        ret_d = {'id':input['_id'], 'owner':input['owner'], 'is_own':(cuid==input['owner'] if input['owner'] else True), 'kind':input['kind'], 'mark':input['mark'], 'created':input['created']}
+        for k in input['added']:
+            ret_d[k] = input['added'][k]
         return ret_d
     
-    def _output_format(self, result=[]):
+    def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         if isinstance(result, dict):
-            return self._output_map(result)
-        return map(self._output_map, result)
+            return self._output_map(result, cuid)
+        return [self._output_map(i, cuid) for i in result]
     
     def state(self, owner, kind, mark):
         return self.one(owner=owner, kind=kind, mark=mark)
@@ -64,14 +65,14 @@ class BehaviorAPI(API):
     def cancel(self, owner, kind, mark):
         return self.drops(owner=owner, kind=kind, mark=mark)
     
-    def list(self, owner=None, kind=None, mark=None):
+    def list(self, cuid=DEFAULT_CUR_UID, owner=None, kind=None, mark=None):
         kwargs = {}
         if owner:kwargs['owner'] = owner
         if kind:kwargs['kind'] = kind
         if mark:kwargs['mark'] = mark
         r = self.find(**kwargs)
         if r[0]:
-            return self._output_format(result=r[1])
+            return self._output_format(result=r[1], cuid=cuid)
         else:
             return None
 

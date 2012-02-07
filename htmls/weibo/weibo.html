@@ -2,7 +2,11 @@
 
 {% block static %}
 	<script src="{{ static_url('js/weibo.js') }}" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {Weibo.init();})
+	</script>
 	{% block static-added %}{% end %}
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/weibo.css') }}"/>
 {% end %}
 {% block bodyleft %}
 	<div id="weibo">
@@ -16,7 +20,7 @@
 		</form><br/><hr/>
 		<div class="wb_items" maintype="" subtype="">
 			<div class="bottom wb_item">
-				<a href="#" style="display:block;text-align:center;" onclick="Weibo.extend(this);return false;">没有更多的了</a>
+				<a href="#" style="display:block;text-align:center;" onclick="Weibo.extend(this);return false;"></a>
 				<input type="hidden" value="0">
 			</div>
 		</div>

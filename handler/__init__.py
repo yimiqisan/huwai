@@ -10,7 +10,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 from commonHandler import RootHandler, TestHandler, FeedbackHandler, Error404Handler, GoogleWebMasterHandler
 from profileHandler import LoginHandler, InviteHandler, RegisterHandler, LogoutHandler, ProfileHandler, SettingHandler
 from authHandler import SinaLoginHandler, QQLoginHandler, ThirdPartHandler
-from weiboHandler import WeiboHandler, AjaxWeiboHandler
+from weiboHandler import WeiboHandler, WeiboItemHandler, AjaxWeiboHandler
 from peopleHandler import PeopleHandler
 from eventHandler import EventHandler, EventPubaHandler, EventPubbHandler, EventCheckHandler, EventListHandler, EventCrawlerHandler
 from imageHandler import UploadImageHandler, AvatarHandler, AttachHandler, AjaxAvatarHandler, AjaxImageHandler, AjaxImageCheckHandler

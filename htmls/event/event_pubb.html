@@ -1,28 +1,27 @@
 {% extends ../frame.html %}
 
 {% block static %}
+	<script language="javascript" src="{{ static_url('js/event.js') }}" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/event.css') }}"/>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			Event.checkb();
+		})
+	</script>
 	{% block static-added %}{% end %}
 {% end %}
 {% block bodyleft %}
 	<div id="subnavi" class="gybox"><a style="float:left;display:block;">活动信息</a><span style="float:left;display:block;margin:auto 250px;background:#F5F5F5;">报名信息</span><a style="float:left;display:block;">等待审核</a></div>
 	<div id="event">
 		<form method="POST" action="/event/pubb/">
-			<div class="event_li"><label class="eleft">截止时间<em class="needed">*</em></label><div class="eright"><script>toggleDate("close_time", 0,0,0)</script></div></div>
+			<div class="event_li"><label class="eleft">截止时间<em class="needed">*</em></label><div class="eright"><script>toggleDate("close_time", 0,21,0)</script></div></div>
 			<div class="event_li"><label class="eleft">人数范围<em class="needed">*</em></label>
 				<div class="eright"><input style="width:30px;" name="fr" value="0"/>&nbsp&nbsp至&nbsp&nbsp<input style="width:30px;"  name="to" value="30"/></div>
 			</div>
-			<div class="event_li"><label class="eleft">集合时间<em class="needed">*</em></label><div class="eright"><script>toggleDate("collect_time", 0,0,0)</script></div></div>
+			<div class="event_li"><label class="eleft">集合时间<em class="needed">*</em></label><div class="eright"><script>toggleDate("collect_time", 0,7,30)</script></div></div>
 			<div class="event_li" style="display:none;"><label class="eleft">集合地点<em class="needed">*</em></label><div class="eright"></div></div>
 			<div class="event_li"><label class="eleft"><input type="hidden" name="eid" value="{{eid}}"><em class="needed"></em></label><div class="eright"><input type="submit" value="提交"></div></div>
 		</form>
 	</div>
 {% end %}
-{% block bodyright %}
-	<div class="apkbox boxmg" style="width:200px;"><p><a>粉色</a></p></div>
-	<div class="ardbox boxmg" style="width:200px;"><p><a>紫色</a></p></div>
-	<div class="ablbox boxmg" style="width:200px;"><p><a>蓝色</a></p></div>
-	<div class="agrbox boxmg" style="width:200px;"><p><a>绿色</a></p></div>
-	<div class="aylbox boxmg" style="width:200px;"><p><a>黄色</a></p></div>
-	<div class="abrbox boxmg" style="width:200px;"><p><a>棕色</a></p></div>
-{% end %}
+{% block bodyright %}{% end %}

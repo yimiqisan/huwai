@@ -27,10 +27,12 @@ ISO_TIME_FORMAT_YMDHM = '%Y%m%d:%H:%M'
 class EventHandler(BaseHandler):
     @authenticated
     @addslash
+    @session
     def get(self, id):
+        uid = self.SESSION['uid']
         e = Event()
         b = Behavior()
-        r = e._api.get(id)
+        r = e._api.get(id, uid)
         rb = b._api.list(kind=u'join', mark=id)
         if r[0]:
             self.render("event/event_show.html", user_list=rb, **r[1])
@@ -42,28 +44,37 @@ class EventHandler(BaseHandler):
         pass
 
 class EventPubaHandler(BaseHandler):
+    KEYS = ["logo", "title", "club", "level", "attention_tl", "declare_tl", "members", "spend_tl", "place", "equip", "route", "is_merc", "schedule_tl", "tags"]
+    
     @authenticated
     @addslash
     def get(self):
-        self.render("event/event_puba.html")
+        d = {'ifNone':self.ifNone}
+        for n in self.KEYS:d[n] = None
+        self.render("event/event_puba.html", **d)
     
+    @authenticated
     @addslash
     @session
     def post(self):
         uid = self.SESSION['uid']
-        l = ["logo", "title", "club", "level", "attention_tl", "declare_tl", "members", "spend_tl", "place", "equip", "route", "is_merc", "schedule_tl", "tags"]
         d = {}
-        for n in l:d[n] = self.get_argument(n, None)
+        for n in self.KEYS:d[n] = self.get_argument(n, None)
         timestr = ":".join([self.get_argument("begin_time"), self.get_argument("begin_time_hour"), self.get_argument("begin_time_minute")])
-        date = datetime.datetime.strptime(timestr, ISO_TIME_FORMAT_YMDHM)
+        d['date'] = datetime.datetime.strptime(timestr, ISO_TIME_FORMAT_YMDHM)
         e = Event()
         is_merc = d['is_merc'] is u'no_merc'
         nick = self.current_user if uid else u'匿名驴友'
-        r = e._api.save_step_one(uid, d['logo'], d['title'], [d['tags']], is_merc, float(d['level']), date, d['place'], d['schedule_tl'], nick=nick, members={'name':d['members']}, club=d['club'], route=u'route', spend_tl=d['spend_tl'], equip=[d['equip']], declare_tl=d['declare_tl'], attention_tl=d['attention_tl'])
+        r = e._api.save_step_one(uid, d['logo'], d['title'], [d['tags']], is_merc, float(d['level']), d['date'], d['place'], d['schedule_tl'], nick=nick, members={'name':d['members']}, club=d['club'], route=u'route', spend_tl=d['spend_tl'], equip=[d['equip']], declare_tl=d['declare_tl'], attention_tl=d['attention_tl'])
         if r[0]:
             return self.redirect('/event/pubb/?eid='+str(r[1]))
         else:
-            return self.render("event/event_puba.html", **{'warning': r[1]})
+            d['warning'] = r[1]
+            d['ifNone'] = self.ifNone
+            return self.render("event/event_puba.html", **d)
+    
+    def ifNone(self, v=None):
+        return v if v else ''
 
 class EventPubbHandler(BaseHandler):
     @authenticated
@@ -99,9 +110,11 @@ class EventPubbHandler(BaseHandler):
 class EventListHandler(BaseHandler):
     @authenticated
     @addslash
+    @session
     def get(self):
+        uid = self.SESSION['uid']
         e = Event()
-        r = e._api.list()
+        r = e._api.list(cuid=uid)
         l = []
         if r[0]:
             t = TimeLine()

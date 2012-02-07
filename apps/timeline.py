@@ -73,9 +73,10 @@ class TimeLineAPI(API):
     
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         now = datetime.now()
+        output_map = lambda i: {'id':i['_id'], 'added_id':i['added_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', '匿名驴友'), 'tid':i.get('topic', None), 'content':i['content'], 'created':self._escape_created(now, i['created'])}
         if isinstance(result, dict):
-            return {'id':result['_id'], 'added_id':result['added_id'], 'owner':result['owner'], 'is_own':(cuid==result['owner'] if result['owner'] else True), 'nick':result['added'].get('nick', '匿名驴友'), 'tid':result.get('topic', None), 'content':result['content'], 'created':self._escape_created(now, result['created'])}
-        return [{'id':i['_id'], 'added_id':i['added_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', '匿名驴友'), 'tid':i.get('topic', None), 'content':i['content'], 'created':self._escape_created(now, i['created'])} for i in result]
+            return output_map(result)
+        return map(output_map, result)
     
     def get(self, id):
         r = self.one(_id=id)

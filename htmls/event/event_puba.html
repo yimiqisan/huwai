@@ -2,6 +2,7 @@
 
 {% block static %}
 	<script language="javascript" src="{{ static_url('js/jquery.uploadify.min.js') }}" type="text/javascript"></script>
+	<script language="javascript" src="{{ static_url('js/event.js') }}" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
 			$("#poster").uploadify({
@@ -13,12 +14,12 @@
 				auto			: true,
 				fileObjName		: 'upload',
 				onUploadSuccess : function (file, data, response) {
-					//$('#poster').html('<img src="/image/avatar/'+data+'_300"/>');
 					$('#poster').html('<span><input type="hidden" name="logo" value="'+data+'"/>已上传</span>');
 					$('#poster_queue').hide();
 					},
 				onError			: function (event, queueID, fileObj){alert("文件:" + fileObj.name + " 上传失败");}
 			});
+			Event.checka();
 		})
 	</script>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/event.css') }}"/>
@@ -29,9 +30,9 @@
 	<div id="subnavi" class="gybox"><span style="float:left;display:block;background:#F5F5F5;">活动信息</span><a style="float:left;display:block;margin:auto 250px;">报名信息</a><a style="float:left;display:block;">等待审核</a></div>
 	<div id="event">
 		<form method="POST" action="/event/puba/">
-			<div class="event_li"><label class="eleft">标题<em class="needed">*</em></label><div class="eright"><input type="text" name="title"></div></div>
+			<div class="event_li"><label class="eleft">标题<em class="needed">*</em></label><div class="eright"><input type="text" name="title" value="{{ifNone(title)}}"/></div></div>
 			<div class="event_li"><label class="eleft">宣传海报<em class="needed">*</em></label><div class="eright">
-				<div id="poster">Uploadify</div>
+				{% if ifNone(logo) %}<span><input type="hidden" name="logo" value="{{logo}}"/>已上传</span>{% else %}<div id="poster">Uploadify</div>{% end %}
 			</div></div>
 			<div class="event_li"><label class="eleft">人员配置<em class="needed">*</em></label><div class="eright"><input type="text" name="members" value="发起人：{{current_user}}"></div></div>
 			<div class="event_li"><label class="eleft">类型<em class="needed">*</em></label>
@@ -42,14 +43,14 @@
 					<select name="club"><option value ="site">公开</option></select>
 				</div>
 			</div>
-			<div class="event_li" style="display:none;"><label class="eleft">路线<em class="needed">*</em></label><div class="eright">route</div></div>
+			<div class="event_li" style="display:none;"><label class="eleft">路线<em class="needed">*</em></label><div class="eright">{{ifNone(route)}}</div></div>
 			<div class="event_li"><label class="eleft">日期<em class="needed">*</em></label><div class="eright"><script>toggleDate("begin_time", 0,0,0)</script></div></div>
-			<div class="event_li"><label for="" class="eleft">地点<em class="needed">*</em></label><div class="eright"><input type="text" name="members" value=""></div></div>
-			<div class="event_li"><label class="eleft">行程安排<em class="needed">*</em></label><div class="eright"><textarea name="schedule_tl" rows="5" cols="60"></textarea></div></div>
-			<div class="event_li"><label class="eleft">费用明细<em class="needed">*</em></label><div class="eright"><textarea name="spend_tl" rows="3" cols="60"></textarea></div></div>
-			<div class="event_li"><label class="eleft">装备要求<em class="needed"></em></label><div class="eright"><textarea name="equip" rows="3" cols="60"></textarea></div></div>
-			<div class="event_li"><label class="eleft">注意事项<em class="needed"></em></label><div class="eright"><textarea name="declare_tl" rows="3" cols="60"></textarea></div></div>
-			<div class="event_li"><label class="eleft">免责声明<em class="needed"></em></label><div class="eright"><textarea name="attention_tl" rows="3" cols="60"></textarea></div></div>
+			<div class="event_li"><label for="" class="eleft">地点<em class="needed">*</em></label><div class="eright"><input type="text" name="place" value="{{ifNone(place)}}"></div></div>
+			<div class="event_li"><label class="eleft">行程安排<em class="needed">*</em></label><div class="eright"><textarea name="schedule_tl" rows="5" cols="60">{{ifNone(schedule_tl)}}</textarea></div></div>
+			<div class="event_li"><label class="eleft">费用明细<em class="needed">*</em></label><div class="eright"><textarea name="spend_tl" rows="3" cols="60">{{ifNone(spend_tl)}}</textarea></div></div>
+			<div class="event_li"><label class="eleft">装备要求<em class="needed"></em></label><div class="eright"><textarea name="	" rows="3" cols="60">{{ifNone(equip)}}</textarea></div></div>
+			<div class="event_li"><label class="eleft">注意事项<em class="needed"></em></label><div class="eright"><textarea name="declare_tl" rows="3" cols="60">{{ifNone(declare_tl)}}</textarea></div></div>
+			<div class="event_li"><label class="eleft">免责声明<em class="needed"></em></label><div class="eright"><textarea name="attention_tl" rows="3" cols="60">{{ifNone(attention_tl)}}</textarea></div></div>
 			<div class="event_li"><label class="eleft"><em class="needed"></em></label><div class="eright"><input type="submit" value="提交"></div></div>
 		</form>
 	</div>

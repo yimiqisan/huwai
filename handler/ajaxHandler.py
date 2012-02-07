@@ -81,7 +81,7 @@ class AjaxToggleStateHandler(BaseHandler):
             id = s[1]['_id']
             r = b._api.cancel(uid, k, m)
         else:
-            r = b._api.ok(uid, k, m)
+            r = b._api.ok(uid, k, m, nick=self.current_user)
         self.write(json.dumps(r))
 
 class AjaxToggleInputHandler(BaseHandler):

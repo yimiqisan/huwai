@@ -2,12 +2,18 @@
 
 {% block static %}
 	<script src="{{ static_url('js/weibo.js') }}" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {Weibo.init();})
+	</script>
 	{% block static-added %}{% end %}
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/event.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/weibo.css') }}"/>
 {% end %}
 {% block bodyleft %}
 	<div id="showdetail">
 		<img width=300 height=300 src="/image/avatar/{{logo}}_300"/>
-		<div style="background:#D8BFD8;">
+		<div style="border-bottom:1px solid #FFCC00;">
+			<h4>活动信息</h4>
 			<p>发起人：{{ nick }}</p>
 			<p>发布日期：{{ created }}</p>
 			<p style="display:none;">户外标签：{{ tags }}</p>
@@ -16,7 +22,8 @@
 			<p>活动地点：{{ place }}</p>
 			<p>活动开始时间：{{ date }}</p>
 		</div>
-		<div style="background:#B0C4DE;">
+		<div style="border-bottom:1px solid #FFCC00;">
+			<h4>报名信息</h4>
 			<p>报名截止时间：{{ deadline }}</p>
 			<p>报名人数：{{ fr }} 到 {{ to }}</p>
 			<p>集合时间：{{ when }}</p>
@@ -26,7 +33,7 @@
 		<p>花费统计：{{ spend_tl }}</p>
 		<p style="display:none;">装备要求：{{ equip }}</p>
 		<p>免责声明：{{ declare_tl }}</p>
-		<p>注意事项：{{ attention_tl }}</p>
+		<p style="display:none;">注意事项：{{ attention_tl }}</p>
 		<p style="display:none;">人员配置：{{ members }}</p>
 	</div>
 	<div style="clear:both;"></div>
@@ -45,11 +52,21 @@
 	</div>
 {% end %}
 {% block bodyright %}
-	<div class="agrbox boxmg" style="width:200px;"><p>
+	<div class="agrbox boxmg left" style="width:200px;"><p>
 		{% if is_join %}
 			{% module Template("util/state_toggle.html", id=id, kind='join', switch='报名参加', value='退出活动') %}
 		{% else %}
 			{% module Template("util/state_toggle.html", id=id, kind='join', switch='退出活动', value='报名参加') %}
 		{% end %}
 	</p></div>
+	{% if user_list %}
+	<div class="agrbox boxmg left" style="width:200px;"><p>
+		<h5>报名列表</h5>
+		<ul class="user_list">
+		{% for u in user_list %}
+			<li><img src="/image/avatar/{{u['owner']}}_50" width=50 height=50 /><span>{{u['nick']}}</span></li>
+		{% end %}
+		</ul>
+	</p></div>
+	{% end %}
 {% end %}
