@@ -89,7 +89,7 @@ class API(object):
             a, x = e.split(',', 1)
             d = a.split(' ')[0]
             if int(d) > 5:
-                r = c.strftime('%Y-%m-%d %X')
+                r = c.strftime('%m-%d %H:%M') if (n.year == c.year) else c.strftime('%Y-%m-%d %H:%M')
             elif int(d) == 1:
                 r = a.replace('day', u'天前')
             else:
@@ -114,6 +114,7 @@ class API(object):
         self.doc['added_id'] = a.get()
         id = get_uuid()
         self.doc['_id'] = id
+        self.doc['created'] = datetime.now()
         try:
             self.doc.save(uuid=True, validate=True)
         except Exception, e:

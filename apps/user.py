@@ -85,18 +85,29 @@ class UserAPI(API):
     
     def is_email_exist(self, email):
         return self.exist("email", email)
-        
+    
+    def is_nick(self, nick):
+        try:
+            nick.encode('utf8')
+        except UnicodeEncodeError:
+            return True
+        if len(nick)==32:
+            return False
+        return True
+    
     def change_pwd(self):
         pass
-        
+    
     def check_email(self):
         pass
     
     def nick2id(self, nick):
-        r = self.one(nick=nick)
-        if r[0] and r[1]:
-            return r[1]['_id']
-        return None
+        if self.is_nick(nick):
+            r = self.one(nick=nick)
+            if r[0] and r[1]:
+                return r[1]['_id']
+            return None
+        return nick
 
 
 

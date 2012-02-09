@@ -13,6 +13,8 @@ from alert import Alert
 
 class Case:
     _cases = {
+        'a_at': True,
+        'a_rpat': True,
         'a_reply': True,
         'a_join': True,
     }
@@ -20,6 +22,8 @@ class Case:
     
     def __init__(self):
         a = Alert()
+        self.on('a_at', a._api.on_at)
+        self.on('a_rpat', a._api.on_rpat)
         self.on('a_reply', a._api.on_reply)
         self.on('a_join', a._api.on_join)
     

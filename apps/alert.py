@@ -53,6 +53,18 @@ class AlertAPI(API):
             r = self.create(owner=owner, subject=subject, count=0)
             return r[1] if r[0] else None
     
+    def on_at(self, to):
+        u = User()
+        owner = u._api.nick2id(to)
+        id = self._init_alert(owner, u'at')
+        return self.incr(id) if id else False
+    
+    def on_rpat(self, to):
+        u = User()
+        owner = u._api.nick2id(to)
+        id = self._init_alert(owner, u'rpat')
+        return self.incr(id) if id else False
+    
     def on_reply(self, to):
         u = User()
         owner = u._api.nick2id(to)

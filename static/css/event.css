@@ -9,7 +9,7 @@
 .event_li .eright{width:300px;}
 
 /* event list */
-.stream{width:210px;background:#EDEDED;margin:10px 0 0 40px;float:left;}
+.stream{width:210px;background:#EDEDED;margin:10px 0 0 40px;float:left;left:0px;top:0px;}
 .stream img{margin:5px;}
 .stream h4{font-size:16px;padding:5px;}
 .stream li{font-size:14px;border-top:1px solid #D6D6D6;padding:5px;}

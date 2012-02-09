@@ -36,9 +36,16 @@ class AlertListHandler(BaseHandler):
     def get(self, subject):
         uid = self.SESSION['uid']
         t = TimeLine()
-        r = t._api.extend(channel=[u'weibo'], at=self.current_user, cursor=None)
-        if r[0]:
-            self.render("alert/list.html", alert_list=r[1])
+        if subject == 'reply':
+            #loading...
+            r = t._api.extend(channel=[u'weibo'], at=self.current_user, cursor=None)
+        elif subject == 'rpat':
+            r = t._api.extend(channel=[u'reply'], at=self.current_user, cursor=None)
+        elif subject == 'at':
+            r = t._api.extend(channel=[u'weibo'], at=self.current_user, cursor=None)
+        else:
+            return self.render("alert/list.html", alert_list=[])
+        if r[0]:self.render("alert/list.html", alert_list=r[1])
     
     @authenticated
     @addslash
@@ -64,7 +71,6 @@ class AjaxAlertHandler(BaseHandler):
     def post(self):
         uid = self.SESSION['uid']
         subject = unicode(self.get_argument('subject', ''))
-        print uid, subject
         a = Alert()
         r = a._api.click(uid, subject)
         return self.write(json.dumps({'ret':'ok'}))

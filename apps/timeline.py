@@ -49,6 +49,11 @@ class TimeLineAPI(API):
             if not r[0]:return r
             tid = r[1]
         return tid
+
+    def _get_nick(self, id):
+        r = self.one(_id=id)
+        if (r[0] and r[1]):return r[1]['added'].get('nick', None)
+        return None
     
     def _flt_at(self, c):
         l = c.split(u' ')
@@ -63,12 +68,18 @@ class TimeLineAPI(API):
                 at_l.extend(t_l)
         return list(set(at_l))
     
+    def _fire_alert(self, channel, tid, at_list):
+        c = case.get_case_object()
+        if channel == u'reply':
+            for at in at_list:c.fire('a_rpat', to=at)
+            c.fire('a_reply', to=self._get_nick(tid))
+        else:
+            for at in at_list:c.fire('a_at', to=at)
+    
     def save(self, content, owner=None, tid=None, channel=u'normal', **kwargs):
         if tid is None:tid = self._flt_tpc(content)
         at_list = self._flt_at(content)
-        # alert-2 lines
-        c = case.get_case_object()
-        for at in at_list:c.fire('a_reply', to=at)
+        self._fire_alert(channel, tid, at_list)
         return super(TimeLineAPI, self).create(owner=owner, content=content, at_list=at_list, topic=tid, channel=channel, **kwargs)
     
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
