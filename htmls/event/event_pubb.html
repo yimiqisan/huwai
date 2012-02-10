@@ -14,14 +14,14 @@
 	<div id="subnavi" class="gybox"><a style="float:left;display:block;">活动信息</a><span style="float:left;display:block;margin:auto 250px;background:#F5F5F5;">报名信息</span><a style="float:left;display:block;">等待审核</a></div>
 	<div id="event">
 		<form method="POST" action="/event/pubb/">
-			<div class="event_li"><label class="eleft">截止时间<em class="needed">*</em></label><div class="eright"><script>toggleDate("close_time", 0,21,0)</script></div></div>
-			<div class="event_li"><label class="eleft">人数范围<em class="needed">*</em></label>
-				<div class="eright"><input style="width:30px;" name="fr" value="0"/>&nbsp&nbsp至&nbsp&nbsp<input style="width:30px;"  name="to" value="30"/></div>
+			<div class="li"><label class="lil">截止时间<em class="needed">*</em></label><div class="lir"><script>toggleDate("close_time", 0,21,0)</script></div></div>
+			<div class="li"><label class="lil">人数范围<em class="needed">*</em></label>
+				<div class="lir"><input style="width:30px;" name="fr" value="0"/>&nbsp&nbsp至&nbsp&nbsp<input style="width:30px;"  name="to" value="30"/></div>
 			</div>
-			<div class="event_li"><label class="eleft">集合时间<em class="needed">*</em></label><div class="eright"><script>toggleDate("collect_time", 0,7,30)</script></div></div>
-			<div class="event_li" style="display:none;"><label class="eleft">集合地点<em class="needed">*</em></label><div class="eright"></div></div>
-			<div class="event_li"><label class="eleft"><input type="hidden" name="eid" value="{{eid}}"><em class="needed"></em></label><div class="eright"><input type="submit" value="提交"></div></div>
+			<div class="li"><label class="lil">集合时间<em class="needed">*</em></label><div class="lir"><script>toggleDate("collect_time", 0,7,30)</script></div></div>
+			<div class="li" style="display:none;"><label class="lil">集合地点<em class="needed">*</em></label><div class="lir"></div></div>
+			<div class="li"><label class="lil"><input type="hidden" name="eid" value="{{eid}}"><em class="needed"></em></label><div class="lil"><input type="submit" value="提交"></div></div>
 		</form>
 	</div>
 {% end %}
-{% block bodyright %}{% end %}
+{% block bodyright %}lir{% end %}

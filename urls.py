@@ -55,6 +55,7 @@ handlers = [(r"/", RootHandler),
             (r"/check/event/", CheckEventHandler),
             
             (r"/google9f2d915bcc519f6e.html", GoogleWebMasterHandler),
+            (r"/306e81119936619cbfb5e703cca43e84.html", CDNZZHandler),
             (r"/t/", TestHandler),
             (r".*", Error404Handler),
             ]

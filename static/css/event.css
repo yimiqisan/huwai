@@ -2,23 +2,7 @@
 #event{margin:5px;background:#FDFFD3;}
 #event h1{font:bold 30px/30px Arial;}
 #event form{display:block;font-size:16px;margin:5px 5px;padding:20px 20px;width:400px;}
-.event_li{position:relative; margin-bottom:25px;padding-top:10px;display:block;width:auto;clear:both;}
-.event_li .needed{color:orange;}
-.event_li .eleft, .event_li .eright{float:left;}
-.event_li .eleft{width:100px;}
-.event_li .eright{width:300px;}
-
-/* event list */
-.stream{width:210px;background:#EDEDED;margin:10px 0 0 40px;float:left;left:0px;top:0px;}
-.stream img{margin:5px;}
-.stream h4{font-size:16px;padding:5px;}
-.stream li{font-size:14px;border-top:1px solid #D6D6D6;padding:5px;}
 
 /* event show */
 #showdetail{float:left;margin:5px;width:750px;padding:10px;background:#FDFFD3;}
 #showdetail img{float:left;clear:left;margin-right:25px;margin-bottom:15px;border:3px solid #FFCC00;}
-
-.user_list{display:block;position:relative;float:left;}
-.user_list ul{display:block;position:relative;float:left;}
-.user_list li{display:block;font-size:12px;width:50px;background:#FFCC00;padding:2px;margin:3px 6px;float:left;}
-.user_list li span{display:block;overflow:hidden;height:18px;}

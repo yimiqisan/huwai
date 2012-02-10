@@ -37,33 +37,17 @@
 		</div>
 		<div class="contentbox">
 			<div id="con_one_1" class="hover">
-				<form name="content-form" method="post">
-					<table style="clear:both" width="100%" align="center" cellpadding="5">
-						<tr style="display:none">
-							<td class="m" valign="top" align="right">名号: </td><td class="n" valign="top">一米七三</td>
-						</tr>
-						<tr style="display:none">
-							<td class="m" valign="top" align="right">我的域名:</td><td class="n" valign="top">qisan</td>
-						</tr>
-						<tr>
-							<td class="m" valign="top" align="right">{%if uid%}<img src="/image/avatar/{{uid}}_30"/>{% end %}&nbsp&nbsp&nbsp头像:</td><td class="n" valign="top"><div id="poster">Uploadify</div></td>
-						</tr>
-						<tr style="display:none">
-							<td class="m" valign="top" align="right">常居地:</td><td class="n" valign="top">北京</td>
-						</tr>
-						<tr style="display:none">
-							<td class="m" valign="top" align="right">绑定邮箱:</td><td class="n" valign="top">yimiqisan@gmail.com</td>
-						</tr>
-						<tr style="display:none">
-							<td class="m" valign="top" align="right">登录密码:</td><td class="n" valign="top"><a href="">更改</a></td>
-						</tr>
-						<tr style="display:none">
-							<td class="m" valign="top" align="right">手机号:</td><td class="n" valign="top">15210904820</td>
-						</tr>
-						<tr>
-							<td class="m"></td><td class="n"><input name="submit" type="submit" value="更新设置" tabindex="8"></td>
-						</tr>
-					</table>
+				<form name="content-form" method="POST" action="/account/setting/">
+					<div class="li"><label class="lil">名号: <em class="needed"></em></label><div class="lir"><input type="text" name="nick" value="{{current_user}}"/></div></div>
+					<div class="li"><label class="lil">我的域名: <em class="needed"></em></label><div class="lir"><input type="text" name="domain" value=""/></div></div>
+					<div class="li"><label class="lil">头像: <em class="needed"></em></label><div class="lir">
+				{% if False %}<span><input type="hidden" name="avanta" value="{{logo}}"/>已上传</span>{% else %}<div id="poster">Uploadify</div>{% end %}
+					</div></div>
+					<div class="li"><label class="lil">常居地: <em class="needed"></em></label><div class="lir"><input type="text" name="live" value=""/></div></div>
+					<div class="li"><label class="lil">绑定邮箱: <em class="needed"></em></label><div class="lir"><input type="text" name="mail" value=""/></div></div>
+					<div class="li"><label class="lil">密码: <em class="needed"></em></label><div class="lir"><input type="text" name="password" value=""/></div></div>
+					<div class="li"><label class="lil">手机号: <em class="needed"></em></label><div class="lir"><input type="text" name="phone" value=""/></div></div>
+					<div class="li"><label class="lil"><em class="needed"></em></label><div class="lir"><input type="submit" value="提交"></div></div>
 				</form>
 			</div>
 			<div id="con_one_2" style="display:none">消息提示</div>

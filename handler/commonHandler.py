@@ -62,4 +62,8 @@ class Error404Handler(BaseHandler):
 class GoogleWebMasterHandler(BaseHandler):
     def get(self):
         self.write('google-site-verification: google9f2d915bcc519f6e.html')
+    
+class CDNZZHandler(BaseHandler):
+    def get(self):
+        self.write('0e9f73cc370a47640032ac94b1d9d1a7')
 

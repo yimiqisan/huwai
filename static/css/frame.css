@@ -93,6 +93,7 @@ a:active{text-decoration:none;}
 
 /* tabs */
 #tab{width:600px;margin:0px;padding:0px;margin:0 auto;}
+#tab form{display:block;font-size:16px;margin:5px 5px;padding:20px 20px;width:400px;}
 #tab ul li:hover{background:#D3D3D3;text-decoration:none;}
 #tab ul{list-style:none;}
 #tab .Menubox{width:100%;color:#F5F5F5;background:#C0C0C0;height:30px;line-height:30px;}
@@ -101,4 +102,21 @@ a:active{text-decoration:none;}
 #tab .Menubox li.hover{padding:0px;background:#fff;width:100px;border:1px solid #A9A9A9;border-bottom:0px solid red;background:#696969;color:#F5F5F5;height:30px;}
 #tab .contentbox{clear:both;margin-top:0px;border:1px solid #A9A9A9;border-top:none;text-align:center;padding-top:8px;background:#FDFFD3;}
 
+/* li */
+.li{position:relative; margin-bottom:25px;padding-top:10px;display:block;width:auto;clear:both;}
+.li .needed{color:orange;}
+.li .lil, .li .lir{float:left;}
+.li .lil{width:100px;}
+.li .lir{width:300px;}
 
+/* stream */
+.stream{width:210px;background:#EDEDED;margin:10px 0 0 40px;float:left;left:0px;top:0px;}
+.stream img{margin:5px;}
+.stream h4{font-size:16px;padding:5px;}
+.stream li{font-size:14px;border-top:1px solid #D6D6D6;padding:5px;}
+
+/* user list*/
+.user_list{display:block;position:relative;float:left;}
+.user_list ul{display:block;position:relative;float:left;}
+.user_list li{display:block;font-size:12px;width:50px;background:#FFCC00;padding:2px;margin:3px 6px;float:left;}
+.user_list li span{display:block;overflow:hidden;height:18px;}
