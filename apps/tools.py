@@ -3,14 +3,6 @@
 """
 tools.py
 
-Created by 刘 智勇 on 2011-09-24.
-Copyright (c) 2011 __MyCompanyName__. All rights reserved.
-"""
-#!/usr/bin/env python
-# encoding: utf-8
-"""
-tools.py
-
 Created by 刘 智勇 on 2011-08-15.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """

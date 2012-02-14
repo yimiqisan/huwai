@@ -38,15 +38,41 @@
 		<div class="contentbox">
 			<div id="con_one_1" class="hover">
 				<form name="content-form" method="POST" action="/account/setting/">
-					<div class="li"><label class="lil">名号: <em class="needed"></em></label><div class="lir"><input type="text" name="nick" value="{{current_user}}"/></div></div>
-					<div class="li"><label class="lil">我的域名: <em class="needed"></em></label><div class="lir"><input type="text" name="domain" value=""/></div></div>
-					<div class="li"><label class="lil">头像: <em class="needed"></em></label><div class="lir">
-				{% if False %}<span><input type="hidden" name="avanta" value="{{logo}}"/>已上传</span>{% else %}<div id="poster">Uploadify</div>{% end %}
+					<div class="li"><label class="lil">名号: <em class="needed">30天更改一次</em></label><div class="lir">{{current_user}}<input type="hidden" name="nick" value="{{current_user}}"/>&nbsp&nbsp&nbsp&nbsp<a>更改</a></div></div>
+					<div class="li"><label class="lil">我的域名: <em class="needed"></em></label><div class="lir">
+						{% if ifNone(domain) %}
+							<span>{{domain}}</span>
+						{% else %}
+							<input type="text" name="domain" value=""/>
+						{% end %}
 					</div></div>
-					<div class="li"><label class="lil">常居地: <em class="needed"></em></label><div class="lir"><input type="text" name="live" value=""/></div></div>
-					<div class="li"><label class="lil">绑定邮箱: <em class="needed"></em></label><div class="lir"><input type="text" name="mail" value=""/></div></div>
-					<div class="li"><label class="lil">密码: <em class="needed"></em></label><div class="lir"><input type="text" name="password" value=""/></div></div>
-					<div class="li"><label class="lil">手机号: <em class="needed"></em></label><div class="lir"><input type="text" name="phone" value=""/></div></div>
+					<div class="li"><label class="lil">头像: <em class="needed"></em></label><div class="lir">
+				{% if ifNone(uid) %}<span>已上传</span>{% else %}<div id="poster">Uploadify</div>{% end %}
+					</div></div>
+					<div class="li"><label class="lil">常居地: <em class="needed"></em></label><div class="lir">
+						{% if ifNone(live) %}
+							<script>select_pid("live", {{live}})</script>
+						{% else %}
+							<script>select_pid("live", 1)</script>
+							<span id="live"></span>
+						{% end %}
+					</div></div>
+					<div class="li"><label class="lil">绑定邮箱: <em class="needed"></em></label><div class="lir">
+						{% if ifNone(mail) %}
+							<span>已绑定邮箱</span>&nbsp&nbsp&nbsp&nbsp<a>更改</a>
+						{% else %}
+							<input type="text" name="mail" value="{{ifNone(mail)}}"/>
+						{% end %}
+					</div></div>
+					<div class="li"><label class="lil">密码: <em class="needed"></em></label><div class="lir"><a href="/account/cpassword/">修改密码</a></div></div>
+					<div class="li"><label class="lil">手机号: <em class="needed"></em></label><div class="lir">
+						{% if ifNone('phone') %}
+							{% module Template("util/input_toggle.html", name="phone") %}
+						{% else %}
+							<span>phone</span>&nbsp&nbsp&nbsp&nbsp<a>取消绑定</a>
+							<input type="text" name="phone" value=""/>
+						{% end %}
+					</div></div>
 					<div class="li"><label class="lil"><em class="needed"></em></label><div class="lir"><input type="submit" value="提交"></div></div>
 				</form>
 			</div>

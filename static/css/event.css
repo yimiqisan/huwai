@@ -1,7 +1,7 @@
 /* event publish */
 #event{margin:5px;background:#FDFFD3;}
 #event h1{font:bold 30px/30px Arial;}
-#event form{display:block;font-size:16px;margin:5px 5px;padding:20px 20px;width:400px;}
+#event form{display:block;font-size:16px;margin:5px 5px;padding:20px 20px;width:700px;}
 
 /* event show */
 #showdetail{float:left;margin:5px;width:750px;padding:10px;background:#FDFFD3;}

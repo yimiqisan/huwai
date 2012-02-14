@@ -104,13 +104,36 @@ class ProfileHandler(BaseHandler):
             self.redirect('/')
     
 class SettingHandler(BaseHandler):
+    KEYS = ["nick", "domain", "avanta", "live", "mail", "password", "phone"]
+    
     @addslash
     @session
     def get(self):
         uid = self.SESSION['uid']
-        self.render('profile/setting.html', uid=uid)
+        d = {'ifNone':self.ifNone}
+        for n in self.KEYS:d[n] = None
+        u = User()
+        u.whois('_id', uid)
+        if u.nick:d['nick'] = u.nick
+        if u.domain:d['domain'] = u.domain
+        if u.avanta:d['avanta'] = u.avanta
+        if u.live:d['live'] = u.live
+        if u.email:d['mail'] = u.email
+        if u.phone:d['phone'] = u.phone
+        self.render('profile/setting.html', **d)
     
     @addslash
     @session
     def post(self):
-        self.render('profile/setting.html')
+        uid = self.SESSION['uid']
+        u = User()
+        d = {}
+        s = {}
+        for n in self.KEYS:
+            d[n] = self.get_argument(n, None)
+            if d[n]:s[n]=d[n]
+        print d
+        print s
+#        u._api.edit(uid, **d)
+        d['ifNone'] = self.ifNone
+        self.render('profile/setting.html', **d)

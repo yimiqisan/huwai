@@ -92,22 +92,23 @@ a:active{text-decoration:none;}
 #footer li a{display:inline;float:right;padding:5px;}
 
 /* tabs */
-#tab{width:600px;margin:0px;padding:0px;margin:0 auto;}
-#tab form{display:block;font-size:16px;margin:5px 5px;padding:20px 20px;width:400px;}
+#tab{width:770px;margin:0px;padding:0px;margin:0 auto;}
+#tab form{display:block;font-size:16px;margin:5px 5px;padding:20px 20px;width:700px;}
 #tab ul li:hover{background:#D3D3D3;text-decoration:none;}
 #tab ul{list-style:none;}
 #tab .Menubox{width:100%;color:#F5F5F5;background:#C0C0C0;height:30px;line-height:30px;}
 #tab .Menubox ul{margin:0px;padding:0px;}
 #tab .Menubox li{float:left;display:block;cursor:pointer;width:114px;text-align:center;color:#F5F5F5;}
 #tab .Menubox li.hover{padding:0px;background:#fff;width:100px;border:1px solid #A9A9A9;border-bottom:0px solid red;background:#696969;color:#F5F5F5;height:30px;}
-#tab .contentbox{clear:both;margin-top:0px;border:1px solid #A9A9A9;border-top:none;text-align:center;padding-top:8px;background:#FDFFD3;}
+#tab .contentbox{clear:both;margin-top:0px;border:1px solid #A9A9A9;border-top:none;text-align:left;padding-top:8px;background:#FDFFD3;}
 
 /* li */
 .li{position:relative; margin-bottom:25px;padding-top:10px;display:block;width:auto;clear:both;}
 .li .needed{color:orange;}
 .li .lil, .li .lir{float:left;}
-.li .lil{width:100px;}
-.li .lir{width:300px;}
+.li .lil{width:200px;}
+.li .lir{width:500px;}
+.li .lir input[type=submit]{float:right;}
 
 /* stream */
 .stream{width:210px;background:#EDEDED;margin:10px 0 0 40px;float:left;left:0px;top:0px;}

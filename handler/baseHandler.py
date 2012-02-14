@@ -33,3 +33,6 @@ class BaseHandler(RequestHandler):
     def render_alert(self, msg, **kwargs):
         kwargs['alert']=msg
         self.render('alert.html', **kwargs)
+    
+    def ifNone(self, v=None):
+        return v if v else ''

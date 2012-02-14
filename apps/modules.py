@@ -42,9 +42,11 @@ class UserDoc(Document):
     structure = {
             '_id': unicode,
             'nick': unicode,
+            'avanta': unicode,
             'password':unicode,
             'email':unicode,
             'domain':unicode,
+            'live':unicode,
             'created':datetime,
             'qqid':unicode,
             'added':dict,
@@ -161,7 +163,7 @@ class AlertDoc(Document):
     structure = {
             '_id':      unicode,
             'owner':      unicode,
-            'subject':  IS(u'reply', u'join', u'follow'),
+            'subject':  IS(u'reply', u'join', u'follow', u'at', u'rpat'),
             'count':    int,
             'created':  datetime,
             'added':    dict,

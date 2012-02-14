@@ -37,8 +37,7 @@ class AlertListHandler(BaseHandler):
         uid = self.SESSION['uid']
         t = TimeLine()
         if subject == 'reply':
-            #loading...
-            r = t._api.extend(channel=[u'weibo'], at=self.current_user, cursor=None)
+            r = t._api.get_rp_org(owner=uid)
         elif subject == 'rpat':
             r = t._api.extend(channel=[u'reply'], at=self.current_user, cursor=None)
         elif subject == 'at':

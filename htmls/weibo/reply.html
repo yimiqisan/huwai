@@ -1,7 +1,7 @@
 <dl id="m-{{ reply['id'] }}" class="comment_list">
 	<dt><a href=""><img width="30" height="30" alt="{{ reply['nick'] }}" src="/image/avatar/{{ reply['owner'] }}_30"></a></dt>
 	<dd>
-		<a href="">{{ reply['nick'] }}</a>|{{ reply['content'] }} ({{ reply['created'] }})
+		<a href="">{{ reply['nick'] }}</a>: {{ reply['content'] }} ({{ reply['created'] }})
 		<p class="info">
 			<span>
 				{% if reply['is_own'] %}<em><a onclick="delItem(this);return false;" href="#" id="d-{{ reply['id'] }}">删除</a><i class="wb_vline">|</i></em>{% end %}

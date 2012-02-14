@@ -220,8 +220,10 @@ class API(object):
         return (True, r)
         
     def find(self, **kwargs):
+        order = kwargs.pop('order', -1)
+        order_by = kwargs.pop('order_by', 'added_id')
         try:
-            r = self.collection.find(kwargs)
+            r = self.collection.find(kwargs).sort(order_by, order)
         except Exception, e:
             logging.info(e)
             return (False, e)

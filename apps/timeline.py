@@ -94,10 +94,30 @@ class TimeLineAPI(API):
         if (r[0] and r[1]):return (True, self._output_format(result=r[1]))
         return r
     
-    def list(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None):
+    def get_rp_org(self, owner=None, topic=None, channel=None, at=None):
         kwargs = {}
         if owner:kwargs['owner']=owner
         if topic:kwargs['topic']=topic
+        if at:kwargs['at_list']=at
+        if channel:kwargs['channel']={'$in':channel}
+        r = self.find(**kwargs)
+        if r[0]:
+            al = [i['_id'] for i in r[1]]
+        else:
+            return r
+        r = self.find(channel={'$in':[u'reply']}, topic={'$in':al})
+        if r[0]:
+            l = []
+            for i in r[1]:
+                if i['topic'] not in l:l.append(i['topic'])
+            return (True, [self.get(i)[1] for i in l])
+        else:
+            return r
+    
+    def list(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None):
+        kwargs = {}
+        if owner:kwargs['owner']=owner
+        if topic:kwargs['topic'] = {'$in':topic} if isinstance(topic, list) else topic
         if at:kwargs['at_list']=at
         if channel:kwargs['channel']={'$in':channel}
         r = self.find(**kwargs)
@@ -112,7 +132,7 @@ class TimeLineAPI(API):
     def extend(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None, cursor=None, limit=20, order_by='added_id', order=-1):
         kwargs = {}
         if owner:kwargs['owner']=owner
-        if topic:kwargs['topic']=topic
+        if topic:kwargs['topic'] = {'$in':topic} if isinstance(topic, list) else topic
         if at:kwargs['at_list']=at
         if channel:kwargs['channel']={'$in':channel}
         if cursor:kwargs['cursor']=cursor
@@ -132,7 +152,7 @@ class TimeLineAPI(API):
     def page(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None, page=1, pglen=10, cursor=None, limit=20, order_by='added_id', order=-1):
         kwargs = {}
         if owner:kwargs['owner']=owner
-        if topic:kwargs['topic']=topic
+        if topic:kwargs['topic'] = {'$in':topic} if isinstance(topic, list) else topic
         if at:kwargs['at_list']=at
         if channel:kwargs['channel']={'$in':channel}
         kwargs['page']=page
@@ -152,7 +172,7 @@ class TimeLineAPI(API):
         
     def abbr(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None, order_by='added_id', order=-1):
         kwargs = {}
-        if topic:kwargs['topic']=topic
+        if topic:kwargs['topic'] = {'$in':topic} if isinstance(topic, list) else topic
         if channel:kwargs['channel']={'$in':channel}
         c = super(TimeLineAPI, self).count(**kwargs)
         if c == 0:
@@ -168,4 +188,4 @@ class TimeLineAPI(API):
             rb = self.extend(cuid=cuid, topic=topic, channel=channel, limit=1, order=-1)
             return (rt[1][0]['content'], '共'+str(c)+'条留言', rb[1][0]['content'])
         else:
-            return c        
+            return c

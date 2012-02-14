@@ -73,9 +73,6 @@ class EventPubaHandler(BaseHandler):
             d['ifNone'] = self.ifNone
             return self.render("event/event_puba.html", **d)
     
-    def ifNone(self, v=None):
-        return v if v else ''
-
 class EventPubbHandler(BaseHandler):
     @authenticated
     @addslash

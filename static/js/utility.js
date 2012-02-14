@@ -46,6 +46,34 @@ function toggleInput(e) {
         var o_val = $(e).html();
         var n_val = inp.val()
         if ((o_val==n_val)||(!n_val)){$(e).show();inp.hide();return false;}
+        $(e).html(n_val);
+        $(e).show();
+        inp.hide();
+        return true;
+    })
+    inp.keydown(function(event) {
+        if (event.keyCode == 13) {
+            var o_val = $(e).html();
+            var n_val = inp.val()
+            if ((o_val==n_val)||(!n_val)){$(e).show();inp.hide();return false;}
+            $(e).html(n_val);
+            $(e).show();
+            inp.hide();
+            return true;
+        }
+    })
+};
+
+
+function toggleInputAjax(e) {
+    var inp = $(e).parent().find("input");
+    $(e).hide();
+    inp.show();
+    inp.select();
+    inp.on("blur", function(event){
+        var o_val = $(e).html();
+        var n_val = inp.val()
+        if ((o_val==n_val)||(!n_val)){$(e).show();inp.hide();return false;}
         $(e).html("修改中...");
         $(e).show();
         inp.hide();
@@ -241,7 +269,7 @@ var Reply = {
             if (existing.length > 0) return;
             var node = $(response.html);
             node.hide();
-            $("#m-"+id+" .wb_rep_list").append(node);
+            $(node).insertAfter($("#m-"+id+" .wb_rep_list .input"));
             node.slideDown();
             form.find(".reply-content").val("").select();
             disabled.enable();

@@ -1,2 +1,5 @@
-#showlist{background:white;}
-#showlist ul li{}
+#showlist{background:#EDEDED;}
+#showlist ul{padding:10px;}
+#showlist ul li{margin-top:5px;padding:10px;border-bottom:1px solid #E1E4E5;}
+#showlist ul li:hover{background:#E1E4E5;}
+#showlist ul a{margin-left:10px;float:right;}
