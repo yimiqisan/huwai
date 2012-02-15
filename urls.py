@@ -22,6 +22,7 @@ handlers = [(r"/", RootHandler),
             (r"/account/logout/", LogoutHandler),
             (r"/account/profile/", ProfileHandler),
             (r"/account/setting/", SettingHandler),
+            (r"/account/cpassword/", CpasswordHandler),
             (r"/account/thirdpart/", ThirdPartHandler),
             
             (r"/auth/sina/", SinaLoginHandler),

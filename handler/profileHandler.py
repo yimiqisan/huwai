@@ -104,7 +104,7 @@ class ProfileHandler(BaseHandler):
             self.redirect('/')
     
 class SettingHandler(BaseHandler):
-    KEYS = ["nick", "domain", "avanta", "live", "mail", "password", "phone"]
+    KEYS = ["nick", "domain", "avanta", "live", "mail", "phone"]
     
     @addslash
     @session
@@ -116,10 +116,10 @@ class SettingHandler(BaseHandler):
         u.whois('_id', uid)
         if u.nick:d['nick'] = u.nick
         if u.domain:d['domain'] = u.domain
-        if u.avanta:d['avanta'] = u.avanta
+        if u.added.get('avanta', None):d['avanta'] = u.added['avanta']
         if u.live:d['live'] = u.live
         if u.email:d['mail'] = u.email
-        if u.phone:d['phone'] = u.phone
+        if u.added.get('phone', None):d['phone'] = u.added['phone']
         self.render('profile/setting.html', **d)
     
     @addslash
@@ -132,8 +132,35 @@ class SettingHandler(BaseHandler):
         for n in self.KEYS:
             d[n] = self.get_argument(n, None)
             if d[n]:s[n]=d[n]
-        print d
-        print s
-#        u._api.edit(uid, **d)
+        u._api.edit(uid, **s)
         d['ifNone'] = self.ifNone
-        self.render('profile/setting.html', **d)
+        return self.redirect('/account/setting/')
+#        self.render('profile/setting.html', **d)
+
+class CpasswordHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self):
+        self.render("profile/cpassword.html")
+    
+    @addslash
+    @session
+    def post(self):
+        return self.render("profile/cpassword.html")
+        o= self.get_argument('oldpassword', None)
+        if o is None:return self.render('profile/cpassword.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码', 'email':e})
+        n = self.get_argument('newpassword', None)
+        if n is None:return self.render('profile/cpassword.html', **{'warning': '请先报上名号', 'email':e})
+        c = self.get_argument('confpassword', None)
+        if c is None:return self.render('profile/cpassword.html', **{'warning': '您接头暗号是？', 'email':e})
+        u = User()
+        r = u.change_pwd(n, e, p)
+        if r[0]:
+            self.set_secure_cookie("user", n, 1)
+            self.SESSION['uid']=r[1]
+            self.redirect('/account/profile')
+        else:
+            return self.render('profile/register.html', **{'warning': r[1], 'email':e})
+
+
+

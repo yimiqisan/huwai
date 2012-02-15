@@ -42,7 +42,6 @@ class UserDoc(Document):
     structure = {
             '_id': unicode,
             'nick': unicode,
-            'avanta': unicode,
             'password':unicode,
             'email':unicode,
             'domain':unicode,

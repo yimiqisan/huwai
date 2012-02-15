@@ -15,7 +15,7 @@
 				fileObjName		: 'upload',
 				onUploadSuccess : function (file, data, response) {
 					//$('#poster').html('<img src="/image/avatar/'+data+'_300"/>');
-					$('#poster').html('<input type="hidden" value="'+data+'"/><img src="/image/avatar/'+data+'_30"/>');
+					$('#poster').html('<input type="hidden" name="avanta" value="'+data+'"/><img src="/image/avatar/'+data+'_30"/>');
 					$('#poster_queue').hide();
 					},
 				onError			: function (event, queueID, fileObj){alert("文件:" + fileObj.name + " 上传失败");}
@@ -38,16 +38,16 @@
 		<div class="contentbox">
 			<div id="con_one_1" class="hover">
 				<form name="content-form" method="POST" action="/account/setting/">
-					<div class="li"><label class="lil">名号: <em class="needed">30天更改一次</em></label><div class="lir">{{current_user}}<input type="hidden" name="nick" value="{{current_user}}"/>&nbsp&nbsp&nbsp&nbsp<a>更改</a></div></div>
-					<div class="li"><label class="lil">我的域名: <em class="needed"></em></label><div class="lir">
-						{% if ifNone(domain) %}
-							<span>{{domain}}</span>
+					<div class="li"><label class="lil">名号: <em class="needed"></em></label><div class="lir">
+						{% if ifNone(current_user) %}
+							<span>{{current_user}}</span>
 						{% else %}
-							<input type="text" name="domain" value=""/>
+							<input type="text" name="nick" value=""/>
 						{% end %}
 					</div></div>
+					<div class="li" style="display:none;"><label class="lil">我的域名: <em class="needed"></em></label><div class="lir">{% if ifNone(domain) %}<span>{{domain}}</span>{% else %}<input type="text" name="domain" value=""/>{% end %}</div></div>
 					<div class="li"><label class="lil">头像: <em class="needed"></em></label><div class="lir">
-				{% if ifNone(uid) %}<span>已上传</span>{% else %}<div id="poster">Uploadify</div>{% end %}
+				{% if ifNone(avanta) %}<img src="/image/avatar/{{uid}}_30"/>{% else %}<div id="poster">Uploadify</div>{% end %}
 					</div></div>
 					<div class="li"><label class="lil">常居地: <em class="needed"></em></label><div class="lir">
 						{% if ifNone(live) %}
@@ -59,21 +59,20 @@
 					</div></div>
 					<div class="li"><label class="lil">绑定邮箱: <em class="needed"></em></label><div class="lir">
 						{% if ifNone(mail) %}
-							<span>已绑定邮箱</span>&nbsp&nbsp&nbsp&nbsp<a>更改</a>
+							<span>{{mail}}</span>
 						{% else %}
-							<input type="text" name="mail" value="{{ifNone(mail)}}"/>
+							<input type="text" name="mail" value=""/>
 						{% end %}
 					</div></div>
 					<div class="li"><label class="lil">密码: <em class="needed"></em></label><div class="lir"><a href="/account/cpassword/">修改密码</a></div></div>
 					<div class="li"><label class="lil">手机号: <em class="needed"></em></label><div class="lir">
-						{% if ifNone('phone') %}
-							{% module Template("util/input_toggle.html", name="phone") %}
+						{% if ifNone(phone) %}
+							<span>{{phone}}</span>
 						{% else %}
-							<span>phone</span>&nbsp&nbsp&nbsp&nbsp<a>取消绑定</a>
 							<input type="text" name="phone" value=""/>
 						{% end %}
 					</div></div>
-					<div class="li"><label class="lil"><em class="needed"></em></label><div class="lir"><input type="submit" value="提交"></div></div>
+					<div class="li"><label class="lil"><em class="needed"></em></label><div class="lir"><input onclick="$('form').submit();" type="button" value="提交"></div></div>
 				</form>
 			</div>
 			<div id="con_one_2" style="display:none">消息提示</div>
