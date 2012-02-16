@@ -61,6 +61,7 @@ class AjaxAlertHandler(BaseHandler):
         if r[0]:
             htmls = []
             for i in r[1]:
+                i['suffix'] = {u'at':u'微博中@您', u'rpat':u'回复中@您', u'reply':u'回复'}[i['subject']]
                 htmls.append(self.render_string("alert/item.html", message=i))
             return self.write(json.dumps({'htmls':htmls}))
         else:
