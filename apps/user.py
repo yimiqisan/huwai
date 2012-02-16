@@ -79,7 +79,7 @@ class UserAPI(API):
         collection = datastore[col_name]
         doc = collection.UserDoc()
         API.__init__(self, col_name=col_name, collection=collection, doc=doc)
-        
+    
     def is_nick_exist(self, nick):
         return self.exist("nick", nick)
     
@@ -95,8 +95,9 @@ class UserAPI(API):
             return False
         return True
     
-    def change_pwd(self):
-        pass
+    def change_pwd(self, id, o, n, c):
+        
+        self.edit(id, password=n)
     
     def check_email(self):
         pass

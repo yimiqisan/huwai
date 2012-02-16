@@ -146,21 +146,19 @@ class CpasswordHandler(BaseHandler):
     @addslash
     @session
     def post(self):
-        return self.render("profile/cpassword.html")
+        uid = self.SESSION['uid']
         o= self.get_argument('oldpassword', None)
-        if o is None:return self.render('profile/cpassword.html', **{'warning': '设置邮箱，可能帮您找回失散多年的密码', 'email':e})
+        if o is None:return self.render('profile/cpassword.html', **{'warning': '请输入旧密码'})
         n = self.get_argument('newpassword', None)
-        if n is None:return self.render('profile/cpassword.html', **{'warning': '请先报上名号', 'email':e})
+        if n is None:return self.render('profile/cpassword.html', **{'warning': '请输入新密码'})
         c = self.get_argument('confpassword', None)
-        if c is None:return self.render('profile/cpassword.html', **{'warning': '您接头暗号是？', 'email':e})
+        if c is None:return self.render('profile/cpassword.html', **{'warning': '请输入确认密码？'})
         u = User()
-        r = u.change_pwd(n, e, p)
-        if r[0]:
-            self.set_secure_cookie("user", n, 1)
-            self.SESSION['uid']=r[1]
-            self.redirect('/account/profile')
-        else:
-            return self.render('profile/register.html', **{'warning': r[1], 'email':e})
+        u.whois("_id", uid)
+        if (u.password != o):return self.render('profile/cpassword.html', **{'warning': '密码不正确'})
+        if (n != c):return self.render('profile/cpassword.html', **{'warning': '新密码不匹配'})
+        u._api.edit(uid, password=n)
+        return self.redirect('/account/setting/')
 
 
 
