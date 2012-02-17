@@ -230,14 +230,40 @@ var Reply = {
             var $cur = $('#'+id+' .content');
             $cur.find(".wb_rep_list").remove();
             $cur.append('<div class="wb_rep_list"><div class="input clearfix"><form action="/a/reply" method="post" class="replyform"><input name="content" class="reply-content" style="width:80%;margin:0 0 3px 0; padding：4px 4px 0 4px; border: 1px solid rgb(198, 198, 198); font-size: 12px; font-family: Tahoma, 宋体; word-wrap: break-word; line-height: 18px; outline-style: none; outline-width: initial; outline-color: initial; overflow-x: hidden; overflow-y: hidden; height: 22px;"><input style="margin-top:5px;float:right;" type="submit" value="回复"></form><div class="action clearfix"></div></div></div>');
-            for (var i=0; i<response.length; i++) {
-                $cur.find(".wb_rep_list").append(response[i]);
+            $cur.find(".wb_rep_list").append("<div class='bottom'><a style='margin-top:10px;display:block;text-align:center;' onclick=Reply.extend('"+id+"');return false;>下拉</a><input type='hidden' value='0'></div>");
+            var e = $(".wb_rep_list .bottom");
+            $(e).find('a').text('').addClass('loading');
+            htmls = response.htmls;
+            for (var i=0; i<htmls.length; i++) {
+                $(htmls[i]).insertBefore(e);
             }
+            $(e).find('input').val(response.cursor);
+            $(e).find('a').text('下拉').removeClass('loading');
             Reply.submit(id);
         });
     },
-
-//    extend: function(e) {},
+    
+    extend: function(id) {
+        var e = $(".wb_rep_list .bottom");
+        if ($(e).find('input').val()=='-1'){$(e).find('a').text('没有更多的了');return false;}
+        var args = {'id': id.replace("m-",""), 'cursor': $(e).find('input').val()};
+        $(e).find('a').text('').addClass('loading');
+        $.postJSON("/a/reply", "GET", args, function(response) {
+            if (response.error){
+                return alert(response.error);
+            }
+            htmls = response.htmls;
+            for (var i=0; i<htmls.length; i++) {
+                $(htmls[i]).insertBefore(e);
+            }
+            if (response.cursor==-1){
+                $(e).find('a').text('没有更多的了').removeClass('loading');
+            }else{
+                $(e).find('a').text('下拉').removeClass('loading');
+            }
+            $(e).find('input').val(response.cursor);
+        });
+    },
     
     submit: function(id){
         var e = $('#'+id+' .replyform');

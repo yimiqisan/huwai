@@ -27,6 +27,18 @@ class Added_id(object):
     def incr(self):
         self.collection.update({"_id":self.idx},{"$inc":{"id":1}}, upsert=True)
     
+    def decr(self):
+        self.collection.update({"_id":self.idx},{"$inc":{"id":-1}}, upsert=True)
+    
+    def clear(self):
+        self.collection.update({"_id":self.idx},{"$set":{"id":0}}, upsert=True)
+    
+    def count(self):
+        try:
+            return int(self.collection.one({"_id":self.idx})["id"])
+        except:
+            return 0
+    
     def get(self):
         self.incr()
         return int(self.collection.one({"_id":self.idx})["id"])

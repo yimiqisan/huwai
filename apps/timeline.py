@@ -14,7 +14,7 @@ import time
 
 from huwai.config import DB_CON, DB_NAME
 from modules import TimeLineDoc
-from api import API, Mapping
+from api import API, Mapping, Added_id
 import case
 
 class TimeLine(object):
@@ -77,14 +77,31 @@ class TimeLineAPI(API):
             for at in at_list:c.fire('a_at', to=at)
     
     def save(self, content, owner=None, tid=None, channel=u'normal', **kwargs):
-        if tid is None:tid = self._flt_tpc(content)
+        if tid:
+            a = Added_id(tid)
+            a.incr()
+        else:
+            tid = self._flt_tpc(content)
         at_list = self._flt_at(content)
         self._fire_alert(channel, tid, at_list)
         return super(TimeLineAPI, self).create(owner=owner, content=content, at_list=at_list, topic=tid, channel=channel, **kwargs)
     
+    def remove(self, id):
+        r = self.get(id)
+        if r[0] and r[1] and (r[1]['channel'] == u'reply'):
+            a = Added_id(r[1]['tid'])
+            a.decr()
+        return super(TimeLineAPI, self).remove(id)
+    
+    def _count(self, tid):
+        if not tid:return 0
+        a = Added_id(tid)
+        c = a.count()
+        return c if (c>0) else 0
+    
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         now = datetime.now()
-        output_map = lambda i: {'id':i['_id'], 'added_id':i['added_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', '匿名驴友'), 'tid':i.get('topic', None), 'content':i['content'], 'created':self._escape_created(now, i['created'])}
+        output_map = lambda i: {'id':i['_id'], 'added_id':i['added_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', '匿名驴友'), 'tid':i.get('topic', None), 'content':i['content'], 'channel':i['channel'], 'count': self._count(i['_id']), 'created':self._escape_created(now, i['created'])}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)

@@ -7,7 +7,7 @@
 		<p class="wb_opt">
 			<span>
 				{% if message['is_own'] %}<em><a onclick="delItem(this);return false;" id="d-{{ message['id'] }}" class="remove">删除</a><i class="wb_vline">|</i></em>{% end %}
-				{% if uid %}<a onclick="Reply.toggle(this);return false;" id="r-{{ message['id'] }}" class="wb_reply">回复</a>{% end %}
+				{% if uid %}<a onclick="Reply.toggle(this);return false;" id="r-{{ message['id'] }}" class="wb_reply">回复({{message['count']}})</a>{% end %}
 			</span>
 			<d title="{{ message['created'] }}" class="date">{{ message['created'] }}</d>
 		</p>

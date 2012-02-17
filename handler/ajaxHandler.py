@@ -23,14 +23,15 @@ class AjaxReplyHandler(BaseHandler):
     def get(self):
         uid = self.SESSION['uid']
         tid = self.get_argument("id")
+        cursor = self.get_argument('cursor', None)
+        if cursor:cursor=int(cursor)
         tl = TimeLine()
-        #r = tl._api.list(cuid=uid, topic=tid, channel=self.CHANNEL)
-        r = tl._api.list(cuid=uid, topic=tid)
+        r = tl._api.extend(cuid=uid, channel=[u'reply'], topic=tid, cursor=cursor, limit=10)
         if r[0]:
             htmls = []
             for i in r[1]:
                 htmls.append(self.render_string("weibo/reply.html", reply=i, uid=uid))
-            return self.write(json.dumps(htmls))
+            return self.write(json.dumps({'htmls':htmls, 'info':r[1], 'cursor': r[2]}))
         else:
             return self.write({'error':'save error'})
     
@@ -67,6 +68,7 @@ class AjaxRemoveHandler(BaseHandler):
         uid = self.SESSION['uid']
         rid = self.get_argument("id", None)
         r = tl._api.remove(rid)
+        print r
         self.write(json.dumps('ok'))
 
 class AjaxToggleStateHandler(BaseHandler):

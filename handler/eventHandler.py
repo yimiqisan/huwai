@@ -49,7 +49,7 @@ class EventPubaHandler(BaseHandler):
     @authenticated
     @addslash
     def get(self):
-        d = {'ifNone':self.ifNone}
+        d = {}
         for n in self.KEYS:d[n] = None
         self.render("event/event_puba.html", **d)
     
@@ -70,7 +70,6 @@ class EventPubaHandler(BaseHandler):
             return self.redirect('/event/pubb/?eid='+str(r[1]))
         else:
             d['warning'] = r[1]
-            d['ifNone'] = self.ifNone
             return self.render("event/event_puba.html", **d)
     
 class EventPubbHandler(BaseHandler):

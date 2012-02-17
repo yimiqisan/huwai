@@ -110,7 +110,7 @@ class SettingHandler(BaseHandler):
     @session
     def get(self):
         uid = self.SESSION['uid']
-        d = {'ifNone':self.ifNone}
+        d = {}
         for n in self.KEYS:d[n] = None
         u = User()
         u.whois('_id', uid)
@@ -133,7 +133,6 @@ class SettingHandler(BaseHandler):
             d[n] = self.get_argument(n, None)
             if d[n]:s[n]=d[n]
         u._api.edit(uid, **s)
-        d['ifNone'] = self.ifNone
         return self.redirect('/account/setting/')
 #        self.render('profile/setting.html', **d)
 

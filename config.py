@@ -11,6 +11,8 @@ import redis
 from mongokit import Connection
 from logging import basicConfig, DEBUG
 
+import uimethods
+
 SITE_ID = u'917d450c728b4f62b6ac9bac1beb01ba'
 
 #config settings
@@ -21,7 +23,7 @@ settings = dict(
         login_url="/account/login",
         autoescape="xhtml_escape",
 #        ui_modules=uimodules,
-#        ui_methods=uimethods,
+        ui_methods=uimethods,
 #        xsrf_cookies=True,
         debug=True,
         cache_engine=redis.Redis(host='localhost', port=6379, db=1),

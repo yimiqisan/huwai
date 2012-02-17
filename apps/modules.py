@@ -40,17 +40,25 @@ class UserDoc(Document):
     __database__ = DB_NAME
 
     structure = {
-            '_id': unicode,
-            'nick': unicode,
-            'password':unicode,
-            'email':unicode,
-            'domain':unicode,
-            'live':unicode,
-            'created':datetime,
-            'qqid':unicode,
-            'added':dict,
-            'added_id':int,
+            '_id':      unicode,
+            'nick':     unicode,
+            'password': unicode,
+            'email':    unicode,
+            'domain':   unicode,
+            'live':     unicode,
+            'created':  datetime,
+            'qqid':     unicode,
+            'added':    dict,
+            'added_id': int,
     }
+    
+    indexes = [
+        {
+            'fields':['_id', 'nick', 'email'],
+            'unique':True,
+        },
+    ]
+
     required_fields = ['_id', 'nick', 'password', 'created']
     default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
     
