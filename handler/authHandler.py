@@ -43,6 +43,7 @@ class SinaLoginHandler(LoginHandler):
             self.SESSION['sina_request_token'] = access_token
             client.set_access_token(access_token, r.expires_in)
             sinfo = client.get.account__profile__basic()
+            print sinfo
             ## TO DO SAVE
         else:
             url = client.get_authorize_url()

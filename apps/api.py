@@ -100,7 +100,7 @@ class API(object):
         if ',' in e:
             a, x = e.split(',', 1)
             d = a.split(' ')[0]
-            if int(d) > 5:
+            if int(d) > 10:
                 r = c.strftime('%m-%d %H:%M') if (n.year == c.year) else c.strftime('%Y-%m-%d %H:%M')
             elif int(d) == 1:
                 r = a.replace('day', u'天前')

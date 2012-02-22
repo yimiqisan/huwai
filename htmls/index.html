@@ -2,7 +2,7 @@
 
 {% block static %}{% end %}
 {% block box %}
-	<div class="agrbox boxmg lucency" style="width:400px;height:300px;">
+	<div class="agrbox boxmg lucency" style="width:400px;height:400px;">
 		<div style="margin:10px 0 0 10px;display:none;">
 			<form action="/account/invite/" method="POST">
 				<input type="text" name="mail" style="width:300px;height:30px;"/>&nbsp&nbsp<input type="submit" value="获取邀请"/>
@@ -10,9 +10,10 @@
 		</div><br/>
 		<div style="margin-left:10px;">
 			<a style="background:#F0FFF0;display:none;" href="/auth/sina/"><img src="{{static_url('img/sina24.png')}}"/></a>&nbsp&nbsp&nbsp&nbsp
-	<a style="background:#F0FFF0;" href="/auth/qq/"><img src="{{static_url('img/qq24.png')}}"/></a>
-	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a style="background:#F0FFF0;color:red;" href="/account/login/">已注册驴友登陆</a>
-		</div></br><hr/>
+	<a style="background:#F0FFF0;" href="/auth/qq/"><img src="{{static_url('img/qq24.png')}}"/></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	<a style="background:#F0FFF0;" href="/auth/sina/"><img src="{{static_url('img/sina24.png')}}"/></a>
+	<br/><br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a style="background:#F0FFF0;color:red;" href="/account/login/">已注册驴友登陆</a>
+		</div><br/><hr/><br/>
 		<form action="/account/register/" method="POST">
 			<span>&nbsp&nbsp&nbsp绰号：</span><input name="nick" type=text style="width:300px;height:30px;"/><br/><br/>
 			<span>&nbsp&nbsp&nbsp邮箱：</span><input name="email" type=text style="width:300px;height:30px;"/><br/><br/>

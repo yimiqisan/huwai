@@ -125,14 +125,7 @@ def _http_call(url, method, authorization, **kw):
         req.add_header('Content-Type', 'multipart/form-data; boundary=%s' % boundary)
     resp = urllib2.urlopen(req)
     body = resp.read()
-    try:
-        r = json.loads(body, object_hook=_obj_hook)
-    except:
-        if body.startswith('callback'):
-            body = body.replace(';','')
-            r = _obj_hook(eval(body))
-        else:
-            r = _obj_hook(dict([b.split('=') for b in body.split('&')]))
+    r = json.loads(body, object_hook=_obj_hook)
     if hasattr(r, 'error_code'):
         raise APIError(r.error_code, getattr(r, 'error', ''), getattr(r, 'request', ''))
     return r
@@ -154,14 +147,13 @@ class APIClient(object):
     '''
     API client using synchronized invocation.
     '''
-    def __init__(self, app_key, app_secret, redirect_uri=None, response_type='code', domain='api.weibo.com', version='2', token_url='access_token'):
+    def __init__(self, app_key, app_secret, redirect_uri=None, response_type='code', domain='api.weibo.com', version='2'):
         self.client_id = app_key
         self.client_secret = app_secret
         self.redirect_uri = redirect_uri
         self.response_type = response_type
-        self.auth_url = 'https://%s/oauth%s/' % (domain, version)
+        self.auth_url = 'https://%s/oauth2/' % domain
         self.api_url = 'https://%s/%s/' % (domain, version)
-        self.token_url = token_url
         self.access_token = None
         self.expires = 0.0
         self.get = HttpObject(self, _HTTP_GET)
@@ -192,12 +184,12 @@ class APIClient(object):
         redirect = redirect_uri if redirect_uri else self.redirect_uri
         if not redirect:
             raise APIError('21305', 'Parameter absent: redirect_uri', 'OAuth2 request')
-        r = _http_post('%s%s' % (self.auth_url, self.token_url), \
+        r = _http_post('%s%s' % (self.auth_url, 'access_token'), \
                 client_id = self.client_id, \
                 client_secret = self.client_secret, \
                 redirect_uri = redirect, \
                 code = code, grant_type = 'authorization_code')
-        r.expires_in = int(r.expires_in) + int(time.time())
+        r.expires_in += int(time.time())
         return r
 
     def is_expires(self):

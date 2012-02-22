@@ -22,7 +22,7 @@ var Weibo = {
     },
     
     extend: function() {
-        var e = $('#weibo .bottom');
+        var e = $('#wb_bottom');
         if ($(e).find('input').val()=='-1'){$(e).find('a').text('没有更多的了');return false;}
         var args = {'cursor': $(e).find('input').val()};
         var mtp = $('#weibo .wb_items').attr('maintype');
@@ -105,7 +105,7 @@ var Weibo = {
     load: function() {
         $(window).scroll(function () {
             var sBottom = $(this).height()+$(this).scrollTop();
-            if (sBottom >= $("#weibo .bottom").offset().top) {
+            if (sBottom >= $("#wb_bottom").offset().top) {
                 Weibo.extend();
             }
         });
