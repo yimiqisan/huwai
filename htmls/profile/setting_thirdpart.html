@@ -5,7 +5,8 @@
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
 			WB.core.load(['connect', 'client', 'widget.base', 'widget.atWhere'], function() {
-				var cfg = { key: '2798557074', xdpath: 'http://yuanhang.info/xd.html'};
+//				var cfg = { key: '2798557074', xdpath: 'http://yuanhang.info/xd.html'};
+				var cfg = { key: '2798557074', xdpath: 'http://127.0.0.1:8000/xd.html'};
 				WB.connect.init(cfg);
 				WB.client.init(cfg);
 				WB.widget.base.connectButton(document.getElementById("connectBtn"),{

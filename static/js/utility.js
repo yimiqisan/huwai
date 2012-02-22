@@ -238,7 +238,12 @@ var Reply = {
                 $(htmls[i]).insertBefore(e);
             }
             $(e).find('input').val(response.cursor);
-            $(e).find('a').text('下拉').removeClass('loading');
+            
+            if (htmls.length < 10){
+                $(e).find('a').text('没有更多的了').removeClass('loading');
+            }else{
+                $(e).find('a').text('下拉').removeClass('loading');
+            }
             Reply.submit(id);
         });
     },
@@ -256,12 +261,17 @@ var Reply = {
             for (var i=0; i<htmls.length; i++) {
                 $(htmls[i]).insertBefore(e);
             }
-            if (response.cursor==-1){
+            if (htmls.length < 10){
                 $(e).find('a').text('没有更多的了').removeClass('loading');
+                $(e).find('input').val(-1);
             }else{
-                $(e).find('a').text('下拉').removeClass('loading');
+                if (response.cursor==-1){
+                    $(e).find('a').text('没有更多的了').removeClass('loading');
+                }else{
+                    $(e).find('a').text('下拉').removeClass('loading');
+                }
+                $(e).find('input').val(response.cursor);
             }
-            $(e).find('input').val(response.cursor);
         });
     },
     
