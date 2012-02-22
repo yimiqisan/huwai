@@ -48,6 +48,7 @@ class UserDoc(Document):
             'live':     unicode,
             'created':  datetime,
             'qqid':     unicode,
+            'sinaid':     unicode,
             'added':    dict,
             'added_id': int,
     }

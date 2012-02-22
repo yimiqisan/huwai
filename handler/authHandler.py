@@ -42,12 +42,23 @@ class SinaLoginHandler(LoginHandler):
             access_token = r.access_token
             self.SESSION['sina_request_token'] = access_token
             client.set_access_token(access_token, r.expires_in)
-            sinfo = client.get.account__profile__basic()
-            print sinfo
-            ## TO DO SAVE
+            u = self.is_authed('sinaid', access_token)
+            if u:
+                self.set_secure_cookie("user", u.nick, 1)
+                self.SESSION['uid']=u._id
+                self.redirect('/account/profile')
+            else:
+                uid = client.get.account__get_uid().uid
+                uinfo = client.get.users__show(uid=uid)
+                #{'domain': u'yimiqisan', 'avatar_large': u'http://tp2.sinaimg.cn/1683546773/180/5603268482/1', 'id': 1683546773, 'location': u'\u5317\u4eac \u671d\u9633\u533a', 'name': u'\u4e00\u7c73\u4e03\u4e092010', 'gender': u'm'}
+                extra_args = {'photo':uinfo['avatar_large'], 'sinaid':uinfo['id'], 'sina_access_token':access_token}
+                self.render('profile/thirdpart.html', extra=extra_args, nick=uinfo['name'])
         else:
             url = client.get_authorize_url()
             self.redirect(url)
+
+class SinaHandler(BaseHandler):
+    pass
 
 class QQLoginHandler(LoginHandler, QQGraphMixin):
     @addslash
@@ -114,9 +125,12 @@ class ThirdPartHandler(BaseHandler):
             r = u.register(n, e, p)
             if r[0]:
                 self.set_secure_cookie("user", n, 1)
-                self.SESSION['uid']=r[1]
+                uid = r[1]
+                self.SESSION['uid']=uid
                 if extra.has_key('photo'):self.save_avatar(extra['photo'])
-                if extra.has_key('qqid'):u._api.edit(r[1], qqid=extra['qqid'])
+                if extra.has_key('qqid'):u._api.edit(uid, qqid=extra['qqid'])
+                if extra.has_key('sinaid'):u._api.edit(uid, sinaid=extra['sinaid'])
+                if extra.has_key('sina_access_token'):u._api.edit(uid, sina_access_token=extra['sina_access_token'])
                 self.redirect('/account/profile')
             else:
                 return self.render('profile/thirdpart.html', **{'warning': r[1], 'nick': n, 'extra': extra})
