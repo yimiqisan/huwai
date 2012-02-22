@@ -42,7 +42,7 @@ class SinaLoginHandler(LoginHandler):
             access_token = r.access_token
             self.SESSION['sina_request_token'] = access_token
             client.set_access_token(access_token, r.expires_in)
-            u = self.is_authed('sinaid', access_token)
+            u = self.is_authed('sina_access_token', access_token)
             if u:
                 self.set_secure_cookie("user", u.nick, 1)
                 self.SESSION['uid']=u._id

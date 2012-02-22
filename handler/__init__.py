@@ -7,8 +7,8 @@ Created by 刘 智勇 on 2011-09-24.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 
-from commonHandler import RootHandler, TestHandler, FeedbackHandler, Error404Handler, GoogleWebMasterHandler, CDNZZHandler
-from profileHandler import LoginHandler, InviteHandler, RegisterHandler, LogoutHandler, ProfileHandler, SettingHandler, CpasswordHandler
+from commonHandler import RootHandler, TestHandler, FeedbackHandler, Error404Handler, SinaXDHandler, GoogleWebMasterHandler, CDNZZHandler
+from profileHandler import LoginHandler, InviteHandler, RegisterHandler, LogoutHandler, ProfileHandler, SettingHandler, SettingAlertHandler, SettingThirdPartHandler, CpasswordHandler
 from authHandler import SinaLoginHandler, QQLoginHandler, ThirdPartHandler
 from weiboHandler import WeiboHandler, WeiboItemHandler, AjaxWeiboHandler
 from peopleHandler import PeopleHandler

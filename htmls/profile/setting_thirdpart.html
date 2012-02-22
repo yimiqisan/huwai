@@ -1,0 +1,45 @@
+{% extends ../frame.html %}
+
+{% block static %}
+	<script type="text/javascript" language="javascript" src="http://tjs.sjs.sinajs.cn/t3/platform/js/api/wb.js" charset="utf-8"></script>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			WB.core.load(['connect', 'client', 'widget.base', 'widget.atWhere'], function() {
+				var cfg = { key: '2798557074', xdpath: 'http://yuanhang.info/xd.html'};
+				WB.connect.init(cfg);
+				WB.client.init(cfg);
+				WB.widget.base.connectButton(document.getElementById("connectBtn"),{
+					login:function(o){alert(o.screen_name);},
+					logout:function(){alert('logout');}
+				});
+			});
+		})
+	</script>
+	<link type="text/css" rel="stylesheet" href="http://tjs.sjs.sinajs.cn/t3/style/css/common/card.css" />
+{% end %}
+{% block bodyleft %}
+	<div id="tab">
+		<div class="Menubox">
+			<ul>
+				<li id="one1"><a href="/account/setting/">基本设置</a></li>
+				<li id="one2"><a href="/account/setting/alert/">消息提示</a></li>
+				<li id="one3" class="hover">微博绑定</li>
+				<li id="one4" style="display:none;">邮件提醒</li>
+			</ul>
+		</div>
+		<div class="contentbox">
+			<div class="hover">
+				<form name="content-form" method="POST" action="/account/setting/">
+					<div class="li"><label class="lil">绑定新浪微博: <em class="needed"></em></label><div class="lir">
+						{% if ifNone(sina_access_token) %}
+							<a href="">已经绑定</a>
+						{% else %}
+							<span id="connectBtn"></span>
+						{% end %}
+					</div></div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% end %}
+{% block bodyright %}{% end %}

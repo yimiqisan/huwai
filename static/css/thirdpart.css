@@ -1,0 +1,695 @@
+.weibo_widget_btn,.weibo_widget_btn em {
+	background:url(../../images/common/card/widget_btn_def.gif) no-repeat;
+	font-size:12px;
+	font-weight:400;
+}
+
+.weibo_widget_btn {
+	margin:0;
+	padding:0;
+	padding-left:12px;
+	height:25px;
+	line-height:22px;
+	display:inline-block;
+}
+
+.weibo_widget_btn em {
+	font-style:normal;
+	margin:0;
+	padding:0;
+	padding-right:12px;
+	height:25px;
+	display:inline-block;
+	background-position:right -35px;
+	cursor:pointer;
+}
+
+.weibo_widget_btn:link,.weibo_widget_btn:visited {
+	text-decoration:none;
+	color:#FFF;
+	background-position:0 0;
+}
+
+.weibo_widget_btn:hover {
+	text-decoration:none;
+	color:#FFF;
+	background-position:0 -70px;
+}
+
+.weibo_widget_btn:hover em {
+	color:#FFF;
+	background-position:right -105px;
+}
+
+.weibo_widget_btn_dis,.weibo_widget_btn_dis em {
+	background:url(../../images/common/card/widget_btn_dis.gif) no-repeat;
+	font-size:12px;
+	font-weight:400;
+}
+
+.weibo_widget_btn_dis {
+	margin:0;
+	padding:0;
+	padding-left:12px;
+	height:25px;
+	line-height:22px;
+	display:inline-block;
+}
+
+.weibo_widget_btn_dis em {
+	font-style:normal;
+	margin:0;
+	padding:0;
+	padding-right:12px;
+	height:25px;
+	display:inline-block;
+	background-position:right -35px;
+	cursor:pointer;
+}
+
+.weibo_widget_btn_dis:link,.weibo_widget_btn_dis:visited {
+	text-decoration:none;
+	color:#999;
+	background-position:0 0;
+}
+
+.weibo_widget_btn_dis:hover {
+	text-decoration:none;
+	color:#999;
+	background-position:0 0;
+}
+
+.weibo_widget_btn_dis:hover em {
+	color:#999;
+	background-position:right -35px;
+}
+
+.weibo_widget_btn_loading {
+	display:block;
+	width:40px;
+	height:25px;
+	padding:0;
+	margin:0;
+	vertical-align:middle;
+	background:url(../../images/common/card/widget_btn_loading.gif) no-repeat center;
+}
+
+.weibo_widget_connect_btn {
+	width:126px;
+	height:24px;
+	border:0;
+	margin:0;
+	padding:0;
+	background:url(/static/img/sina_24x24.png) no-repeat;
+	cursor:pointer;
+}
+
+.weibo_widget_connect_icon {
+	max-width:180px;
+	width:126px;
+	height:24px;
+	line-height:22px;
+	border:0;
+	margin:0;
+	padding:0;
+	background:url(../../images/common/card/widget_logo_icon_24.gif) no-repeat;
+	padding-left:30px;
+	font-size:12px;
+	font-weight:400;
+}
+
+.weibo_widget_connect_disconnect {
+	margin:0;
+	padding:3px;
+	margin-left:10px;
+}
+
+.weibo_widget_connect_disconnect:link,.weibo_widget_connect_disconnect:visited {
+	text-decoration:none;
+	color:#666;
+	background:none;
+	border:0;
+}
+
+.weibo_widget_connect_disconnect:hover {
+	text-decoration:none;
+	color:#333;
+	background:#F2F2F2;
+	border:0;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+}
+
+.weibo_widget_connect_none {
+	width:126px;
+	height:24px;
+	border:0;
+	margin:0;
+	padding:0;
+	background:none;
+}
+
+.weibo_widget_connect_loading {
+	display:block;
+	width:126px;
+	height:24px;
+	border:0;
+	margin:0;
+	padding:0;
+	background:url(../../images/common/card/widget_btn_loading.gif) no-repeat center;
+}
+
+.weibo_widget_hovercard_card {
+	width:290px;
+	height:184px;
+	border:0;
+	margin:0;
+	padding:0;
+	font-size:12px;
+	font-family:Arial,Helvetica,sans-serif,瀹嬩綋;
+	font-weight:400;
+	text-align:left;
+	color:#000;
+	position:absolute;
+}
+
+.weibo_widget_hovercard_card input,textarea,select {
+	vertical-align:middle;
+}
+
+.weibo_widget_hovercard_border {
+	margin:0;
+	padding:0;
+	border:0;
+	background:#DADADA;
+	filter:alpha(opacity=80);
+	opacity:.8;
+	height:100%;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+}
+
+.weibo_widget_hovercard_container {
+	border:1px solid #CCC;
+	background:#FFF;
+	width:278px;
+	height:172px;
+	margin:0;
+	padding:0;
+	position:absolute;
+	top:5px;
+	left:5px;
+	overflow:hidden;
+}
+
+.weibo_widget_hovercard_content {
+	margin:0;
+	padding:0;
+	border:0;
+	height:135px;
+	overflow:hidden;
+	position:relative;
+}
+
+.weibo_widget_hovercard_btn {
+	position:absolute;
+	top:5px;
+	right:5px;
+}
+
+.weibo_widget_hovercard_bar {
+	margin:0;
+	padding:0;
+	border:1px solid #FFF;
+	height:35px;
+	background:#EEE;
+	overflow:hidden;
+	position:relative;
+}
+
+.weibo_widget_hovercard_loading {
+	width:40px;
+	height:40px;
+	border:0;
+	padding:0;
+	margin:0;
+	vertical-align:middle;
+	position:absolute;
+	top:35px;
+	left:119px;
+	background:url(../../images/common/card/widget_loading.gif) no-repeat;
+}
+
+.weibo_widget_hovercard_error {
+	margin:0;
+	padding:0;
+	border:0;
+	margin-top:40px;
+	text-align:center;
+	color:#666;
+}
+
+.weibo_widget_hovercard_avatar {
+	width:52px;
+	height:52px;
+	margin:0;
+	padding:0;
+	position:absolute;
+	top:9px;
+	left:9px;
+	background:#FFF;
+	border:1px solid #CFCFCF;
+}
+
+.weibo_widget_hovercard_avatar a:link,.weibo_widget_hovercard_avatar a:visited {
+	text-decoration:none;
+	border:0;
+}
+
+.weibo_widget_hovercard_avatar a:hover {
+	text-decoration:none;
+	border:0;
+}
+
+.weibo_widget_hovercard_avatar img {
+	width:50px;
+	height:50px;
+	border:0;
+	position:absolute;
+	top:1px;
+	left:1px;
+}
+
+.weibo_widget_hovercard_icon {
+	margin:0;
+	padding:0;
+	border:0;
+	width:18px;
+	height:18px;
+	background:url(../../images/common/card/widget_logo_icon.png) no-repeat!important;
+	background:none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled="true",src="../../images/common/card/widget_logo_icon.png",sizingMethod="image");
+	position:absolute;
+	bottom:-3px;
+	right:-6px;
+}
+
+.weibo_widget_hovercard_name {
+	margin:0;
+	padding:0;
+	border:0;
+	position:absolute;
+	top:10px;
+	left:74px;
+	width:190px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+
+.weibo_widget_hovercard_name a:link,.weibo_widget_hovercard_name a:visited {
+	text-decoration:none;
+	color:#0082CB;
+}
+
+.weibo_widget_hovercard_name a:hover {
+	text-decoration:underline;
+	color:#0082CB;
+}
+
+.weibo_widget_hovercard_verified {
+	width:11px;
+	height:11px;
+	border:0;
+	vertical-align:middle;
+	margin:0;
+	padding:0;
+	background:url(../../images/common/card/widget_verified.gif) no-repeat;
+}
+
+.weibo_widget_hovercard_info {
+	margin:0;
+	padding:0;
+	border:0;
+	position:absolute;
+	top:28px;
+	left:74px;
+	color:#999;
+	width:190px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+
+.weibo_widget_hovercard_gende_f {
+	width:12px;
+	height:12px;
+	border:0;
+	vertical-align:baseline;
+	margin:0;
+	padding:0;
+	margin-left:3px;
+	background:url(../../images/common/card/widget_gender_f.gif) no-repeat;
+}
+
+.weibo_widget_hovercard_gende_m {
+	width:12px;
+	height:12px;
+	border:0;
+	vertical-align:baseline;
+	margin:0;
+	padding:0;
+	margin-left:3px;
+	background:url(../../images/common/card/widget_gender_m.gif) no-repeat;
+}
+
+.weibo_widget_hovercard_description {
+	margin:0;
+	padding:0;
+	border:0;
+	position:absolute;
+	top:48px;
+	left:74px;
+	color:#999;
+	width:190px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+
+.weibo_widget_hovercard_status {
+	margin:0;
+	padding:0;
+	border:0;
+	width:255px;
+	height:37px;
+	line-height:150%;
+	position:absolute;
+	top:71px;
+	left:10px;
+	color:#333;
+	word-wrap:break-word;
+	word-break:break-all;
+	overflow:hidden;
+}
+
+.weibo_widget_hovercard_status a:link,.weibo_widget_hovercard_status a:visited {
+	text-decoration:none;
+	color:#0082CB;
+}
+
+.weibo_widget_hovercard_status a:hover {
+	text-decoration:underline;
+	color:#0082CB;
+}
+
+.weibo_widget_hovercard_count {
+	margin:0;
+	padding:0;
+	border:0;
+	width:255px;
+	position:absolute;
+	top:116px;
+	left:10px;
+	color:#999;
+}
+
+.weibo_widget_hovercard_count_1 {
+	margin:0;
+	padding:0;
+	border:0;
+	float:left;
+	border-right:1px solid #CCC;
+	padding-right:10px;
+	margin-right:8px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+
+.weibo_widget_hovercard_count_2 {
+	margin:0;
+	padding:0;
+	border:0;
+	float:left;
+	padding-right:10px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+
+.weibo_widget_hovercard_count_link {
+	margin:0;
+	padding:0;
+	border:0;
+	line-height:13px;
+}
+
+.weibo_widget_hovercard_count_link a:link,.weibo_widget_hovercard_count_link a:visited {
+	text-decoration:none;
+	color:#0082CB;
+}
+
+.weibo_widget_hovercard_count_link a:hover {
+	text-decoration:underline;
+	color:#0082CB;
+}
+
+.weibo_widget_hovercard_tip_tl {
+	width:14px;
+	height:13px;
+	position:absolute;
+	top:-6px;
+	left:20px;
+	background:url(../../images/common/card/widget_tip_t.gif) no-repeat;
+}
+
+.weibo_widget_hovercard_tip_tr {
+	width:14px;
+	height:13px;
+	position:absolute;
+	top:-6px;
+	right:20px;
+	background:url(../../images/common/card/widget_tip_t.gif) no-repeat;
+}
+
+.weibo_widget_hovercard_tip_bl {
+	width:14px;
+	height:13px;
+	position:absolute;
+	top:177px;
+	left:20px;
+	background:url(../../images/common/card/widget_tip_b.gif) no-repeat;
+}
+
+.weibo_widget_hovercard_tip_br {
+	width:14px;
+	height:13px;
+	position:absolute;
+	top:177px;
+	right:20px;
+	background:url(../../images/common/card/widget_tip_b.gif) no-repeat;
+}
+
+.weibo_widget_hovercard_tip_lb {
+	width:14px;
+	height:13px;
+	position:absolute;
+	top:20px;
+	left:-7px;
+	background:url(../../images/common/card/widget_tip_l.gif) no-repeat;
+}
+
+.weibo_widget_hovercard_tip_lt {
+	width:14px;
+	height:13px;
+	position:absolute;
+	bottom:20px;
+	left:-7px;
+	background:url(../../images/common/card/widget_tip_l.gif) no-repeat;
+}
+
+.weibo_widget_hovercard_tip_rb {
+	width:14px;
+	height:13px;
+	position:absolute;
+	top:20px;
+	right:-7px;
+	background:url(../../images/common/card/widget_tip_r.gif) no-repeat;
+}
+
+.weibo_widget_hovercard_tip_rt {
+	width:14px;
+	height:13px;
+	position:absolute;
+	bottom:20px;
+	right:-7px;
+	background:url(../../images/common/card/widget_tip_r.gif) no-repeat;
+}
+
+.tsina_btn_add1,.tsina_btn_add2,.tsina_btn_done,.tsina_btn_dis {
+	display:inline-block;
+	margin:0;
+	padding:0;
+	padding-left:28px;
+	height:23px;
+	background-repeat:no-repeat;
+	overflow:hidden;
+}
+
+.tsina_btn_add1:link,.tsina_btn_add1:visited,.tsina_btn_add2:link,.tsina_btn_add2:visited,.tsina_btn_dis:link,.tsina_btn_dis:visited {
+	text-decoration:none;
+}
+
+.tsina_btn_add1:hover, {
+	text-decoration:none;
+	background-position:0 -70px;
+}
+
+.tsina_btn_add1:hover em {
+	background-position:right -105px;
+}
+
+.tsina_btn_add1 em,.tsina_btn_add2 em,.tsina_btn_done em,.tsina_btn_dis em {
+	font-style:normal;
+	margin:0;
+	padding:3px 12px 0 0;
+	height:23px;
+	display:inline-block;
+	background-position:right -35px;
+	background-repeat:no-repeat;
+	cursor:pointer;
+	line-height:18px;
+	line-height:20px;
+	font-size:12px;
+	font-weight:400;
+}
+
+.tsina_btn_add1,.tsina_btn_add1 em {
+	background-image:url(../../images/common/card/btn_add_2.gif);
+}
+
+.tsina_btn_add1:link,.tsina_btn_add1:visited,.tsina_btn_add1:hover,.tsina_btn_add1:hover em {
+	color:#fff;
+}
+
+.tsina_btn_add2,.tsina_btn_add2 em {
+	background-image:url(../../images/common/card/btn_add_1.gif);
+}
+
+.tsina_btn_add2:link,.tsina_btn_add2:visited,.tsina_btn_add2:hover,.tsina_btn_add2:hover em {
+	color:#333;
+}
+
+.tsina_btn_done,.tsina_btn_done em {
+	background-image:url(../../images/common/card/btn_add_3.gif);
+	cursor:default;
+}
+
+.tsina_btn_dis,.tsina_btn_dis em {
+	background-image:url(../../images/common/card/btn_add_4.gif);
+	cursor:default;
+	padding-left:3px;
+}
+
+.tsina_btn_dis {
+	padding-left:9px;
+}
+
+.tsina_btn_dis:link,.tsina_btn_dis:visited {
+	color:#7a7a7a;
+}
+
+.tsina_btn_dis img {
+	border:0;
+	display:block;
+	margin-top:3px;
+	float:left;
+}
+
+.tsina_btn_dis span.tsina_ico_ldg,.tsina_btn_dis span.tsina_ico_dis {
+	display:inline-block;
+	height:22px;
+	width:18px;
+	float:left;
+}
+
+.tsina_btn_dis span.tsina_ico_ldg {
+	background:url(../../images/common/card/tsina_loading.gif) 0 center no-repeat;
+}
+
+.tsina_btn_dis span.tsina_ico_dis {
+	background:url(../../images/common/card/tsina_logogray.gif) 0 center no-repeat;
+}
+
+.tsina_loading {
+	font-size:14px;
+	line-height:22px;
+	color:#666;
+}
+
+.tsina_loading span.tsina_ico_ldg {
+	background:url(../../images/common/card/tsina_loading.gif) 0 center no-repeat;
+	display:inline-block;
+	height:18px;
+	width:20px;
+	float:left;
+}
+
+.weibo_widget_connect_icon_th {
+	height:30px;
+	line-height:30px;
+	padding-left:35px;
+}
+
+address,caption,cite,code,dfn,em,th,var {
+	font-style:normal;
+	font-weight:400;
+}
+
+a em {
+	font-family:瀹嬩綋;
+	font-size:12px;
+}
+
+a.iframeatt {
+	display:inline-block;
+	height:20px;
+	padding-right:5px;
+	text-decoration:none;
+}
+
+a.iframeatt:hover {
+	text-decoration:none;
+}
+
+a.iframeatt em {
+	background:url(http://img.t.sinajs.cn/t35/appstyle/opent/images/connect/add_attention.gif) no-repeat;
+	line-height:20px;
+}
+
+a.attention_add {
+	background:#e3ffd5;
+	padding-left:5px;
+	border:solid 1px #d5f7c5;
+}
+
+a.attention_add em {
+	background-position:-2px -7px;
+	padding-left:10px;
+	color:#389a0a;
+}
+
+a.attention_already {
+	background:#f8f8f8;
+	padding-left:4px;
+	border:solid 1px #ddd;
+}
+
+a.attention_already em {
+	background-position:0 -28px;
+	padding-left:14px;
+	color:#999;
+}

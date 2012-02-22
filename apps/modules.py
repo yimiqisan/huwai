@@ -48,7 +48,7 @@ class UserDoc(Document):
             'live':     unicode,
             'created':  datetime,
             'qqid':     unicode,
-            'sinaid':     unicode,
+            'sina_access_token':     unicode,
             'added':    dict,
             'added_id': int,
     }

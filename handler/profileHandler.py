@@ -136,6 +136,34 @@ class SettingHandler(BaseHandler):
         return self.redirect('/account/setting/')
 #        self.render('profile/setting.html', **d)
 
+class SettingAlertHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self):
+        d = {}
+        self.render('profile/setting_alert.html', **d)
+    
+    @addslash
+    @session
+    def post(self):
+        return self.redirect('/account/setting/alert/')
+
+class SettingThirdPartHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self):
+        uid = self.SESSION['uid']
+        d = {}
+        u = User()
+        u.whois('_id', uid)
+        if u.nick:d['sina_access_token'] = u.sina_access_token
+        self.render('profile/setting_thirdpart.html', **d)
+    
+    @addslash
+    @session
+    def post(self):
+        return self.redirect('/account/setting/thirdpart/')
+
 class CpasswordHandler(BaseHandler):
     @addslash
     @session

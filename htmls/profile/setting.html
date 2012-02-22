@@ -29,14 +29,14 @@
 	<div id="tab">
 		<div class="Menubox">
 			<ul>
-				<li id="one1" onclick="setTab('one',1,4)" class="hover">基本设置</li>
-				<li id="one2" onclick="setTab('one',2,4)" style="display:none;">消息提示</li>
-				<li id="one3" onclick="setTab('one',3,4)" style="display:none;">微博绑定</li>
+				<li id="one1" class="hover">基本设置</li>
+				<li id="one2" ><a href="/account/setting/alert/">消息提示</a></li>
+				<li id="one3" ><a href="/account/setting/thirdpart/">微博绑定</a></li>
 				<li id="one4" onclick="setTab('one',4,4)" style="display:none;">邮件提醒</li>
 			</ul>
 		</div>
 		<div class="contentbox">
-			<div id="con_one_1" class="hover">
+			<div class="hover">
 				<form name="content-form" method="POST" action="/account/setting/">
 					<div class="li"><label class="lil">名号: <em class="needed"></em></label><div class="lir">
 						{% if ifNone(current_user) %}
@@ -75,9 +75,6 @@
 					<div class="li"><label class="lil"><em class="needed"></em></label><div class="lir"><input onclick="$('form').submit();" type="button" value="提交"></div></div>
 				</form>
 			</div>
-			<div id="con_one_2" style="display:none">消息提示</div>
-			<div id="con_one_3" style="display:none">微博绑定</div>
-			<div id="con_one_4" style="display:none">邮件提醒</div>
 		</div>
 	</div>
 {% end %}

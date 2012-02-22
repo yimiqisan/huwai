@@ -22,6 +22,8 @@ handlers = [(r"/", RootHandler),
             (r"/account/logout/", LogoutHandler),
             (r"/account/profile/", ProfileHandler),
             (r"/account/setting/", SettingHandler),
+            (r"/account/setting/alert/", SettingAlertHandler),
+            (r"/account/setting/thirdpart/", SettingThirdPartHandler),
             (r"/account/cpassword/", CpasswordHandler),
             (r"/account/thirdpart/", ThirdPartHandler),
             
@@ -55,6 +57,7 @@ handlers = [(r"/", RootHandler),
             
             (r"/check/event/", CheckEventHandler),
             
+            (r"/xd.html/?", SinaXDHandler),
             (r"/google9f2d915bcc519f6e.html", GoogleWebMasterHandler),
             (r"/306e81119936619cbfb5e703cca43e84.html", CDNZZHandler),
             (r"/t/", TestHandler),

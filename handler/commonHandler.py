@@ -59,6 +59,10 @@ class Error404Handler(BaseHandler):
     def get(self):
         self.render_alert(u"从前有个山，\n山里有个庙，\n庙里有个页面，\n现在找不到。")
     
+class SinaXDHandler(BaseHandler):
+    def get(self):
+        self.render("xd.html")
+    
 class GoogleWebMasterHandler(BaseHandler):
     def get(self):
         self.write('google-site-verification: google9f2d915bcc519f6e.html')
