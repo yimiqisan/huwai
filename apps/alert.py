@@ -15,7 +15,7 @@ import time
 from huwai.config import DB_CON, DB_NAME
 from modules import AlertDoc
 from api import API
-from user import User
+import user
 
 class Alert(object):
     def __init__(self, api=None):
@@ -45,36 +45,41 @@ class AlertAPI(API):
             return False
         return True
 
-    def _init_alert(self, owner, subject):
+    def _init_alert(self, owner, subject, **kwargs):
         r = self.one(owner=owner, subject=subject)
         if r[0] and r[1]:
             return r[1]['_id']
         else:
-            r = self.create(owner=owner, subject=subject, count=0)
+            r = self.create(owner=owner, subject=subject, count=0, **kwargs)
             return r[1] if r[0] else None
     
     def on_at(self, to):
-        u = User()
+        u = user.User()
         owner = u._api.nick2id(to)
         id = self._init_alert(owner, u'at')
         return self.incr(id) if id else False
     
     def on_rpat(self, to):
-        u = User()
+        u = user.User()
         owner = u._api.nick2id(to)
         id = self._init_alert(owner, u'rpat')
         return self.incr(id) if id else False
     
     def on_reply(self, to):
-        u = User()
+        u = user.User()
         owner = u._api.nick2id(to)
         id = self._init_alert(owner, u'reply')
         return self.incr(id) if id else False
     
     def on_join(self, to):
-        u = User()
+        u = user.User()
         owner = u._api.nick2id(to)
         id = self._init_alert(owner, u'join')
+        return self.incr(id) if id else False
+    
+    def on_pwd(self, owner, pwd):
+        u = user.User()
+        id = self._init_alert(owner, u'pwd', password=pwd)
         return self.incr(id) if id else False
     
     def click(self, owner, subject):

@@ -11,10 +11,12 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 import logging
 import uuid
 from datetime import datetime
+from md5 import md5
 
 from huwai.config import DB_CON, DB_NAME
 from modules import UserDoc
 from api import API
+import case
 
 from mail import TmpTable, Mail
 
@@ -46,16 +48,24 @@ class User(object):
         r = t._api.set(email)
         return m.send('ni hao ma', 'invite', r[1])
     
-    def register(self, nick, email, password, **kwargs):
+    def _fire_alert(self, owner, pwd):
+        c = case.get_case_object()
+        c.fire('a_pwd', o=owner, p=pwd)
+    
+    def register(self, nick, password=None, **info):
         r = self._api.is_nick_exist(nick)
         if r:return (False, '名号已被占用')
-        r = self._api.is_email_exist(email)
-        if r:return (False, '邮箱已被占用')
-        info = {'nick':nick, 'email':email, 'password':password}
-        info.update(kwargs)
+        email = info.get('email', None)
+        if email:
+            if self._api.is_email_exist(email):return (False, '邮箱已被占用')
+        if not password:
+            password = self.random_password()
+        pwd = unicode(md5(password).hexdigest())
+        info.update({'nick':nick, 'password':pwd})
         c = self._api.create(**info)
         if c[0]:
             self.info = info
+            self._fire_alert(info['_id'], password)
         else:
             self.info = None
         return c
@@ -64,12 +74,24 @@ class User(object):
         r = self._api.is_nick_exist(nick)
         if not r:return (False, '查无此人')
         c = self._api.one(nick=nick)
+        password = unicode(md5(password).hexdigest())
         if c[0] and (c[1]['password'] == password):
             self.info = c[1]
             return (True, c[1])
         self.info = None
         return (False, '用户名或密码错误')
-
+    
+    def reset_password(self, id, email):
+        pwd = self.random_password()
+        password = unicode(md5(pwd).hexdigest())
+        self._api.edit(id, password=password)
+        return (True, pwd)
+        
+    def random_password(self):
+        from string import digits, ascii_letters
+        from random import sample
+        seed = digits+ascii_letters
+        return ''.join(sample(seed, 6))
 
 class UserAPI(API):
     def __init__(self):
@@ -96,7 +118,6 @@ class UserAPI(API):
         return True
     
     def change_pwd(self, id, o, n, c):
-        
         self.edit(id, password=n)
     
     def check_email(self):

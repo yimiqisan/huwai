@@ -26,7 +26,9 @@ handlers = [(r"/", RootHandler),
             (r"/account/setting/thirdpart/", SettingThirdPartHandler),
             (r"/account/cpassword/", CpasswordHandler),
             (r"/account/thirdpart/", ThirdPartHandler),
+            (r"/bind/sina/", BindSinaHandler),
             
+            (r"/auth/", AuthHandler),
             (r"/auth/sina/", SinaLoginHandler),
             (r"/auth/qq/", QQLoginHandler),
             

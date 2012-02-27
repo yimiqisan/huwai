@@ -1,22 +1,25 @@
 {% extends ../frame.html %}
 
 {% block static %}
-	<script type="text/javascript" language="javascript" src="http://tjs.sjs.sinajs.cn/t3/platform/js/api/wb.js" charset="utf-8"></script>
-	<script language="javascript" type="text/javascript">
-		$(document).ready(function() {
-			WB.core.load(['connect', 'client', 'widget.base', 'widget.atWhere'], function() {
-//				var cfg = { key: '2798557074', xdpath: 'http://yuanhang.info/xd.html'};
-				var cfg = { key: '2798557074', xdpath: 'http://127.0.0.1:8000/xd.html'};
-				WB.connect.init(cfg);
-				WB.client.init(cfg);
-				WB.widget.base.connectButton(document.getElementById("connectBtn"),{
-					login:function(o){alert(o.screen_name);},
-					logout:function(){alert('logout');}
-				});
+	
+	<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2798557074"></script>
+	<script type="text/javascript">
+		WB2.anyWhere(function(W){
+			W.widget.connectButton({id: "wb_connect_btn"});
+			W.widget.connectButton({
+				id: "wb_connect_btn2",
+				callback : {
+					login:function(o){
+						alert("1: "+o.screen_name)
+					},
+					logout:function(){
+						alert('logout 1');
+					}
+				}
 			});
-		})
+		});
 	</script>
-	<link type="text/css" rel="stylesheet" href="http://tjs.sjs.sinajs.cn/t3/style/css/common/card.css" />
+	
 {% end %}
 {% block bodyleft %}
 	<div id="tab">
@@ -35,7 +38,7 @@
 						{% if ifNone(sina_access_token) %}
 							<a href="">已经绑定</a>
 						{% else %}
-							<span id="connectBtn"></span>
+							<span id="wb_connect_btn"></span>
 						{% end %}
 					</div></div>
 				</form>

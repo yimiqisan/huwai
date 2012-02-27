@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-profile.py
+authHandler.py
 
 Created by 刘 智勇 on 2011-09-24.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
@@ -20,7 +20,33 @@ from apps.oauth2 import APIClient, QQGraphMixin
 from apps.pstore import AvatarProcessor
 
 
-class LoginHandler(BaseHandler):
+class AuthHandler(BaseHandler):
+    @session
+    def add_user(self, **extra):
+        u = User()
+        n = kwargs.pop('nick')
+        if u._api.is_nick_exist(n):return self.render('profile/auth.html', **{'warning': '名称已存在', 'nick': n, 'extra': extra})
+        r = u.register(n, **extra)
+        if r[0]:
+            self.set_secure_cookie("user", n, 1)
+            uid = r[1]
+            self.SESSION['uid']=uid
+            if extra.has_key('photo'):self.save_avatar(extra['photo'])
+            for i in extra.keys():u._api.edit(uid, i=extra[i])
+            self.redirect('/account/profile')
+        else:
+            return self.render('profile/auth.html', **{'warning': r[1], 'nick': n, 'extra': extra})
+
+    @addslash
+    @session
+    def post(self):
+        u = User()
+        n = self.get_argument('nick', None)
+        extra = self.get_argument('extra', {})
+        if not n:return self.render('profile/auth.html', **{'warning': '名称为空', 'nick': n, 'extra': extra})
+        extra['nick'] = n
+        self.add_user(**extra)
+    
     @session
     def is_authed(self, key, value):
         u = User()
@@ -28,9 +54,23 @@ class LoginHandler(BaseHandler):
         if u.uid is None:
             return False
         else:
-            return u
+            self.set_secure_cookie("user", u.nick, 1)
+            self.SESSION['uid']=u._id
+            self.redirect('/account/profile')
+            return True
+    
+    def save_avatar(self, photo_url):
+        http = tornado.httpclient.AsyncHTTPClient()
+        http.fetch(photo_url, self.async_callback(self._on_save_avatar))
+    
+    @session
+    def _on_save_avatar(self, response):
+        uid = self.SESSION['uid']
+        p=AvatarProcessor(uid)
+        r = p.process(response.body)
+        self.finish()
 
-class SinaLoginHandler(LoginHandler):
+class SinaLoginHandler(AuthHandler):
     @addslash
     @session
     def get(self):
@@ -43,16 +83,11 @@ class SinaLoginHandler(LoginHandler):
             self.SESSION['sina_request_token'] = access_token
             client.set_access_token(access_token, r.expires_in)
             u = self.is_authed('sina_access_token', access_token)
-            if u:
-                self.set_secure_cookie("user", u.nick, 1)
-                self.SESSION['uid']=u._id
-                self.redirect('/account/profile')
-            else:
+            if not u:
                 uid = client.get.account__get_uid().uid
                 uinfo = client.get.users__show(uid=uid)
-                #{'domain': u'yimiqisan', 'avatar_large': u'http://tp2.sinaimg.cn/1683546773/180/5603268482/1', 'id': 1683546773, 'location': u'\u5317\u4eac \u671d\u9633\u533a', 'name': u'\u4e00\u7c73\u4e03\u4e092010', 'gender': u'm'}
-                extra_args = {'photo':uinfo['avatar_large'], 'sinaid':uinfo['id'], 'sina_access_token':access_token}
-                self.render('profile/thirdpart.html', extra=extra_args, nick=uinfo['name'])
+                kwargs = {'nick':uinfo['name'], 'photo':uinfo['avatar_large'], 'sinaid':uinfo['id'], 'sina_access_token':access_token}
+                self.add_user(**kwargs)
         else:
             url = client.get_authorize_url()
             self.redirect(url)
@@ -60,7 +95,7 @@ class SinaLoginHandler(LoginHandler):
 class SinaHandler(BaseHandler):
     pass
 
-class QQLoginHandler(LoginHandler, QQGraphMixin):
+class QQLoginHandler(AuthHandler, QQGraphMixin):
     @addslash
     @session
     @tornado.web.asynchronous

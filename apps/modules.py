@@ -55,7 +55,7 @@ class UserDoc(Document):
     
     indexes = [
         {
-            'fields':['_id', 'nick', 'email'],
+            'fields':['_id', 'nick'],
             'unique':True,
         },
     ]

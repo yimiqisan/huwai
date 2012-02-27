@@ -76,14 +76,14 @@ class RegisterHandler(BaseHandler):
         p = self.get_argument('password', None)
         if p is None:return self.render('profile/register.html', **{'warning': '您接头暗号是？', 'email':e})
         u = User()
-        r = u.register(n, e, p)
+        r = u.register(n, p, email=e)
         if r[0]:
             self.set_secure_cookie("user", n, 1)
             self.SESSION['uid']=r[1]
             self.redirect('/account/profile')
         else:
             return self.render('profile/register.html', **{'warning': r[1], 'email':e})
-    
+
 class LogoutHandler(BaseHandler):
     @addslash
     @session
@@ -187,5 +187,31 @@ class CpasswordHandler(BaseHandler):
         u._api.edit(uid, password=n)
         return self.redirect('/account/setting/')
 
+class BindSinaHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self):
+        CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/auth/sina/'
+        client = APIClient(config.SINA_CONSUME_KEY, config.SINA_CONSUME_SECRET, CALLBACK_URL)
+        code = self.get_argument('code', None)
+        if code:
+            r = client.request_access_token(code)
+            access_token = r.access_token
+            self.SESSION['sina_request_token'] = access_token
+            client.set_access_token(access_token, r.expires_in)
+            u = self.is_authed('sina_access_token', access_token)
+            if u:
+                self.set_secure_cookie("user", u.nick, 1)
+                self.SESSION['uid']=u._id
+                self.redirect('/account/profile')
+            else:
+                uid = client.get.account__get_uid().uid
+                uinfo = client.get.users__show(uid=uid)
+                #{'domain': u'yimiqisan', 'avatar_large': u'http://tp2.sinaimg.cn/1683546773/180/5603268482/1', 'id': 1683546773, 'location': u'\u5317\u4eac \u671d\u9633\u533a', 'name': u'\u4e00\u7c73\u4e03\u4e092010', 'gender': u'm'}
+                extra_args = {'photo':uinfo['avatar_large'], 'sinaid':uinfo['id'], 'sina_access_token':access_token}
+                self.render('profile/thirdpart.html', extra=extra_args, nick=uinfo['name'])
+        else:
+            url = client.get_authorize_url()
+            self.redirect(url)
 
 

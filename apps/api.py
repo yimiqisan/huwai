@@ -240,7 +240,78 @@ class API(object):
             logging.info(e)
             return (False, e)
         return (True, r)
-        
+    
+    def map(self, func, opts, **kwargs):
+        if kwargs == {}:
+            objs = self.collection.find()
+        else:
+            ret = self.collection.find(kwargs)
+            if not ret[0]:
+                return (False, 'error get objects')
+            objs = ret[1]
+        cnt = objs.count()
+        c = True
+        for i in xrange(cnt/100+1):
+            objr = objs[i*100:(i*100 + 100)]
+            for obj in objr:
+                r = func(obj, opts)
+                if not r:
+                    c = False
+                    break
+            if not c:
+                break
+        return (True, None)
+    
+    def map_tmp(self, func, opts):
+        all_entities = self.entities.objects.all()
+        cnt = all_entities.count()
+        c = True
+        for i in xrange(cnt/10000+1):
+            entities = all_entities[i*10000:(i*10000 + 10000)]
+            for entity in entities:
+                body = entity.body
+                added_id = entity.added_id
+                updated = entity.updated
+                data = zlib.decompress(body)
+                try:
+                    obj = Pickle.loads(data)
+                except:
+                    return (False, 'decode json error')
+                obj['added_id'] = added_id
+                obj['updated'] = updated
+                r = func(entity.eid, obj, opts)
+                if not r:
+                    c = False
+                    break
+            if not c:
+                break
+        return (True, None)
+    
+    def map_after(self, func, opts, point=datetime.strptime('2000-1-1', '%Y-%m-%d')):
+        all_entities = self.entities.objects.filter(updated__gt = point)
+        cnt = all_entities.count()
+        c = True
+        for i in xrange(cnt/10000+1):
+            entities = all_entities[i*10000:(i*10000 + 10000)]
+            for entity in entities:
+                body = entity.body
+                added_id = entity.added_id
+                updated = entity.updated
+                data = zlib.decompress(body)
+                try:
+                    obj = Pickle.loads(data)
+                except:
+                    return (False, 'decode json error')
+                obj['added_id'] = added_id
+                obj['updated'] = updated
+                r = func(entity.eid, obj, opts)
+                if not r:
+                    c = False
+                    break
+            if not c:
+                break
+        return (True, None)
+    
     def exist(self, key, value):
         try:
             return self.collection.one({key:value}) is not None

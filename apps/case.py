@@ -17,6 +17,7 @@ class Case:
         'a_rpat': True,
         'a_reply': True,
         'a_join': True,
+        'a_pwd': True,
     }
     _case_map = {}
     
@@ -26,6 +27,7 @@ class Case:
         self.on('a_rpat', a._api.on_rpat)
         self.on('a_reply', a._api.on_reply)
         self.on('a_join', a._api.on_join)
+        self.on('a_pwd', a._api.on_pwd)
     
     def on(self, case, func):
         if not self._case_map.has_key(case):
