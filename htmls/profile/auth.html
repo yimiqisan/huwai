@@ -1,0 +1,15 @@
+{% extends ../box.html %}
+
+{% block static %}{% end %}
+{% block box %}
+	<div class="agrbox boxmg lucency" style="width:400px;height:300px;">
+		<div style="margin:60px 0 0 10px;">
+			<form action="/auth/" method="POST">
+				<h1 style="color:red;font-size:20px;">昵称修改</h1><br/>
+				<span>绰号：</span><input name="nick" type=text style="width:300px;height:30px;"/><br/><br/>
+				<input name="next" type=hidden value="{{ extra }}"/>
+				<div style="padding-left:320px;"><input type=submit value="修改"/></div>
+			</form>
+		</div><br/>
+	</div>
+{% end %}
