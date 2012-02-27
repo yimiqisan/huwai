@@ -50,7 +50,7 @@ class User(object):
     
     def _fire_alert(self, owner, pwd):
         c = case.get_case_object()
-        c.fire('a_pwd', o=owner, p=pwd)
+        c.fire('a_pwd', owner=owner, pwd=pwd)
     
     def register(self, nick, password=None, **info):
         r = self._api.is_nick_exist(nick)
@@ -65,7 +65,7 @@ class User(object):
         c = self._api.create(**info)
         if c[0]:
             self.info = info
-            self._fire_alert(info['_id'], password)
+            self._fire_alert(c[1], password)
         else:
             self.info = None
         return c

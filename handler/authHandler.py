@@ -24,7 +24,7 @@ class AuthHandler(BaseHandler):
     @session
     def add_user(self, **extra):
         u = User()
-        n = kwargs.pop('nick')
+        n = extra.pop('nick')
         if u._api.is_nick_exist(n):return self.render('profile/auth.html', **{'warning': '名称已存在', 'nick': n, 'extra': extra})
         r = u.register(n, **extra)
         if r[0]:
