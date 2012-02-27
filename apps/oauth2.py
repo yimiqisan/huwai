@@ -160,7 +160,7 @@ class APIClient(object):
         self.post = HttpObject(self, _HTTP_POST)
         self.upload = HttpObject(self, _HTTP_UPLOAD)
 
-    def set_access_token(self, access_token, expires_in):
+    def set_access_token(self, access_token, expires_in=time.time()+3600):
         self.access_token = str(access_token)
         self.expires = float(expires_in)
 

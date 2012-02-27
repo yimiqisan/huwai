@@ -76,6 +76,10 @@ class TimeLineAPI(API):
         else:
             for at in at_list:c.fire('a_at', to=at)
     
+    def _fire_sina(self, owner, content):
+        c = case.get_case_object()
+        c.fire('s_update', uid=owner, content=content)
+    
     def save(self, content, owner=None, tid=None, channel=u'normal', **kwargs):
         if tid:
             a = Added_id(tid)
@@ -84,6 +88,7 @@ class TimeLineAPI(API):
             tid = self._flt_tpc(content)
         at_list = self._flt_at(content)
         self._fire_alert(channel, tid, at_list)
+        self._fire_sina(owner, content)
         return super(TimeLineAPI, self).create(owner=owner, content=content, at_list=at_list, topic=tid, channel=channel, **kwargs)
     
     def remove(self, id):
