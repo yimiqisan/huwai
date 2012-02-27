@@ -5,15 +5,14 @@
 	<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2798557074"></script>
 	<script type="text/javascript">
 		WB2.anyWhere(function(W){
-			W.widget.connectButton({id: "wb_connect_btn"});
 			W.widget.connectButton({
-				id: "wb_connect_btn2",
+				id: "wb_connect_btn",
 				callback : {
 					login:function(o){
-						alert("1: "+o.screen_name)
+						alert(o);
 					},
 					logout:function(){
-						alert('logout 1');
+						alert('logout');
 					}
 				}
 			});
@@ -39,6 +38,7 @@
 							<a href="">已经绑定</a>
 						{% else %}
 							<span id="wb_connect_btn"></span>
+							<a href="/auth/sina/"><img src="{{static_url('img/sina_24x24.png')}}"></a>
 						{% end %}
 					</div></div>
 				</form>

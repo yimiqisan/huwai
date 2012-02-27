@@ -22,6 +22,16 @@ from apps.pstore import AvatarProcessor
 
 class AuthHandler(BaseHandler):
     @session
+    def bind_user(self, **extra):
+        uid = self.SESSION['uid']
+        u = User()
+        r = u._api.edit(uid, **extra)
+        if r[0]:
+            self.redirect('/account/profile')
+        else:
+            return self.redirect('/account/setting/thirdpart/', **{'warning': r[1]})
+    
+    @session
     def add_user(self, **extra):
         u = User()
         n = extra.pop('nick')
@@ -32,17 +42,18 @@ class AuthHandler(BaseHandler):
             uid = r[1]
             self.SESSION['uid']=uid
             if extra.has_key('photo'):self.save_avatar(extra['photo'])
-            for i in extra.keys():u._api.edit(uid, i=extra[i])
+            u._api.edit(uid, **extra)
             self.redirect('/account/profile')
         else:
             return self.render('profile/auth.html', **{'warning': r[1], 'nick': n, 'extra': extra})
-
+    
     @addslash
     @session
     def post(self):
         u = User()
         n = self.get_argument('nick', None)
         extra = self.get_argument('extra', {})
+        if isinstance(extra, unicode):extra=eval(extra)
         if not n:return self.render('profile/auth.html', **{'warning': '名称为空', 'nick': n, 'extra': extra})
         extra['nick'] = n
         self.add_user(**extra)
@@ -74,6 +85,7 @@ class SinaLoginHandler(AuthHandler):
     @addslash
     @session
     def get(self):
+        uid = self.SESSION['uid']
         CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/auth/sina/'
         client = APIClient(config.SINA_CONSUME_KEY, config.SINA_CONSUME_SECRET, CALLBACK_URL)
         code = self.get_argument('code', None)
@@ -84,10 +96,14 @@ class SinaLoginHandler(AuthHandler):
             client.set_access_token(access_token, r.expires_in)
             u = self.is_authed('sina_access_token', access_token)
             if not u:
-                uid = client.get.account__get_uid().uid
-                uinfo = client.get.users__show(uid=uid)
-                kwargs = {'nick':uinfo['name'], 'photo':uinfo['avatar_large'], 'sinaid':uinfo['id'], 'sina_access_token':access_token}
-                self.add_user(**kwargs)
+                sinaid = client.get.account__get_uid().uid
+                uinfo = client.get.users__show(uid=sinaid)
+                if uid:
+                    kwargs = {'sinaid':uinfo['id'], 'sina_access_token':access_token}
+                    self.bind_user(**kwargs)
+                else:
+                    kwargs = {'nick':uinfo['name'], 'photo':uinfo['avatar_large'], 'sinaid':uinfo['id'], 'sina_access_token':access_token}
+                    self.add_user(**kwargs)
         else:
             url = client.get_authorize_url()
             self.redirect(url)
