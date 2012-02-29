@@ -136,10 +136,10 @@ class QQLoginHandler(AuthHandler, QQGraphMixin):
     def _on_register(self, response):
         uid = self.SESSION['uid']
         if uid:
-            kwargs = {'qqid':response['qqid']}
+            kwargs = {'qqid':unicode(response['qqid'])}
             self.bind_user(**kwargs)
         else:
-            kwargs = {'nick':response['nickname'], 'photo':response['figureurl_2'], 'qqid':response['qqid']}
+            kwargs = {'nick':unicode(response['nickname']), 'photo':response['figureurl_2'], 'qqid':unicode(response['qqid'])}
             self.add_user(**kwargs)
 
 class QQHandler(BaseHandler, QQGraphMixin):

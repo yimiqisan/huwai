@@ -17,6 +17,7 @@
 		<link rel="stylesheet" href="{{ static_url('css/frame.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ static_url('css/jquery.fancybox.css') }}" media="screen"/>
 		{% block static %}{% end %}
+		<link rel="shortcut icon" href="" type="image/x-icon">
 	</head>
 	<body style="background-image: url({{ static_url('img/bg.png') }});background-repeat: repeat;background-attachment: fixed;background-position: left top;">
 		<div id="shell">
@@ -44,7 +45,7 @@
 						</ul>
 					</span>
 				{% else %}
-					<span><a class="fancybox fancybox.ajax" href="/account/login/?next={{ request.uri }}">登陆</a></span>
+					<span><a class="fancybox fancybox.ajax" href="/account/login/?next={{ request.uri }}">登录</a></span>
 					<span><a  class="fancybox fancybox.frame" href="/account/thirdpart/"><img src="{{static_url('img/sina_24x24.png')}}"/></a></span>
 					<span><a class="fancybox fancybox.ajax" href="/account/register/?next={{ request.uri }}">注册</a></span>
 				{% end %}

@@ -1,4 +1,4 @@
-#showlist{background:#EDEDED;}
+#showlist{background:#EDEDED;width:775px;}
 #showlist ul{padding:10px;}
 #showlist ul li{margin-top:5px;padding:10px;border-bottom:1px solid #E1E4E5;}
 #showlist ul li:hover{background:#E1E4E5;}
