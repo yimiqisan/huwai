@@ -3,48 +3,17 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>户外地图</title>
-	<meta http-equiv="Pragma" content="no-cache">
-	<meta http-equiv="Expires" content="Sun, 6 Mar 2005 01:00:00 GMT">
 	<script src="http://img3.douban.com/js/packed_jquery.min6301986802.js"></script>
-	<script src="http://img3.douban.com/js/packed_douban504578906.js"></script>
-	<script src="http://img3.douban.com/js/separation/packed__all1312701400.js"></script>
 	<script type="text/javascript" src="http://img3.douban.com/js/packed_do7035717041.js" data-cfg-autoload="false"></script>
-	<style type="text/css">
-		/* preview */
-		#preview .row .field { line-height:inherit; width:65px; }
-		#preview .row .item { padding-top:1px; }
-		/* address mini-item */
-		.mini-item { margin-bottom:5px; }
-		span#loc { position:relative; top:2px; padding-right:10px; }
-		.time-splitor { margin-right:10px; }
-		#event-map-wrap { margin-top:5px; }
-		#desc { font-size:14px; border:1px solid #ddd; resize:vertical;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
-		#desc:focus { border:1px solid darkGray; }
-		.item.priv label,
-		.no-need-fee { margin-right:30px; }
-		.item.poster object { float:left; }
-		.item.poster .poster-msg { margin-left:100px; margin-bottom:5px; padding-top:4px; }
-		.hint { color:gray; }
-		.hint option { color:black; }
-		label.hint { display:block; position:absolute; }
-	</style>
 	<script>
 		// 时间定期举办：dui.Dialog
 		Do.add('dialog-css', {path: 'http://img3.douban.com/css/ui/packed_dialog9553472722.css', type: 'css'});
 		Do.add('dialog', {path: 'http://img3.douban.com/js/ui/packed_dialog6160013120.js', type: 'js', requires: ['dialog-css']});
-		// Date Picker
-		Do.add('jQueryUI', {path:'http://img3.douban.com/js/lib/packed_jquery.ui.min3996326299.js', type:'js'});
-		Do.add('datePickerCss', {path:'http://img3.douban.com/css/packed_datepicker5815226041.css', type:'css'});
-		Do.add('datePicker', {path:'http://img3.douban.com/js/lib/packed_jquery.ui.datepicker.min4227681688.js', type:"js", requires: ['jQueryUI','datePickerCss']});
-		// Editable Select
-		Do.add('editable-select-css', {path: 'http://img3.douban.com/css/lib/packed_jquery.editable-select2463386474.css', type: 'css'});
-		Do.add('editable-select', {path: 'http://img3.douban.com/js/lib/packed_jquery.editable-select5845427014.js', type:"js", requires: ['editable-select-css']});
 		// Form Validation && input placeholder
 		Do.add('validate', {path: 'http://img3.douban.com/js/lib/packed_validate9226952288.js', type:'js'});
 		// uploadify
 		Do.add('uploadify', {path: 'http://img3.douban.com/js/lib/packed_jquery.uploadify3707512005.js', type:'js', requires: ['http://img3.douban.com/js/packed_swfobject4154961822.js']});
 	</script>
-	<link rel="shortcut icon" href="" type="image/x-icon">
 </head>
 <body>
 	<div id="wrapper" class="fwrap">
@@ -87,7 +56,6 @@
 							<div class="item">
 								<input id="latLgt" name="latLgt" type="hidden" />
 								<input id="bits_2" type="checkbox" checked="checked" name="bits_2"/>
-								<label for="bits_2">显示地图<span class="tip"> (推荐，没有准确地图定位的活动可能被管理员驳回) </span></label>
 								<div id="event-map-wrap"></div>
 							</div>
 						</div>
