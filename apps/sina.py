@@ -20,4 +20,5 @@ def update(uid, content):
     if not token:return False
     client = APIClient(config.SINA_CONSUME_KEY, config.SINA_CONSUME_SECRET)
     client.set_access_token(token)
-    return client.post.statuses__update(status=content)
+    client.post.statuses__update(status=content)
+    return True

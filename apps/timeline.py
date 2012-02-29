@@ -88,7 +88,7 @@ class TimeLineAPI(API):
             tid = self._flt_tpc(content)
         at_list = self._flt_at(content)
         self._fire_alert(channel, tid, at_list)
-        self._fire_sina(owner, content)
+        #self._fire_sina(owner, content)
         return super(TimeLineAPI, self).create(owner=owner, content=content, at_list=at_list, topic=tid, channel=channel, **kwargs)
     
     def remove(self, id):

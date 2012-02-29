@@ -39,6 +39,8 @@ handlers = [(r"/", RootHandler),
             (r"/event/", EventListHandler),
             (r"/event/loading/", EventCheckHandler),
             
+            (r"/map/", MapHandler),
+            
             (r"/alert/(.*)/", AlertListHandler),
 #            (r"/alert/(.{32})/", AlertHandler),
             (r"/a/alert/", AjaxAlertHandler),

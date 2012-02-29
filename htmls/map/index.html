@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="ua-windows ua-webkit">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>户外地图</title>
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="Sun, 6 Mar 2005 01:00:00 GMT">
+	<script src="http://img3.douban.com/js/packed_jquery.min6301986802.js"></script>
+	<script src="http://img3.douban.com/js/packed_douban504578906.js"></script>
+	<script src="http://img3.douban.com/js/separation/packed__all1312701400.js"></script>
+	<script type="text/javascript" src="http://img3.douban.com/js/packed_do7035717041.js" data-cfg-autoload="false"></script>
+	<style type="text/css">
+		/* preview */
+		#preview .row .field { line-height:inherit; width:65px; }
+		#preview .row .item { padding-top:1px; }
+		/* address mini-item */
+		.mini-item { margin-bottom:5px; }
+		span#loc { position:relative; top:2px; padding-right:10px; }
+		.time-splitor { margin-right:10px; }
+		#event-map-wrap { margin-top:5px; }
+		#desc { font-size:14px; border:1px solid #ddd; resize:vertical;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
+		#desc:focus { border:1px solid darkGray; }
+		.item.priv label,
+		.no-need-fee { margin-right:30px; }
+		.item.poster object { float:left; }
+		.item.poster .poster-msg { margin-left:100px; margin-bottom:5px; padding-top:4px; }
+		.hint { color:gray; }
+		.hint option { color:black; }
+		label.hint { display:block; position:absolute; }
+	</style>
+	<script>
+		// 时间定期举办：dui.Dialog
+		Do.add('dialog-css', {path: 'http://img3.douban.com/css/ui/packed_dialog9553472722.css', type: 'css'});
+		Do.add('dialog', {path: 'http://img3.douban.com/js/ui/packed_dialog6160013120.js', type: 'js', requires: ['dialog-css']});
+		// Date Picker
+		Do.add('jQueryUI', {path:'http://img3.douban.com/js/lib/packed_jquery.ui.min3996326299.js', type:'js'});
+		Do.add('datePickerCss', {path:'http://img3.douban.com/css/packed_datepicker5815226041.css', type:'css'});
+		Do.add('datePicker', {path:'http://img3.douban.com/js/lib/packed_jquery.ui.datepicker.min4227681688.js', type:"js", requires: ['jQueryUI','datePickerCss']});
+		// Editable Select
+		Do.add('editable-select-css', {path: 'http://img3.douban.com/css/lib/packed_jquery.editable-select2463386474.css', type: 'css'});
+		Do.add('editable-select', {path: 'http://img3.douban.com/js/lib/packed_jquery.editable-select5845427014.js', type:"js", requires: ['editable-select-css']});
+		// Form Validation && input placeholder
+		Do.add('validate', {path: 'http://img3.douban.com/js/lib/packed_validate9226952288.js', type:'js'});
+		// uploadify
+		Do.add('uploadify', {path: 'http://img3.douban.com/js/lib/packed_jquery.uploadify3707512005.js', type:'js', requires: ['http://img3.douban.com/js/packed_swfobject4154961822.js']});
+	</script>
+    <link rel="shortcut icon" href="http://img3.douban.com/favicon.ico" type="image/x-icon">
+</head>
+<body>
+	<div id="wrapper" class="fwrap">
+		<div id="content">
+			<div class="grid-16-8 clearfix">
+				<div class="article">
+					<form id="eform" name="lzform" action="" method="post" autocomplete="off"><div style="display:none;"><input type="hidden" name="ck" value="Z1lC"/></div>
+						<div class="row">
+							<div class="item extra-tips page-address">
+								<input id="loc_id" name="loc_id" type="hidden" value="108288"/>
+								<span class="all-address-field">
+									<span id="loc">北京</span>
+									<select class="basic-input" id="district_id" name="district_id">
+										<option value="0">城区</option>
+										<option value="128519">东城区</option>
+										<option value="128520">西城区</option>
+										<option value="128521">崇文区</option>
+										<option value="128522">宣武区</option>
+										<option value="128523">朝阳区</option>
+										<option value="128524">丰台区</option>
+										<option value="128525">石景山区</option>
+										<option value="128526">海淀区</option>
+										<option value="128527">门头沟区</option>
+										<option value="128528">房山区</option>
+										<option value="128529">通州区</option>
+										<option value="128530">顺义区</option>
+										<option value="128531">昌平区</option>
+										<option value="128532">大兴区</option>
+										<option value="128533">怀柔区</option>
+										<option value="128534">平谷区</option>
+										<option value="128535">密云县</option>
+										<option value="128536">延庆县</option>
+									</select>
+									<select class="basic-input" id="region_id" name="region_id"><option value="0">商圈(可选)</option></select>
+									<input class="basic-input" id="street_address" name="street_address" type="text" size="34" placeholder="详细地址" value=""/>
+								</span>
+								<input id="location-latLng" type="hidden" name="location-latLng" value="" />
+								<div class="suggest-wrap"></div>
+							</div>
+							<div class="item">
+								<input id="latLgt" name="latLgt" type="hidden" />
+								<input id="bits_2" type="checkbox" checked="checked" name="bits_2"/>
+								<label for="bits_2">显示地图<span class="tip"> (推荐，没有准确地图定位的活动可能被管理员驳回) </span></label>
+								<div id="event-map-wrap"></div>
+							</div>
+						</div>
+						
+						
+						
+						
+    <div class="row">
+        <label class="field" for="poster">海报</label>
+        <div class="item poster">
+            <input id="poster" type="file" name="poster"/>
+            <div class="poster-msg">
+                <span id="loading-state"></span>
+            </div>
+            <div class="clearfix"></div>
+            <div id="poster_preview"></div>
+        </div>
+    </div>
+
+
+
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	Do(function(){
+		var more = $('.top-nav-more a.more').click(function(e){
+			e.preventDefault();
+			var el = $(e.currentTarget), p = el.parent();
+			p.toggleClass('on');
+			return false;
+		});
+		$('body').click(function(){
+			more.parent().removeClass('on');
+		});
+	});
+	Do = (typeof Do === 'undefined')? $ : Do;
+	Do(function(){
+		var lnk = $('#db-nav-location .label').click(function(e){
+			var el = $(e.currentTarget), p = el.parent();
+			p.toggleClass('label-active');
+			if (p.hasClass('label-active')) {
+				el.next().show();
+			} else {
+				el.next().hide();
+			}
+			return false;
+		});
+		$('body').click(function(){
+			lnk.parent().removeClass('label-active');
+			lnk.next().hide();
+		});
+	});
+	Do(function(){
+		$('label.inp-placeholder').each(function(i) {
+			var label = $(this);
+			var inp = $('#' + label.attr('for'));
+			function checkLabel() {
+				if (inp.val() === '') {
+					label.show();
+				} else {
+					label.hide();
+				}
+			}
+			inp.focus(function() {
+				label.addClass('inp-active');
+				checkLabel();
+			}).bind('input keyup', checkLabel).blur(function() {
+				label.removeClass('inp-active');
+				checkLabel();
+			});
+		});
+	});
+	</script>
+   
+	<script type="text/javascript">
+	Do('dialog', function() {
+		var dlg = dui.Dialog();
+		var repeatDialogSetting = {
+			title: '定期举办',
+			content: $('#tmpl-repeat-dialog'),
+			iframe: true,
+			width: '365',
+			buttons: [{
+				text: '确定',
+				method: function(o) {
+					// simple validation
+					var repeatWeekday = $('.repeat-weekday', o.node),
+					errorMsg = $('.error', o.node),
+					cycleSecBtn = $('input[name="repeat-cycle"]:eq(1)', o.node),
+					pass = false,
+					repeat_dayVal = [],
+					weekday_str = [], repeat_state;
+					if (cycleSecBtn.attr('checked')) { //每周
+						repeatWeekday.find('input').each(function() {
+							if ($(this).attr('checked')) {
+								pass = true;
+								return false;
+							}
+						});
+						repeat_state = '每周';
+						} else { // 每天
+							pass = true;
+							repeat_state = '每天';
+						}
+						if (pass) {
+							// collect data to input:hidden
+							if (cycleSecBtn.attr('checked')) {
+								repeat_state = '每周';
+								$('#repeat_type').val('week');
+								repeatWeekday.find('input[name="monday"]').attr('checked') && (repeat_dayVal.push('1'), weekday_str.push('一'));
+								repeatWeekday.find('input[name="tuesday"]').attr('checked') && (repeat_dayVal.push('2'), weekday_str.push('二'));
+								repeatWeekday.find('input[name="wednesday"]').attr('checked') && (repeat_dayVal.push('3'), weekday_str.push('三'));
+								repeatWeekday.find('input[name="thursday"]').attr('checked') && (repeat_dayVal.push('4'), weekday_str.push('四'));
+								repeatWeekday.find('input[name="friday"]').attr('checked') && (repeat_dayVal.push('5'), weekday_str.push('五'));
+								repeatWeekday.find('input[name="saturday"]').attr('checked') && (repeat_dayVal.push('6'), weekday_str.push('六'));
+								repeatWeekday.find('input[name="sunday"]').attr('checked') && (repeat_dayVal.push('7'), weekday_str.push('日'));
+								$('#repeat_day').val(repeat_dayVal.join(','));
+								if (weekday_str.length === 7) {
+									repeat_state = '每天';
+								} else {
+									repeat_state += weekday_str.join(', ');
+								}
+							} else {
+								$('#repeat_type').val('day');
+							}
+							// change repeat-indicator
+							$('#repeat_time').siblings('.repeat-indicator').show().find('.repeat-state').text('：' + repeat_state);
+							errorMsg.hide();
+							o.update();
+							o.close();
+						} else {
+							errorMsg.show();
+							o.update();
+						}
+					}
+				},{
+					text: '取消',
+					method: function(o) {
+						if ($('#repeat_type').val() === '') {
+							$('#repeat_time').attr('checked', false);
+						}
+						o.close();
+					}
+					}]
+				};
+    // Bind Event: brief
+    function _bindBriefEvent(o) {
+        /*  event binding */
+        // repeat-cycle: 2 radio
+        var repeatWeekday = $('.repeat-weekday',o.node),
+        repeatCycle = $('.repeat-cycle', o.node),
+        repeatBrief = $('.repeat-brief',o.node);
+        var cycleFirBtn = $('input[name="repeat-cycle"]:eq(0)', o.node);
+        var cycleSecBtn = $('input[name="repeat-cycle"]:eq(1)', o.node);
+        cycleFirBtn.click(function() {
+            repeatWeekday.hide();
+            o.update();
+        });
+        cycleSecBtn.click(function() {
+            repeatWeekday.show();
+            o.update();
+        });
+        // repeat week
+        repeatWeekday.delegate('input','click',setBrief);
+        cycleFirBtn.click(setBrief);
+        cycleSecBtn.click(setBrief);
+    }
+    function setBrief() {
+        var begin_day_str = $('#begin_day').val();
+        var end_day_str = $('#end_day').val();
+        var begin_time_str = $('#begin_time').val();
+        var end_time_str = $('#end_time').val();
+        var day_str = (begin_day_str && end_day_str) ?
+            begin_day_str + ' 至 ' + end_day_str + '<br/> ' : '';
+        var time_str = (begin_time_str !== '时间' && end_time_str !== '时间' &&
+                        begin_time_str !== '' && end_time_str !== '') ?
+            begin_time_str + '-' + end_time_str : '';
+        var brief = day_str;
+        var weekday_str = [];
+        var weekday  = $('.repeat-weekday', dlg.node);
+        if ($('input[name="repeat-cycle"]:eq(0)',dlg.node).attr('checked')) {
+            brief += '每天';
+        } else {
+            weekday.find('input[name="monday"]').attr('checked') && weekday_str.push('一');
+            weekday.find('input[name="tuesday"]').attr('checked') && weekday_str.push('二');
+            weekday.find('input[name="wednesday"]').attr('checked') && weekday_str.push('三');
+            weekday.find('input[name="thursday"]').attr('checked') && weekday_str.push('四');
+            weekday.find('input[name="friday"]').attr('checked') && weekday_str.push('五');
+            weekday.find('input[name="saturday"]').attr('checked') && weekday_str.push('六');
+            weekday.find('input[name="sunday"]').attr('checked') && weekday_str.push('日');
+            weekday_str.length === 7 ? brief += '每天' :
+                brief += '每周' + weekday_str.join(', ');
+        }
+        brief += ' ' + time_str + ' 举办';
+        $('.repeat-brief', dlg.node).html(brief);
+    }
+    function _restoreDialogState(o) {
+        var weekday = $('.repeat-weekday' ,o.node)
+        if ($('#repeat_type').val() === 'week') {
+            $('input[name="repeat-cycle"]:eq(1)', o.node).attr('checked', true);
+            var selected = $('#repeat_day').val().split(',');
+            weekday.show();
+            for (var i=selected.length-1; i>=0; i--) {
+                switch(selected[i]) {
+                    case '1':
+                        weekday.find('input[name="monday"]').attr('checked', true);
+                        break;
+                    case '2':
+                        weekday.find('input[name="tuesday"]').attr('checked', true);
+                        break;
+                    case '3':
+                        weekday.find('input[name="wednesday"]').attr('checked', true);
+                        break;
+                    case '4':
+                        weekday.find('input[name="thursday"]').attr('checked', true);
+                        break;
+                    case '5':
+                        weekday.find('input[name="friday"]').attr('checked', true);
+                        break;
+                    case '6':
+                        weekday.find('input[name="saturday"]').attr('checked', true);
+                        break;
+                    case '7':
+                        weekday.find('input[name="sunday"]').attr('checked', true);
+                        break;
+                }
+            }
+        } else {
+            $('input[name="repeat-cycle"]:first', o.node).attr('checked', true);
+            weekday.hide();
+        }
+        // default: set today's weekday selected
+        if ($('#repeat_day').val() === '') {
+            var today = new Date;
+            switch(today.getDay()) {
+                case 1:
+                    weekday.find('input[name="monday"]').attr('checked', true);
+                    break;
+                case 2:
+                    weekday.find('input[name="tuesday"]').attr('checked', true);
+                    break;
+                case 3:
+                    weekday.find('input[name="wednesday"]').attr('checked', true);
+                    break;
+                case 4:
+                    weekday.find('input[name="thursday"]').attr('checked', true);
+                    break;
+                case 5:
+                    weekday.find('input[name="friday"]').attr('checked', true);
+                    break;
+                case 6:
+                    weekday.find('input[name="saturday"]').attr('checked', true);
+                    break;
+                case 7:
+                    weekday.find('input[name="sunday"]').attr('checked', true);
+                    break;
+            }
+        }
+        setBrief();
+    }
+    $('#repeat_time').click(function() {
+        var $this = $(this);
+        var repeatIndicator = $(this).siblings('.repeat-indicator');
+        if ($this.attr('checked')) {
+            if ($('#repeat_type').val() === '') {
+                openDialog();
+            } else {
+                repeatIndicator.show();
+            }
+        } else {
+            repeatIndicator.hide();
+        }
+    });
+    $('#repeat_time').siblings('.repeat-indicator').find('.repeat-change').click(openDialog);
+    function openDialog() {
+        // for overlay
+        var top = getPageScroll().top;
+        var $html = $('html');
+        var $doc = $(document);
+        var docHeight = $doc.height();
+        var $win = $(window);
+        var winHeight = $win.height();
+        var overlay = $('<div class="overlay"></div>');
+        // set, initialize, and open the dialog
+        dlg.set(repeatDialogSetting);
+        _bindBriefEvent(dlg);
+        dlg.node.bind('dialog:close', function() {
+            $html.height(docHeight).css({'overflow': 'auto'}).scrollTop(top);
+            overlay.remove();
+            if ($('#repeat_type').val() === '') {
+                $('#repeat_time').attr('checked', false);
+            }
+        });
+        _restoreDialogState(dlg);
+        $html.height(winHeight).css({'overflow': 'hidden'}).scrollTop(top);
+        $('body').append(overlay);
+        $('div.overlay').css({'width': $doc.width(), 'height': docHeight, 'display': 'block'});
+        dlg.open().update();
+    }
+});
+Do('editable-select', 'datePicker', 'validate', function() {
+    // datapicker & editable select & initialize field
+    $('.editable-select').editableSelect({
+        bg_iframe: true,
+        item_then_scroll: 20
+    });
+    $('#begin_time, #end_time').each(function() {
+        if ($(this).val() === '时间') {
+            $(this).addClass('hint');
+        }
+    });
+    $('#begin_time, #end_time').bind('blur', function() {
+        var $this = $(this);
+        if ($this.val() === '时间') {
+            $this.addClass('hint');
+        } else {
+            $this.removeClass('hint');
+        }
+    });
+    $('#begin_day, #end_day').datepicker({
+        dateFormat: 'yy-mm-dd',
+        dayNamesMin: ['日','一','二','三','四','五','六'],
+        monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+        prevText: '<<',
+        nextText: '>>'
+    });
+    // initialize begin day & time
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth() + 1;
+    var day = today.getDate();
+    var todayString = year + '-' + month + '-' + day
+    $('#begin_day').val() || $('#begin_day').val(todayString);
+    if ($('#begin_time').val() === '时间') {
+        var time = today.getHours();
+        if (today.getMinutes() < 30) {
+            time += ':30';
+        } else {
+            time = (time + 1)%24;
+            time += ':00';
+        }
+        $('#begin_time').val(time).trigger('blur');
+    }
+    // validation
+    function monthDiff(d1, d2) {
+        var months;
+        months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth();
+        months += d2.getMonth();
+        return months;
+    }
+    function getDate(dateInput, timeInput) {
+        var dayArray = dateInput.val().split('-');
+        var timeArray = timeInput.val().split(':');
+        // month starts from 0
+        return new Date(dayArray[0], dayArray[1] - 1, dayArray[2], timeArray[0], timeArray[1]);
+    }
+    function timeLimitCheck(typeVal, limit) {
+        if (type.val() !== typeVal) {
+            // if not that type, just pass
+            return false;
+        }
+        var begin = getDate(begin_day, begin_time);
+        var end = getDate(end_day, end_time);
+        return monthDiff(begin,end) > limit;
+    }
+    var type = $('#type');
+    var begin_day = $('#begin_day');
+    var begin_time = $('#begin_time');
+    var end_day = $('#end_day');
+    var end_time = $('#end_time');
+    var loc_id = $('#loc_id');
+    var district_id = $('#district_id');
+    var street_address = $('#street_address');
+    var optionMsg = {
+        loc: '城市名',
+        street_address: '详细地址'
+    };
+    var validateError = {
+        title: {
+            isNull: '请输入活动标题',
+            tooLong: '最多32个汉字'
+        },
+        type: {
+            isNull: '请选择活动类型'
+        },
+        time: {
+            begin_day_isNull: '请输入开始日期',
+            begin_time_isNull: '请选择开始时间',
+            begin_time_invalidFormat: '请输入正确的开始时间',
+            end_day_isNull: '请输入结束日期',
+            end_time_isNull: '请输入结束时间',
+            end_time_invalidFormat: '请输入正确的结束时间',
+            seeYouLater: '不能创建三个月以后才开始的活动',
+            outdated: '结束时间已过',
+            timeTravel: '结束时间不能早于起始时间',
+            longerThan2Months: '电影活动持续时间不能超过2个月',
+            longerThan3Months: '旅行活动持续时间不能超过3个月',
+            longerThan4Months: '展览活动持续时间不能超过4个月'
+        },
+        timeRepeat: {
+            timeTravel: '定期举办时，结束时间不能早于开始时间'
+        },
+        address: {
+            loc_id_isNull: '请输入城市',
+            district_isNull: '请选择城区',
+            street_address_isNull: '请输入具体地址'
+        },
+        desc: {
+            isNull: '请输入简介',
+            tooLong: '最多4000个汉字'
+        },
+        average: {
+            invalidFormat: '请填写数字',
+            isNegative: '请填写正数',
+            tooMuch: '人均费用不能超过99999999元'
+        }
+    },
+    validateRules = {
+        title: {
+            elems: '#title',
+            isNull: function(el) {
+                return !$.trim(el.val());
+            },
+            tooLong: function(el) {
+                return $.trim(el.val()).replace(/[^\x00-\xff]/g, '豆瓣').length > 64;
+            }
+        },
+        type: {
+            elems: '#type',
+            isNull: function(el) {
+                return el.val() == 0;
+            }
+        },
+        time: {
+            elems: '#end_time',
+            begin_day_isNull: function() {
+                return !$.trim(begin_day.val());
+            },
+            begin_time_isNull: function() {
+                return !$.trim(begin_time.val());
+            },
+            begin_time_invalidFormat: function() {
+                var time_val = $.trim(begin_time.val());
+                var time_reg = /^(\d{1,2}):(\d{1,2})$/
+                var all_num_reg = /^\d{4}$/;
+                var temp;
+                if (all_num_reg.test(time_val)) {
+                    time_val = time_val.slice(0,2) + ':' + time_val.slice(2,4);
+                }
+                time_val = time_val.replace('：', ':');
+                if (!time_reg.test(time_val)) {
+                    return true;
+                }
+                temp = time_reg.exec(time_val);
+                var hour = temp[1];
+                var minute = temp[2];
+                if (parseInt(hour, 10) < 24 && parseInt(minute, 10) < 60) {
+                    if (hour.length === 1) {
+                        hour = '0' + hour;
+                    }
+                    if (minute.length === 1) {
+                        minute = '0' + minute;
+                    }
+                    begin_time.val(hour + ':' + minute);
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            end_day_isNull: function() {
+                return !$.trim(end_day.val());
+            },
+            end_time_isNull: function() {
+                return !$.trim(end_time.val());
+            },
+            end_time_invalidFormat: function() {
+                var time_val = $.trim(end_time.val());
+                var time_reg = /^(\d{1,2}):(\d{1,2})$/
+                var all_num_reg = /^\d{4}$/;
+                var temp;
+                if (all_num_reg.test(time_val)) {
+                    time_val = time_val.slice(0,2) + ':' + time_val.slice(2,4);
+                }
+                time_val = time_val.replace('：', ':');
+                if (!time_reg.test(time_val)) {
+                    return true;
+                }
+                temp = time_reg.exec(time_val);
+                var hour = temp[1];
+                var minute = temp[2];
+                if (parseInt(hour, 10) < 24 && parseInt(minute, 10) < 60) {
+                    if (hour.length === 1) {
+                        hour = '0' + hour;
+                    }
+                    if (minute.length === 1) {
+                        minute = '0' + minute;
+                    }
+                    end_time.val(hour + ':' + minute);
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            seeYouLater: function() {
+                return getDate(begin_day, begin_time) > new Date((new Date()).getTime() + 3*30*24*60*60*1000);
+            },
+            outdated: function() {
+                return getDate(end_day, end_time) < new Date;
+            },
+            timeTravel: function() {
+                var begin = getDate(begin_day, begin_time);
+                var end = getDate(end_day, end_time);
+                return end < begin
+            },
+            longerThan2Months: function() {
+                // 电影活动时间不能长于2个月
+                return timeLimitCheck('18', 2);
+            },
+            longerThan3Months: function() {
+                // 旅行活动时间不能长于3个月
+                return timeLimitCheck('16', 3);
+            },
+            longerThan4Months: function() {
+                // 展览活动时间不能长于4个月
+                return timeLimitCheck('12', 4);
+            }
+        },
+        timeRepeat: {
+            elems: 'label[for="repeat_time"]',
+            timeTravel: function() {
+                if ($('#repeat_time').attr('checked')) {
+                    return begin_time.val() > end_time.val();
+                } else {
+                    return false;
+                }
+            }
+        },
+        address: {
+            elems: '#street_address',
+            loc_id_isNull: function() {
+                return !$.trim(loc_id.val());
+            },
+            district_isNull: function() {
+                if (district_id.find('option').length <= 1) {
+                    // 没有城区
+                    return false;
+                }
+                return district_id.val() == 0;
+            },
+            street_address_isNull: function() {
+                return !$.trim(street_address.val());
+            }
+        },
+        desc: {
+            elems: '#desc',
+            isNull: function(el) {
+                return !$.trim(el.val());
+            },
+            tooLong: function(el) {
+                return el.val().length > 4000;
+            }
+        },
+        average: {
+            elems: '#average',
+            isNegative: function(el) {
+                if (!$('input[name="fee"]:eq(1)').attr('checked')) {
+                    // when it's hide, pass validate
+                    return false
+                }
+                return (el.val() < 0);
+            },
+            invalidFormat: function(el) {
+                if (!$('input[name="fee"]:eq(1)').attr('checked')) {
+                    // when it's hide, pass validate
+                    return false
+                }
+                // if it's empty, return false;
+                // if it's not empty, check format:
+                //     if it's all number, return false;
+                //     if it's not all numbers, return true -> Invalid Format
+                return !!$.trim(el.val()) && !/^\d*[0-9](\.\d*[0-9])?$/.test(el.val());
+            },
+            tooMuch: function(el) {
+                if (!$('input[name="fee"]:eq(1)').attr('checked')) {
+                    // when it's hide, pass validate
+                    return false
+                }
+                return parseFloat(el.val(),10) > 99999999;
+            }
+        }
+    };
+    $('form').validateForm(validateRules, validateError, optionMsg, null);
+    $('#eform').bind('hasError', function() {
+        var eform = $(this);
+        if (eform.find('.has-error').length > 0) {
+            // rollback
+            $('html, body').animate({
+                scrollTop: eform.find('.has-error:first').offset().top
+            });
+            return;
+        }
+    });
+});
+// Placeholder
+Do(function() {
+    /**
+      * A utility function for adding placeholder
+      * @o {string, or dom object...} will be param of $()
+      */
+    var addPlaceholder = function(target) {
+        if (!$(target).is('input[type="text"]')) {
+            return false;
+        }
+        if ('placeholder' in document.createElement('input')) {
+            //return false;
+        }
+        var o = $(target),
+        placeholder = o.attr('placeholder');
+        if (o.val() === '') {
+            o.addClass('hint');
+            o.val(placeholder);
+        }
+        o.focus(function() {
+            if (o.is('.hint')) {
+                o.val('');
+                o.removeClass('hint');
+            }
+        }).blur(function() {
+            if (o.val() === '') {
+                o.addClass('hint').val(placeholder);
+            }
+        });
+    }
+    //addPlaceholder('#street_address');
+    //addPlaceholder('#loc');
+    $('select').each(function() {
+        if ($(this).val() == 0) {
+            $(this).addClass('hint');
+        }
+    });
+    $('select').bind('change.placeholder', function() {
+        var $this = $(this);
+        if ($this.val() == 0) {
+            $this.addClass('hint');
+        } else {
+            $this.removeClass('hint');
+        }
+    });
+    $('#begin_day, #end_day').change(function() {
+        $(this).blur();
+    });
+});
+/**
+  * - Poster Uploading. requires uploadify
+  */
+Do('uploadify', function() {
+    var poster = $('#poster');
+    var ERR_LIMIT = '文件太大，图片大小应小于5M';
+    var NODE_STATE = '#loading-state';
+    var CSS_ERRROR = 'loading-error';
+    poster.uploadify({
+        'uploader': '/swf/uploadify.swf',
+        'expressInstall':'/swf/expressInstall.swf',
+        'script': '/j/location/upload_poster',
+        'scriptData': {
+            'dbcl2': '2074346:igC8Vr+/zX8',
+            'eid': $('input[name="eid"]').val(),
+            'ck': 'Z1lC'
+        },
+        'auto': true,
+        'multi': false,
+        'buttonText': '',
+        'buttonImg': 'http://img3.douban.com/pics/upload-btns.png',
+        'width': 97,
+        'height': 29,
+        'rollover': true,
+        'cancelImg': 'http://img3.douban.com/pics/cancel.png',
+        'sizeLimit': 1024 * 1000 * 5,
+        'fileExt': '*.jpeg;*.gif;*.jpg;*.png;',
+        'fileDesc': '图片文件',
+        'onError': function(event,ID,fileObj,errorObj) {
+            if (errorObj.type == 'File Size') {
+                $(NODE_STATE).addClass(CSS_ERRROR).text(ERR_LIMIT);
+            }
+        },
+        'onComplete': function(e, ID, fileObj, response, data) {
+            $('#loading-state').hide();
+            var json = $.parseJSON(response);
+            var img = new Image();
+            img.src = json.url;
+            $('#poster_preview').empty().append(img);
+        },
+        'onProgress': function(e, ID, fileObj, data) {
+            $(NODE_STATE).show().
+                removeClass(CSS_ERRROR).
+                text('上传中...' + data.percentage + '%');
+        },
+        'onSWFReady': function(){
+            Do.delay(1000, function(){
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = "http://maps.google.cn/maps/api/js?sensor=false&callback=loadMap";
+                document.body.appendChild(script);
+            });
+        }
+    });
+});
+/** - Fee. average cost: hide/show
+  * - Form reset
+  * - City - District - Area: ajax loading
+  */
+Do(function() {
+    // Form reset
+    $('#eform').get(0).reset();
+    // Repeat boot
+    var repeat_time = $('#repeat_time');
+    var repeat_indicator = repeat_time.siblings('.repeat-indicator');
+    var repeat_state = repeat_indicator.children('.repeat-state');
+    var repeat_type = $('#repeat_type');
+    var repeat_day = $('#repeat_day');
+    if (repeat_time.attr('checked')) {
+        repeat_indicator.show();
+    }
+    if (repeat_type.val() === 'day') {
+        repeat_state.text('：每天');
+    } else if (repeat_type.val() === 'week') {
+        var selected = repeat_day.val().split(',');
+        var day = {
+            '1': '一',
+            '2': '二',
+            '3': '三',
+            '4': '四',
+            '5': '五',
+            '6': '六',
+            '7': '日'
+        };
+        var dayText = [];
+        for (var i=selected.length-1; i>=0; i--) {
+            dayText.unshift(day[selected[i]]);
+        }
+        repeat_state.text('：' + (dayText.length == 7 ? '每天' : ('每周' + dayText.join('、'))));
+    }
+    // Fee. Average Cost: hide/show
+    var feeField = $('.feeField');
+    $('input[name="fee"]:first').attr('checked') && feeField.css({visibility: 'hidden'});
+    $('input[name="fee"]:eq(0)').click(function() {
+        feeField.css({'visibility':'hidden'});
+        $('#average').val('');
+    });
+    $('input[name="fee"]:eq(1)').click(function() {
+        feeField.css({'visibility':'visible'});
+    });
+    if ($('input[name="fee"]:eq(0)').attr('checked')) {
+        feeField.css({'visibility':'hidden'});
+    }
+    // City - District - Area: ajax loading
+    var loc = $('#loc'),
+        loc_id = $('#loc_id'),
+        district_id = $('#district_id'),
+        region_id = $('#region_id');
+    district_id.change(function(e) {
+        district_id.val() != 0 && $.ajax({
+            url: '/j/location/business_area',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                loc_id: loc_id.val(),
+                ck: 'Z1lC',
+                district_id: district_id.val()
+            },
+            success: function(data) {
+                if (!data.r) {
+                    return false;
+                }
+                var regionArray = data.region,
+                    length = regionArray.length,
+                    option,
+                    text,
+                    docFrag = document.createDocumentFragment();
+                option = document.createElement('option');
+                text = document.createTextNode('商圈(可选)');
+                option.appendChild(text);
+                option.setAttribute('value','0');
+                docFrag.appendChild(option);
+                for (var i = 0; i < length; i++) {
+                    option = document.createElement('option');
+                    text = document.createTextNode(regionArray[i].name);
+                    option.setAttribute('value', regionArray[i].id);
+                    option.appendChild(text);
+                    docFrag.appendChild(option);
+                }
+                region_id.empty().append(docFrag).trigger('change.placeholder');
+            }
+        });
+    });
+});
+/**
+* - Sync value to true field
+* - New address hide / show
+*/
+Do(function() {
+    // True Field
+    var loc_id = $('#loc_id');
+    var district_id = $('#district_id');
+    var region_id = $('#region_id');
+    var street_addr = $('#street_address');
+    // Proxy Form Field
+    var loc = $('#loc');
+    var addrItem = $('.item.page-address');
+    var all_address_field = loc.parent('.all-address-field');
+    // Sync Proxy Field to True Field
+    loc.change(function() {
+        var item = addrItem;
+        $.ajax({
+            url: '/j/location/city_district',
+            type: 'post',
+            data: {
+                ck: 'Z1lC',
+                city_name: loc.val()
+            },
+            success: loadDistrict
+        });
+    });
+    function loadDistrict(j) {
+        if (!district_id.length) return;
+        var item = addrItem;
+        if (j.r) { // right city
+            var distArray = j.children,
+                length = distArray.length,
+            option, text,
+            docFrag = document.createDocumentFragment();
+            // sync
+            loc_id.val(j.id);
+            // reset district
+            option = document.createElement('option');
+            text = document.createTextNode('城区');
+            option.appendChild(text);
+            option.setAttribute('value','0');
+            docFrag.appendChild(option);
+            for (var i=0; i < distArray.length; i++) {
+                option = document.createElement('option');
+                text = document.createTextNode(distArray[i].name);
+                option.setAttribute('value', distArray[i].id);
+                option.appendChild(text);
+                docFrag.appendChild(option);
+            }
+            district_id.empty().append(docFrag).trigger('change.placeholder');
+            // reset region
+            option = document.createElement('option');
+            text = document.createTextNode('商圈(可选)');
+            option.appendChild(text);
+            option.setAttribute('value','0');
+            region_id.empty().append(option).trigger('change.placeholder');
+        } else {
+            option = item.find('.validate-option'),
+            error = item.find('.validate-error');
+            option.hide();
+            if (error.length === 0) {
+                $('<span class="validate-error">城市有误</span>').appendTo(item).show();
+            } else {
+                error.show().html('城市有误');
+            }
+            loc_id.val('');
+            item.addClass('has-error');
+        }
+    }
+    function _loadRegion(data_district_id,data_region_id) {
+        $.ajax({
+            url: '/j/location/business_area',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                ck: 'Z1lC',
+                loc_id: loc_id.val(),
+                district_id: data_district_id
+            },
+            success: function(data) {
+                if (!data.r) { return false; }
+                var regionArray = data.region,
+                    length = regionArray.length,
+                    option,
+                    text,
+                    docFrag = document.createDocumentFragment();
+                option = document.createElement('option');
+                text = document.createTextNode('商圈(可选)');
+                option.appendChild(text);
+                option.setAttribute('value','0');
+                docFrag.appendChild(option);
+                for (var i = 0; i < length; i++) {
+                    option = document.createElement('option');
+                    text = document.createTextNode(regionArray[i].name);
+                    option.setAttribute('value', regionArray[i].id);
+                    option.appendChild(text);
+                    docFrag.appendChild(option);
+                }
+                region_id.empty().
+                    append(docFrag).
+                    val(data_region_id).
+                    trigger('blur');
+                if($('#bits_2').is(':checked')){
+                    street_addr.trigger('blur');
+                }
+            }
+        });
+    }
+    // Sync Recent Address to True Field
+    addrItem.find('.recent-addr').click(function(e) {
+        var $this = $(this);
+        var data_loc_id = $this.attr('data_loc_id');
+        var data_loc = $this.attr('data_loc');
+        var data_district_id = $this.attr('data_district_id');
+        var data_region_id = $this.attr('data_region_id');
+        var data_street_address = $this.attr('data_street_address');
+        all_address_field.hide();
+        // 隐藏错误提示
+        $('.page-address .validate-error').hide();
+        loc.parents('.item').find('label.hint').hide();
+        // Sync loc_id, street_address-
+        loc_id.val(data_loc_id);
+        loc.is('input') && loc.val(data_loc);
+        loc.is('span') && loc.text(data_loc);
+        street_addr.val(data_street_address);
+        $.ajax({
+            url: '/j/location/city_district',
+            type: 'post',
+            data: {
+                ck: 'Z1lC',
+                city_name: data_loc
+            },
+            success: function(j) {
+                loadDistrict(j);
+                district_id.val(data_district_id).trigger('blur');
+                _loadRegion(data_district_id, data_region_id);
+            }
+        });
+    }).each(function() { // boot up loc_id, district_id, etc
+        if (!$(this).attr('checked')) {
+            return;
+        }
+        var $this = $(this);
+        var data_loc_id = $this.attr('data_loc_id');
+        var data_loc = $this.parent('label').text().split(' ')[0];
+        var data_district_id = $this.attr('data_district_id');
+        var data_region_id = $this.attr('data_region_id');
+        var data_street_address = $this.attr('data_street_address');
+        // Hide fields
+        all_address_field.hide();
+        loc.parents('.item').find('label.hint').hide();
+        // Sync loc_id, street_address-
+        loc_id.val(data_loc_id);
+        loc.is('input') && loc.val(data_loc);
+        loc.is('span') && loc.text(data_loc);
+        street_addr.val(data_street_address).blur();
+        $.ajax({
+            url: '/j/location/city_district',
+            type: 'post',
+            data: {
+                ck: 'Z1lC',
+                city_name: data_loc
+            },
+            success: function(j) {
+                loadDistrict(j);
+                district_id.val(data_district_id).trigger('change.placeholder');
+                _loadRegion(data_district_id, data_region_id);
+            }
+        });
+    });
+    addrItem.find('.new-addr').click(function() {
+        if (loc.is('input')) {
+            loc.val('');
+            loc_id.val('');
+            district_id.find('option:gt(0)').remove();
+            region_id.find('option:gt(0)').remove();
+        }
+        district_id.val('0').trigger('change.placeholder');
+        region_id.val('0').trigger('change.placeholder');
+        street_addr.val('');
+        if($('#bits_2').is(':checked')){
+            street_addr.trigger('blur');
+        }
+        // 隐藏错误提示
+        $('.page-address .validate-error').hide();
+        all_address_field.show();
+        loc.parents('.item').find('label.hint').show();
+    });
+});
+// Preview and rollback
+Do(function() {
+    function stringToDate(dateString) {
+        var array = dateString.split('-');
+        return new Date(array[0], array[1]-1, array[2]);
+    }
+    function dateToFormattedString(date) {
+        return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+    }
+    function dayToChineseDay(day) {
+        var cDay;
+        switch(day) {
+            case 1:
+                cDay = '周一';
+                break;
+            case 2:
+                cDay = '周二';
+                break;
+            case 3:
+                cDay = '周三';
+                break;
+            case 4:
+                cDay = '周四';
+                break;
+            case 5:
+                cDay = '周五';
+                break;
+            case 6:
+                cDay = '周六';
+                break;
+            case 7:
+                cDay = '周日';
+                break;
+        }
+        return cDay;
+    }
+    // preview
+    $('#preview_form').click(function() {
+        var begin_day = $('#begin_day');
+        var begin_time = $('#begin_time');
+        var end_day = $('#end_day');
+        var end_time = $('#end_time');
+        var eform = $('#eform');
+        eform.data('validateForm').validate();
+        if (eform.find('.has-error').length > 0) {
+            // rollback
+            $('html, body').animate({
+                scrollTop: eform.find('.has-error:first').offset().top
+            });
+            return;
+        }
+        eform.hide();
+        var preview = $('#preview');
+        var titleText = $('#title').val();
+        var typeText = $('#type').find('option:selected').text();
+        // Time Brief Text
+        var beginTimeText, endTimeText;
+        var begin_day_date = stringToDate(begin_day.val());
+        var end_day_date = stringToDate(end_day.val());
+        // Format: 2011年9月21日 周三
+        beginTimeText = dateToFormattedString(begin_day_date) +
+            ' ' + dayToChineseDay(begin_day_date.getDay());
+        endTimeText = dateToFormattedString(end_day_date) +
+            ' ' + dayToChineseDay(end_day_date.getDay());
+        if (!$('#repeat_time').attr('checked')) {
+            // 非定期
+            beginTimeText += ' ' + begin_time.val();
+            endTimeText += ' ' + end_time.val();
+        } else {
+            // 定期
+            beginTimeText += '起 ' + $('#repeat_time').siblings('.repeat-indicator').children('.repeat-state').text().slice(1) +
+                ' ' + begin_time.val() +
+                '-' + end_time.val();
+        }
+        var addressText = ($('#loc').is('span') ? $('#loc').text() : $('#loc').val()) +
+            $('#district_id').find('option:selected').text() +
+            $('#street_address').val();
+        var descHTML = $('#desc').val().replace(/\n/g, '<br/>').replace(/\n\n+/g, '<br/><br/>');
+        var priv = eform.find('.item.priv').find('input:checked').parent('label').text();
+        var allow = $('#allow_others').attr('checked') ? $('#allow_others').parent('label').text() : '';
+        var need_apply = $('#need_apply').attr('checked') ? $('#need_apply').parent('label').text() : '';
+        var poster = $('#poster_preview').find('img').clone();
+        var fee = $('input[name="fee"]:checked').val() == '0' ?
+                      '免费' :
+                      (!$('#average').val() ? '需要' : '每人' + $('#average').val() + '元');
+        var latLng = $('#location-latLng').val(),
+            $img = dui.iMap.staticMap({center: latLng, size: '310x260'});
+        preview.children('.title').
+            find('.item').
+            text(titleText);
+        preview.children('.type').
+            find('.item').
+            text(typeText);
+        preview.children('.begin-time').
+            find('.item').
+            html(beginTimeText);
+        preview.children('.end-time').
+            find('.item').
+            html(endTimeText);
+        preview.children('.address').
+            find('.item.text').
+            text(addressText).
+        end().
+            find('.item.map').
+            empty().append($img);
+        preview.children('.description').
+            find('.item').
+            html(descHTML);
+        preview.children('.participant').
+            find('.item.priv').
+            text($.trim(priv)).
+        end().
+            find('.item.allow').
+            text($.trim(allow)).
+        end().
+            find('.item.need-apply').
+            text($.trim(need_apply));
+        preview.children('.poster').
+            find('.item.image').
+            empty().append(poster.length !== 0 ? poster : '未上传');
+        preview.children('.fee').
+            find('.item').
+            text(fee);
+        preview.children('.footer').
+            find('input[type="submit"]').
+            click(function(e) {
+                e.preventDefault();
+                eform.get(0).submit();
+            }).
+        end().
+            find('.continue-edit').
+            click(function(e) {
+                e.preventDefault();
+                preview.hide();
+                eform.show();
+            });
+        preview.show();
+        $('html, body').animate({ scrollTop:0}, 'slow');
+    });
+});
+Do('dialog', function() {
+    $('#cancel_form').click(function(e) {
+        e.preventDefault();
+        var dlg = dui.Dialog({
+            title: '取消创建同城活动',
+            content: '确认取消后，当前活动内容将不被保存，确定要放弃编辑吗？',
+            iframe: true,
+            width: '370',
+            buttons: [{
+                text: '确定离开',
+                method: function(o) {
+                    history.back();
+                }
+            }, {
+                text: '留在此页',
+                method: function(o) {
+                    o.close();
+                }
+            }]
+        });
+        dlg.open();
+    });
+});
+// get scrollbar info
+function getPageScroll() {
+    var t, l, w, h;
+    if (document.documentElement && document.documentElement.scrollTop) {
+        t = document.documentElement.scrollTop;
+        l = document.documentElement.scrollLeft;
+        w = document.documentElement.scrollWidth;
+        h = document.documentElement.scrollHeight;
+    } else if (document.body) {
+        t = document.body.scrollTop;
+        l = document.body.scrollLeft;
+        w = document.body.scrollWidth;
+        h = document.body.scrollHeight;
+    }
+    return { top: t, left: l, width: w, height: h };
+}
+// 异步加载 google map
+function loadMap(){
+    Do.add('imap', {path: 'http://img3.douban.com/js/ui/packed_imap2031263059.js', type: 'js', requires: ['jQueryUI', 'dialog-css', 'dialog']});
+    Do('imap', function(){
+        var infowindows = [];
+        $.fn.iMap = function(){
+            var map;
+            // 自动搜索
+            this.autoSearch = function(){
+                var start = new Date(),
+                    end = '';
+                $(this).bind('keyup', function(){
+                    var $this = $(this),
+                        $map = $('#event-map'),
+                        $city = $('#loc'),
+                        city = $city.is('input')? $city.val(): $city.text(),
+                        $street = $('#street_address'),
+                        street = $.trim($street.val()),
+                        address = city + '市' + street;
+                    end = new Date();
+                    function _successHandle(map, result){
+                        var latLng = result.geometry.location,
+                            marker = dui.iMap.createMarker(map, {clickable: false, draggable: false, latLng: latLng});
+                        dui.iMap.setCenter(map, {latLng: latLng});
+                        zoom2center({map: map, marker: marker, infowindow: '', latLng: latLng});
+                        $('#location-latLng').val(latLng.lat() + ',' + latLng.lng());
+                    }
+                    if(end - start > 2000 && address.length > 1){
+                        var geocoder = new google.maps.Geocoder();
+                         geocoder.geocode({
+                            address: address
+                        },function(results, status){
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                var map = dui.iMap.createMap($map, {width: 310, height: 260, panControl: false, mapTypeControl: false, zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL}});
+                                dui.iMap.search({ele: '#event-map', map: map, address: address, success: _successHandle, fail: function(){}});
+                            }
+                        });
+                        start = end;
+                    }
+                });
+            };
+            // 显示、隐藏
+            this.toggle = function(){
+                var $this = $(this),
+                    $mapWrap = $('#event-map-wrap'),
+                    $city = $('#loc'),
+                    city = $city.is('input')? $city.val(): $city.text(),
+                    $street = $('#street_address'),
+                    street = $.trim($street.val()),
+                    address = city + '市' + street;
+                function _success(map, result){
+                    var latLng = result.geometry.location,
+                        marker = dui.iMap.createMarker(map, {draggable: false, latLng: latLng});
+                    dui.iMap.setCenter(map, {latLng: latLng});
+                    zoom2center({map: map, marker: marker, infowindow: '', latLng: latLng});
+                    $('#location-latLng').val(latLng.lat() + ',' + latLng.lng());
+                }
+                // 搜索无结果时的回调函数
+                function _fail(map){
+                    var marker = dui.iMap.createMarker(map),
+                        $content = $('<div><h3 style="font-size:12px;font-weight:normal;">你输入的地址在地图上找不到</h3><p style="font-size:12px;">请重新输入或<a id="btn-manual-mark" href="#">手动标记</a></p></div>'),
+                        infowindow = dui.iMap.infowindow(map, marker, {content: $content.get(0)});
+                    infowindow.open(map, marker);
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                    $content.find('#btn-manual-mark').one('click', _manual);
+                };
+                function _init($checkbox, location){
+                    if($checkbox.is(':checked')){
+                        var $map = $('<div id="event-map"></div>');
+                        // 在地图初始化之前，所需的dom一定要初始化比如show完毕。
+                        $mapWrap.empty().append($map).show();
+                        map = dui.iMap.createMap($map, {width: 310, height: 260, panControl: false, mapTypeControl: false});
+                        if($.trim(location) !== ''){
+                            dui.iMap.search({ele: '#event-map', map: map, address: location, success: _success, fail: _fail});
+                        }
+                    }else{
+                        $mapWrap.empty().hide();
+                        $('#street_address').unbind();
+                    }
+                }
+                $this.bind('click', function(e){
+                    var _city = $city.text(),
+                        _street = $.trim($street.val()),
+                        _address = _city + _street;
+                    _init($this, _address);
+                });
+                // 页面初始化时
+                _init($this, address);
+            };
+            // 地址提示
+            this.suggest = function(ele, map){
+                $(this).autocomplete({
+                    appendTo: ele,
+                    source: function(request, response) {
+                        var geocoder = new google.maps.Geocoder(),
+                            $city = $('#loc'),
+                            city = $city.is('input')? $city.val(): $city.text(),
+                            $district = $('#district_id'),
+                            district = $district.find(':selected').val() == 0? '': $district.find(':selected').text(),
+                            address = $('#manual-mark-map').parents('.dui-dialog').is(':visible')? request.term: city + district + request.term;
+                        geocoder.geocode( {'address': address}, function(results, status) {
+                            response($.map(results, function(item) {
+                                return {
+                                    label:  item.formatted_address,
+                                    value: item.formatted_address,
+                                    latitude: item.geometry.location.lat(),
+                                    longitude: item.geometry.location.lng()
+                                }
+                            }));
+                        });
+                    },
+                    select: function(event, ui) {
+                        var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude),
+                            marker = dui.iMap.createMarker(map, {latLng: location});
+                        dui.iMap.setCenter(map, {latLng: location});
+                        map.setZoom(15);
+                    }
+                });
+            }
+            return this;
+        };
+        // 手动标注地址
+        function _manual(e){
+            // 搜索
+            function _search(map, address){
+                function _success(map, result){
+                    var latLng = result.geometry.location,
+                        marker = dui.iMap.createMarker(map, {draggable: true, latLng: latLng}),
+                        content = '<div class="info-window"><div class-"info-win-bd">拖动此图标在地图上标注位置</div></div>',
+                        infowindow = dui.iMap.infowindow(map, marker, {content: content}),
+                        dragStart,
+                        dragEnd;
+                    dui.iMap.setCenter(map, {latLng: latLng});
+                    setTimeout(function(){
+                        infowindow.open(map, marker);
+                    }, 0);
+                    infowindows.push(infowindow);
+                    dui.iMap.bind(map, 'zoom', function() {
+                        marker.setMap(null);
+                        marker = dui.iMap.createMarker(map, {draggable: true, latLng: latLng}),
+                        dui.iMap.setCenter(map, {latLng: latLng});
+                        setTimeout(function(){
+                            infowindow.open(map, marker);
+                        }, 0);
+                        dui.iMap.bind(marker, 'dragstart', _dragstart);
+                        dui.iMap.bind(marker, 'dragend', _dragend);
+                    });
+                    function _dragstart(e){
+                        dui.iMap.removeOverlay(infowindows);
+                        infowindow.setMap(null);
+                        google.maps.event.clearListeners(map, 'zoom_changed');
+                    }
+                    function _dragend(e){
+                        var info = '<div class="info-window" style="height:100px;"><div class="info-win-bd"><p>是否将新位置设置为你的默认位置？(可以继续拖动图标标注)</p><a class="btn-save" href="#">保存</a><a class="btn-cancel" href="#">取消</a></div>',
+                            infowindow = dui.iMap.infowindow(map, marker, {content: info, maxHeight: 1000}),
+                            latLng = e.latLng;
+                        dui.iMap.setCenter(map, {latLng: latLng});
+                        setTimeout(function(){
+                            infowindow.open(map, marker);
+                        }, 0);
+                        dui.iMap.bind(map, 'zoom', function() {
+                            marker.setMap(null);
+                            marker = dui.iMap.createMarker(map, {draggable: true, latLng: latLng}),
+                            dui.iMap.setCenter(map, {latLng: latLng});
+                            setTimeout(function(){
+                                infowindow.open(map, marker);
+                            }, 0);
+                        });
+                        // 保存手动标注地址
+                        $('.info-window .btn-save').live('click', function(e){
+                            e.preventDefault();
+                            $('.dui-dialog-close').trigger('click');
+                            var $map = $('#event-map'),
+                                map = dui.iMap.createMap($map, {zoom:16, width: 310, height: 260, panControl: false, mapTypeControl: false, zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL}}),
+                                marker = dui.iMap.createMarker(map, {latLng: latLng}),
+                                $content = $('<div class="info-window"><div class="info-win-hd">' + $('#street_address').val() + '</div><div class="info-win-bd"><a href="#">手动标记</a></div></div>'),
+                                infowindow = dui.iMap.infowindow(map, marker, {content: $content.get(0)});
+                            dui.iMap.setCenter(map, {latLng: latLng});
+                            setTimeout(function(){
+                                infowindow.open(map, marker);
+                            }, 0);
+                            dui.iMap.bind(map, 'zoom', function() {
+                                marker.setMap(null);
+                                marker = dui.iMap.createMarker(map, {draggable: false, latLng: latLng}),
+                                dui.iMap.setCenter(map, {latLng: latLng});
+                                setTimeout(function(){
+                                    infowindow.open(map, marker);
+                                }, 0);
+                            });
+                            $('#location-latLng').val(latLng.lat() + ',' + latLng.lng());
+                            $content.find('a').one('click', function(e){
+                                _manual(e);
+                                return false;
+                            });
+                            return false;
+                        });
+                        // 取消手动标注地址
+                        $('.info-window .btn-cancel').live('click', function(e){
+                            e.preventDefault();
+                            $('.dui-dialog-close').trigger('click');
+                            $('#street_address').trigger('blur');
+                            return false;
+                        });
+                    }
+                    // 拖拽事件
+                    dragStart = dui.iMap.bind(marker, 'dragstart', _dragstart);
+                    dragEnd = dui.iMap.bind(marker, 'dragend', _dragend);
+                }
+                dui.iMap.search({map: map, address: address, success: _success});
+            }
+            e.preventDefault();
+            var $doc = $(document),
+                docHeight = $doc.height(),
+                $win = $(window),
+                winHeight = $win.height(),
+                $html = $('html'),
+                $city = $('#loc'),
+                _city = $city.is('input')? $city.val(): $city.text(),
+                $district = $('#district_id'),
+                _district = $district.find(':selected').val() == 0? '': $district.find(':selected').text(),
+                _address = _city + '市' + _district;;
+            // 遮罩
+            var top = getPageScroll().top;
+            $html.height(winHeight).css({'overflow': 'hidden'}).scrollTop(top);
+            $('body').append($('<div class="overlay"></div>'));
+            $('div.overlay').css({'width': $doc.width(), 'height': docHeight, 'display': 'block'});
+            var content = '<div id="manual-mark-map"><div class="map"></div></div>',
+                dlg = dui.Dialog({
+                    title: '手动标注地点',
+                    width: 600,
+                    iframe: true,
+                    content: content
+                });
+            dlg.node.find('.bd').css({padding:0});
+            dlg.open();
+            // 这里有一个坑
+            // 如果地图初始化放在 dlg.open() 之前
+            // 地图资源会加载不完全
+            var map = dui.iMap.createMap($('#manual-mark-map .map'), {zoom: 16, searchControl: false, width: 600, height: 400, panControl: true, mapTypeControl: true, zoomControl: true, zoomControlOptions: {style: google.maps.ZoomControlStyle.LARGE}});
+            dlg.update();
+            _search(map, _address);
+            // 关闭dialog时，同时关闭遮罩，页面回到之前位置
+            dlg.node.find('.dui-dialog-close').bind('click', function(e){
+                e.preventDefault();
+                $html.height(docHeight).css({'overflow': 'auto'}).scrollTop(top);
+                $('.overlay').remove();
+                // 这里触发地址栏的失焦事件会导致 autosearch 事件
+                // 使得无法保存手动标记地点的座标
+                //$('#street_address').trigger('blur');
+            });
+        };
+        // 改变地图缩放级别时，保证地标在地图中心
+        function zoom2center(options){
+            var defaults = {
+                    map: '',
+                    marker: '',
+                    infowindow: '',
+                    latLng: '',
+                    callback: function(){}
+                },
+                opts = $.extend(defaults, options || {});
+            dui.iMap.bind(opts.map, 'zoom', function() {
+                dui.iMap.setCenter(opts.map, {latLng: opts.latLng});
+                if(opts.infowindow){
+                    setTimeout(function(){
+                        opts.infowindow.open(opts.map, opts.marker);
+                    }, 0);
+                }
+                opts.callback();
+            });
+        }
+        // 地图的自动搜索
+        function autosearch(){
+            // 选中了显示地图时
+            if($('#bits_2').is(':checked')){
+                var $this = $(this),
+                    $city = $('#loc'),
+                    city = $city.is('input')? $city.val(): $city.text(),
+                    $street = $('#street_address'),
+                    street = $.trim($street.val()),
+                    address = city + '市'  + street,
+                    $map = $('#event-map'),
+                    map = dui.iMap.createMap($map, {width: 310, height: 260, panControl: false, mapTypeControl: false, zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL}});
+                // 搜索成功
+                function successHandle(map, result){
+                    var latLng = result.geometry.location,
+                        marker = dui.iMap.createMarker(map, {clickable: false, draggable: false, latLng: latLng}),
+                        $content = $('<div class="info-window"><div class="info-win-hd">' + result.formatted_address + '</div><div class="info-win-bd"><a id="btn-manual-mark" href="#">手动标记</a></div></div>'),
+                        infowindow = dui.iMap.infowindow(map, marker, {content: $content.get(0)});
+                    dui.iMap.setCenter(map, {latLng: latLng});
+                    setTimeout(function(){
+                        infowindow.open(map, marker);
+                    }, 0);
+                    $('#location-latLng').val(latLng.lat() + ',' + latLng.lng());
+                    $content.find('#btn-manual-mark').one('click', _manual);
+                    zoom2center({map: map, marker: marker, infowindow: infowindow, latLng: latLng, callback: function(){
+                        $content.find('#btn-manual-mark').one('click', _manual);
+                    }});
+                }
+                // 搜索无结果时的回调函数
+                function _fail(map){
+                    var marker = dui.iMap.createMarker(map),
+                        $content = $('<div><h3 style="font-size:12px;font-weight:normal;">你输入的地址在地图上找不到</h3><p style="font-size:12px;">请重新输入或<a id="btn-manual-mark" href="#">手动标记</a></p></div>'),
+                        infowindow = dui.iMap.infowindow(map, marker, {content: $content.get(0)});
+                    infowindow.open(map, marker);
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                    $content.find('#btn-manual-mark').one('click', _manual);
+                };
+                dui.iMap.search({ele: '#event-map', map: map, address: address, success: successHandle, fail: _fail});
+            }
+        }
+        var _t_map;
+        // 事件绑定
+        $('#bits_2').iMap().toggle();
+        $('.page-address').delegate('#loc', 'change', function() {
+            try {
+                clearTimeout(_t_map);
+            } catch(e) {}
+            _t_map = setTimeout(autosearch, 400);
+        });
+        $('.page-address').delegate('#street_address', 'blur', autosearch);
+        $('#street_address').iMap().autoSearch();
+    });
+}
+</script>
+</body>
+</html>
