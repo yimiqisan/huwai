@@ -39,7 +39,7 @@ class AlertListHandler(BaseHandler):
         if subject == 'reply':
             r = t._api.get_rp_org(owner=uid)
         elif subject == 'rpat':
-            r = t._api.extend(channel=[u'reply'], at=self.current_user, cursor=None)
+            r = t._api.get_rpat_org(channel=[u'reply'], at=self.current_user)
         elif subject == 'at':
             r = t._api.extend(channel=[u'weibo'], at=self.current_user, cursor=None)
         else:

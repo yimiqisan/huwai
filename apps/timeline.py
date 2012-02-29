@@ -116,6 +116,25 @@ class TimeLineAPI(API):
         if (r[0] and r[1]):return (True, self._output_format(result=r[1]))
         return r
     
+    def get_rpat_org(self, owner=None, topic=None, channel=None, at=None):
+        kwargs = {}
+        if owner:kwargs['owner']=owner
+        if topic:kwargs['topic']=topic
+        if at:kwargs['at_list']=at
+        if channel:kwargs['channel']={'$in':channel}
+        r = self.find(**kwargs)
+        if r[0]:
+            l = []
+            for i in r[1]:
+                if i['topic'] not in l:l.append(i['topic'])
+            ll = []
+            for i in l:
+                j = self.get(i)[1]
+                if j:ll.append(j)
+            return (True, ll)
+        else:
+            return r
+    
     def get_rp_org(self, owner=None, topic=None, channel=None, at=None):
         kwargs = {}
         if owner:kwargs['owner']=owner

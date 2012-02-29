@@ -32,7 +32,7 @@ var Alert = {
                 return alert(response.error);
             }
             $(e).css('display', 'none');
+            window.location.href = '/alert/'+subject;
         });
-        window.location.href = '/alert/'+subject;
     }
 };
