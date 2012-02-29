@@ -132,9 +132,15 @@ class QQLoginHandler(AuthHandler, QQGraphMixin):
         else:
             self.qq_request(path="/user/get_user_info", callback=self.async_callback(self._on_get_user_info, self._on_register, response['fields'], response['openid']), access_token=response['session']["access_token"], openid=response['openid'], oauth_consumer_key=response['client_id'], fields=",".join(response['fields']))
     
+    @session
     def _on_register(self, response):
-        extra_args = {'photo':response['figureurl_2'], 'qqid':response['qqid']}
-        self.render('profile/thirdpart.html', extra=extra_args, nick=response['nickname'])
+        uid = self.SESSION['uid']
+        if uid:
+            kwargs = {'qqid':response['qqid']}
+            self.bind_user(**kwargs)
+        else:
+            kwargs = {'nick':response['nickname'], 'photo':response['figureurl_2'], 'qqid':response['qqid']}
+            self.add_user(**kwargs)
 
 class QQHandler(BaseHandler, QQGraphMixin):
     @tornado.web.authenticated
