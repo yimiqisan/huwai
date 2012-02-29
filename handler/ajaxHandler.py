@@ -68,7 +68,6 @@ class AjaxRemoveHandler(BaseHandler):
         uid = self.SESSION['uid']
         rid = self.get_argument("id", None)
         r = tl._api.remove(rid)
-        print r
         self.write(json.dumps('ok'))
 
 class AjaxToggleStateHandler(BaseHandler):
