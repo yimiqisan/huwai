@@ -3,7 +3,7 @@ Do(function() {
     Do.delay(1000, function(){
         var script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = "http://maps.google.cn/maps/api/js?sensor=false&callback=loadMap";
+        script.src = "http://maps.google.cn/maps/api/js?sensor=false&callback=loadMap&language=cn&region=GB";
         document.body.appendChild(script);
     });
 });
