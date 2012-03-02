@@ -288,3 +288,6 @@ class QQGraphMixin(OAuth2Mixin):
             call_back(None)
             return
         call_back(r)
+
+class RenrenGraphMixin(OAuth2Mixin):
+    pass

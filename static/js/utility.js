@@ -1,3 +1,20 @@
+// get scrollbar info
+function getPageScroll() {
+    var t, l, w, h;
+    if (document.documentElement && document.documentElement.scrollTop) {
+        t = document.documentElement.scrollTop;
+        l = document.documentElement.scrollLeft;
+        w = document.documentElement.scrollWidth;
+        h = document.documentElement.scrollHeight;
+    } else if (document.body) {
+        t = document.body.scrollTop;
+        l = document.body.scrollLeft;
+        w = document.body.scrollWidth;
+        h = document.body.scrollHeight;
+    }
+    return { top: t, left: l, width: w, height: h };
+}
+
 function setTab(name,cursel,n){for(i=1;i<=n;i++){var menu=document.getElementById(name+i);var con=document.getElementById("con_"+name+"_"+i);menu.className=i==cursel?"hover":"";con.style.display=i==cursel?"block":"none";}}
 
 function showUinfo(e) {
