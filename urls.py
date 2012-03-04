@@ -31,6 +31,7 @@ handlers = [(r"/", RootHandler),
             (r"/auth/", AuthHandler),
             (r"/auth/sina/", SinaLoginHandler),
             (r"/auth/qq/", QQLoginHandler),
+            (r"/auth/renren/", RenrenLoginHandler),
             
             (r"/event/c/", EventCrawlerHandler),
             (r"/event/(.{32})/", EventHandler),

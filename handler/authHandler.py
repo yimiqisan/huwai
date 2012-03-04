@@ -16,7 +16,7 @@ from baseHandler import BaseHandler
 
 from apps.user import User
 from apps.tools import session
-from apps.oauth2 import APIClient, QQGraphMixin
+from apps.oauth2 import APIClient, QQGraphMixin, RenrenGraphMixin
 from apps.pstore import AvatarProcessor
 
 
@@ -158,6 +158,61 @@ class QQHandler(BaseHandler, QQGraphMixin):
             self.authorize_redirect()
             return
         self.finish("Posted a message!")
+
+class RenrenLoginHandler(AuthHandler, RenrenGraphMixin):
+    @addslash
+    @session
+    def get(self):
+        CALLBACK_URL = self.request.protocol+'://'+self.request.host+'/auth/renren/'
+        code = self.get_argument('code', False)
+        if code:
+            self.get_authenticated_user(redirect_uri=CALLBACK_URL,client_id=config.RENREN_CONSUME_KEY,client_secret=config.RENREN_CONSUME_SECRET,code=code, callback=self.async_callback(self._on_login))
+        else:
+            self.authorize_redirect(redirect_uri=CALLBACK_URL,client_id=config.RENREN_CONSUME_KEY,extra_params={"display":"default", "response_type":"code"})
+    
+    def post(self):
+        verification_code = self.request.get("code")
+        args = dict(client_id=RENREN_APP_API_KEY, redirect_uri=self.request.path_url)
+        error = self.request.get("error")
+        if error:
+            args["error"] = error
+            args["error_description"] = self.request.get("error_description")
+            args["error_uri"] = self.request.get("error_uri")
+            path = os.path.join(os.path.dirname(__file__), "error.html")
+            args = dict(error=args)
+            self.response.out.write(template.render(path, args))
+        elif verification_code:
+            scope = self.request.get("scope")
+            scope_array = str(scope).split("[\\s,+]")
+            response_state = self.request.get("state")
+            args["client_secret"] = RENREN_APP_SECRET_KEY
+            args["code"] = verification_code
+            args["grant_type"] = "authorization_code"
+            response = urllib.urlopen(RENREN_ACCESS_TOKEN_URI + "?" + urllib.urlencode(args)).read()
+            access_token = _parse_json(response)["access_token"]
+            '''Obtain session key from the Resource Service.'''
+            session_key_request_args = {"oauth_token": access_token}
+            response = urllib.urlopen(RENREN_SESSION_KEY_URI + "?" + urllib.urlencode(session_key_request_args)).read()
+            session_key = str(_parse_json(response)["renren_token"]["session_key"])
+            '''Requesting the Renren API Server obtain the user's base info.'''
+            params = {"method": "users.getInfo", "fields": "name,tinyurl"}
+            api_client = RenRenAPIClient(session_key, RENREN_APP_API_KEY, RENREN_APP_SECRET_KEY)
+            response = api_client.request(params);
+            if type(response) is list:
+                response = response[0]
+            user_id = response["uid"]#str(access_token).split("-")[1]
+            name = response["name"]
+            avatar = response["tinyurl"]
+            user = User(key_name = unicode(user_id), id = unicode(user_id), name = unicode(name), avatar = unicode(avatar), access_token = access_token)
+            user.put()
+            set_cookie(self.response, "renren_user", str(user_id), expires=time.time() + 30 * 86400)
+            self.redirect("/")
+        else:
+            args["response_type"] = "code"
+            args["scope"] = "publish_feed email status_update"
+            args["state"] = "1 23 abc&?|."
+            self.redirect(RENREN_AUTHORIZATION_URI + "?" +urllib.urlencode(args))
+
 
 class ThirdPartHandler(BaseHandler):
     @addslash

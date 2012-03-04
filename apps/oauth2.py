@@ -289,5 +289,151 @@ class QQGraphMixin(OAuth2Mixin):
             return
         call_back(r)
 
+
+
 class RenrenGraphMixin(OAuth2Mixin):
-    pass
+    """QQ authentication using the new Graph API and OAuth2."""
+    _OAUTH_ACCESS_TOKEN_URL = "http://graph.renren.com/oauth/token?"
+    _OAUTH_AUTHORIZE_URL = "http://graph.renren.com/oauth/authorize?"
+    RENREN_SESSION_KEY_URI = "http://graph.renren.com/renren_api/session_key"
+    RENREN_API_SERVER = "http://api.renren.com/restserver.do"
+    _OAUTH_NO_CALLBACKS = False
+    def get_authenticated_user(self, redirect_uri, client_id, client_secret, code, callback, extra_fields=None):
+        http = httpclient.AsyncHTTPClient()
+        args = {
+            "redirect_uri": redirect_uri,
+            "code": code,
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "extra_params" : {"grant_type":"authorization_code"},
+            }
+        fields = set(['nickname', 'figureurl_2', 'gender', 'qqid'])
+        if extra_fields: fields.update(extra_fields)
+        http.fetch(self._oauth_request_token_url(**args), self.async_callback(self._on_access_token, redirect_uri, client_id, client_secret, callback, fields))
+    
+    
+    def _on_access_token(self, redirect_uri, client_id, client_secret, callback, fields, response):
+        body = response.body
+        try:
+            args = json.loads(body, object_hook=_obj_hook)
+        except:
+            if body.startswith('callback'):
+                body = body.replace(';','')
+                args = _obj_hook(eval(body))
+            else:
+                args = _obj_hook(dict([b.split('=') for b in body.split('&')]))
+        if hasattr(args, 'error'):
+            logging.info('RenRen auth error: %s' % str(args.error_description))
+            callback(None)
+            return
+        session_args = {"access_token": args.access_token}
+        response = urllib.urlopen(RENREN_SESSION_KEY_URI + "?" + urllib.urlencode(session_args)).read()
+        session_key = str(json.loads(body, object_hook=_obj_hook).renren_token["session_key"])
+        
+        
+        self.qq_request(path="/oauth2.0/me", callback=self.async_callback(self._on_get_open_id, callback, session, fields), access_token=session["access_token"], fields=",".join(fields))
+        
+        
+        
+        '''Requesting the Renren API Server obtain the user's base info.'''
+        params = {"method": "users.getInfo", "fields": "name,tinyurl"}
+        api_client = RenRenAPIClient(session_key, RENREN_APP_API_KEY, RENREN_APP_SECRET_KEY)
+        response = api_client.request(params);
+        
+        
+        
+        
+    
+    def _on_get_open_id(self, callback, session, fields, reps):
+        if reps is None:
+            callback(None)
+            return
+        reps['session'] = session
+        reps['fields'] = fields
+        callback(reps)
+    
+    def _on_get_user_info(self, callback, fields, openid, user):
+        if user is None:
+            callback(None)
+            return
+        user['qqid'] = openid
+        fieldmap = {}
+        for field in fields:
+            fieldmap[field] = user.get(field)
+        callback(fieldmap)
+    
+    def renren_request(self, path, callback, access_token=None, post_args=None, **args):
+        url = "http://graph.renren.com/renren_api/session_key" + path
+        all_args = {}
+        if access_token:
+            all_args["access_token"] = access_token
+            all_args.update(args)
+            all_args.update(post_args or {})
+        if all_args: url += "?" + urllib.urlencode(all_args)
+        callback = self.async_callback(self._on_qq_request, callback)
+        http = httpclient.AsyncHTTPClient()
+        if post_args is not None:
+            http.fetch(url, method="POST", body=urllib.urlencode(post_args), callback=callback)
+        else:
+            http.fetch(url, callback=callback)
+    
+    def _on_qq_request(self, call_back, response):
+        body = response.body
+        body = ''.join(body.replace(';','').split())
+        r = eval(body)
+        if hasattr(r, 'error'):
+            logging.logging("Error response %s fetching %s", r.error_description, response.request.url)
+            call_back(None)
+            return
+        call_back(r)
+
+
+
+
+
+
+class RenRenAPIClient(object):
+    def __init__(self, session_key = None, api_key = None, secret_key = None):
+        self.session_key = session_key
+        self.api_key = api_key
+        self.secret_key = secret_key
+    
+    def request(self, params = None):
+        """Fetches the given method's response returning from RenRen API.
+        Send a POST request to the given method with the given params.
+        """
+        params["api_key"] = self.api_key
+        params["call_id"] = str(int(time.time() * 1000))
+        params["format"] = "json"
+        params["session_key"] = self.session_key
+        params["v"] = '1.0'
+        sig = self.hash_params(params);
+        params["sig"] = sig
+        post_data = None if params is None else urllib.urlencode(params)
+        file = urllib.urlopen(RENREN_API_SERVER, post_data)
+        try:
+            s = file.read()
+            logging.info("api response is: " + s)
+            response = _parse_json(s)
+        finally:
+            file.close()
+        if type(response) is not list and response["error_code"]:
+            logging.info(response["error_msg"])
+            raise RenRenAPIError(response["error_code"], response["error_msg"])
+        return response
+        
+    def hash_params(self, params = None):
+        hasher = hashlib.md5("".join(["%s=%s" % (self.unicode_encode(x), self.unicode_encode(params[x])) for x in sorted(params.keys())]))
+        hasher.update(self.secret_key)
+        return hasher.hexdigest()
+        
+    def unicode_encode(self, str):
+        """
+        Detect if a string is unicode and encode as utf-8 if necessary
+        """
+        return isinstance(str, unicode) and str.encode('utf-8') or str
+    
+class RenRenAPIError(Exception):
+    def __init__(self, code, message):
+        Exception.__init__(self, message)
+        self.code = code

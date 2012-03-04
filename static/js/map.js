@@ -37,7 +37,7 @@ function loadMap(){
                     }
                     if(end - start > 2000 && address.length > 1){
                         var geocoder = new google.maps.Geocoder();
-                         geocoder.geocode({
+                        geocoder.geocode({
                             address: address
                         },function(results, status){
                             if (status == google.maps.GeocoderStatus.OK) {

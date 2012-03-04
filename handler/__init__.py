@@ -9,7 +9,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 
 from commonHandler import RootHandler, TestHandler, FeedbackHandler, Error404Handler, SinaXDHandler, GoogleWebMasterHandler, CDNZZHandler
 from profileHandler import LoginHandler, InviteHandler, RegisterHandler, LogoutHandler, ProfileHandler, SettingHandler, SettingAlertHandler, SettingThirdPartHandler, CpasswordHandler, BindSinaHandler
-from authHandler import AuthHandler, SinaLoginHandler, QQLoginHandler, ThirdPartHandler
+from authHandler import AuthHandler, SinaLoginHandler, QQLoginHandler, RenrenLoginHandler, ThirdPartHandler
 from weiboHandler import WeiboHandler, WeiboItemHandler, AjaxWeiboHandler
 from peopleHandler import PeopleHandler
 from eventHandler import EventHandler, EventPubaHandler, EventPubbHandler, EventCheckHandler, EventListHandler, EventCrawlerHandler
