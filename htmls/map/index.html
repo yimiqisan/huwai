@@ -2,7 +2,7 @@
 
 {% block static %}
 	<script src="{{ static_url('js/do.js') }}" type="text/javascript"></script>
-	<script src="http://img3.douban.com/js/ui/packed_dialog6160013120.js" type="text/javascript"></script>
+	<script src="{{ static_url('js/dialog.js') }}" type="text/javascript"></script>
 	{% block static-added %}{% end %}
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/map.css') }}"/>
 {% end %}
@@ -41,4 +41,10 @@
 	</div>
 	<script src="{{ static_url('js/map.js') }}" type="text/javascript"></script>
 {% end %}
-{% block bodyright %}{% end %}
+{% block bodyright %}
+	<div class="ablbox boxmg left" style="width:200px;">
+		<select id='points' size=14 style="width:200px;">
+			<option value="1">(41.853171531675805,-87.63354159570054) Level: 3</option>
+		</select>
+	</div>
+{% end %}

@@ -10,7 +10,7 @@ Do(function() {
 
 // 异步加载 google map
 function loadMap(){
-    Do.add('imap', {path: 'http://img3.douban.com/js/ui/packed_imap2031263059.js', type: 'js', requires: ['jQueryUI', 'dialog-css', 'dialog']});
+    Do.add('imap', {path: '/static/js/imap.js', type: 'js', requires: ['jQueryUI', 'dialog-css', 'dialog']});
     Do('imap', function(){
         var infowindows = [];
         $.fn.iMap = function(){
@@ -82,6 +82,33 @@ function loadMap(){
                         map = dui.iMap.createMap($map, {width: 700, height: 500, panControl: false, mapTypeControl: false});
                         if($.trim(location) !== ''){
                             dui.iMap.search({ele: '#event-map', map: map, address: location, success: _success, fail: _fail});
+                            
+                            google.maps.event.addListener(map, 'click', function(event) {
+                                dui.iMap.createMarker(map, {latLng: event.latLng, draggable: true, clickable: true,
+                                    handleClick: function(event) {
+                                        dui.iMap.infowindow(event.map, event.marker, {content: 'event.marker.getPosition().toUrlValue()'});
+                                    },
+                                    handleDragEnd: function(event) {
+                                        dui.iMap.showPolyline();
+                                    }, handleRightClick: function(event) {
+//                                        dui.iMap.removeMarker(event.marker);
+                                        dui.iMap.showPolyline();
+                                    }, handleDBClick:function(event) {
+/*                                      var i = getMarkerIndex(marker);
+                                        if (i > 0 && i == markers.length - 1) {
+                                            i--;
+                                            }
+                                        if (i < markers.length - 1) {
+                                            var lat0 = markers[i].getPosition().lat();
+                                            var lng0 = markers[i].getPosition().lng();
+                                            var lat1 = markers[i+1].getPosition().lat();
+                                            var lng1 = markers[i+1].getPosition().lng();
+                                            var latlng = new google.maps.LatLng((lat0+lat1)/2, (lng0+lng1)/2);
+                                            addMarker(latlng, i+1);
+                                        }
+*/                                  }
+                                })
+                            });
                         }
                     }else{
                         $mapWrap.empty().hide();
@@ -332,3 +359,5 @@ function loadMap(){
         $('#street_address').iMap().autoSearch();
     });
 }
+
+
