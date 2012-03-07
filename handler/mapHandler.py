@@ -19,4 +19,10 @@ class MapHandler(BaseHandler):
     def get(self):
         uid = self.SESSION['uid']
         self.render("map/index.html")
-    
+
+class MapItemHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self, id):
+        uid = self.SESSION['uid']
+        self.render("map/item.html")

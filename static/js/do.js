@@ -8,7 +8,7 @@
 	},
 	h = {
 		autoLoad: true,
-		coreLib: ["http://t.douban.com/js/jquery.min.js"],
+		coreLib: ["/static/js/jquery.min.js"],
 		mods: {}
 	},
 	f = e.getElementsByTagName("script"),
