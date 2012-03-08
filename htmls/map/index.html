@@ -1,50 +1,39 @@
 {% extends ../frame.html %}
 
 {% block static %}
-	<script src="{{ static_url('js/do.js') }}" type="text/javascript"></script>
-	<script src="{{ static_url('js/dialog.js') }}" type="text/javascript"></script>
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="{{ static_url('js/jquery.map.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('js/map.js') }}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var map = yhui.iMap.createMap($('#map_canvas'), {width: 700, height: 500, panControl: false, mapTypeControl: false,
+				zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL},
+				markControl: true, markCallback: function(){alert('mark failure')},
+				routeControl: true, routeCallback: function(){alert('route failure')},
+				searchControl: true, searchCallback: function(){alert('search failure')},
+			});
+			var latlng = new google.maps.LatLng(34.725737, 135.235871);
+			map.setCenter(latlng);
+			map.setZoom(8);
+		});
+	</script>
+
 	{% block static-added %}{% end %}
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/map.css') }}"/>
 {% end %}
 {% block bodyleft %}
 	<div id="wrapper" class="fwrap" style="background:white;padding:15px;height:600px;width:745px;">
-		<div id="content">
-			<div class="grid-16-8 clearfix">
-				<div class="article">
-					<form id="eform" name="lzform" action="" method="post" autocomplete="off">
-						<div class="row">
-							<div class="item extra-tips page-address">
-								<input id="loc_id" name="loc_id" type="hidden" value="0"/>
-								<span class="all-address-field">
-									<span id="loc">北京</span>
-									<select class="basic-input" id="district_id" name="district_id">
-										<option value="0">城区</option>
-										<option value="128519">东城区</option>
-										<option value="128520">西城区</option>
-									</select>
-									<input class="basic-input" id="street_address" name="street_address" type="text" size="34" placeholder="详细地址" value=""/>
-								</span>
-								<input id="location-latLng" type="hidden" name="location-latLng" value="" />
-								<div class="suggest-wrap"></div>
-							</div>
-							<div class="item">
-								<input id="latLgt" name="latLgt" type="hidden" />
-								<input id="bits_2" type="checkbox" checked="checked" name="bits_2"/>
-								<label for="bits_2">显示地图<span class="tip"> (推荐，没有准确地图定位的活动可能被管理员驳回) </span></label>
-								<div id="event-map-wrap"></div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+		<div id="map_canvas" style="width:600px; height:600px"></div>
 	</div>
-	<script src="{{ static_url('js/map.js') }}" type="text/javascript"></script>
 {% end %}
 {% block bodyright %}
 	<div class="ablbox boxmg left" style="width:200px;">
-		<select id='points' size=14 style="width:200px;">
-			<option value="1">(41.853171531675805,-87.63354159570054) Level: 3</option>
-		</select>
+		<form action="/map/" method="post">
+			<select name="points" id="points" size=10 style="width:100%;">
+				<option value="1">(41.85380,-87.63304) Level:3</option>
+			</select>
+			<input type=submit value="submit">
+		</form>
 	</div>
 {% end %}

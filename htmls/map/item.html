@@ -2,10 +2,11 @@
 
 {% block static %}
 
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript" src="{{ static_url('js/tmap.js') }}"></script>
+{% comment <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> %}
+{% comment <script type="text/javascript" src="{{ static_url('js/jquery.map.js') }}"></script> %}
+	<script type="text/javascript" src="{{ static_url('js/map.js') }}"></script>
 	<script type="text/javascript">
-		$(document).ready(function() {
+/*		$(document).ready(function() {
 			var map = yhui.iMap.createMap($('#map_canvas'), {width: 700, height: 500, panControl: false, mapTypeControl: false,
 				zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL},
 				markControl: true, markCallback: function(){alert('mark failure')},
@@ -16,7 +17,7 @@
 			map.setCenter(latlng);
 			map.setZoom(8);
 		});
-	</script>
+*/	</script>
 
 	{% block static-added %}{% end %}
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/map.css') }}"/>
