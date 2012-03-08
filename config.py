@@ -14,6 +14,7 @@ from logging import basicConfig, DEBUG
 import uimethods
 
 SITE_ID = u'917d450c728b4f62b6ac9bac1beb01ba'
+DEFAULT_CUR_UID = '948a55d68e1b4317804e4650a9505641'
 
 #config settings
 settings = dict(

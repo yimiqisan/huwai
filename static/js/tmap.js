@@ -154,7 +154,6 @@
             x.append(v);
             y.controls[google.maps.ControlPosition.TOP_LEFT].push(x.get(0));
             google.maps.event.addDomListener(w.get(0), "click",
-/*
             function() {
                 var A = u.val();
                 q({
@@ -162,22 +161,6 @@
                     address: A,
                     fail: z
                 })
-            }
-*/            
-            function(){
-                var start = new Date(),
-                    end = '';
-                $(this).bind('keyup', function(){
-                    var $this = $(this),
-                    address = u.val();
-                    end = new Date();
-                    function _successHandle(map, result){
-                        var latLng = result.geometry.location;
-                        dui.iMap.setCenter(map, {latLng: latLng});
-                        zoom2center({map: map, latLng: latLng});
-//                        $('#location-latLng').val(latLng.lat() + ',' + latLng.lng());
-                    }
-                });
             });
             u.bind("keydown",
             function(B) {
@@ -189,41 +172,6 @@
                     })
                 }
             });
-            u.autocomplete({
-                source: function(B, A) {
-                    var C = new google.maps.Geocoder();
-                    C.geocode({
-                        address: B.term
-                    },
-                    function(E, D) {
-                        A(b.map(E,
-                        function(F) {
-                            return {
-                                label: F.formatted_address,
-                                value: F.formatted_address,
-                                latitude: F.geometry.location.lat(),
-                                longitude: F.geometry.location.lng()
-                            }
-                        }))
-                    })
-                },
-                select: function(C, D) {
-                    if (n.length) {
-                        b.each(n,
-                        function(F, E) {
-                            E.setMap(null)
-                        })
-                    }
-                    var B = new google.maps.LatLng(D.item.latitude, D.item.longitude),
-                    A = i(y, {
-                        latLng: B
-                    });
-                    j(y, {
-                        latLng: B
-                    });
-                    y.setZoom(15)
-                }
-            })
         }
         function q(u) {
             var x = {
@@ -236,7 +184,7 @@
             },
             v = b.extend(x, u || {});
             if (h && h.length) {
-                e(h)
+                n(h)
             }
             if (i && i.length) {
                 n(i)
@@ -255,8 +203,8 @@
                         y = m(v.map, {
                             draggable: false,
                             latLng: C
-                        }),
-                        B = '<div class="info-window"><div class="info-win-hd">' + A[0].formatted_address + '</div><div class="info-win-bd"><a target="_blank" href="http://ditu.google.cn/maps?hl=zh-CN&ie=UTF8&dirflg=r&f=d&daddr=' + A[0].formatted_address + '">驾车/公交路线</a></div></div>',
+                        });
+                        B = '<div class="info-window"><div class="info-win-hd">' + A[0].formatted_address + '</div></div>',
                         D = a.iMap.infowindow(v.map, y, {
                             content: B
                         });

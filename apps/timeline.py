@@ -12,7 +12,7 @@ import uuid
 from datetime import datetime
 import time
 
-from huwai.config import DB_CON, DB_NAME
+from huwai.config import DB_CON, DB_NAME, DEFAULT_CUR_UID
 from modules import TimeLineDoc
 from api import API, Mapping, Added_id
 import case
@@ -28,7 +28,6 @@ class TimeLine(object):
             return None
 
 class TimeLineAPI(API):
-    DEFAULT_CUR_UID = '948a55d68e1b4317804e4650a9505641'
     def __init__(self):
         DB_CON.register([TimeLineDoc])
         datastore = DB_CON[DB_NAME]

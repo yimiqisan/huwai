@@ -9,7 +9,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 from datetime import datetime
 import uuid
 
-from mongokit import Document, IS
+from mongokit import Document, IS, INDEX_GEO2D
 
 from huwai.config import DB_NAME
 
@@ -170,7 +170,7 @@ class AlertDoc(Document):
     
     structure = {
             '_id':      unicode,
-            'owner':      unicode,
+            'owner':    unicode,
             'subject':  IS(u'reply', u'join', u'follow', u'at', u'rpat'),
             'count':    int,
             'created':  datetime,
@@ -183,9 +183,30 @@ class AlertDoc(Document):
     use_schemaless = True
     use_dot_notation=True
 
-
+class MapDoc(Document):
+    __collection__ = 'map'
+    __database__ = DB_NAME
     
+    structure = {
+            '_id':          unicode,
+            'owner':        unicode,
+            'location':     list,
+            'points':       list,
+            'subject':      IS(u'weibo', u'route', u'place'),
+            'created':      datetime,
+            'added':        dict,
+            'added_id':     int,
+    }
+    indexes = [
+        {
+            'fields':[('location', INDEX_GEO2D)],
+        },
+    ]
+    required_fields = ['_id', 'created']
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
     
+    use_schemaless = True
+    use_dot_notation=True
     
     
     

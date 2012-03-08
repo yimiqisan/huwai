@@ -42,6 +42,7 @@ handlers = [(r"/", RootHandler),
             
             (r"/map/", MapHandler),
             (r"/map/(.{32})/", MapItemHandler),
+            (r"/a/map/", AjaxMapHandler),
             
             (r"/alert/(.*)/", AlertListHandler),
 #            (r"/alert/(.{32})/", AlertHandler),

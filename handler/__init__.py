@@ -17,4 +17,4 @@ from imageHandler import UploadImageHandler, AvatarHandler, AttachHandler, AjaxA
 from ajaxHandler import AjaxReplyHandler, AjaxRemoveHandler, AjaxToggleStateHandler, AjaxToggleInputHandler
 from checkHandler import CheckEventHandler
 from alertHandler import AlertHandler, AlertListHandler, AjaxAlertHandler
-from mapHandler import MapHandler, MapItemHandler
+from mapHandler import MapHandler, MapItemHandler, AjaxMapHandler
