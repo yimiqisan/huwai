@@ -38,13 +38,8 @@ class MapAPI(API):
         doc = collection.MapDoc()
         API.__init__(self, col_name=col_name, collection=collection, doc=doc)
     
-    def _calc_loc(self, points):
-        return points[0]
-    
-    def save(self, owner, subject, location=None, points=None, **kwargs):
-        if (subject == u'route')and not location:
-            location = self._calc_loc(points)
-        return super(MapAPI, self).create(owner=owner, location=location, points=points, subject=subject, **kwargs)
+    def save(self, owner, subject, location=None, polyline=None, **kwargs):
+        return super(MapAPI, self).create(owner=owner, location=location, polyline=polyline, subject=subject, **kwargs)
     
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         now = datetime.now()

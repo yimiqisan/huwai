@@ -22,6 +22,8 @@
 			Event.checka();
 		})
 	</script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=geometry&sensor=false"></script>
+	<script type="text/javascript" src="{{ static_url('js/jquery.map.js') }}" ></script>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/event.css') }}"/>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/uploadify.css') }}"/>
 	{% block static-added %}{% end %}
@@ -45,7 +47,21 @@
 			</div>
 			<div class="li" style="display:none;"><label class="lil">路线<em class="needed">*</em></label><div class="lir">{{ifNone(route)}}</div></div>
 			<div class="li"><label class="lil">日期<em class="needed">*</em></label><div class="lir"><script>toggleDate("begin_time", 0,0,0)</script></div></div>
-			<div class="li"><label for="" class="lil">地点<em class="needed">*</em></label><div class="lir"><input type="text" name="place" value="{{ifNone(place)}}"></div></div>
+			<div class="li"><label for="" class="lil">地点<em class="needed">*</em></label>
+				<div class="lir">
+					<div id="map_canvas" ipLocID="place" ipRouteID="route" style="width:600px; height:600px"></div>
+					<script type="text/javascript">
+					var map = yhui.iMap.createMap($('#map_canvas'), {width: 300, height: 250, panControl: false, mapTypeControl: false,
+						zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL},
+						markControl: true, markCallback: function(){alert('mark failure')},
+						searchControl: true, searchCallback: function(){alert('search failure')},
+					});
+					var latlng = new google.maps.LatLng(39.899466447900096, 116.40604492187502);
+					map.setCenter(latlng);
+					map.setZoom(8);
+					</script>
+				</div>
+			</div>
 			<div class="li"><label class="lil">行程安排<em class="needed">*</em></label><div class="lir"><textarea name="schedule_tl" rows="5" cols="60">{{ifNone(schedule_tl)}}</textarea></div></div>
 			<div class="li"><label class="lil">费用明细<em class="needed">*</em></label><div class="lir"><textarea name="spend_tl" rows="3" cols="60">{{ifNone(spend_tl)}}</textarea></div></div>
 			<div class="li"><label class="lil">装备要求<em class="needed"></em></label><div class="lir"><textarea name="	" rows="3" cols="60">{{ifNone(equip)}}</textarea></div></div>

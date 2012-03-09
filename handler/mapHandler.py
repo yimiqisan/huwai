@@ -6,7 +6,7 @@ mapHandler.py
 Created by 刘 智勇 on 2012-02-28.
 Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 """
-
+import json
 from tornado.web import addslash
 
 from baseHandler import BaseHandler
@@ -38,18 +38,11 @@ class AjaxMapHandler(BaseHandler):
     @session
     def post(self):
         uid = self.SESSION['uid']
-        ps = self.get_argument('points', [])
+        ps = self.get_argument('points', [(2.0,3.1)])
+        print ps
         m = Map()
-        m._api.save(uid, u'route', points=None, **kwargs)
-
-
-
-
-
-
-
-
-
-
+        #r = m._api.save(uid, u'route', points=ps)
+        return self.write(json.dumps({'info':ps}))
+    
 
 

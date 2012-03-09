@@ -191,7 +191,7 @@ class MapDoc(Document):
             '_id':          unicode,
             'owner':        unicode,
             'location':     list,
-            'points':       list,
+            'polyline':     unicode,
             'subject':      IS(u'weibo', u'route', u'place'),
             'created':      datetime,
             'added':        dict,
@@ -207,8 +207,5 @@ class MapDoc(Document):
     
     use_schemaless = True
     use_dot_notation=True
-    
-    
-    
     
     
