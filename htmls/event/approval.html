@@ -49,39 +49,7 @@
 		</div>
 		{% end %}
 	</div>
-
-
-
-
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>姓名</th>
-					<th>报名时间</th>
-					<th>操作</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for u in userlist %}
-				<tr>
-					<td>{{ u.get('nick', None) }}</td>
-					<td>{{ u['created'] }}</td>
-					<td><input type="checkbox" name="{{ u['id'] }}" value="1"></td>
-				</tr>
-				{% end %}
-			</tbody>
-		</table>
-		<div class="pagination">
-			<ul>
-				<li><a href="#">Prev</a></li>
-				<li class="active"><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">Next</a></li>
-			</ul>
-		</div>
 {% end %}
 {% block bodyright %}
-	<a class="btn" href="/event/">回到活动</a>
+	<a class="btn" href="/event/{{ eid }}/">回到活动</a>
 {% end %}

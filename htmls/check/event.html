@@ -1,4 +1,4 @@
-{% extends ../box.html %}
+{% extends ../box93.html %}
 
 {% block bodyleft %}
 	<div class="btn-toolbar pull-right">
@@ -64,14 +64,9 @@
 {% block bodyright %}
 <div class="tabbable tabs-right">
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#rA" data-toggle="tab">活动审核</a></li>
-		<li><a href="#rB" data-toggle="tab">驴友审核</a></li>
-		<li><a href="#rC" data-toggle="tab">微博审核</a></li>
+		<li class="active"><a>活动审核</a></li>
+		<li style="display:none;"><a href="/check/people/">驴友审核</a></li>
+		<li style="display:none;"><a href="/check/weibo/">微博审核</a></li>
 	</ul>
-	<div class="tab-content">
-		<div class="tab-pane active" id="rA"><p>A.</p></div>
-		<div class="tab-pane" id="rB"><p>B.</p></div>
-		<div class="tab-pane" id="rC"><p>C.</p></div>
-	</div>
 </div>
 {% end %}

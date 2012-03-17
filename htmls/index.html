@@ -1,4 +1,4 @@
-{% extends box.html %}
+{% extends box75.html %}
 
 {% block static %}
 	<link href="{{ static_url('css/profile.css') }}" rel="stylesheet">
@@ -19,12 +19,12 @@
 	</form>
 {% end %}
 {% block foot %}
-				<div class="span12">
-				<form action="/account/register/" method="post">
-					<span>&nbsp&nbsp&nbsp绰号：</span><input name="nick" type=text style="width:200px;height:30px;"/>
-					<span>&nbsp&nbsp&nbsp邮件：</span><input name="email" type=text style="width:200px;height:30px;"/>
-					<span>&nbsp&nbsp&nbsp密码：</span><input name="password" type=password style="width:200px;height:30px;"/>
-					&nbsp&nbsp&nbsp&nbsp<input type=submit value="注册"/>
-				</form>
-			</div>
+	<div class="span12">
+		<form action="/account/register/" method="post">
+			<span>&nbsp&nbsp&nbsp绰号：</span><input name="nick" type=text style="width:200px;height:30px;"/>
+			<span>&nbsp&nbsp&nbsp邮件：</span><input name="email" type=text style="width:200px;height:30px;"/>
+			<span>&nbsp&nbsp&nbsp密码：</span><input name="password" type=password style="width:200px;height:30px;"/>
+			&nbsp&nbsp&nbsp&nbsp<input type=submit value="注册"/>
+		</form>
+	</div>
 {% end %}

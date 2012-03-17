@@ -163,8 +163,8 @@ class EventApprovalHandler(BaseHandler):
     def get(self, id):
         uid = self.SESSION['uid']
         b = Behavior()
-        r = b._api.list(kind=u'join')
-        self.render("event/approval.html", userlist=r)
+        r = b._api.list(kind=u'join', mark=id)
+        self.render("event/approval.html", userlist=r, eid=id)
 
 class EventCrawlerHandler(BaseHandler):
     @addslash

@@ -26,19 +26,13 @@
 	{% block static-added %}{% end %}
 {% end %}
 {% block bodyleft %}
-	<ul class="nav nav-tabs pull-right">
+	<ul class="nav nav-tabs row-fluid">
 		<li class="active"><a>基本设置</a></li>
 		<li><a href="/account/setting/alert/">消息设置</a></li>
 		<li><a href="/account/setting/thirdpart/">账号绑定</a></li>
 	</ul>
-	
-	
-	
-	
-
-		<form class="form-horizontal" name="content-form" method="POST" action="/account/setting/">
+	<form class="form-horizontal row-fluid" name="content-form" method="POST" action="/account/setting/">
 		<fieldset>
-			<legend>基本设置</legend>
 			<div class="control-group">
 				<label class="control-label" for="textarea">名号:</label>
 				<div class="controls">
@@ -86,7 +80,6 @@
 				<a class="btn" href="/accout/profile/" >取消</a>
 			</div>
 		</fieldset>
-		</form>
-
+	</form>
 {% end %}
 {% block bodyright %}{% end %}
