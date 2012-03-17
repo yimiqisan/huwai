@@ -4,5 +4,5 @@
 #event form{display:block;font-size:16px;margin:5px 5px;padding:20px 20px;width:700px;}
 
 /* event show */
-#showdetail{float:left;border-top:3px solid white;width:755px;padding:10px;background:#FDFFD3;}
-#showdetail img{float:left;clear:left;margin-right:25px;margin-bottom:15px;border:3px solid #FFCC00;}
+//#showdetail{float:left;border-top:3px solid white;width:100%;padding:10px;background:#FDFFD3;}
+#showdetail img{float:left;clear:left;margin-right:25px;margin-bottom:15px;}

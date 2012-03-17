@@ -38,12 +38,12 @@ class MapAPI(API):
         doc = collection.MapDoc()
         API.__init__(self, col_name=col_name, collection=collection, doc=doc)
     
-    def save(self, owner, subject, location=None, polyline=None, **kwargs):
-        return super(MapAPI, self).create(owner=owner, location=location, polyline=polyline, subject=subject, **kwargs)
+    def save(self, owner, subject, location=None, polyline=None, link=None, **kwargs):
+        return super(MapAPI, self).create(owner=owner, subject=subject, location=location, polyline=polyline, link=link, **kwargs)
     
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         now = datetime.now()
-        output_map = lambda i: {'id':i['_id'], 'added_id':i['added_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', '匿名驴友'), 'created':self._escape_created(now, i['created'])}
+        output_map = lambda i: {'id':i['_id'], 'added_id':i['added_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner'] if i['owner'] else True), 'created':self._escape_created(now, i['created']), 'subject':i['subject'], 'link':i['link'], 'polyline':i['polyline'], 'location':i['location']}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)
@@ -52,6 +52,16 @@ class MapAPI(API):
         r = self.one(_id=id)
         if (r[0] and r[1]):return (True, self._output_format(result=r[1]))
         return r
+    
+    def near(self, cuid=DEFAULT_CUR_UID, near=[]):
+        r = self.find(**{"location": {"$near": near}})
+        if r[0]:
+            kw = {'result':r[1]}
+            if cuid:kw['cuid']=cuid
+            l = self._output_format(**kw)
+            return (True, l)
+        else:
+            return (False, r[1])
     
     def list(self, cuid=DEFAULT_CUR_UID, owner=None, subject=None, location=None):
         kwargs = {}

@@ -1,1 +1,1 @@
-<div><a  onclick="Alert.click(this);return false;" id="r-{{ message['id'] }}" subject="{{ message['subject'] }}" href="#">最新 {{ message['count'] }} 条{{ message['suffix'] }}</a></div>
+<li><a onclick="Alert.click(this);return false;" id="r-{{ message['id'] }}" subject="{{ message['subject'] }}" href="/alert/at/">有一条最新 <span class="badge badge-warning">{{ message['count'] }}</span> 条{{ message['suffix'] }}</a></li>

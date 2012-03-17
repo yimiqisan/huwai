@@ -79,7 +79,7 @@ class TimeLineDoc(Document):
             'content':  unicode,
             'at_list':  list,
             'topic':    unicode,
-            'channel':  IS(u'normal', u'reply', u'weibo', u'map', u'keys', u'e_schedule', u'e_spend', u'e_declare', u'e_attention'),
+            'channel':  IS(u'normal', u'reply', u'weibo', u'club', u'event', u'album', u'map', u'keys', u'e_schedule', u'e_spend', u'e_declare', u'e_attention'),
     }
     required_fields = ['_id', 'created', 'content']
     default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
@@ -122,7 +122,7 @@ class EventDoc(Document):
             
             'check':    bool,
     }
-    required_fields = ['_id', 'owner', 'created', 'title', 'tags', 'is_merc', 'level', 'date', 'place']
+    required_fields = ['_id', 'owner', 'created', 'title', 'tags', 'is_merc', 'level', 'date']
     default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now(), 'fr':0, 'to':30}
     
     use_schemaless = True
@@ -190,9 +190,10 @@ class MapDoc(Document):
     structure = {
             '_id':          unicode,
             'owner':        unicode,
+            'subject':      IS(u'weibo', u'route', u'place', u'collect'),
             'location':     list,
             'polyline':     unicode,
-            'subject':      IS(u'weibo', u'route', u'place'),
+            'link':         unicode,
             'created':      datetime,
             'added':        dict,
             'added_id':     int,
@@ -207,5 +208,33 @@ class MapDoc(Document):
     
     use_schemaless = True
     use_dot_notation=True
+
+class RoleDoc(Document):
+    __collection__ = 'role'
+    __datebase__ = DB_NAME
+    
+    structure = {
+            '_id':          unicode,
+            'user':         unicode,
+            'subject':      IS(u'site', u'club', u'event', u'album', u'weibo'),
+            'xid':          unicode,
+            'created':      datetime,
+            'added':        dict,
+            'added_id':     int,
+    }
+    required_fields = ['_id', 'created']
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
+    
+    use_schemaless = True
+    use_dot_notation=True
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     

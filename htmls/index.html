@@ -1,25 +1,30 @@
 {% extends box.html %}
 
-{% block static %}{% end %}
-{% block box %}
-	<div class="agrbox boxmg lucency" style="width:400px;height:400px;">
-		<div style="margin:10px 0 0 10px;display:none;">
-			<form action="/account/invite/" method="POST">
-				<input type="text" name="mail" style="width:300px;height:30px;"/>&nbsp&nbsp<input type="submit" value="获取邀请"/>
-			</form>
-		</div><br/>
-		<div style="margin-left:10px;">
-			<a style="background:#F0FFF0;display:none;" href="/auth/sina/"><img src="{{static_url('img/sina24.png')}}"/></a>&nbsp&nbsp&nbsp&nbsp
-	<a style="background:#F0FFF0;" href="/auth/qq/"><img src="{{static_url('img/qq24.png')}}"/></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	<a style="background:#F0FFF0;" href="/auth/sina/"><img src="{{static_url('img/sina24.png')}}"/></a><br/><br/>
-	&nbsp&nbsp&nbsp&nbsp&nbsp<a style="background:#F0FFF0;display:none;" href="/auth/renren/"><img src="{{static_url('img/renren_28.png')}}"/></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	<a style="background:#F0FFF0;color:red;" href="/account/login/">已注册驴友登录</a>
-		</div><br/><hr/><br/>
-		<form action="/account/register/" method="POST">
-			<span>&nbsp&nbsp&nbsp绰号：</span><input name="nick" type=text style="width:300px;height:30px;"/><br/><br/>
-			<span>&nbsp&nbsp&nbsp邮箱：</span><input name="email" type=text style="width:300px;height:30px;"/><br/><br/>
-			<span>&nbsp&nbsp&nbsp密码：</span><input name="password" type=password style="width:300px;height:30px;"/><br/><br/>
-			<div style="padding-left:320px;"><input type=submit value="注册"/></div>
-		</form>
-	</div>
+{% block static %}
+	<link href="{{ static_url('css/profile.css') }}" rel="stylesheet">
+{% end %}
+{% block bodyleft %}
+	<h1>远航户外</h1>
+{% end %}
+{% block bodyright %}
+	<form action="/account/login/" method="post">
+		<span>&nbsp&nbsp&nbsp绰号：</span><input name="nick" type=text style="width:300px;height:30px;"/><br/><br/>
+		<span>&nbsp&nbsp&nbsp密码：</span><input name="password" type=password style="width:300px;height:30px;"/><br/><br/>
+		<div style="padding-left:100px;" class="social">
+			<input type=submit value="登录"/>
+			<a href="/auth/sina/" class="sina"></a>
+			<a href="/auth/qq/" class="qq"></a>
+			<a href="/auth/renren/" class="renren"></a>
+		</div>
+	</form>
+{% end %}
+{% block foot %}
+				<div class="span12">
+				<form action="/account/register/" method="post">
+					<span>&nbsp&nbsp&nbsp绰号：</span><input name="nick" type=text style="width:200px;height:30px;"/>
+					<span>&nbsp&nbsp&nbsp邮件：</span><input name="email" type=text style="width:200px;height:30px;"/>
+					<span>&nbsp&nbsp&nbsp密码：</span><input name="password" type=password style="width:200px;height:30px;"/>
+					&nbsp&nbsp&nbsp&nbsp<input type=submit value="注册"/>
+				</form>
+			</div>
 {% end %}

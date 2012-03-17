@@ -5,7 +5,10 @@ var Weibo = {
             return false;
         })
         Weibo.getLen();
-        $("#weibo-content").select();
+        $("#weibo-content").one('focus', function(){
+            $("#weiboform input[type=submit]").addClass("btn-primary");
+            return false;
+            });
         Weibo.extend();
         Weibo.hover();
         Weibo.load();
@@ -87,6 +90,7 @@ var Weibo = {
             }else{
                 form.find("#weibo-content").val("").select();
             }
+            $("#weiboform input[type=submit]").removeClass("btn-primary");
             $("#num").text(140);
             disabled.enable();
         });

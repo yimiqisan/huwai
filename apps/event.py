@@ -17,6 +17,7 @@ from modules import EventDoc
 from api import API, Mapping
 from behavior import Behavior
 from timeline import TimeLine
+from imap import Map
 
 
 class Event(object):
@@ -65,6 +66,18 @@ class EventAPI(API):
         if (r[0] and r[1]):return r[1]['content']
         return ''
     
+    def _map_save(self, id, owner, place, **kwargs):
+        try:
+            place = list(eval(place))
+        except:
+            return place
+        m = Map()
+        r = m._api.save(owner, u'collect', location=place, link=id, **kwargs)
+        if r[0] and r[1]:
+            return r[1]
+        else:
+            return place
+    
     def _get_tid(self, t):
         m = Mapping()
         r = m.do(t)
@@ -77,7 +90,7 @@ class EventAPI(API):
         kwargs['club']=club if club else SITE_ID
         if route:kwargs['route']=route
         if equip:kwargs['equip']=equip
-        r = super(EventAPI, self).create(owner=owner, logo=logo, title=title, tags=tags, is_merc=is_merc, level=level, place=place, date=date, **kwargs)
+        r = super(EventAPI, self).create(owner=owner, logo=logo, title=title, tags=tags, is_merc=is_merc, level=level, date=date, place=place, **kwargs)
         if r[0]:self.after_step_one(r[1], title, schedule_tl=schedule_tl, spend_tl=spend_tl, declare_tl=declare_tl, attention_tl=attention_tl)
         return r
     
@@ -98,7 +111,8 @@ class EventAPI(API):
             if r[0]:kwargs['attention_tl']=r[1]
         self.edit(id, **kwargs)
     
-    def save_step_two(self, id, deadline, fr, to, when, where, **kwargs):
+    def save_step_two(self, id, owner, deadline, fr, to, when, where, **kwargs):
+        where = self._map_save(id, owner, where)
         return self.edit(id, deadline=deadline, fr=fr, to=to, when=when, where=where, check=False, **kwargs)
     
     def check(self, id, check, message=None):

@@ -51,7 +51,7 @@ function toggleState(e) {
         }
         $(e).html($(e).attr("switch"));
         $(e).attr("switch", tmp);
-        window.location.reload();
+        //window.location.reload();
     });
 };
 

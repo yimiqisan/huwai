@@ -1,0 +1,18 @@
+.social a {
+float: left;
+height: 18px;
+line-height: 17px;
+padding: 0 0 0 20px;
+background-image: url(/static/img/share.gif);
+background-repeat: no-repeat;
+font-family: '微软雅黑E\8F6F\96C5\9ED1';
+}
+a.sina, span.icon_sina {
+background-position: 0 -26px;
+}
+a.qq, span.icon_qq {
+background-position: 0 -51px;
+}
+a.renren, span.icon_renren {
+background-position: 0 0;
+}

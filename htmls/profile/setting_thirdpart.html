@@ -1,49 +1,26 @@
 {% extends ../frame.html %}
 
-{% block static %}
-	
-	<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2798557074"></script>
-	<script type="text/javascript">
-		WB2.anyWhere(function(W){
-			W.widget.connectButton({
-				id: "wb_connect_btn",
-				callback : {
-					login:function(o){
-						alert(o);
-					},
-					logout:function(){
-						alert('logout');
-					}
-				}
-			});
-		});
-	</script>
-	
-{% end %}
+{% block static %}{% end %}
 {% block bodyleft %}
-	<div id="tab">
-		<div class="Menubox">
-			<ul>
-				<li id="one1"><a href="/account/setting/">基本设置</a></li>
-				<li id="one2"><a href="/account/setting/alert/">消息提示</a></li>
-				<li id="one3" class="hover">微博绑定</li>
-				<li id="one4" style="display:none;">邮件提醒</li>
-			</ul>
-		</div>
-		<div class="contentbox">
-			<div class="hover">
-				<form name="content-form" method="POST" action="/account/setting/">
-					<div class="li"><label class="lil">绑定新浪微博: <em class="needed"></em></label><div class="lir">
-						{% if ifNone(sina_access_token) %}
-							<a href="">已经绑定</a>
-						{% else %}
-							<span id="wb_connect_btn"></span>
-							<a href="/auth/sina/"><img src="{{static_url('img/sina_24x24.png')}}"></a>
-						{% end %}
-					</div></div>
-				</form>
+	<ul class="nav nav-tabs pull-right">
+		<li><a href="/account/setting/">基本设置</a></li>
+		<li><a href="/account/setting/alert/">消息设置</a></li>
+		<li class="active"><a>账号绑定</a></li>
+	</ul>
+	<form class="form-horizontal" name="content-form" method="POST" action="/account/setting/">
+		<fieldset>
+			<legend>账号绑定</legend>
+			<div class="control-group">
+				<label class="control-label" for="textarea">绑定新浪微博:</label>
+				<div class="controls">
+					{% if ifNone(sina_access_token) %}<a href="">已经绑定</a>{% else %}<span id="wb_connect_btn"></span><a href="/auth/sina/"><img src="{{static_url('img/sina_24x24.png')}}"></a>{% end %}
+				</div>
 			</div>
-		</div>
-	</div>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">完成</button>
+				<a class="btn" href="/accout/profile/" >取消</a>
+			</div>
+		</fieldset>
+	</form>
 {% end %}
 {% block bodyright %}{% end %}

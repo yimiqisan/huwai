@@ -461,6 +461,13 @@
             },
             reloadPolyline: function(v) {
                 return af(v);
+            },
+            setLocation: function(v, u) {
+                am = an(v, {latLng: u,  clickable: true,
+                    handleClick:function(event){}
+                });
+                ai();
+                return an
             }
         }
     })();

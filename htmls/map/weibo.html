@@ -1,0 +1,30 @@
+{% extends ../frame.html %}
+
+{% block static %}
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=geometry&region=CN&sensor=false"></script>
+<script type="text/javascript" src="{{ static_url('js/jquery.map.js') }}"></script>
+	{% block static-added %}{% end %}
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/map.css') }}"/>
+{% end %}
+{% block bodyleft %}
+	<div id="wrapper" class="fwrap" style="background:white;padding:15px;height:600px;width:745px;">
+		<form action="/map/" method="post">
+			<div id="map_canvas" ipLocID="location" ipRouteID="route" style="width:600px; height:600px"></div>
+		</form>
+	</div>
+	<script type="text/javascript">
+		var map = yhui.iMap.createMap($('#map_canvas'), {width: 700, height: 550, panControl: false, mapTypeControl: true,
+			mapTypeControlOptions: {position: google.maps.ControlPosition.TOP_RIGHT, style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+			zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL},
+			markControl: true, markCallback: function(){alert('mark failure')},
+			routeControl: true, routeCallback: function(){alert('route failure')},
+			searchControl: true, searchCallback: function(){alert('search failure')},
+		});
+		var latlng = new google.maps.LatLng(38.27942813243152, 104.20023437500004);
+		map.setCenter(latlng);
+		map.setZoom(4);
+	</script>
+{% end %}
+{% block bodyright %}
+{% end %}

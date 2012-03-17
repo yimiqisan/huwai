@@ -13,9 +13,10 @@
 			routeControl: true, routeCallback: function(){alert('route failure')},
 			searchControl: true, searchCallback: function(){alert('search failure')},
 		});
-		var latlng = new google.maps.LatLng(37.026952434983365, 104.20023437500002);
+		var latlng = new google.maps.LatLng({{ lat }}, {{ lng }});
 		map.setCenter(latlng);
-		map.setZoom(4);
+		yhui.iMap.setLocation(map, latlng);
+		map.setZoom(14);
 	</script>
 {% end %}
 {% block bodyright %}

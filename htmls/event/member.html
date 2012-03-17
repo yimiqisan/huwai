@@ -1,0 +1,27 @@
+{% extends ../frame.html %}
+
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {$('#nav-event').addClass("active");})
+	</script>
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/event.css') }}"/>
+{% end %}
+
+{% block bodyleft %}
+	<ul class="thumbnails">
+		{% for u in userlist %}
+		<li class="span3">
+			<a href="" class="thumbnail" style="min-height:100px;">
+				<div style="float:left; clear:right; margin-right:10px;"><img src="/image/avatar/{{u.get('owner', None)}}_100" width=80 height=80 /></div>
+				<h3>{{ u.get('nick', None) }}</h3>
+			</a>
+		</li>
+		{% end %}
+	</ul>
+{% end %}
+{% block bodyright %}
+	<div class="well">
+		<a href="/event/{{ eid }}/">回到活动</a>
+	</div>
+{% end %}

@@ -12,9 +12,9 @@ from profileHandler import LoginHandler, InviteHandler, RegisterHandler, LogoutH
 from authHandler import AuthHandler, SinaLoginHandler, QQLoginHandler, RenrenLoginHandler, ThirdPartHandler
 from weiboHandler import WeiboHandler, WeiboItemHandler, AjaxWeiboHandler
 from peopleHandler import PeopleHandler
-from eventHandler import EventHandler, EventPubaHandler, EventPubbHandler, EventCheckHandler, EventListHandler, EventCrawlerHandler
+from eventHandler import EventHandler, EventPubaHandler, EventPubbHandler, EventCheckHandler, EventListHandler, EventFallsHandler, EventMemberHandler, EventApprovalHandler, EventCrawlerHandler
 from imageHandler import UploadImageHandler, AvatarHandler, AttachHandler, AjaxAvatarHandler, AjaxImageHandler, AjaxImageCheckHandler
 from ajaxHandler import AjaxReplyHandler, AjaxRemoveHandler, AjaxToggleStateHandler, AjaxToggleInputHandler
 from checkHandler import CheckEventHandler
 from alertHandler import AlertHandler, AlertListHandler, AjaxAlertHandler
-from mapHandler import MapHandler, MapItemHandler, AjaxMapHandler
+from mapHandler import MapHandler, MapItemHandler, MapEventHandler, MapWeiboHandler, AjaxMapHandler

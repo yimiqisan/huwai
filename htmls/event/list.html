@@ -1,0 +1,44 @@
+{% extends ../frame.html %}
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {$('#nav-event').addClass("active");})
+	</script>
+{% end %}
+{% block bodyleft %}
+	<ul class="breadcrumb" style="background:#ededed;">
+		{% if title %}<li><a href="#">{{ title }}</a></li>{% end %}
+		<li class="pull-right">
+			<div class="btn-group">
+				<button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">模式切换 <span class="caret"></span></button>
+				<ul class="dropdown-menu">
+					<li><a href="/event/falls/"><i class="icon-picture"></i> &nbsp&nbsp&nbsp图片模式</a></li>
+					<li style="display:none;"><a href="/event/map/"><i class="icon-map-marker"></i> &nbsp&nbsp&nbsp地图模式</a></li>
+				</ul>
+			</div>
+		</li>
+	</ul>
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th>活动名称</th>
+				<th>发布时间</th>
+				<th>活动开始时间</th>
+				<th>补充</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for e in event_list %}
+			<tr>
+				<td>{{e['title']}}</td>
+				<td>{{e['date']}}</td>
+				<td>{{e['created']}}</td>
+				<td><a href="/event/{{e['id']}}/">{{e['tl'][1]}}</a></td>
+			</tr>
+			{% end %}
+		</tbody>
+	</table>
+{% end %}
+{% block bodyright %}
+	<a class="btn btn-large btn-success" href="/event/puba/">发布活动</a>
+{% end %}

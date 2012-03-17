@@ -1,0 +1,142 @@
+{% extends ../frame.html %}
+
+{% block static %}
+	<script language="javascript" src="{{ static_url('js/jquery.uploadify.min.js') }}" type="text/javascript"></script>
+	<script language="javascript" src="{{ static_url('js/event.js') }}" type="text/javascript"></script>
+	<script language="javascript" src="{{ static_url('js/jquery-ui.min.js') }}" type="text/javascript"></script>
+	<script language="javascript" src="{{ static_url('js/tags.js') }}" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$('#nav-event').addClass("active");
+			$("#poster").uploadify({
+				swf				: '{{ static_url("js/uploadify.swf") }}',
+				uploader		: '/a/image',
+				checkExisting	: '/a/image/check',
+				buttonText		: '点击上传',
+				cancelImage		: '{{ static_url("img/uploadify-cancel.png") }}',
+				auto			: true,
+				fileObjName		: 'upload',
+				onUploadSuccess : function (file, data, response) {
+					$('#poster').html('<span><input type="hidden" name="logo" value="'+data+'"/>已上传</span>');
+					$('#poster_queue').hide();
+					},
+				onError			: function (event, queueID, fileObj){alert("文件:" + fileObj.name + " 上传失败");}
+			});
+			Event.checka();
+			$("input[rel=popover]").popover({trigger: 'focus'});
+			$("textarea[rel=popover]").popover({trigger: 'focus', placement: 'top'});
+			$("#event-tags").tagit({
+				removeConfirmation: true,
+				availableTags: ['登山', '徒步', '骑行', '聚会', '滑雪', '体育运动', '摄影', '攀岩', '探险', '滑翔伞', '垂钓', '漂流', '自驾', '环保公益']
+			});
+		})
+	</script>
+	
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/uploadify.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/jquery-ui.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/jquery.tags.css') }}"/>
+{% end %}
+
+{% block bodyleft %}
+	<form class="form-horizontal" method="POST" action="/event/puba/">
+		<fieldset>
+			<legend>活动发布---第一步</legend>
+			<div class="control-group">
+				<label class="control-label" for="focusedInput">活动标题:</label>
+				<div class="controls">
+					<input class="input-xlarge" name="title" type="text" value="" rel="popover" data-content="标题是驴友们首先看到的东西哦，您的活动够不够吸引眼球，他很关键哦,所以小编提醒您要重视标题哦，亲！" data-original-title="真爱生命，重视标题">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="focusedInput">宣传海报:</label>
+				<div class="controls">
+					<div id="poster">图片上传</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">人员配置:</label>
+				<div class="controls">
+					<span name="members" class="input-xlarge uneditable-input">发起人：{{current_user}}</span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inlineCheckboxes">活动属性:</label>
+				<div class="controls">
+					<label class="checkbox inline">
+						 <input type="checkbox" name="is_merc" value="option1">商业
+					</label>
+					<label class="checkbox inline">
+						<input type="checkbox" name="club" value="option2"> 公开
+					</label>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="select01">难度系数</label>
+				<div class="controls">
+					<select name="level">
+						<option>1.0</option>
+						<option>1.5</option>
+						<option>2.0</option>
+						<option>2.5</option>
+						<option>3.0</option>
+						<option>4.0</option>
+						<option>5.0</option>
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="multiSelect">户外标签</label>
+				<div class="controls">
+					<ul id="event-tags" style="margin-left:0px; width:500px;"></ul>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="focusedInput">活动时间:</label>
+				<div class="controls">
+					<script>toggleDate("begin_time", 0,0,0)</script>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="focusedInput">活动地点:</label>
+				<div class="controls">
+					<input class="input-xlarge" name="place" type="text" value="" rel="popover" data-content="天南海北，海角天涯 天荒地老 海枯石烂 看着办吧！" data-original-title="施主自哪里来，往“哪里”去？">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="textarea">行程安排:</label>
+				<div class="controls">
+					<textarea class="input-xlarge" name="schedule_tl" rows="3" style="width:500px;" rel="popover" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title"></textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="textarea">费用明细:</label>
+				<div class="controls">
+					<textarea class="input-xlarge" name="spend_tl" rows="3" style="width:500px;" rel="popover" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title"></textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="textarea">装备要求:</label>
+				<div class="controls">
+					<textarea class="input-xlarge" name="equip" rows="3" style="width:500px;" rel="popover" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title"></textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="textarea">注意事项:</label>
+				<div class="controls">
+					<textarea class="input-xlarge" name="attention_tl" rows="3" style="width:500px;" rel="popover" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title"></textarea>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="textarea">免责声明:</label>
+				<div class="controls">
+					<textarea class="input-xlarge" name="declare_tl" rows="3" style="width:500px;" rel="popover" data-content="&lt;a&gt;导入模板&lt;/a&gt;" data-original-title="A Title"></textarea>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">进入下一步</button>
+				<a class="btn" href="/event/" >取消</a>
+			</div>
+		</fieldset>
+	</form>
+{% end %}
+{% block bodyright %}{% end %}

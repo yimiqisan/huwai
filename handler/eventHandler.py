@@ -19,6 +19,7 @@ from apps.tools import session
 from apps.event import Event
 from apps.timeline import TimeLine
 from apps.behavior import Behavior
+from apps.role import Role
 
 from baseHandler import BaseHandler
 
@@ -35,9 +36,9 @@ class EventHandler(BaseHandler):
         r = e._api.get(id, uid)
         rb = b._api.list(kind=u'join', mark=id)
         if r[0]:
-            self.render("event/event_show.html", user_list=rb, **r[1])
+            self.render("event/item.html", user_list=rb, eid=id, **r[1])
         else:
-            self.render("event/event_show.html", warning=r[1])
+            self.render("event/item.html", eid=id, warning=r[1])
     
     @addslash
     def post(self):
@@ -51,7 +52,7 @@ class EventPubaHandler(BaseHandler):
     def get(self):
         d = {}
         for n in self.KEYS:d[n] = None
-        self.render("event/event_puba.html", **d)
+        self.render("event/publish_step_one.html", **d)
     
     @authenticated
     @addslash
@@ -77,19 +78,20 @@ class EventPubbHandler(BaseHandler):
     @addslash
     @session
     def get(self):
+        return self.render("event/publish_step_two.html")
         uid = self.SESSION['uid']
         eid = self.get_argument('eid', None)
-        if not eid:return self.render("event/event_puba.html", **{'warning': u'发布失败，请重试！'})
+        if not eid:return self.render("event/publish_step_two.html", **{'warning': u'发布失败，请重试！'})
         e = Event(id=eid)
         if e.owner != uid:return self.redirect('/event/puba/')
-        self.render("event/event_pubb.html", eid=eid)
+        self.render("event/publish_step_two.html", eid=eid)
     
     @addslash
     @session
     def post(self):
         uid = self.SESSION['uid']
         eid = self.get_argument('eid', None)
-        l = ["fr", "to"]
+        l = ["fr", "to", "where"]
         d = {}
         for n in l:d[n] = self.get_argument(n, None)
         e = Event(id=eid)
@@ -97,7 +99,7 @@ class EventPubbHandler(BaseHandler):
         deadline = datetime.datetime.strptime(timestr, ISO_TIME_FORMAT_YMDHM)
         timestr = ":".join([self.get_argument("collect_time"), self.get_argument("collect_time_hour"), self.get_argument("collect_time_minute")])
         when = datetime.datetime.strptime(timestr, ISO_TIME_FORMAT_YMDHM)
-        r = e._api.save_step_two(eid, deadline, int(d['fr']), int(d['to']), when, u'where')
+        r = e._api.save_step_two(eid, uid, deadline, int(d['fr']), int(d['to']), when, d['where'])
         if r[0]:
             return self.redirect('/event/loading')
         else:
@@ -117,14 +119,52 @@ class EventListHandler(BaseHandler):
             for i in r[1]:
                 i['tl'] = t._api.abbr(topic=i['tid'], channel=[u'weibo'])
                 l.append(i)
-            self.render("event/event_list.html", event_list=l, title="活动列表")
+            self.render("event/list.html", event_list=l, title="活动列表")
         else:
-            self.render("event/event_list.html", event_list=l, warning=r[1])
+            self.render("event/list.html", event_list=l, warning=r[1])
+
+class EventFallsHandler(BaseHandler):
+    @authenticated
+    @addslash
+    @session
+    def get(self):
+        uid = self.SESSION['uid']
+        e = Event()
+        r = e._api.list(cuid=uid)
+        l = []
+        if r[0]:
+            t = TimeLine()
+            for i in r[1]:
+                i['tl'] = t._api.abbr(topic=i['tid'], channel=[u'weibo'])
+                l.append(i)
+            self.render("event/falls.html", event_list=l, title="活动列表")
+        else:
+            self.render("event/falls.html", event_list=l, warning=r[1])
+
+class EventMemberHandler(BaseHandler):
+    @authenticated
+    @addslash
+    @session
+    def get(self, id):
+        uid = self.SESSION['uid']
+        b = Behavior()
+        r = b._api.list(kind=u'join', mark=id)
+        self.render("event/member.html", userlist=r, eid=id)
 
 class EventCheckHandler(BaseHandler):
     @addslash
+    @session
     def get(self):
-        self.render_alert(u"发布成功，\n请耐心等待，\n我们的审核灰常快")
+        self.render_alert(u"发布成功，\n请耐心等待，\n我们的审核灰常快。")
+
+class EventApprovalHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self, id):
+        uid = self.SESSION['uid']
+        b = Behavior()
+        r = b._api.list(kind=u'join')
+        self.render("event/approval.html", userlist=r)
 
 class EventCrawlerHandler(BaseHandler):
     @addslash

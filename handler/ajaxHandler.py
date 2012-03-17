@@ -75,8 +75,8 @@ class AjaxToggleStateHandler(BaseHandler):
     def post(self):
         uid = self.SESSION['uid']
         b = Behavior()
-        k = self.get_argument("kind", None)
-        m = self.get_argument("mark", None)
+        k = self.get_argument("kind", 'kind')
+        m = self.get_argument("mark", 'mark')
         s = b._api.state(uid, k, m)
         if s[0] and s[1]:
             id = s[1]['_id']

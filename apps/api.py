@@ -262,56 +262,6 @@ class API(object):
                 break
         return (True, None)
     
-    def map_tmp(self, func, opts):
-        all_entities = self.entities.objects.all()
-        cnt = all_entities.count()
-        c = True
-        for i in xrange(cnt/10000+1):
-            entities = all_entities[i*10000:(i*10000 + 10000)]
-            for entity in entities:
-                body = entity.body
-                added_id = entity.added_id
-                updated = entity.updated
-                data = zlib.decompress(body)
-                try:
-                    obj = Pickle.loads(data)
-                except:
-                    return (False, 'decode json error')
-                obj['added_id'] = added_id
-                obj['updated'] = updated
-                r = func(entity.eid, obj, opts)
-                if not r:
-                    c = False
-                    break
-            if not c:
-                break
-        return (True, None)
-    
-    def map_after(self, func, opts, point=datetime.strptime('2000-1-1', '%Y-%m-%d')):
-        all_entities = self.entities.objects.filter(updated__gt = point)
-        cnt = all_entities.count()
-        c = True
-        for i in xrange(cnt/10000+1):
-            entities = all_entities[i*10000:(i*10000 + 10000)]
-            for entity in entities:
-                body = entity.body
-                added_id = entity.added_id
-                updated = entity.updated
-                data = zlib.decompress(body)
-                try:
-                    obj = Pickle.loads(data)
-                except:
-                    return (False, 'decode json error')
-                obj['added_id'] = added_id
-                obj['updated'] = updated
-                r = func(entity.eid, obj, opts)
-                if not r:
-                    c = False
-                    break
-            if not c:
-                break
-        return (True, None)
-    
     def exist(self, key, value):
         try:
             return self.collection.one({key:value}) is not None

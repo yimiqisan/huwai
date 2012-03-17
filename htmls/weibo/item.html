@@ -2,7 +2,10 @@
 
 {% block static %}
 	<script language="javascript" type="text/javascript">
-		$(document).ready(function() {Reply.toggle($(".wb_item"));})
+		$(document).ready(function() {
+			Reply.toggle($(".wb_item"));
+			$('#nav-weibo').addClass("active");
+		})
 	</script>
 	{% block static-added %}{% end %}
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/weibo.css') }}"/>

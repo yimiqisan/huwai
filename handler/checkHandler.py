@@ -27,11 +27,11 @@ class CheckEventHandler(BaseHandler):
     @session
     def get(self):
         e = Event()
-        r = e._api.list(check=False)
+        r = e._api.list(check=True)
         if r[0]:
-            return self.render("check/c_event.html", event_list=self._content_filter(r[1]))
+            return self.render("check/event.html", event_list=r[1])
         else:
-            return self.render("check/c_event.html", **{'warning': r[1], 'event_list':[]})
+            return self.render("check/event.html", **{'warning': r[1], 'event_list':[]})
     
     def _content_filter(self, l):
         rl = []

@@ -18,7 +18,7 @@ class WeiboHandler(BaseHandler):
     @addslash
     @session
     def get(self):
-        return self.render("weibo/weibo.html", title=u"微博")
+        return self.render("weibo/index.html", title=u"微博")
 
 class WeiboItemHandler(BaseHandler):
     @addslash

@@ -26,56 +26,67 @@
 	{% block static-added %}{% end %}
 {% end %}
 {% block bodyleft %}
-	<div id="tab">
-		<div class="Menubox">
-			<ul>
-				<li id="one1" class="hover">基本设置</li>
-				<li id="one2" ><a href="/account/setting/alert/">消息提示</a></li>
-				<li id="one3" ><a href="/account/setting/thirdpart/">微博绑定</a></li>
-				<li id="one4" onclick="setTab('one',4,4)" style="display:none;">邮件提醒</li>
-			</ul>
-		</div>
-		<div class="contentbox">
-			<div class="hover">
-				<form name="content-form" method="POST" action="/account/setting/">
-					<div class="li"><label class="lil">名号: <em class="needed"></em></label><div class="lir">
-						{% if ifNone(current_user) %}
-							<span>{{current_user}}</span>
-						{% else %}
-							<input type="text" name="nick" value=""/>
-						{% end %}
-					</div></div>
-					<div class="li" style="display:none;"><label class="lil">我的域名: <em class="needed"></em></label><div class="lir">{% if ifNone(domain) %}<span>{{domain}}</span>{% else %}<input type="text" name="domain" value=""/>{% end %}</div></div>
-					<div class="li"><label class="lil">头像: <em class="needed"></em></label><div class="lir">
-				{% if ifNone(avanta) %}<img src="/image/avatar/{{uid}}_30"/>{% else %}<div id="poster">Uploadify</div>{% end %}
-					</div></div>
-					<div class="li"><label class="lil">常居地: <em class="needed"></em></label><div class="lir">
-						{% if ifNone(live) %}
-							<script>select_pid("live", {{live}})</script>
-						{% else %}
-							<script>select_pid("live", 1)</script>
-							<span id="live"></span>
-						{% end %}
-					</div></div>
-					<div class="li"><label class="lil">绑定邮箱: <em class="needed"></em></label><div class="lir">
-						{% if ifNone(mail) %}
-							<span>{{mail}}</span>
-						{% else %}
-							<input type="text" name="mail" value=""/>
-						{% end %}
-					</div></div>
-					<div class="li"><label class="lil">密码: <em class="needed"></em></label><div class="lir"><a href="/account/cpassword/">修改密码</a></div></div>
-					<div class="li"><label class="lil">手机号: <em class="needed"></em></label><div class="lir">
-						{% if ifNone(phone) %}
-							<span>{{phone}}</span>
-						{% else %}
-							<input type="text" name="phone" value=""/>
-						{% end %}
-					</div></div>
-					<div class="li"><label class="lil"><em class="needed"></em></label><div class="lir"><input onclick="$('form').submit();" type="button" value="提交"></div></div>
-				</form>
+	<ul class="nav nav-tabs pull-right">
+		<li class="active"><a>基本设置</a></li>
+		<li><a href="/account/setting/alert/">消息设置</a></li>
+		<li><a href="/account/setting/thirdpart/">账号绑定</a></li>
+	</ul>
+	
+	
+	
+	
+
+		<form class="form-horizontal" name="content-form" method="POST" action="/account/setting/">
+		<fieldset>
+			<legend>基本设置</legend>
+			<div class="control-group">
+				<label class="control-label" for="textarea">名号:</label>
+				<div class="controls">
+					{% if ifNone(current_user) %}<span>{{current_user}}</span>{% else %}<input type="text" name="nick" value=""/>{% end %}
+				</div>
 			</div>
-		</div>
-	</div>
+			<div class="control-group" style="display:none;">
+				<label class="control-label" for="textarea">我的域名:</label>
+				<div class="controls">
+					{% if ifNone(domain) %}<span>{{domain}}</span>{% else %}<input type="text" name="domain" value=""/>{% end %}
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="textarea">头像:</label>
+				<div class="controls">
+					{% if ifNone(avanta) %}<img src="/image/avatar/{{uid}}_30"/>{% else %}<div id="poster">Uploadify</div>{% end %}
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="textarea">常居地:</label>
+				<div class="controls">
+					{% if ifNone(live) %}<script>select_pid("live", {{live}})</script>{% else %}<script>select_pid("live", 1)</script><span id="live"></span>{% end %}
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="textarea">绑定邮箱:</label>
+				<div class="controls">
+					{% if ifNone(mail) %}<span>{{mail}}</span>{% else %}<input type="text" name="mail" value=""/>{% end %}
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="textarea">密码:</label>
+				<div class="controls">
+					<a href="/account/cpassword/">修改密码</a>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="textarea">手机号:</label>
+				<div class="controls">
+					{% if ifNone(phone) %}<span>{{phone}}</span>{% else %}<input type="text" name="phone" value=""/>{% end %}
+				</div>
+			</div>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">完成</button>
+				<a class="btn" href="/accout/profile/" >取消</a>
+			</div>
+		</fieldset>
+		</form>
+
 {% end %}
 {% block bodyright %}{% end %}
