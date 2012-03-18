@@ -49,9 +49,11 @@ handlers = [(r"/", RootHandler),
             (r"/map/event/", MapEventHandler),
             (r"/map/weibo/", MapWeiboHandler),
             
+            (r"/alert/", AlertHandler),
             (r"/alert/(.*)/", AlertListHandler),
 #            (r"/alert/(.{32})/", AlertHandler),
             (r"/a/alert/", AjaxAlertHandler),
+            (r"/chatsocket", ChatSocketHandler),
             
             (r"/feedback/", FeedbackHandler),
             

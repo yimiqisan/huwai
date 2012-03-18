@@ -1,5 +1,12 @@
-#showlist{background:#EDEDED;width:775px;}
-#showlist ul{padding:10px;}
-#showlist ul li{margin-top:5px;padding:10px;border-bottom:1px solid #E1E4E5;}
-#showlist ul li:hover{background:#E1E4E5;}
-#showlist ul a{margin-left:10px;float:right;}
+#input {
+  margin-top: 0.5em;
+}
+
+#inbox .message {
+  padding-top: 0.25em;
+}
+
+#nav {
+  float: right;
+  z-index: 99;
+}

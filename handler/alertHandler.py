@@ -8,31 +8,69 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 import json
 
-from tornado.web import addslash, authenticated
-
 from apps.tools import session
 from apps.alert import Alert
 from apps.timeline import TimeLine
 
 from baseHandler import BaseHandler
 
+import logging
+import tornado.escape
+import tornado.ioloop
+import tornado.options
+import tornado.web
+import tornado.websocket
+import os.path
+import uuid
+
+
 class AlertHandler(BaseHandler):
-    @authenticated
-    @addslash
-    @session
-    def get(self, id):
-        pass
-    
-    @authenticated
-    @addslash
-    @session
-    def post(self):
-        pass
+    def get(self):
+        self.render("alert/list.html", messages=ChatSocketHandler.cache)
+
+class ChatSocketHandler(tornado.websocket.WebSocketHandler):
+    waiters = set()
+    cache = []
+    cache_size = 200
+
+    def allow_draft76(self):
+        # for iOS 5.0 Safari
+        return True
+
+    def open(self):
+        ChatSocketHandler.waiters.add(self)
+
+    def on_close(self):
+        ChatSocketHandler.waiters.remove(self)
+
+    @classmethod
+    def update_cache(cls, chat):
+        cls.cache.append(chat)
+        if len(cls.cache) > cls.cache_size:
+            cls.cache = cls.cache[-cls.cache_size:]
+
+    @classmethod
+    def send_updates(cls, chat):
+        for waiter in cls.waiters:
+            try:
+                waiter.write_message(chat)
+            except:
+                logging.error("Error sending message", exc_info=True)
+
+    def on_message(self, message):
+        parsed = tornado.escape.json_decode(message)
+        chat = {
+            "id": str(uuid.uuid4()),
+            "body": parsed["body"],
+            }
+        chat["html"] = self.render_string("alert/item.html", message=chat)
+
+        ChatSocketHandler.update_cache(chat)
+        ChatSocketHandler.send_updates(chat)
+
+
 
 class AlertListHandler(BaseHandler):
-    @authenticated
-    @addslash
-    @session
     def get(self, subject):
         uid = self.SESSION['uid']
         t = TimeLine()
@@ -46,12 +84,6 @@ class AlertListHandler(BaseHandler):
             return self.render("alert/list.html", alert_list=[])
         if r[0]:self.render("alert/list.html", alert_list=r[1])
     
-    @authenticated
-    @addslash
-    @session
-    def post(self):
-        pass
-
 class AjaxAlertHandler(BaseHandler):
     @session
     def get(self):
@@ -74,13 +106,4 @@ class AjaxAlertHandler(BaseHandler):
         a = Alert()
         r = a._api.click(uid, subject)
         return self.write(json.dumps({'ret':'ok'}))
-    
-
-
-
-
-
-
-
-
 

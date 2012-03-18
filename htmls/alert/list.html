@@ -1,16 +1,28 @@
-{% extends ../frame.html %}
+{% extends ../box93.html %}
 
 {% block static %}
 	{% block static-added %}{% end %}
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/alert.css') }}"/>
+    <script src="{{ static_url('js/alert.js') }}" type="text/javascript"></script>
 {% end %}
 {% block bodyleft %}
-	<div id="showlist">
-		<ul>
-		{% for a in alert_list %}
-			<li>{{a['nick']}}：{{ a['content'] }}<a href="/weibo/{{ a['id'] }}">查看</a></li>
+	<div id="input">
+		<form action="" method="post" id="messageform">
+			<table>
+				<tr>
+					<td><input type="text" name="body" id="message" style="width:500px"/></td>
+					<td style="padding-left:5px">
+						<input type="submit" value="{{ _('Post') }}"/>
+						<input type="hidden" name="next" value="{{ request.path }}"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div id="inbox">
+		{% for message in messages %}
+			{% include "item.html" %}
 		{% end %}
-		</ul>
 	</div>
 {% end %}
 {% block bodyright %}{% end %}
