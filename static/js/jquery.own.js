@@ -47,3 +47,4 @@ jQuery.popForm =function(a, width, height, from) {
     var left = p ? l - width - 20: l + 40;
     $('#popform').offset({top:top,left:left}).width(width).height(height).append(from);
 };
+
