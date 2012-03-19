@@ -57,6 +57,9 @@ var updater = {
     }
 };
 
+
+
+
 var Alert = {
     init: function(){
         Alert.list();
