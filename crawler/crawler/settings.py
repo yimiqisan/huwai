@@ -16,11 +16,15 @@ NEWSPIDER_MODULE = 'crawler.spiders'
 DEFAULT_ITEM_CLASS = 'crawler.items.CrawlerItem'
 USER_AGENT = '%s/%s' % (BOT_NAME, BOT_VERSION)
 
+ITEM_PIPELINES = [
+    'crawler.pipelines.Huwai8264Pipeline',
+]
+
 #mongodb settings
 DB_NAME = 'crawler'
-DB_HOST = 'localhost'
-DB_PORT = 27027
-#DB_CON = Connection(host=DB_HOST, port=DB_PORT)
+MONGO_HOST = 'localhost'
+MONGO_PORT = 27017
+DB_CON = Connection(host=MONGO_HOST, port=MONGO_PORT)
 
 WEB_SITE = [
             {'allowd_domains':'www.517huwai.com','start_urls':'http://www.517huwai.com/Activity/index/p/1/','filter':'//dl','title':'dd/h1/a/text()','link':'dd/h1/a/@href','organizername':'dd/p[1]/span[1]/font/a/text()','activityclass':'dd/p[1]/span[2]/font/a/text()','place':'dd/p[2]/span/text()','time':'dd/p[3]/span/text()','hotnumber':'dd/p[4]/span[2]'},

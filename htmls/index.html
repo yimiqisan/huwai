@@ -4,7 +4,9 @@
 	<link href="{{ static_url('css/profile.css') }}" rel="stylesheet">
 {% end %}
 {% block bodyleft %}
-	<h1>远航户外</h1>
+	<div style="min-height:600px;">
+		<h1>远航户外</h1></br><a class="pull-left btn btn-primary" href="#register">注册加入</a>
+	</div>
 {% end %}
 {% block bodyright %}
 	<form action="/account/login/" method="post">
@@ -19,7 +21,7 @@
 	</form>
 {% end %}
 {% block foot %}
-	<div class="span12">
+	<div class="span12" name="register" id="register" style="height:200px;">
 		<form action="/account/register/" method="post">
 			<span>&nbsp&nbsp&nbsp绰号：</span><input name="nick" type=text style="width:200px;height:30px;"/>
 			<span>&nbsp&nbsp&nbsp邮件：</span><input name="email" type=text style="width:200px;height:30px;"/>

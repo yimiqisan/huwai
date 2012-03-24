@@ -171,7 +171,8 @@ class AlertDoc(Document):
     structure = {
             '_id':      unicode,
             'owner':    unicode,
-            'subject':  IS(u'reply', u'join', u'follow', u'at', u'rpat'),
+            'subject':  IS(u'weibo_at', u'weibo_ra', u'weibo_fl', u'account_ml', u'account_pw', u'account_iv', u'event_ckfb', u'event_jnfb', u'event_ckps', u'event_jnps', u'event_jncf'),
+            'nature':   IS(u'alert', u'error', u'success', u'confirm'),
             'count':    int,
             'created':  datetime,
             'added':    dict,
@@ -211,7 +212,7 @@ class MapDoc(Document):
 
 class RoleDoc(Document):
     __collection__ = 'role'
-    __datebase__ = DB_NAME
+    __database__ = DB_NAME
     
     structure = {
             '_id':          unicode,
@@ -228,7 +229,23 @@ class RoleDoc(Document):
     use_schemaless = True
     use_dot_notation=True
     
+class TagDoc(Document):
+    __collection__ = 'tag'
+    __database__ = DB_NAME
     
+    structure = {
+            '_id':          unicode,
+            'content':      unicode,
+            'relation_l':   list,
+            'created':      datetime,
+            'added':        dict,
+            'added_id':     int,
+    }
+    required_fields = ['_id', 'created']
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
+    
+    use_schemaless = True
+    use_dot_notation=True
     
     
     

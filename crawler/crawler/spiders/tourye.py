@@ -16,7 +16,7 @@ from scrapy.selector import HtmlXPathSelector
 from crawler.items import TouryeItem
 
 class TouryeSpider(BaseSpider):
-	name = "tourye"
+	name = "c_tourye"
 	domain = 'u.tourye.com/'
 	allowed_domains = ['u.tourye.com']
 	start_urls=['http://u.tourye.com/space.php?uid=0&do=event&view=all&type=signing&classid=1&page=1']

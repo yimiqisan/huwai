@@ -37,7 +37,7 @@ class BehaviorAPI(API):
         API.__init__(self, col_name=col_name, collection=collection, doc=doc)
     
     def _output_map(self, input, cuid):
-        ret_d = {'id':input['_id'], 'owner':input['owner'], 'is_own':(cuid==input['owner'] if input['owner'] else True), 'kind':input['kind'], 'mark':input['mark'], 'created':input['created']}
+        ret_d = {'id':input['_id'], 'owner':input['owner'], 'is_own':(cuid==input['owner'] if input['owner'] else True), 'kind':input['kind'], 'mark':input['mark'], 'created':input['created'].strftime('%m-%d %H:%M')}
         for k in input['added']:
             ret_d[k] = input['added'][k]
         return ret_d

@@ -49,6 +49,15 @@ basicConfig(filename = 'app.log',
 )
 TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
+CLUB_WEBSITE = {
+    "c_8264":    u"b096ba6ee2d34a649be11d3d45eddc60",
+    "c_517":     u"608fb0bcf528477ab2cd166a17738b28",
+    "c_tourye":       u"23b22295c6de483481242fdcdf1afbff",
+    "c_lvye":         u"ac061d953c564bb5ba987df50fc6baf8",
+    "c_doyouhike":    u"ddb2d797c1424cb298edcf4bf20bb70d",
+    "c_lvzhou":       u"461a993f6ba448b7a13a4335f3ff6a83"
+}
+
 #thirdpart key list
 SINA_CONSUME_KEY = '2798557074'
 SINA_CONSUME_SECRET = '1540c762507cae70b0d81abdc2ad4d59'

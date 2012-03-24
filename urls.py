@@ -53,7 +53,6 @@ handlers = [(r"/", RootHandler),
             (r"/alert/(.*)/", AlertListHandler),
 #            (r"/alert/(.{32})/", AlertHandler),
             (r"/a/alert/", AjaxAlertHandler),
-            (r"/chatsocket", ChatSocketHandler),
             
             (r"/feedback/", FeedbackHandler),
             
@@ -70,6 +69,7 @@ handlers = [(r"/", RootHandler),
             (r"/a/image/check", AjaxImageCheckHandler),
             
             (r"/check/event/", CheckEventHandler),
+            (r"/check/tag/", CheckTagHandler),
             
             (r"/xd.html/?", SinaXDHandler),
             (r"/google9f2d915bcc519f6e.html", GoogleWebMasterHandler),

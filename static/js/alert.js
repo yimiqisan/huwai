@@ -2,62 +2,8 @@ $(document).ready(function() {
     if (!window.console) window.console = {};
     if (!window.console.log) window.console.log = function() {};
 
-    $("#messageform").live("submit", function() {
-        newMessage($(this));
-        return false;
-    });
-    $("#messageform").live("keypress", function(e) {
-        if (e.keyCode == 13) {
-            newMessage($(this));
-            return false;
-        }
-    });
-    $("#message").select();
-    updater.start();
+    Alert.init();
 });
-
-function newMessage(form) {
-    var message = form.formToDict();
-    updater.socket.send(JSON.stringify(message));
-    form.find("input[type=text]").val("").select();
-}
-
-jQuery.fn.formToDict = function() {
-    var fields = this.serializeArray();
-    var json = {}
-    for (var i = 0; i < fields.length; i++) {
-        json[fields[i].name] = fields[i].value;
-    }
-    if (json.next) delete json.next;
-    return json;
-};
-
-var updater = {
-    socket: null,
-
-    start: function() {
-        var url = "ws://" + location.host + "/chatsocket";
-        if ("WebSocket" in window) {
-	    updater.socket = new WebSocket(url);
-        } else {
-            updater.socket = new MozWebSocket(url);
-        }
-	updater.socket.onmessage = function(event) {
-	    updater.showMessage(JSON.parse(event.data));
-	}
-    },
-
-    showMessage: function(message) {
-        var existing = $("#m" + message.id);
-        if (existing.length > 0) return;
-        var node = $(message.html);
-        node.hide();
-        $("#inbox").append(node);
-        node.slideDown();
-    }
-};
-
-
 
 
 var Alert = {
@@ -72,9 +18,22 @@ var Alert = {
             if (response.error){
                 return alert(response.error);
             }
-            htmls = response.htmls;
-            if (htmls.length > 0){for (var i=0; i<htmls.length; i++) {e.append(htmls[i]);}}
-            else {$(e).parent().css('display', 'none');}
+            ms = response.messages;
+            if (ms.length > 0){
+                for (var i=0; i<ms.length; i++) {
+                    noty({
+                        text: "<a id=r-"+ ms[i]['id'] +"' onclick='Alert.click(this);return false;' subject="+ms[i]['subject']+">"+ms[i]['suffix']+"</a>",
+                        layout: "topRight",
+                        type: "success",
+                        timeout: 50000,
+                        onClose: function(){},
+                    });
+
+//                    {'count': 1, 'suffix': u'\u5fae\u535a\u4e2d@\u60a8', 'id': u'3c1acf88336c409bace1e53fa5767fe9', 'subject': u'at'}
+//                    <div><a  onclick="Alert.click(this);return false;" id="r-{{ message['id'] }}" subject="{{ message['subject'] }}" href="#">最新 {{ message['count'] }} 条{{ message['suffix'] }}</a></div>
+                    
+                    }
+            }
         });
     },
     

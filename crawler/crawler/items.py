@@ -5,6 +5,20 @@
 
 from scrapy.item import Item, Field
 
+class CrawlerItem(Item):
+    pass
+
+class EventItem(Item):
+    l = ['title', 'created', 'logo', 'tags', 'level', 'date', 'place', 'club', 'address']
+    #l.extend(exl)
+    for i in l:exec(i+'=Field()')
+
+class Huwai8264Item(EventItem):
+    pass
+    
+class HuwailvzhouItem(EventItem):
+    pass
+    
 class Huwai517Item(Item):
     # define the fields for your item here like:
     # name = Field()

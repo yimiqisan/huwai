@@ -70,10 +70,9 @@ class TimeLineAPI(API):
     def _fire_alert(self, channel, tid, at_list):
         c = case.get_case_object()
         if channel == u'reply':
-            for at in at_list:c.fire('a_rpat', to=at)
-            c.fire('a_reply', to=self._get_nick(tid))
+            for at in at_list:c.fire('a_weibo_ra', to=at)
         else:
-            for at in at_list:c.fire('a_at', to=at)
+            for at in at_list:c.fire('a_weibo_at', to=at)
     
     def _fire_sina(self, owner, content):
         c = case.get_case_object()

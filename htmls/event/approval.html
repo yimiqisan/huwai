@@ -8,6 +8,7 @@
 				btn.button('loading');
 				var url = btn.attr("ajax-url");
 				var kind = btn.attr("ajax-kind");
+				
 				var args = {'kind': kind, 'mark': btn.attr("id").replace("btn-", "")};
 				$.postJSON(url, "POST", args, function(response) {
 					if (response.error){

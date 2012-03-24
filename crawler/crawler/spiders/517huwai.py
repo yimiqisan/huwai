@@ -16,7 +16,7 @@ from scrapy.selector import HtmlXPathSelector
 from crawler.items import Huwai517Item
 
 class hw517Spider(BaseSpider):
-	name = "517huwai"
+	name = "c_517"
 	domain = 'www.517huwai.com'
 	allowed_domains = ['www.517huwai.com']
 	start_urls=['http://www.517huwai.com/Activity/index/p/1/']

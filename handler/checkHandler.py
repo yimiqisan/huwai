@@ -53,7 +53,12 @@ class CheckEventHandler(BaseHandler):
                 r = e._api.check(k, True)
         self.redirect('/check/event/')
 
-
+class CheckTagHandler(BaseHandler):
+    def get(self):
+        return self.render("check/tag.html")
+    
+    def post(self):
+        self.redirect('/check/tag/')
 
 
 

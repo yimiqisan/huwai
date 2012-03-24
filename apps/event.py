@@ -12,7 +12,7 @@ import uuid
 from datetime import datetime
 import time
 
-from huwai.config import DB_CON, DB_NAME, SITE_ID
+from huwai.config import DB_CON, DB_NAME, SITE_ID, CLUB_WEBSITE
 from modules import EventDoc
 from api import API, Mapping
 from behavior import Behavior
@@ -47,9 +47,9 @@ class Event(object):
     
 class EventAPI(API):
     DEFAULT_CUR_UID = '948a55d68e1b4317804e4650a9505641'
-    def __init__(self):
+    def __init__(self, db_name=DB_NAME):
         DB_CON.register([EventDoc])
-        datastore = DB_CON[DB_NAME]
+        datastore = DB_CON[db_name]
         col_name = EventDoc.__collection__
         collection = datastore[col_name]
         doc = collection.EventDoc()

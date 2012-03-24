@@ -3,12 +3,12 @@ var Weibo = {
         $("#weiboform").live("submit", function() {
             Weibo.new($(this));
             return false;
-        })
+        });
         Weibo.getLen();
         $("#weibo-content").one('focus', function(){
             $("#weiboform input[type=submit]").addClass("btn-primary");
             return false;
-            });
+        });
         Weibo.extend();
         Weibo.hover();
         Weibo.load();

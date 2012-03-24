@@ -28,57 +28,16 @@ class AlertHandler(BaseHandler):
     def get(self):
         self.render("alert/list.html", messages=ChatSocketHandler.cache)
 
-class ChatSocketHandler(tornado.websocket.WebSocketHandler):
-    waiters = set()
-    cache = []
-    cache_size = 200
-
-    def allow_draft76(self):
-        # for iOS 5.0 Safari
-        return True
-
-    def open(self):
-        ChatSocketHandler.waiters.add(self)
-
-    def on_close(self):
-        ChatSocketHandler.waiters.remove(self)
-
-    @classmethod
-    def update_cache(cls, chat):
-        cls.cache.append(chat)
-        if len(cls.cache) > cls.cache_size:
-            cls.cache = cls.cache[-cls.cache_size:]
-
-    @classmethod
-    def send_updates(cls, chat):
-        for waiter in cls.waiters:
-            try:
-                waiter.write_message(chat)
-            except:
-                logging.error("Error sending message", exc_info=True)
-
-    def on_message(self, message):
-        parsed = tornado.escape.json_decode(message)
-        chat = {
-            "id": str(uuid.uuid4()),
-            "body": parsed["body"],
-            }
-        chat["html"] = self.render_string("alert/item.html", message=chat)
-
-        ChatSocketHandler.update_cache(chat)
-        ChatSocketHandler.send_updates(chat)
-
-
-
 class AlertListHandler(BaseHandler):
+    @session
     def get(self, subject):
         uid = self.SESSION['uid']
         t = TimeLine()
         if subject == 'reply':
             r = t._api.get_rp_org(owner=uid)
-        elif subject == 'rpat':
+        elif subject == 'weibo_ra':
             r = t._api.get_rpat_org(channel=[u'reply'], at=self.current_user)
-        elif subject == 'at':
+        elif subject == 'weibo_at':
             r = t._api.extend(channel=[u'weibo'], at=self.current_user, cursor=None)
         else:
             return self.render("alert/list.html", alert_list=[])
@@ -91,11 +50,11 @@ class AjaxAlertHandler(BaseHandler):
         a = Alert()
         r = a._api.list(uid)
         if r[0]:
-            htmls = []
-            for i in r[1]:
-                i['suffix'] = {u'at':u'微博中@您', u'rpat':u'回复中@您', u'reply':u'回复'}[i['subject']]
-                htmls.append(self.render_string("alert/item.html", message=i))
-            return self.write(json.dumps({'htmls':htmls}))
+            ms = r[1]
+            for m in ms:
+                m['suffix'] = {u'weibo_at':u'微博中@您', u'weibo_ra':u'回复中@您'}[m['subject']]
+                m['suffix'] = u'有' + unicode(m['count']) + u'条' + m['suffix']
+            return self.write(json.dumps({'messages':ms}))
         else:
             return self.write({'error':'save error'})
     

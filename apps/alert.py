@@ -45,7 +45,7 @@ class AlertAPI(API):
             return False
         return True
 
-    def _init_alert(self, owner, subject, **kwargs):
+    def _init_alert(self, owner, subject, nature=u'alert', **kwargs):
         r = self.one(owner=owner, subject=subject)
         if r[0] and r[1]:
             return r[1]['_id']
@@ -53,33 +53,52 @@ class AlertAPI(API):
             r = self.create(owner=owner, subject=subject, count=0, **kwargs)
             return r[1] if r[0] else None
     
-    def on_at(self, to):
+    def on_weibo_at(self, to):
         u = user.User()
         owner = u._api.nick2id(to)
-        id = self._init_alert(owner, u'at')
+        id = self._init_alert(owner, u'weibo_at')
         return self.incr(id) if id else False
     
-    def on_rpat(self, to):
+    def on_weibo_ra(self, to):
         u = user.User()
         owner = u._api.nick2id(to)
-        id = self._init_alert(owner, u'rpat')
+        id = self._init_alert(owner, u'weibo_ra')
         return self.incr(id) if id else False
     
-    def on_reply(self, to):
-        u = user.User()
-        owner = u._api.nick2id(to)
-        id = self._init_alert(owner, u'reply')
+    def on_weibo_fl(self, to):
+        ''' weibo_fl '''
+        pass
+    
+    def on_account_ml(self):
+        ''' account_ml '''
+        pass
+    
+    def on_account_pw(self):
+        ''' account_pw '''
+        pass
+    
+    def on_account_iv(self):
+        ''' account_iv '''
+        pass
+    
+    def on_event_ckfb(self, owner):
+        id = self._init_alert(owner, u'event_ckfb', u'error')
         return self.incr(id) if id else False
     
-    def on_join(self, to):
-        u = user.User()
-        owner = u._api.nick2id(to)
-        id = self._init_alert(owner, u'join')
+    def on_event_jnfb(self, owner):
+        id = self._init_alert(owner, u'event_jnfb', u'error')
         return self.incr(id) if id else False
     
-    def on_pwd(self, owner, pwd):
-        u = user.User()
-        id = self._init_alert(owner, u'pwd', password=pwd)
+    def on_event_ckps(self, owner):
+        id = self._init_alert(owner, u'event_ckps', u'success')
+        return self.incr(id) if id else False
+    
+    def on_event_jnps(self, owner):
+        id = self._init_alert(owner, u'event_jnps', u'success')
+        return self.incr(id) if id else False
+    
+    def on_event_jncf(self, owner):
+        id = self._init_alert(owner, u'event_jncf', u'confirm')
         return self.incr(id) if id else False
     
     def click(self, owner, subject):
