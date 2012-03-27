@@ -28,11 +28,7 @@ var Alert = {
                         timeout: 50000,
                         onClose: function(){},
                     });
-
-//                    {'count': 1, 'suffix': u'\u5fae\u535a\u4e2d@\u60a8', 'id': u'3c1acf88336c409bace1e53fa5767fe9', 'subject': u'at'}
-//                    <div><a  onclick="Alert.click(this);return false;" id="r-{{ message['id'] }}" subject="{{ message['subject'] }}" href="#">最新 {{ message['count'] }} 条{{ message['suffix'] }}</a></div>
-                    
-                    }
+                }
             }
         });
     },

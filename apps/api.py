@@ -85,8 +85,8 @@ class API(object):
         self.col_name = col_name
         self.collection = collection
         self.doc = doc
-        self.keys = self.doc.structure.keys()
-        self.keys.remove('added')
+        self.structure = self.doc.structure
+        self.structure.pop('added', None)
         
     def _init_doc(self, id):
         try:
@@ -118,7 +118,9 @@ class API(object):
     
     def create(self, **kwargs):
         for k, v in kwargs.items():
-            if k in self.keys:
+            if k in self.structure:
+                if isinstance(self.structure[k], list) and not isinstance(v, list):
+                    v = [v]
                 self.doc[k]=v
             else:
                 self.doc['added'][k] = v
@@ -160,10 +162,15 @@ class API(object):
         items.update(kwargs)
         keyl_l = items.keys()
         addeds = {}
+        lists = {}
         for k in keyl_l:
-            if k not in self.keys:
+            if k not in self.structure:
                 addeds[k]=items.pop(k)
+            elif isinstance([], self.structure[k]):
+                li = items.pop(k, None)
+                if li:lists[k] = {"$each":li} if isinstance(li, list) else li
         try:
+            if lists: self.collection.update({"_id":id}, {"$addToSet":lists})
             self.collection.update({"_id":id}, {"$set":items})
             if (len(addeds)>0):self._edit_added(id, **addeds)
         except Exception, e:

@@ -45,9 +45,9 @@ handlers = [(r"/", RootHandler),
             
             (r"/map/", MapHandler),
             (r"/map/(.{32})/", MapItemHandler),
-            (r"/a/map/", AjaxMapHandler),
             (r"/map/event/", MapEventHandler),
             (r"/map/weibo/", MapWeiboHandler),
+            (r"/a/map/", AjaxMapHandler),
             
             (r"/alert/", AlertHandler),
             (r"/alert/(.*)/", AlertListHandler),
@@ -56,6 +56,7 @@ handlers = [(r"/", RootHandler),
             
             (r"/feedback/", FeedbackHandler),
             
+            (r"/a/tag/", AjaxTagHandler),
             (r"/a/reply", AjaxReplyHandler),
             (r"/a/remove", AjaxRemoveHandler),
             (r"/a/toggle/state", AjaxToggleStateHandler),

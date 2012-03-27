@@ -235,6 +235,7 @@ class TagDoc(Document):
     
     structure = {
             '_id':          unicode,
+            'owner':        unicode,
             'content':      unicode,
             'relation_l':   list,
             'created':      datetime,
