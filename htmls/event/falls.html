@@ -97,9 +97,19 @@
 		{% for e in event_list %}
 			<li class="span3 item">
 				<div class="thumbnail">
-					<h3>{{e['title']}}</h3>
-					<a style="background:#EDEDED;" href="/event/{{e['id']}}">
-						<img src="/image/attach/{{e['logo']}}_300"/>
+					<h3>
+						{% if e.has_key('href') %}<a target="_blank" href="{{e['href']}}">{% else %}<a href="/event/{{e['id']}}/">{% end %}
+							{{e['title']}}
+						</a>
+					</h3>
+					{% if e.has_key('href') %}
+						<a style="background:#EDEDED;" target="_blank" href="{{e['href']}}"><img src="{{e['logo']}}"/>
+					{% else %}
+						<a style="background:#EDEDED;" href="/event/{{e['id']}}"><img src="/image/attach/{{e['logo']}}_300"/>
+					{% end %}
+					
+					
+					
 					</a>
 					<ul class="caption">
 						{% if e['tl'][0] %}<li>{{e['tl'][0]}}</li>{% end %}

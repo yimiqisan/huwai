@@ -21,8 +21,8 @@ class Added_id(object):
     def __init__(self, idx):
         self.idx = idx
         DB_CON.register([IdDoc])
-        self.datastroe = DB_CON[DB_NAME]
-        self.collection = self.datastroe[IdDoc.__collection__]
+        self.datastore = DB_CON[DB_NAME]
+        self.collection = self.datastore[IdDoc.__collection__]
     
     def incr(self):
         self.collection.update({"_id":self.idx},{"$inc":{"id":1}}, upsert=True)
@@ -47,8 +47,8 @@ class Mapping(object):
     ''' get mapping '''
     def __init__(self):
         DB_CON.register([MappingDoc])
-        self.datastroe = DB_CON[DB_NAME]
-        self.collection = self.datastroe[MappingDoc.__collection__]
+        self.datastore = DB_CON[DB_NAME]
+        self.collection = self.datastore[MappingDoc.__collection__]
         self.doc = self.collection.MappingDoc()
     
     def do(self, image):
@@ -80,8 +80,8 @@ class Mapping(object):
         return (True, None)
 
 class API(object):
-    def __init__(self, col_name=None, collection=None, doc=None):
-        self.datastroe = DB_CON[DB_NAME]
+    def __init__(self, db_name=DB_NAME, col_name=None, collection=None, doc=None):
+        self.datastore = DB_CON[db_name]
         self.col_name = col_name
         self.collection = collection
         self.doc = doc
@@ -149,7 +149,7 @@ class API(object):
         return True
         
     def drop_table(self):
-        self.datastroe.drop_collection(self.col_name)
+        self.datastore.drop_collection(self.col_name)
         
     def _edit_added(self, id, **addeds):
         r = self.one(_id=id)

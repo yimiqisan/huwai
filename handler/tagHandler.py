@@ -10,8 +10,8 @@ import json
 from tornado.web import addslash, authenticated
 
 from baseHandler import BaseHandler
-from apps.tag import Tag
-from apps.tools import session
+from huwai.apps.tag import Tag
+from huwai.apps.tools import session
 
 class AjaxTagHandler(BaseHandler):
     @session

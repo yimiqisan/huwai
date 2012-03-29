@@ -9,8 +9,8 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 from tornado.web import addslash
 
 from baseHandler import BaseHandler
-from apps.pstore import AvatarProcessor, AttachProcessor
-from apps.tools import session
+from huwai.apps.pstore import AvatarProcessor, AttachProcessor
+from huwai.apps.tools import session
 
 class AvatarHandler(BaseHandler):
     def get(self, fn=None):

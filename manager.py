@@ -12,7 +12,7 @@ from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 from tornado.options import define, options
 
-import config
+from huwai import config
 from urls import handlers
 
 

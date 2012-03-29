@@ -10,8 +10,8 @@ import json
 from tornado.web import addslash
 
 from baseHandler import BaseHandler
-from apps.tools import session
-from apps.imap import Map
+from huwai.apps.tools import session
+from huwai.apps.imap import Map
 
 
 class MapHandler(BaseHandler):

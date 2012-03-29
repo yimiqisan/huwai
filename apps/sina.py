@@ -7,10 +7,10 @@ Created by 刘 智勇 on 2012-02-27.
 Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 """
 
-import config
+import huwai.config
 
-from apps.oauth2 import APIClient
-from apps.user import User
+from huwai.apps.oauth2 import APIClient
+from huwai.apps.user import User
 
 
 def update(uid, content):

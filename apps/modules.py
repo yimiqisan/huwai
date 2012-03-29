@@ -11,7 +11,7 @@ import uuid
 
 from mongokit import Document, IS, INDEX_GEO2D
 
-from huwai.config import DB_NAME
+from huwai.config import DB_NAME, DB_SCRAPY_NAME, SITE_ID
 
 class IdDoc(Document):
     __collection__ = 'ids'
@@ -106,6 +106,7 @@ class EventDoc(Document):
             'level':    float,
             'route':    unicode,
             'date':     datetime,
+            'day':     int,
             'place':    unicode,
             
             'schedule_tl':  unicode,
@@ -122,8 +123,38 @@ class EventDoc(Document):
             
             'check':    bool,
     }
-    required_fields = ['_id', 'owner', 'created', 'title', 'tags', 'is_merc', 'level', 'date']
-    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now(), 'fr':0, 'to':30}
+    required_fields = ['_id', 'owner', 'created', 'title', 'tags', 'date']
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now(), 'fr':0, 'to':30, 'date':datetime.now(), 'deadline':datetime.now(), 'when':datetime.now()}
+    
+    use_schemaless = True
+    use_dot_notation=True
+
+class EventScrapyDoc(Document):
+    __collection__ = 'eventscrapy'
+    __database__ = DB_SCRAPY_NAME
+        
+    structure = {
+            '_id':      unicode,
+            'owner':    unicode,
+            'eid':      unicode,
+            'club':     unicode,
+            'created':  datetime,
+            'added':    dict,
+            'added_id': int,
+            'logo':     unicode,
+            'title':    unicode,
+            'tags':     list,
+            'date':     datetime,
+            'day':      int,
+            'place':    unicode,
+            'href':     unicode,
+            'nick':     unicode,
+            
+            'deadline': datetime,
+            'check':    bool,
+    }
+    required_fields = ['_id', 'owner', 'created', 'title', 'date']
+    default_values = {'_id':uuid.uuid4().hex, 'owner': SITE_ID, 'created':datetime.now(), 'date':datetime.now(), 'deadline':datetime.now()}
     
     use_schemaless = True
     use_dot_notation=True

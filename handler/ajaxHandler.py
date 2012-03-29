@@ -11,10 +11,10 @@ import uuid
 import json
 
 from baseHandler import BaseHandler
-from apps.timeline import TimeLine
-from apps.behavior import Behavior
-from apps.pstore import Pstore
-from apps.tools import session
+from huwai.apps.timeline import TimeLine
+from huwai.apps.behavior import Behavior
+from huwai.apps.pstore import Pstore
+from huwai.apps.tools import session
 
 
 class AjaxReplyHandler(BaseHandler):

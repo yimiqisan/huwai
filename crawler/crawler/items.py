@@ -9,8 +9,7 @@ class CrawlerItem(Item):
     pass
 
 class EventItem(Item):
-    l = ['title', 'created', 'logo', 'tags', 'level', 'date', 'place', 'club', 'address']
-    #l.extend(exl)
+    l = ['eid', 'owner', 'club', 'title', 'created', 'logo', 'tags', 'date', 'day', 'place', 'deadline', 'href', 'nick']
     for i in l:exec(i+'=Field()')
 
 class Huwai8264Item(EventItem):

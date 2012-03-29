@@ -9,7 +9,7 @@ Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 
 from api import API
 from modules import RoleDoc
-from config import SITE_ID
+from huwai.config import SITE_ID
 from event import Event
 
 SITE_ADMIN = 0x01

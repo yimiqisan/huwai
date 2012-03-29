@@ -12,8 +12,8 @@ import uuid
 from datetime import datetime
 import time
 
-from huwai.config import DB_CON, DB_NAME, SITE_ID, CLUB_WEBSITE
-from modules import EventDoc
+from huwai.config import DB_CON, DB_NAME, DB_SCRAPY_NAME, SITE_ID, DEFAULT_CUR_UID, CLUB_WEBSITE
+from modules import EventDoc, EventScrapyDoc
 from api import API, Mapping
 from behavior import Behavior
 from timeline import TimeLine
@@ -46,14 +46,13 @@ class Event(object):
         return 
     
 class EventAPI(API):
-    DEFAULT_CUR_UID = '948a55d68e1b4317804e4650a9505641'
     def __init__(self, db_name=DB_NAME):
         DB_CON.register([EventDoc])
         datastore = DB_CON[db_name]
         col_name = EventDoc.__collection__
         collection = datastore[col_name]
         doc = collection.EventDoc()
-        API.__init__(self, col_name=col_name, collection=collection, doc=doc)
+        API.__init__(self, db_name=db_name, col_name=col_name, collection=collection, doc=doc)
     
     def _tl_save(self, content, owner, tid, channel, **kwargs):
         tl = TimeLine()
@@ -115,6 +114,9 @@ class EventAPI(API):
         where = self._map_save(id, owner, where)
         return self.edit(id, deadline=deadline, fr=fr, to=to, when=when, where=where, check=False, **kwargs)
     
+    def save_scrapy(self, owner, logo=None, title=None, created=None, tags=None, date=None, place=None, club=None, where=None):
+        return super(EventAPI, self).create(owner=owner, logo=logo, title=title, tags=tags, date=date, place=place, club=club, where=where, created=created)
+    
     def check(self, id, check, message=None):
         return self.edit(id, check=check)
     
@@ -126,7 +128,7 @@ class EventAPI(API):
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         merc_f = lambda x: u'商业性质' if x else u'非商业性质'
         club_f = lambda x: u'公开' if x==u'site' else u'xx俱乐部'
-        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added']['tid'], 'is_join':self._is_joined(i['_id'], cuid), 'nick':i['added'].get('nick', '匿名驴友'), 'created':i['created'].strftime('%Y-%m-%d %H:%M:%S'), 'logo':i['logo'], 'title':i['title'], 'members':i['members'], 'tags':i['tags'], 'club':club_f(i['club']), 'is_merc':merc_f(i['is_merc']), 'level':i['level'], 'route':i['route'], 'place':i['place'], 'date':i['date'].strftime('%Y-%m-%d %H:%M:%S'), 'schedule_tl':self._tl_get(i['schedule_tl']), 'spend_tl':self._tl_get(i['spend_tl']), 'equip':i['equip'], 'declare_tl':self._tl_get(i['declare_tl']), 'attention_tl':self._tl_get(i['attention_tl']), 'deadline':i['deadline'].strftime('%Y-%m-%d %H:%M:%S'), 'fr':i['fr'], 'to':i['to'], 'when':i['when'].strftime('%Y-%m-%d %H:%M:%S'), 'where':i['where']}
+        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'is_join':self._is_joined(i['_id'], cuid), 'nick':i['added'].get('nick', '匿名驴友'), 'created':i['created'].strftime('%Y-%m-%d %H:%M:%S'), 'logo':i['logo'], 'title':i['title'], 'members':i['members'], 'tags':i['tags'], 'club':club_f(i['club']), 'is_merc':merc_f(i['is_merc']), 'level':i['level'], 'route':i['route'], 'place':i['place'], 'date':i['date'].strftime('%Y-%m-%d %H:%M:%S'), 'schedule_tl':self._tl_get(i['schedule_tl']), 'spend_tl':self._tl_get(i['spend_tl']), 'equip':i['equip'], 'declare_tl':self._tl_get(i['declare_tl']), 'attention_tl':self._tl_get(i['attention_tl']), 'deadline':i['deadline'].strftime('%Y-%m-%d %H:%M:%S'), 'fr':i['fr'], 'to':i['to'], 'when':i['when'].strftime('%Y-%m-%d %H:%M:%S'), 'where':i['where']}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)
@@ -139,7 +141,7 @@ class EventAPI(API):
     def list(self, owner=None, tags=None, cuid=DEFAULT_CUR_UID, club=None, is_merc=None, level=None, date=None, place=None, deadline=None, fr=None, to=None, when=None, check=True):
         kwargs = {}
         if owner:kwargs['owner']=owner
-        if tags:kwargs['tags']={'in':tags}
+        if tags:kwargs['tags']={'$all':tags} if isinstance(tags, list) else tags
         if club:kwargs['club']=club
         if is_merc:kwargs['is_merc']=is_merc
         if level:kwargs['level']={'in':level}
@@ -155,10 +157,56 @@ class EventAPI(API):
             return (True, self._output_format(result=r[1], cuid=cuid))
         else:
             return (False, r[1])
-
+    
     def extend(self):
         return super(EventAPI, self).extend()
     
     def page(self):
         return super(EventAPI, self).page()
+
+class EventScrapyAPI(API):
+    def __init__(self, db_name=DB_SCRAPY_NAME):
+        DB_CON.register([EventScrapyDoc])
+        datastore = DB_CON[db_name]
+        col_name = EventScrapyDoc.__collection__
+        collection = datastore[col_name]
+        doc = collection.EventScrapyDoc()
+        API.__init__(self, db_name=db_name, col_name=col_name, collection=collection, doc=doc)
     
+    def _pre_save(self, eid, club):
+        r = self.one(eid=eid, club=club)
+        return r[1] is not None
+    
+    def save(self, owner, club, eid, logo, title, tags=None, date=None, day=1, place=None, href=None, deadline=None, created=None, nick=None, **kwargs):
+        if self._pre_save(eid, club): return (True, None)
+        if tags:tags = tags if isinstance(tags, list) else [tags]
+        return super(EventScrapyAPI, self).create(owner=owner, eid=eid, club=club, logo=logo, title=title, tags=tags, date=date, day=day, place=place, href=href, deadline=deadline, created=created, nick=nick, **kwargs)
+    
+    def check(self, id, check, message=None):
+        return self.edit(id, check=check)
+    
+    def _output_format(self, result=[]):
+        output_map = lambda i: {'id':i['_id'], 'tid':i['_id'], 'owner':i['owner'], 'href':i['href'], 'club':i['club'], 'nick':i.get('nick', '匿名驴友'), 'created':i['created'].strftime('%Y-%m-%d %H:%M:%S'), 'logo':i['logo'], 'title':i['title'], 'tags':i['tags'], 'place':i['place'], 'date':i['date'].strftime('%Y-%m-%d %H:%M:%S'), 'deadline':i['deadline'].strftime('%Y-%m-%d %H:%M:%S')}
+        if isinstance(result, dict):
+            return output_map(result)
+        return map(output_map, result)
+    
+    def get(self, id, cuid=DEFAULT_CUR_UID):
+        r = self.one(_id=id)
+        if r[0]:return (True, self._output_format(result=r[1]))
+        return r
+    
+    def list(self, owner=None, club=None, tags=None, date=None, place=None, deadline=None, check=True):
+        kwargs = {}
+        if owner:kwargs['owner']=owner
+        if club:kwargs['club']=club
+        if tags:kwargs['tags']={'$all':tags} if isinstance(tags, list) else tags
+        if date:kwargs['date']=date
+        if place:kwargs['place']=place
+        if deadline:kwargs['deadline']={'$gt':deadline}
+        #kwargs['check']=check
+        r = self.find(**kwargs)
+        if r[0]:
+            return (True, self._output_format(result=r[1]))
+        else:
+            return (False, r[1])

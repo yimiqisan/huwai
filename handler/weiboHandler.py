@@ -10,8 +10,8 @@ import json
 from tornado.web import addslash, authenticated
 
 from baseHandler import BaseHandler
-from apps.timeline import TimeLine
-from apps.tools import session
+from huwai.apps.timeline import TimeLine
+from huwai.apps.tools import session
 from datetime import datetime
 
 class WeiboHandler(BaseHandler):

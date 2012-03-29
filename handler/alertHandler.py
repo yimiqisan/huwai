@@ -8,9 +8,9 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 import json
 
-from apps.tools import session
-from apps.alert import Alert
-from apps.timeline import TimeLine
+from huwai.apps.tools import session
+from huwai.apps.alert import Alert
+from huwai.apps.timeline import TimeLine
 
 from baseHandler import BaseHandler
 

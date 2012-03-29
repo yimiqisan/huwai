@@ -8,7 +8,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 
 from tornado.web import RequestHandler
-from apps.tools import session
+from huwai.apps.tools import session
 
 class BaseHandler(RequestHandler):
     @property

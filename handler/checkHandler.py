@@ -16,8 +16,8 @@ import types
 import pymongo
 import uuid
 
-from apps.tools import session
-from apps.event import Event
+from huwai.apps.tools import session
+from huwai.apps.event import Event
 
 from baseHandler import BaseHandler
 

@@ -15,11 +15,11 @@ import types
 import pymongo
 import uuid
 
-from apps.tools import session
-from apps.event import Event
-from apps.timeline import TimeLine
-from apps.behavior import Behavior
-from apps.role import Role
+from huwai.apps.tools import session
+from huwai.apps.event import Event, EventScrapyAPI
+from huwai.apps.timeline import TimeLine
+from huwai.apps.behavior import Behavior
+from huwai.apps.role import Role
 
 from baseHandler import BaseHandler
 
@@ -115,8 +115,14 @@ class EventListHandler(BaseHandler):
         r = e._api.list(cuid=uid)
         l = []
         if r[0]:
+            es = r[1]
+            # crawler start
+            sapi = EventScrapyAPI()
+            rc = sapi.list()
+            if rc[0]:es.extend(rc[1])
+            # crawler end
             t = TimeLine()
-            for i in r[1]:
+            for i in es:
                 i['tl'] = t._api.abbr(topic=i['tid'], channel=[u'weibo'])
                 l.append(i)
             self.render("event/list.html", event_list=l, title="活动列表")
@@ -134,6 +140,12 @@ class EventFallsHandler(BaseHandler):
         l = []
         if r[0]:
             t = TimeLine()
+            es = r[1]
+            # crawler start
+            sapi = EventScrapyAPI()
+            rc = sapi.list()
+            if rc[0]:es.extend(rc[1])
+            # crawler end
             for i in r[1]:
                 i['tl'] = t._api.abbr(topic=i['tid'], channel=[u'weibo'])
                 l.append(i)

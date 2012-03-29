@@ -21,7 +21,7 @@
 	<table class="table table-condensed">
 		<thead>
 			<tr>
-				<th>活动名称</th>
+				<th width=50%>活动名称</th>
 				<th>发布时间</th>
 				<th>活动开始时间</th>
 				<th>补充</th>
@@ -30,10 +30,14 @@
 		<tbody>
 			{% for e in event_list %}
 			<tr>
-				<td>{{e['title']}}</td>
+				<td>
+					{% if e.has_key('href') %}<a target="_blank" href="{{e['href']}}">{% else %}<a href="/event/{{e['id']}}/">{% end %}
+						{{e['title']}}
+					</a>
+				</td>
 				<td>{{e['date']}}</td>
 				<td>{{e['created']}}</td>
-				<td><a href="/event/{{e['id']}}/">{{e['tl'][1]}}</a></td>
+				<td><a>{{e['tl'][1]}}</a></td>
 			</tr>
 			{% end %}
 		</tbody>

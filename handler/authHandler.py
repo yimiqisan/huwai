@@ -14,10 +14,10 @@ import tornado
 from tornado.web import addslash
 from baseHandler import BaseHandler
 
-from apps.user import User
-from apps.tools import session
-from apps.oauth2 import APIClient, QQGraphMixin, RenrenGraphMixin
-from apps.pstore import AvatarProcessor
+from huwai.apps.user import User
+from huwai.apps.tools import session
+from huwai.apps.oauth2 import APIClient, QQGraphMixin, RenrenGraphMixin
+from huwai.apps.pstore import AvatarProcessor
 
 
 class AuthHandler(BaseHandler):
