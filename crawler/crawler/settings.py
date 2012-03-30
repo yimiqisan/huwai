@@ -17,7 +17,7 @@ DEFAULT_ITEM_CLASS = 'crawler.items.CrawlerItem'
 USER_AGENT = '%s/%s' % (BOT_NAME, BOT_VERSION)
 
 ITEM_PIPELINES = [
-    'crawler.pipelines.Huwai8264Pipeline',
+    'crawler.pipelines.StorePipeline',
 ]
 
 #mongodb settings

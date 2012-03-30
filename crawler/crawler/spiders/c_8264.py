@@ -45,10 +45,10 @@ class E8264Spider(BaseSpider):
     
     def parse(self, response):
         soup = BeautifulSoup(response.body)
-        el = soup.find_all(summary='forum_101')[0]
+        el = soup.find_all('table', {'summary':'forum_101'})[0]
         es = el.find_all('tbody')
         items = []
-        for e in es:
+        for e in es[:2]:
             item = Huwai8264Item()
             th = e.th.find_all('a')
             td = e.find_all('td')
@@ -58,13 +58,12 @@ class E8264Spider(BaseSpider):
             nick = e.cite.find_all('a')[0].get_text().strip()
             child_soup = BeautifulSoup(urlopen(address))
             act = child_soup.find_all('div', {'class':'act'})[0]
-            dd = act.find_all('dd')
             try:
                 item['eid'] = unicode(self._flt_eid(address))
                 item['club'] = CLUB_WEBSITE[self.name]
                 item['title'] = th[1].get_text().strip()
                 item['created'] = datetime.strptime(td[1].em.get_text().strip(), '%Y-%m-%d')
-                item['logo'] = unicode(act.img['src'].strip())
+                item['logo'] = logo
                 item['tags'] = dd[0].get_text().strip()
                 item['date'], item['day'] = self._flt_date(dd[1].get_text().strip())
                 item['place'] = dd[2].get_text().strip()
@@ -76,3 +75,4 @@ class E8264Spider(BaseSpider):
                 print e
                 continue
         return items
+

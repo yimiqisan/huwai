@@ -14,11 +14,14 @@ class EventItem(Item):
 
 class Huwai8264Item(EventItem):
     pass
+
+class Huwai517Item(EventItem):
+    pass
     
 class HuwailvzhouItem(EventItem):
     pass
     
-class Huwai517Item(Item):
+class Huwai517oldItem(Item):
     # define the fields for your item here like:
     # name = Field()
     innerItem={}

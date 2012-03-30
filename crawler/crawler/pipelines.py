@@ -12,7 +12,3 @@ class StorePipeline(object):
         api = EventScrapyAPI()
         r = api.save(SITE_ID, item['club'], item['eid'], item['logo'], item['title'], tags=item['tags'], date=item['date'], day=item['day'], place=item['place'], href=item['href'], deadline=item['deadline'], created=item['created'], nick=item['nick'])
         return item
-    
-class Huwai8264Pipeline(StorePipeline):
-    pass
-    
