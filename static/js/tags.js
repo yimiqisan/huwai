@@ -6,66 +6,73 @@
         }
     };
     a.iTag = (function() {
-        var c;
-        function d(id) {
-            var eventTags = $('#'+id);
-            eventTags.tagit({
-//                availableTags: ['登山', '徒步', '骑行', '聚会', '滑雪', '体育运动', '摄影', '攀岩', '探险', '滑翔伞', '垂钓', '漂流', '自驾', '环保公益'],
+        var c = {
+            id: 'tags',
+            eclass: 'span3',
+            placeholderText: '输入后按 < Enter > 键',
+            removeConfirmation: true,
+            tagSource:function() {},
+            onTagRemoved: function(evt, tag) {},
+            onTagClicked: function(evt, tag) {},
+            onTagAdded: function(evt, tag) {},
+        },
+        d = {
+            panelControl: false,
+        },
+        g = b.extend(c, d);
+        function h(x, u) {
+            var v = b.extend(g, u || {});
+            x.append(b('<input id="'+v.id+'Single" name="'+v.id+'" type="hidden"/>'));
+            x.append(b('<ul id="'+v.id+'" class="pull-left '+v.eclass+'"></ul>'));
+            var w = $('#'+v.id);
+            w.tagit({
                 singleField: true,
-                singleFieldNode: $('#'+id+'Single'),
-                removeConfirmation: true,
-                tagSource: e,
-                placeholderText: '输入后按 < Enter > 键',
-                onTagRemoved: function(evt, tag) {},
-                onTagClicked: function(evt, tag) {},
-                onTagAdded: function(evt, tag) {},
+                singleFieldNode: b('#'+v.id+'Single'),
+                removeConfirmation: v.removeConfirmation,
+                tagSource: v.tagSource,
+                placeholderText: v.placeholderText,
+                onTagRemoved: v.onTagRemoved,
+                onTagClicked: v.onTagClicked,
+                onTagAdded: v.onTagAdded
             });
-            $("#tag-submit").click(function(){
-                var u = $('#'+id+'Single').val();
-                if (!u) {return false;}
-                c = $('.tabbable .active a').attr('href').replace('#', '');
-                args = {'content': u, 'rel': c};
-                $.postJSON("/a/tag/", 'POST', args, function(response) {
-                    if (response.error){
-                        return alert(response.error);
-                    }
-                    eventTags.tagit("removeAll");
-                    f();
-                });
-            })
-            f();
+            if (v.panelControl) {
+                y = b('<a id="'+v.id+'Submit" class="btn btn-primary pull-right">加上去</a>');
+                y.click(function(){
+                    var za = $('#'+v.id+'Single').val();
+                    if (!za) {return false;}
+                    var z = $('.tabbable .active a').attr('href').replace('#', '');
+                    args = {'content': za, 'rel': z};
+                    $.postJSON("/a/tag/", 'POST', args, function(response) {
+                        if (response.error){
+                            return alert(response.error);
+                        }
+                        w.tagit("removeAll");
+                    });
+                    i();
+                })
+                x.append(y);
+                x.prepend(b('<textarea id="'+v.id+'Panel" class="span10" rows=20 name="'+v.id+'Panel" disabled="true"></textarea>'));
+            }
+            i();
         };
-        function e(search, showChoices) {
-            var that = this;
-            var args = {'search': search.term};
-            if (c){args.rel=c;}
-            $.postJSON("/a/tag/", 'GET', args, function(response) {
-                if (response.error){
-                    return alert(response.error);
-                }
-                showChoices(that._subtractArray(response.data, that.assignedTags()));
-            });
-        };
-        function f() {
+        function i(u) {
+            var v = b.extend(g, u || {});
             var args = {};
-            c = $('.tabbable .active a').attr('href').replace('#', '');
-            if (c){args.rel=c;}
+            z = $('.tabbable .active a').attr('href').replace('#', '');
+            if (z){args.rel=z;}
             $.postJSON("/a/tag/", 'GET', args, function(response) {
                 if (response.error){
                     return alert(response.error);
                 }
-                $("#eventTagsPanel").val(response.data);
+                $("#"+v.id+"Panel").val(response.data);
             });
         };
         return {
-            init: function(u) {
-                return d(u);
+            create: function(x, u) {
+                return h(x, u);
             },
-            source: function(u, v) {
-                e(u, v);
-            },
-            load: function() {
-                f();
+            tab: function(u) {
+                i(u);
             }
         }
     })();

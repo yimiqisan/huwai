@@ -16,7 +16,7 @@ from huwai.config import DB_NAME, DB_SCRAPY_NAME, SITE_ID
 class IdDoc(Document):
     __collection__ = 'ids'
     __database__ = DB_NAME
-
+    
     structure = {
                 '_id':unicode,
                 'id':int,
@@ -27,7 +27,7 @@ class IdDoc(Document):
 class MappingDoc(Document):
     __collection__ = 'mapping'
     __database__ = DB_NAME
-
+    
     structure = {
                 '_id':  unicode,
                 'image':unicode,
@@ -38,7 +38,7 @@ class MappingDoc(Document):
 class UserDoc(Document):
     __collection__ = 'people'
     __database__ = DB_NAME
-
+    
     structure = {
             '_id':      unicode,
             'nick':     unicode,
@@ -59,7 +59,7 @@ class UserDoc(Document):
             'unique':True,
         },
     ]
-
+    
     required_fields = ['_id', 'nick', 'password', 'created']
     default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
     
@@ -69,7 +69,7 @@ class UserDoc(Document):
 class TimeLineDoc(Document):
     __collection__ = 'timeline'
     __database__ = DB_NAME
-        
+    
     structure = {
             '_id':      unicode,
             'owner':    unicode,

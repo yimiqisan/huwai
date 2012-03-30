@@ -5,6 +5,7 @@
 	<script language="javascript" src="{{ static_url('js/event.js') }}" type="text/javascript"></script>
 	<script language="javascript" src="{{ static_url('js/jquery-ui.min.js') }}" type="text/javascript"></script>
 	<script language="javascript" src="{{ static_url('js/jquery.tags.js') }}" type="text/javascript"></script>
+	<script language="javascript" src="{{ static_url('js/tags.js') }}" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
 			$('#nav-event').addClass("active");
@@ -25,18 +26,26 @@
 			Event.checka();
 			$("input[rel=popover]").popover({trigger: 'focus'});
 			$("textarea[rel=popover]").popover({trigger: 'focus', placement: 'top'});
-			$("#event-tags").tagit({
-				removeConfirmation: true,
-				availableTags: ['登山', '徒步', '骑行', '聚会', '滑雪', '体育运动', '摄影', '攀岩', '探险', '滑翔伞', '垂钓', '漂流', '自驾', '环保公益']
+			yhui.iTag.create($('#etag'), {
+				id:'eventTags',
+				eclass: 'span6',
+				tagSource:function(search, showChoices) {
+					var that = this;
+					var args = {'search': search.term, 'rel': 'event'};
+					$.postJSON("/a/tag/", 'GET', args, function(response) {
+						if (response.error){
+							return alert(response.error);
+						}
+						showChoices(that._subtractArray(response.data, that.assignedTags()));
+					});
+				}
 			});
 		})
 	</script>
-	
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/uploadify.css') }}"/>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/jquery-ui.css') }}"/>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/jquery.tags.css') }}"/>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/tagit.ui-zendesk.css') }}"/>
-	
 {% end %}
 
 {% block bodyleft %}
@@ -89,7 +98,7 @@
 			<div class="control-group">
 				<label class="control-label" for="multiSelect">户外标签</label>
 				<div class="controls">
-					<ul id="event-tags" style="margin-left:0px; width:500px;"></ul>
+					<div id="etag"></div>
 				</div>
 			</div>
 			<div class="control-group">

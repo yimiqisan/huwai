@@ -54,7 +54,7 @@ class hw517Spider(BaseSpider):
         el = soup.find_all(id='actlist')[0]
         es = el.find_all('dl')
         items = []
-        for e in es[:5]:
+        for e in es:
             item = Huwai517Item()
             address = prefix + e.dt.find_all('a')[0].get('href').strip()
             print address

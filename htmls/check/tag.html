@@ -9,10 +9,24 @@
 	<script language="javascript" src="{{ static_url('js/tags.js') }}" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
-			yhui.iTag.init('eventTags');
-			$('a[data-toggle="tab"]').on('shown', function (e) {
-				yhui.iTag.load();
+			yhui.iTag.create($('#etag'), {
+				id:'eventTags',
+				eclass: 'span9',
+				panelControl:true,
+				tagSource:function(search, showChoices) {
+					var that = this;
+					var args = {'search': search.term};
+					var z = $('.tabbable .active a').attr('href').replace('#', '');
+					if (z){args.rel=z;}
+					$.postJSON("/a/tag/", 'GET', args, function(response) {
+						if (response.error){
+							return alert(response.error);
+						}
+						showChoices(that._subtractArray(response.data, that.assignedTags()));
+					});
+				}
 			});
+			$('a[data-toggle="tab"]').on('shown', function (e) {yhui.iTag.tab({id:'eventTags'});});
 		})
 	</script>
 {% end %}
@@ -27,11 +41,7 @@
 		<li><a href="#brand" data-toggle="tab">品牌推广</a></li>
 	</ul>
 </div>
-<div id="etag"> 
-	<textarea id="eventTagsPanel" class="span10" rows=20 name="tags" disabled="true"></textarea>
-	<input id="eventTagsSingle" name="tags" type="hidden"/>
-	<ul id="eventTags" class="pull-left span9"></ul><a id="tag-submit" class="btn btn-primary pull-right">加上去</a>
-</div>
+<div id="etag"></div>
 {% end %}
 {% block bodyright %}
 <div class="tabbable tabs-right">
