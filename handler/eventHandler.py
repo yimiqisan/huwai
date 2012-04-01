@@ -71,7 +71,7 @@ class EventPubaHandler(BaseHandler):
             return self.redirect('/event/pubb/?eid='+str(r[1]))
         else:
             d['warning'] = r[1]
-            return self.render("event/event_puba.html", **d)
+            return self.render("event/publish_step_one.html", **d)
     
 class EventPubbHandler(BaseHandler):
     @authenticated

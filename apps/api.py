@@ -117,6 +117,7 @@ class API(object):
         return r
     
     def create(self, **kwargs):
+        self.doc['added'] = {}
         for k, v in kwargs.items():
             if k in self.structure:
                 if isinstance(self.structure[k], list) and not isinstance(v, list):

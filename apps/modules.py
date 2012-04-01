@@ -106,7 +106,7 @@ class EventDoc(Document):
             'level':    float,
             'route':    unicode,
             'date':     datetime,
-            'day':     int,
+            'day':      int,
             'place':    unicode,
             
             'schedule_tl':  unicode,
@@ -141,6 +141,7 @@ class EventScrapyDoc(Document):
             'created':  datetime,
             'added':    dict,
             'added_id': int,
+            
             'logo':     unicode,
             'title':    unicode,
             'tags':     list,
@@ -155,6 +156,27 @@ class EventScrapyDoc(Document):
     }
     required_fields = ['_id', 'owner', 'created', 'title', 'date']
     default_values = {'_id':uuid.uuid4().hex, 'owner': SITE_ID, 'created':datetime.now(), 'date':datetime.now(), 'deadline':datetime.now()}
+    
+    use_schemaless = True
+    use_dot_notation=True
+
+class NoteDoc(Document):
+    __collection__ = 'note'
+    __database__ = DB_NAME
+    
+    structure = {
+            '_id':      unicode,
+            'owner':    unicode,
+            'created':  datetime,
+            'added':    dict,
+            'added_id': int,
+            'title':    unicode,
+            'content':  unicode,
+            'tags':     list,
+            'members':  list,
+    }
+    required_fields = ['_id', 'created']
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
     
     use_schemaless = True
     use_dot_notation=True

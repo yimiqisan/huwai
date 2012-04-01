@@ -43,6 +43,10 @@ handlers = [(r"/", RootHandler),
             (r"/event/(.{32})/member/", EventMemberHandler),
             (r"/event/loading/", EventCheckHandler),
             
+            (r"/note/", NoteHandler),
+            (r"/note/write/", NoteWriteHandler),
+            (r"/a/note/", AjaxNoteHandler),
+            
             (r"/map/", MapHandler),
             (r"/map/(.{32})/", MapItemHandler),
             (r"/map/event/", MapEventHandler),

@@ -18,7 +18,7 @@
 			</div>
 		</li>
 	</ul>
-	<table class="table table-condensed">
+	<table class="table table-condensed" style="background:white;">
 		<thead>
 			<tr>
 				<th width=50%>活动名称</th>
@@ -37,7 +37,7 @@
 				</td>
 				<td>{{e['date']}}</td>
 				<td>{{e['created']}}</td>
-				<td><a>{{e['tl'][1]}}</a></td>
+				<td>{% if not e.has_key('href') %}<a href="/event/{{e['id']}}/">{{e['tl'][1]}}</a>{% end %}</td>
 			</tr>
 			{% end %}
 		</tbody>

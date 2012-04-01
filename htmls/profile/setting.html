@@ -28,8 +28,8 @@
 {% block bodyleft %}
 	<ul class="nav nav-tabs row-fluid">
 		<li class="active"><a>基本设置</a></li>
-		<li><a href="/account/setting/alert/">消息设置</a></li>
-		<li><a href="/account/setting/thirdpart/">账号绑定</a></li>
+		<li class="hide"><a href="/account/setting/alert/">消息设置</a></li>
+		<li class="hide"><a href="/account/setting/thirdpart/">账号绑定</a></li>
 	</ul>
 	<form class="form-horizontal row-fluid" name="content-form" method="POST" action="/account/setting/">
 		<fieldset>
@@ -51,13 +51,13 @@
 					{% if ifNone(avanta) %}<img src="/image/avatar/{{uid}}_30"/>{% else %}<div id="poster">Uploadify</div>{% end %}
 				</div>
 			</div>
-			<div class="control-group">
+			<div class="control-group hide">
 				<label class="control-label" for="textarea">常居地:</label>
 				<div class="controls">
 					{% if ifNone(live) %}<script>select_pid("live", {{live}})</script>{% else %}<script>select_pid("live", 1)</script><span id="live"></span>{% end %}
 				</div>
 			</div>
-			<div class="control-group">
+			<div class="control-group hide">
 				<label class="control-label" for="textarea">绑定邮箱:</label>
 				<div class="controls">
 					{% if ifNone(mail) %}<span>{{mail}}</span>{% else %}<input type="text" name="mail" value=""/>{% end %}
@@ -69,7 +69,7 @@
 					<a href="/account/cpassword/">修改密码</a>
 				</div>
 			</div>
-			<div class="control-group">
+			<div class="control-group hide">
 				<label class="control-label" for="textarea">手机号:</label>
 				<div class="controls">
 					{% if ifNone(phone) %}<span>{{phone}}</span>{% else %}<input type="text" name="phone" value=""/>{% end %}

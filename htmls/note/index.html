@@ -1,0 +1,44 @@
+{% extends ../frame.html %}
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$('#nav-note').addClass("active");
+		})
+	</script>
+{% end %}
+{% autoescape None %}
+{% block bodyleft %}
+	{% for n in note_l %}
+		<div class="note">kjsdf
+			<br>sk.dmf.sdms.df./ds,
+			<br>sdmf.dsf.
+			<div class="ll">
+				<table>
+					<tbody>
+						<tr><td><img src="/rUdHkJ2oPvhO4yyq4WNyoQ/x207592482-1.jpg" alt="一片树叶"></td></tr>
+						<tr><td align="center" class="wr pl"><div class="pl" style="text-align:center;">一片树叶</div></td></tr>
+					</tbody>
+				</table>
+			</div>
+			<br>
+			<div class="ll">
+				<table>
+					<tbody>
+						<tr><td><img src="/_bRZtvzwyleK0x4syRTnQA/x207592482-2.jpg" alt="people"></td></tr>
+						<tr><td align="center" class="wr pl"><div class="pl" style="text-align:center;">people</div></td></tr>
+					</tbody>
+				</table>
+			</div>
+			<br>里的担心完全没有了。&lt;h1&gt;妙峰山&lt;/h1&gt;
+			<a rel="nofollow" href="http://www.yuanhang.info" target="_blank">死定了反抗精神力的空间</a>
+			<a rel="nofollow" href="http://www.info" target="_blank">死定了反抗精神空间</a></div>
+		
+	
+	
+		<p>{{ n['content'] }}</p>
+	{% end %}
+{% end %}
+{% block bodyright %}
+	<a class="btn btn-primary" href="/note/write/">写游记</a>
+{% end %}

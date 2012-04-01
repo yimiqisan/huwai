@@ -67,7 +67,7 @@
 			<div class="control-group">
 				<label class="control-label">人员配置:</label>
 				<div class="controls">
-					<span name="members" class="input-xlarge uneditable-input">发起人：{{current_user}}</span>
+					<input name="members" class="input-xlarge" type="text" value="发起人：{{current_user}}">
 				</div>
 			</div>
 			<div class="control-group">
@@ -85,7 +85,8 @@
 				<label class="control-label" for="select01">难度系数</label>
 				<div class="controls">
 					<select name="level">
-						<option>1.0</option>
+						<option>0.5</option>
+						<option selected>1.0</option>
 						<option>1.5</option>
 						<option>2.0</option>
 						<option>2.5</option>
@@ -116,31 +117,31 @@
 			<div class="control-group">
 				<label class="control-label" for="textarea">行程安排:</label>
 				<div class="controls">
-					<textarea class="input-xlarge" name="schedule_tl" rows="3" style="width:500px;" rel="popover" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title"></textarea>
+					<textarea class="input-xlarge" name="schedule_tl" rows="3" style="width:500px;" rel="popover" data-content="亲爱的领队，有了行程安排您的活动将一切尽在掌握！" data-original-title="好的计划是成功的一半"></textarea>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="textarea">费用明细:</label>
 				<div class="controls">
-					<textarea class="input-xlarge" name="spend_tl" rows="3" style="width:500px;" rel="popover" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title"></textarea>
+					<textarea class="input-xlarge" name="spend_tl" rows="3" style="width:500px;" rel="popover" data-content="俗话说穷家富路，这次活动需要准备多少银两，让大家清楚清楚吧" data-original-title="亲驴友，明算账"></textarea>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="textarea">装备要求:</label>
 				<div class="controls">
-					<textarea class="input-xlarge" name="equip" rows="3" style="width:500px;" rel="popover" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title"></textarea>
+					<textarea class="input-xlarge" name="equip" rows="3" style="width:500px;" rel="popover" data-content="俗话说得好：户外户外，拼的就是装备。" data-original-title="工欲善其事必先利其器"></textarea>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="textarea">注意事项:</label>
 				<div class="controls">
-					<textarea class="input-xlarge" name="attention_tl" rows="3" style="width:500px;" rel="popover" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title"></textarea>
+					<textarea class="input-xlarge" name="attention_tl" rows="3" style="width:500px;" rel="popover" data-content="队伍里面难免会有一些第一次参加户外的初出毛驴(初出茅庐的小驴)，还请领队大人多多提醒啊" data-original-title="这个可以有"></textarea>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="textarea">免责声明:</label>
 				<div class="controls">
-					<textarea class="input-xlarge" name="declare_tl" rows="3" style="width:500px;" rel="popover" data-content="&lt;a&gt;导入模板&lt;/a&gt;" data-original-title="A Title"></textarea>
+					<textarea class="input-xlarge" name="declare_tl" rows="3" style="width:500px;" rel="popover" data-content="反正出了事儿，又不找我，嘿嘿" data-original-title="这个爱有没有"></textarea>
 				</div>
 			</div>
 			<div class="form-actions">

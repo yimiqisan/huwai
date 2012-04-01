@@ -107,11 +107,8 @@
 					{% else %}
 						<a style="background:#EDEDED;" href="/event/{{e['id']}}"><img src="/image/attach/{{e['logo']}}_300"/>
 					{% end %}
-					
-					
-					
-					</a>
-					<ul class="caption">
+						</a>
+					<ul class="caption unstyled">
 						{% if e['tl'][0] %}<li>{{e['tl'][0]}}</li>{% end %}
 						<li><a href="/event/{{e['id']}}/">{{e['tl'][1]}}</a></li>
 						{% if e['tl'][2] %}<li>{{e['tl'][2]}}</li>{% end %}

@@ -52,8 +52,8 @@
                 })
                 x.append(y);
                 x.prepend(b('<textarea id="'+v.id+'Panel" class="span10" rows=20 name="'+v.id+'Panel" disabled="true"></textarea>'));
-            }
             i();
+            }
         };
         function i(u) {
             var v = b.extend(g, u || {});

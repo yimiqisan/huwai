@@ -13,6 +13,7 @@ from authHandler import AuthHandler, SinaLoginHandler, QQLoginHandler, RenrenLog
 from weiboHandler import WeiboHandler, WeiboItemHandler, AjaxWeiboHandler
 from peopleHandler import PeopleHandler
 from eventHandler import EventHandler, EventPubaHandler, EventPubbHandler, EventCheckHandler, EventListHandler, EventFallsHandler, EventMemberHandler, EventApprovalHandler, EventCrawlerHandler
+from noteHandler import NoteHandler, NoteWriteHandler, AjaxNoteHandler
 from imageHandler import UploadImageHandler, AvatarHandler, AttachHandler, AjaxAvatarHandler, AjaxImageHandler, AjaxImageCheckHandler
 from ajaxHandler import AjaxReplyHandler, AjaxRemoveHandler, AjaxToggleStateHandler, AjaxToggleInputHandler
 from checkHandler import CheckEventHandler, CheckTagHandler
