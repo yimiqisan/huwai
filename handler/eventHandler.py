@@ -7,7 +7,7 @@ Created by 刘 智勇 on 2011-09-24.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 
-from tornado.web import addslash, authenticated
+from tornado.web import addslash
 
 from mongokit import *
 import datetime
@@ -26,7 +26,6 @@ from baseHandler import BaseHandler
 ISO_TIME_FORMAT_YMDHM = '%Y%m%d:%H:%M'
 
 class EventHandler(BaseHandler):
-    @authenticated
     @addslash
     @session
     def get(self, id):
@@ -47,14 +46,12 @@ class EventHandler(BaseHandler):
 class EventPubaHandler(BaseHandler):
     KEYS = ["logo", "title", "club", "level", "attention_tl", "declare_tl", "members", "spend_tl", "place", "equip", "route", "is_merc", "schedule_tl", "tags"]
     
-    @authenticated
     @addslash
     def get(self):
         d = {}
         for n in self.KEYS:d[n] = None
         self.render("event/publish_step_one.html", **d)
     
-    @authenticated
     @addslash
     @session
     def post(self):
@@ -74,14 +71,12 @@ class EventPubaHandler(BaseHandler):
             return self.render("event/publish_step_one.html", **d)
     
 class EventPubbHandler(BaseHandler):
-    @authenticated
     @addslash
     @session
     def get(self):
-        return self.render("event/publish_step_two.html")
         uid = self.SESSION['uid']
         eid = self.get_argument('eid', None)
-        if not eid:return self.render("event/publish_step_two.html", **{'warning': u'发布失败，请重试！'})
+        if not eid:return self.redirect("/event/puba/")
         e = Event(id=eid)
         if e.owner != uid:return self.redirect('/event/puba/')
         self.render("event/publish_step_two.html", eid=eid)
@@ -106,7 +101,6 @@ class EventPubbHandler(BaseHandler):
             return self.render("event/event_pubb.html", **{'warning': r[1]})
 
 class EventListHandler(BaseHandler):
-    @authenticated
     @addslash
     @session
     def get(self):
@@ -130,7 +124,6 @@ class EventListHandler(BaseHandler):
             self.render("event/list.html", event_list=l, warning=r[1])
 
 class EventFallsHandler(BaseHandler):
-    @authenticated
     @addslash
     @session
     def get(self):
@@ -154,7 +147,6 @@ class EventFallsHandler(BaseHandler):
             self.render("event/falls.html", event_list=l, warning=r[1])
 
 class EventMemberHandler(BaseHandler):
-    @authenticated
     @addslash
     @session
     def get(self, id):
@@ -177,44 +169,3 @@ class EventApprovalHandler(BaseHandler):
         b = Behavior()
         r = b._api.list(kind=u'join', mark=id)
         self.render("event/approval.html", userlist=r, eid=id)
-
-class EventCrawlerHandler(BaseHandler):
-    @addslash
-    def get(self):
-        stra = self.get_spider_events()
-        l=len(stra)/2
-        entries1=[]
-        entries2=[]
-        for i in range(l):
-            entries1.append(stra[i])
-            entries2.append(stra[i+l])
-            #handler data for outputing
-        self.render("event/event.html", entries1=entries1, entries2=entries2, entries=stra)
-    
-    def get_spider_events(self, page=1, number=8, data="all"):
-        conn = Connection()
-        conn.register([ActivityData])
-        col = conn.test.example
-        return list(col.find().sort('rank', pymongo.DESCENDING))
-
-class DBException(Exception):
-    def __init__(self, error):
-        Exception.__init__(self)
-        self.error = error
-
-class ActivityData(Document):
-    structure = {
-        'title':unicode,
-        'link':unicode,
-        'imageurl':{"originurl":unicode,"localurl":unicode},
-        'organizername':unicode,
-        'activityclass':unicode,
-        'place':unicode,
-        'time':unicode,
-        'hotnumber':unicode,
-        'uuid':str,
-        'date_creation':datetime.datetime,
-        'rank':int
-    }
-    required_fields = ['title','link','imageurl.originurl','imageurl.localurl','organizername','activityclass','place','time','hotnumber']
-    default_values = {'uuid':str(uuid.uuid4()), 'rank':0, 'date_creation':datetime.datetime.utcnow}

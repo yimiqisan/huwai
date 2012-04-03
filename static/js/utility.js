@@ -15,12 +15,6 @@ function getPageScroll() {
     return { top: t, left: l, width: w, height: h };
 }
 
-function setTab(name,cursel,n){for(i=1;i<=n;i++){var menu=document.getElementById(name+i);var con=document.getElementById("con_"+name+"_"+i);menu.className=i==cursel?"hover":"";con.style.display=i==cursel?"block":"none";}}
-
-function showUinfo(e) {
-    $("#userinfo ul").toggle();
-};
-
 function delItem(e) {
     var mid = $(e).attr('id').replace('d-', 'm-');
     var $p = $("#"+mid);
@@ -81,7 +75,6 @@ function toggleInput(e) {
         }
     })
 };
-
 
 function toggleInputAjax(e) {
     var inp = $(e).parent().find("input");
@@ -247,7 +240,7 @@ var Reply = {
             }
             var $cur = $('#'+id+' .content');
             $cur.find(".wb_rep_list").remove();
-            $cur.append('<div class="wb_rep_list"><div class="input clearfix"><form action="/a/reply" method="post" class="replyform"><input name="content" class="reply-content" style="width:80%;margin:0 0 3px 0; padding：4px 4px 0 4px; border: 1px solid rgb(198, 198, 198); font-size: 12px; font-family: Tahoma, 宋体; word-wrap: break-word; line-height: 18px; outline-style: none; outline-width: initial; outline-color: initial; overflow-x: hidden; overflow-y: hidden; height: 22px;"><input style="margin-top:5px;float:right;" type="submit" value="回复"></form><div class="action clearfix"></div></div></div>');
+            $cur.append('<div class="wb_rep_list"><div class="input clearfix"><form action="/a/reply" method="post" class="replyform"><input name="content" class="reply-content" style="width:85%;margin:0 0 3px 0; padding：4px 4px 0 4px; border: 1px solid rgb(198, 198, 198); font-size: 12px; font-family: Tahoma, 宋体; word-wrap: break-word; line-height: 18px; outline-style: none; outline-width: initial; outline-color: initial; overflow-x: hidden; overflow-y: hidden; height: 22px;"><input class="btn pull-right" type="submit" value="回复"></form><div class="action clearfix"></div></div></div>');
             $cur.find(".wb_rep_list").append("<div class='bottom'><a style='margin-top:10px;display:block;text-align:center;' onclick=Reply.extend('"+id+"');return false;>下拉</a><input type='hidden' value='0'></div>");
             var e = $("#"+id+" .wb_rep_list .bottom");
             $(e).find('a').text('').addClass('loading');

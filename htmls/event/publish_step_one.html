@@ -49,7 +49,7 @@
 {% end %}
 
 {% block bodyleft %}
-	<form class="form-horizontal" method="POST" action="/event/puba/">
+	<form class="form-horizontal event-form" method="POST" action="/event/puba/">
 		<fieldset>
 			<legend>活动发布---第一步</legend>
 			<div class="control-group">
@@ -145,7 +145,7 @@
 				</div>
 			</div>
 			<div class="form-actions">
-				<button type="submit" class="btn btn-primary">进入下一步</button>
+				<input type="submit" class="btn btn-primary" value="进入下一步"/>
 				<a class="btn" href="/event/" >取消</a>
 			</div>
 		</fieldset>

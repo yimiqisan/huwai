@@ -22,8 +22,8 @@
 		<thead>
 			<tr>
 				<th width=50%>活动名称</th>
-				<th>发布时间</th>
-				<th>活动开始时间</th>
+				<th>开始时间</th>
+				<th>报名截止</th>
 				<th>补充</th>
 			</tr>
 		</thead>
@@ -36,7 +36,7 @@
 					</a>
 				</td>
 				<td>{{e['date']}}</td>
-				<td>{{e['created']}}</td>
+				<td>{{e['deadline']}}</td>
 				<td>{% if not e.has_key('href') %}<a href="/event/{{e['id']}}/">{{e['tl'][1]}}</a>{% end %}</td>
 			</tr>
 			{% end %}

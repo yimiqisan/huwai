@@ -1,11 +1,11 @@
 <dl class="wb_item" id="m-{{ message['id'] }}">
 	<dt class="face">
-		<a href="" title="{{ message['nick'] }}" style="display:block;width:50px;height:50px;overflow-x:hidden;overflow-y:hidden;">
+		<a href="/weibo/she/{{ message['owner'] }}/" title="{{ message['nick'] }}" style="display:block;width:50px;height:50px;overflow-x:hidden;overflow-y:hidden;">
 			<img title="{{ message['nick'] }}" alt="{{ message['nick'] }}" width=50 height=50 src="/image/avatar/{{ message['owner'] }}_50"/>
 		</a>
 	</dt>
 	<dd class="content">
-		<p class="wb_item_content"><a title="{{ message['nick'] }}" href="">{{ message['nick'] }}</a>：{{ message['content'] }}</p>
+		<p class="wb_item_content"><a href="/weibo/she/{{ message['owner'] }}/" title="{{ message['nick'] }}" href="">{{ message['nick'] }}</a>：{{ message['content'] }}</p>
 		<p class="wb_opt">
 			<span>
 				{% if message['is_own'] %}<a onclick="delItem(this);return false;" id="d-{{ message['id'] }}" class="remove">删除</a><i class="wb_vline">|</i>{% end %}

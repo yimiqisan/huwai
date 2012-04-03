@@ -1,32 +1,96 @@
-{% extends box75.html %}
+{% extends frame.html %}
 
 {% block static %}
-	<link href="{{ static_url('css/profile.css') }}" rel="stylesheet">
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$(".item-a, .item-b").mouseover(function(){$(this).addClass('mover');});
+			$(".item-a, .item-b").mouseout(function(){$(this).removeClass('mover');});
+		})
+	</script>
 {% end %}
 {% block bodyleft %}
-	<div style="min-height:600px;">
-		<h1>北京户外网</h1></br><a class="pull-left btn btn-primary" href="#register">注册加入</a>
+<div class="guess-warp">
+	<div class="row guess-list">
+
+		<div class="group-a">
+			<div class="item-a">
+				<img src="/image/attach/9cae532ef37647e4a46cfba3275cd41d_300" alt="">
+				<div class="item-info"><p>三顿饭了设计的</p></div>
+			</div>
+			<div class="item-b">
+				<img src="/image/attach/64c69fc12ce04b13b3af7f0b919b9610_300" alt="">
+				<div class="item-info"><p>三顿饭了设计的</p></div>
+			</div>
+			<div class="item-b">
+				<img src="/image/attach/64c69fc12ce04b13b3af7f0b919b9610_300" alt="">
+				<div class="item-info"><p>三顿饭了设计的</p></div>
+			</div>
+		</div>
+		
+		<div class="group-b">
+			<div class="item-a">
+				<img src="/image/attach/3ae008d06bb846f9a1984c0a4eb39450_300" alt="">
+				<div class="item-info"><p>三顿饭了设计的</p></div>
+			</div>
+			<div class="item-a">
+				<img src="/image/attach/9cae532ef37647e4a46cfba3275cd41d_300" alt="">
+				<div class="item-info"><p>三顿饭了设计的</p></div>
+			</div>
+			<div class="item-a">
+				<img src="/image/attach/3ae008d06bb846f9a1984c0a4eb39450_300" alt="">
+				<div class="item-info"><p>三顿饭了设计的</p></div>
+			</div>
+		</div>
+		
+		<div class="group-c">
+			<div class="item-a">
+				<img src="/image/attach/3ae008d06bb846f9a1984c0a4eb39450_300" alt="">
+				<div class="item-info"><p>三顿饭了设计的</p></div>
+			</div>
+			<div class="item-b">
+				<img src="/image/attach/64c69fc12ce04b13b3af7f0b919b9610_300" alt="">
+				<div class="item-info"><p>三顿饭了设计的</p></div>
+			</div>
+			<div class="item-b">
+				<img src="/image/attach/64c69fc12ce04b13b3af7f0b919b9610_300" alt="">
+				<div class="item-info"><p>三顿饭了设计的</p></div>
+			</div>
+		</div>
+		
 	</div>
+</div>
 {% end %}
 {% block bodyright %}
-	<form action="/account/login/" method="post">
-		<span>&nbsp&nbsp&nbsp绰号：</span><input name="nick" type=text style="width:300px;height:30px;"/><br/><br/>
-		<span>&nbsp&nbsp&nbsp密码：</span><input name="password" type=password style="width:300px;height:30px;"/><br/><br/>
-		<div style="padding-left:100px;" class="social">
-			<input type=submit value="登录"/>
-			<a style="display:none;" href="/auth/sina/" class="sina"></a>
-			<a style="display:none;" href="/auth/qq/" class="qq"></a>
-			<a style="display:none;" href="/auth/renren/" class="renren"></a>
-		</div>
-	</form>
+<h4>最新活动</h4>
+<table class="table table-condensed" style="background:white;">
+<tbody>
+
+<tr><td><a href="/event/3699d2af58ac4b19b5e957f9da58cc8f/">23</a></td></tr>
+
+<tr><td><a href="/event/805bb6ffb5c4415e84e41646f06bd7df/">植物园看花灯</a></td></tr>
+
+<tr><td><a href="/event/e5e16c3df4f049718db2e7706a6b9a49/">123</a></td></tr>
+
+<tr><td><a href="/event/ea0a5a2b5b6d489f8676bd099248b9f9/">大五朝台</a></td></tr>
+
+<tr><td><a href="/event/36d04847add14bd794d7e0eac2b94f0f/">海驼山</a></td></tr>
+
+<tr><td><a href="/event/07a15e9ab8e0457e9c33627792e28280/">dd</a></td></tr>
+
+<tr><td><a href="/event/cfbaf0c596f1428bbabf5caefd842fc3/">忠孝路上走九遍</a></td></tr>
+
+<tr><td><a href="/event/337cdc987153477cb44f075f3a672668/">昌平滑雪场</a></td></tr>
+
+<tr><td><a href="/event/95a8d394b1354ebeb490321e889599a0/">你好2012</a></td></tr>
+
+<tr><td><a href="/event/ba32b4b31f184715a94d65466fc12447/">坐上火车去拉萨</a></td></tr>
+
+<tr><td><a target="_blank" href="http://www.517huwai.com/activity/7748">丽江文海村 –玉龙雪山 -- 龙蟠--  虎跳峡</a></td>
+
+<td></td>
+</tr>
+</tbody>
+</table>
 {% end %}
 {% block foot %}
-	<div class="span12" name="register" id="register" style="height:200px;">
-		<form action="/account/register/" method="post">
-			<span>&nbsp&nbsp&nbsp绰号：</span><input name="nick" type=text style="width:200px;height:30px;"/>
-			<span>&nbsp&nbsp&nbsp邮件：</span><input name="email" type=text style="width:200px;height:30px;"/>
-			<span>&nbsp&nbsp&nbsp密码：</span><input name="password" type=password style="width:200px;height:30px;"/>
-			&nbsp&nbsp&nbsp&nbsp<input type=submit value="注册"/>
-		</form>
-	</div>
 {% end %}

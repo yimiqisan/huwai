@@ -66,7 +66,7 @@
 			<div class="control-group">
 				<label class="control-label" for="textarea">密码:</label>
 				<div class="controls">
-					<a href="/account/cpassword/">修改密码</a>
+					<a class="" data-toggle="modal" href="#change_pwd" >修改密码</a>
 				</div>
 			</div>
 			<div class="control-group hide">
@@ -81,5 +81,20 @@
 			</div>
 		</fieldset>
 	</form>
+	
+<div id="change_pwd" class="modal hide fade">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>密码修改</h3>
+	</div>
+	<div class="modal-body">
+		<form action="/account/cpassword/" method="POST">
+			<span>&nbsp&nbsp&nbsp旧的密码：</span><input name="oldpassword" type=password style="width:200px;height:30px;"/><br/><br/>
+			<span>&nbsp&nbsp&nbsp新的密码：</span><input name="newpassword" type=password style="width:200px;height:30px;"/><br/><br/>
+			<span>&nbsp&nbsp&nbsp确认密码：</span><input name="confpassword" type=password style="width:200px;height:30px;"/><br/><br/>
+			&nbsp&nbsp&nbsp&nbsp<input type=submit value="修改"/>
+		</form>
+	</div>
+</div>
 {% end %}
 {% block bodyright %}{% end %}

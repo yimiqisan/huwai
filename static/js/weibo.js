@@ -5,8 +5,12 @@ var Weibo = {
             return false;
         });
         Weibo.getLen();
-        $("#weibo-content").one('focus', function(){
+        $("#weibo-content").live('focus', function(){
             $("#weiboform input[type=submit]").addClass("btn-primary");
+            return false;
+        });
+        $("#weibo-content").live('blur', function(){
+            $("#weiboform input[type=submit]").removeClass("btn-primary");
             return false;
         });
         Weibo.extend();
@@ -28,8 +32,10 @@ var Weibo = {
         var e = $('#wb_bottom');
         if ($(e).find('input').val()=='-1'){$(e).find('a').text('没有更多的了');return false;}
         var args = {'cursor': $(e).find('input').val()};
+        var she = $('#weibo .wb_items').attr('she');
         var mtp = $('#weibo .wb_items').attr('maintype');
         var stp = $('#weibo .wb_items').attr('subtype');
+        if (she){args.she=she;}
         if (mtp){args.maintype=mtp;}
         if (stp){args.subtype=stp;}
         $(e).find('a').addClass('loading');

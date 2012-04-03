@@ -15,8 +15,6 @@
 
 {% block bodyleft %}
 	<div id="subnavi" class="gybox"><a style="float:left;display:block;">活动信息</a><span style="float:left;display:block;margin:auto 250px;background:#F5F5F5;">报名信息</span><a style="float:left;display:block;">等待审核</a></div>
-
-
 	<form class="form-horizontal" method="POST" action="/event/pubb/">
 		<fieldset>
 			<legend>活动发布---第二步</legend>
@@ -41,7 +39,8 @@
 			<div class="control-group">
 				<label class="control-label" for="inlineCheckboxes">集合地点:</label>
 				<div class="controls">
-					<div id="map_canvas" ipLocID="where" ipRouteID="route" style="width:600px; height:600px"></div>
+					<input name="where" value=""/>
+					<div id="map_canvas" ipLocID="where" ipRouteID="route" style="width:600px; height:600px; display:none;"></div>
 					<script type="text/javascript">
 					var map = yhui.iMap.createMap($('#map_canvas'), {width: 300, height: 250, panControl: false, mapTypeControl: false,
 						zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL},
@@ -55,7 +54,7 @@
 				</div>
 			</div>
 			<div class="form-actions">
-				<input type="hidden" name="eid" value="eid}}">
+				<input type="hidden" name="eid" value="{{eid}}">
 				<button type="submit" class="btn btn-primary">完毕，发布</button>
 				<a class="btn" href="/event/" >取消</a>
 			</div>

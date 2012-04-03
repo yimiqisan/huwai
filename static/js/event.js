@@ -1,14 +1,15 @@
 var Event = {
     checka: function(){
         $("input[type=submit]").click(function(){
+            $(".error").removeClass("error");
             //check title
-            if (!$("input[name=title]").val()){alert('请填写标题');$("input[name=title]").select();return false;}
+            if (!$("input[name=title]").val()){alert('请填写标题');$("input[name=title]").parent().parent().addClass('error');$("input[name=title]").select();return false;}
             //check place
-            if (!$("input[name=place]").val()){alert('请填写地点');$("input[name=place]").select();return false;}
+            if (!$("input[name=place]").val()){alert('请填写地点');$("input[name=place]").parent().parent().addClass('error');$("input[name=place]").select();return false;}
             //check schedule_tl
-            if (!$("textarea[name=schedule_tl]").val()){alert('请填写行程安排');$("textarea[name=schedule_tl]").select();return false;}
+            if (!$("textarea[name=schedule_tl]").val()){alert('请填写行程安排');$("textarea[name=schedule_tl]").parent().parent().addClass('error');$("textarea[name=schedule_tl]").select();return false;}
             //check spend_tl
-            if (!$("textarea[name=spend_tl]").val()){alert('请填写费用明细');$("textarea[name=spend_tl]").select();return false;}
+            if (!$("textarea[name=spend_tl]").val()){alert('请填写费用明细');$("textarea[name=spend_tl]").parent().parent().addClass('error');$("textarea[name=spend_tl]").select();return false;}
             //check date
             var now = new Date();
             var y = parseInt($("#begin_time_year").val());
@@ -19,7 +20,7 @@ var Event = {
             var sdate = new Date(y,m-1,d,h,i);
             if (now > sdate){alert('您填写的活动时间已过!');return false;}
             //check date
-            $("#event form").submit();
+            $(".event-form").submit();
             return false;
         });
     },

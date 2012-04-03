@@ -33,16 +33,23 @@ class WeiboItemHandler(BaseHandler):
         else:
             return self.render("weibo/item.html", title=u"微博", message=None, uid=uid, id=None, warning='此条微博不存在或已删除！')
 
+class WeiboSheHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self, she=None):
+        return self.render("weibo/she.html", title=u"微博", she=she)
+
 class AjaxWeiboHandler(BaseHandler):
     @session
     def get(self):
         uid = self.SESSION['uid']
+        she = self.get_argument('she', None)
         cursor = self.get_argument('cursor', None)
         maintype = self.get_argument('maintype', None)
         subtype = self.get_argument('subtype', None)
         if cursor:cursor=int(cursor)
         tl = TimeLine()
-        r = tl._api.extend(cuid=uid, channel=[u'weibo'], cursor=cursor, topic=maintype)
+        r = tl._api.extend(cuid=uid, owner=she, channel=[u'weibo'], cursor=cursor, topic=maintype)
         if r[0]:
             htmls = []
             for i in r[1]:

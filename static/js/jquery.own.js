@@ -31,6 +31,38 @@ jQuery.fn.enable = function(opt_enable) {
     return this;
 };
 
+function login() {
+    $("#login form").submit(function(){
+        $(".help-inline").addClass("hide");
+        $(".control-group").removeClass("error");
+        var r = true;
+        $("#login .control-group").each(function(){
+            if(!$(this).find("input").val()) {
+                $(this).addClass("error");
+                $(this).find(".help-inline").removeClass("hide");
+                r = false;
+            }
+        })
+        return r;
+    })
+};
+
+function reg() {
+    $("#register form").submit(function(){
+        $(".help-inline").addClass("hide");
+        $(".control-group").removeClass("error");
+        var r = true;
+        $("#register .control-group").each(function(){
+            if(!$(this).find("input").val()) {
+                $(this).addClass("error");
+                $(this).find(".help-inline").removeClass("hide");
+                r = false;
+            }
+        })
+        return r;
+    })
+};
+
 function like(a, b, e) {
     var f_html = "<from><input type=input style='opacity:1.0;width:90%;'/></from>";
     $.popForm(b, 200, 400, f_html);
