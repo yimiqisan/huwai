@@ -20,6 +20,7 @@
 					},
 				onError			: function (event, queueID, fileObj){alert("文件:" + fileObj.name + " 上传失败");}
 			});
+			cpassword();
 		})
 	</script>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/uploadify.css') }}"/>
@@ -81,20 +82,41 @@
 			</div>
 		</fieldset>
 	</form>
-	
-<div id="change_pwd" class="modal hide fade">
-	<div class="modal-header">
-		<a class="close" data-dismiss="modal">×</a>
-		<h3>密码修改</h3>
+	<div id="change_pwd" class="modal hide fade">
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">×</a>
+			<h3>密码修改</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal" action="/account/cpassword/" method="post">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="nick">旧的密码</label>
+						<div class="controls">
+							<input name="oldpassword" type="password">
+							<span class="help-inline hide">必填</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="email">新的密码</label>
+						<div class="controls">
+							<input name="newpassword" type="password">
+							<span class="help-inline hide">必填</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="password">确认密码</label>
+						<div class="controls">
+							<input name="confpassword" type="password">
+							<span class="help-inline hide">必填</span>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="submit" class="btn btn-primary" value="修改"/>
+					</div>
+				</fieldset>
+			</form>
+		</div>
 	</div>
-	<div class="modal-body">
-		<form action="/account/cpassword/" method="POST">
-			<span>&nbsp&nbsp&nbsp旧的密码：</span><input name="oldpassword" type=password style="width:200px;height:30px;"/><br/><br/>
-			<span>&nbsp&nbsp&nbsp新的密码：</span><input name="newpassword" type=password style="width:200px;height:30px;"/><br/><br/>
-			<span>&nbsp&nbsp&nbsp确认密码：</span><input name="confpassword" type=password style="width:200px;height:30px;"/><br/><br/>
-			&nbsp&nbsp&nbsp&nbsp<input type=submit value="修改"/>
-		</form>
-	</div>
-</div>
 {% end %}
 {% block bodyright %}{% end %}

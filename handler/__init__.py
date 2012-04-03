@@ -8,7 +8,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 
 from commonHandler import RootHandler, TestHandler, FeedbackHandler, Error404Handler, SinaXDHandler, GoogleWebMasterHandler, CDNZZHandler
-from profileHandler import LoginHandler, InviteHandler, RegisterHandler, LogoutHandler, ProfileHandler, SettingHandler, SettingAlertHandler, SettingThirdPartHandler, CpasswordHandler, BindSinaHandler
+from profileHandler import LoginHandler, InviteHandler, RegisterHandler, LogoutHandler, ProfileHandler, SettingHandler, SettingAlertHandler, SettingThirdPartHandler, CpasswordHandler, BindSinaHandler, AjaxLoginHandler, AjaxRegisterHandler, AjaxCpasswordHandler
 from authHandler import AuthHandler, SinaLoginHandler, QQLoginHandler, RenrenLoginHandler, ThirdPartHandler
 from weiboHandler import WeiboHandler, WeiboItemHandler, WeiboSheHandler, AjaxWeiboHandler
 from peopleHandler import PeopleHandler
@@ -16,7 +16,7 @@ from eventHandler import EventHandler, EventPubaHandler, EventPubbHandler, Event
 from noteHandler import NoteHandler, NoteWriteHandler, AjaxNoteHandler
 from imageHandler import UploadImageHandler, AvatarHandler, AttachHandler, AjaxAvatarHandler, AjaxImageHandler, AjaxImageCheckHandler
 from ajaxHandler import AjaxReplyHandler, AjaxRemoveHandler, AjaxToggleStateHandler, AjaxToggleInputHandler
-from checkHandler import CheckEventHandler, CheckTagHandler
+from checkHandler import CheckEventHandler, CheckTagHandler, AjaxCheckEventHandler
 from alertHandler import AlertHandler, AlertListHandler, AjaxAlertHandler
 from mapHandler import MapHandler, MapItemHandler, MapEventHandler, MapWeiboHandler, AjaxMapHandler
 from tagHandler import AjaxTagHandler

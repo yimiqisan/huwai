@@ -1,0 +1,18 @@
+<tr>
+	<td rowspan="4">{{ number }}</td>
+	<td>{{ e['nick'] }}在{{ e['created'] }}发布了{{ e['title'] }}活动</td>
+	<td>报名从{{ e['fr'] }}到{{ e['to'] }}</td>
+	<td rowspan="4"><input type="checkbox" name="{{ e['id'] }}" value="1"></td>
+</tr>
+<tr>
+	<td>时间{{ e['date'] }}地点{{ e['place'] }}</td>
+	<td>截止{{ e['deadline'] }}{{ e['when'] }}{{ e['where'] }}</td>
+</tr>
+<tr>
+	<td>{{ e['tags'] }}{{ e['level'] }}难度</td>
+	<td>声明{{ e['declare_tl'] }}</td>
+</tr>
+<tr>
+	<td>花费{{ e['spend_tl'] }}装备{{ e['equip'] }}日程{{ e['schedule_tl'] }}</td>
+	<td>注意{{ e['attention_tl'] }}</td>
+</tr>

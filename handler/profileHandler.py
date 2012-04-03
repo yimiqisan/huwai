@@ -6,6 +6,8 @@ profile.py
 Created by 刘 智勇 on 2011-09-24.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
+from md5 import md5
+
 from huwai import config
 
 from tornado.web import addslash
@@ -214,5 +216,61 @@ class BindSinaHandler(BaseHandler):
         else:
             url = client.get_authorize_url()
             self.redirect(url)
+
+class AjaxLoginHandler(BaseHandler):
+    @addslash
+    @session
+    def post(self):
+        n = self.get_argument('nick', None)
+        if n is None:return self.write({'error':'请先报上名号'})
+        p = self.get_argument('password', None)
+        if p is None:return self.write({'error':'您接头暗号是'})
+        nt = self.get_argument('next', None)
+        u = User()
+        r = u.login(n, p)
+        if r[0]:
+            self.set_secure_cookie("user", n, 1)
+            self.SESSION['uid']=u._id
+            self.write({'ret':'ok'})
+        else:
+            self.write({'error':r[1]})
+
+class AjaxRegisterHandler(BaseHandler):
+    @addslash
+    @session
+    def post(self):
+        e= self.get_argument('email', None)
+        if e is None:return self.write({'error':'设置邮箱，可能帮您找回失散多年的密码'})
+        n = self.get_argument('nick', None)
+        if n is None:return self.write({'error':'请报上名号'})
+        p = self.get_argument('password', None)
+        if p is None:return self.write({'error':'您接头暗号是'})
+        u = User()
+        r = u.register(n, p, email=e)
+        if r[0]:
+            self.set_secure_cookie("user", n, 1)
+            self.SESSION['uid']=r[1]
+            self.write({'ret':'ok'})
+        else:
+            self.write({'error':r[1]})
+
+class AjaxCpasswordHandler(BaseHandler):
+    @addslash
+    @session
+    def post(self):
+        uid = self.SESSION['uid']
+        o= self.get_argument('oldpassword', None)
+        if o is None:return self.write({'error':'请输入旧密码'})
+        n = self.get_argument('newpassword', None)
+        if n is None:return self.write({'error':'请输入新密码'})
+        c = self.get_argument('confpassword', None)
+        if c is None:return self.write({'error':'请输入确认密码？'})
+        u = User()
+        u.whois("_id", uid)
+        if (u.password != unicode(md5(o).hexdigest())):return self.write({'error':'密码不正确？'})
+        if (n != c):return self.write({'error':'新密码不匹配？'})
+        u._api.edit(uid, password=unicode(md5(n).hexdigest()))
+        return self.write({'ret':'ok'})
+
 
 

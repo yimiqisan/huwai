@@ -7,6 +7,7 @@ Created by 刘 智勇 on 2011-09-24.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 
+import json
 from tornado.web import addslash
 from config import TIME_FORMAT
 
@@ -20,6 +21,25 @@ from huwai.apps.tools import session
 from huwai.apps.event import Event
 
 from baseHandler import BaseHandler
+
+class AjaxCheckEventHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self):
+        e = Event()
+        r = e._api.list(check=True)
+        if r[0]:
+            htmls = []
+            for i in xrange(1, len(r[1])):
+                htmls.append(self.render_string("check/event_item.html", e=r[1][i], number=i))
+            return self.write(json.dumps({'htmls':htmls}))
+        else:
+            return self.write({'error':'save error'})
+    
+    @addslash
+    @session
+    def post(self):
+        pass
 
 
 class CheckEventHandler(BaseHandler):

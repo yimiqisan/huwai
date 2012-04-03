@@ -1,5 +1,24 @@
 {% extends ../box102.html %}
 
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			var args = {};
+			$.postJSON("/a/check/event/", "GET", args, function(response) {
+				if (response.error){
+					return alert(response.error);
+				}
+				var e = $('table tbody');
+				htmls = response.htmls;
+				for (var i=0; i<htmls.length; i++) {
+					$(e).append(htmls[i]);
+				}
+				$(e).append('<tr><td colspan="4"><span class="pagination"><ul><li><a href="#">Prev</a></li><li class="active"><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">Next</a></li></ul></span><span class="pull-right"><input type="hidden" name="eid" value="eid}}"><button type="submit" class="btn btn-primary">完毕，发布</button><a class="btn" href="/event/" >取消</a></span></td></tr>');
+			});
+		})
+	</script>
+{% end %}
+
 {% block bodyleft %}
 	<div class="btn-toolbar pull-right">
 		<div class="btn-group" data-toggle="buttons-radio">
@@ -18,47 +37,7 @@
 				<th>✓</th>
 			</tr>
 		</thead>
-		<tbody>
-			{% for e in event_list %}
-			<tr>
-				<td rowspan="4">1</td>
-				<td>{{ e['nick'] }}在{{ e['created'] }}发布了{{ e['title'] }}活动</td>
-				<td>报名从{{ e['fr'] }}到{{ e['to'] }}</td>
-				<td rowspan="4"><input type="checkbox" name="{{ e['id'] }}" value="1"></td>
-			</tr>
-			<tr>
-				<td>时间{{ e['date'] }}地点{{ e['place'] }}</td>
-				<td>截止{{ e['deadline'] }}{{ e['when'] }}{{ e['where'] }}</td>
-			</tr>
-			<tr>
-				<td>{{ e['tags'] }}{{ e['level'] }}难度</td>
-				<td>声明{{ e['declare_tl'] }}</td>
-			</tr>
-			<tr>
-				<td>花费{{ e['spend_tl'] }}装备{{ e['equip'] }}日程{{ e['schedule_tl'] }}</td>
-				<td>注意{{ e['attention_tl'] }}</td>
-			</tr>
-			{% end %}
-			<tr>
-				<td colspan="4">
-					<span class="pagination">
-						<ul>
-							<li><a href="#">Prev</a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">Next</a></li>
-						</ul>
-					</span>
-					<span class="pull-right">
-						<input type="hidden" name="eid" value="eid}}">
-						<button type="submit" class="btn btn-primary">完毕，发布</button>
-						<a class="btn" href="/event/" >取消</a>
-					</span>
-				</td>
-			</tr>
-		</tbody>
+		<tbody></tbody>
 	</table>
 {% end %}
 {% block bodyright %}

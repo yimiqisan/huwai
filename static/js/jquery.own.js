@@ -35,15 +35,22 @@ function login() {
     $("#login form").submit(function(){
         $(".help-inline").addClass("hide");
         $(".control-group").removeClass("error");
-        var r = true;
+        var args = {};
         $("#login .control-group").each(function(){
-            if(!$(this).find("input").val()) {
+            var inp = $(this).find("input");
+            args[inp.attr('name')] = inp.val()
+            if(!inp.val()) {
                 $(this).addClass("error");
                 $(this).find(".help-inline").removeClass("hide");
-                r = false;
             }
         })
-        return r;
+        $.postJSON("/a/login/", "POST", args, function(response) {
+            if (response.error){
+                return alert(response.error);
+            }
+            window.location.reload();
+        });
+        return false;
     })
 };
 
@@ -51,15 +58,45 @@ function reg() {
     $("#register form").submit(function(){
         $(".help-inline").addClass("hide");
         $(".control-group").removeClass("error");
-        var r = true;
+        var args = {};
         $("#register .control-group").each(function(){
-            if(!$(this).find("input").val()) {
+            var inp = $(this).find("input");
+            args[inp.attr('name')] = inp.val()
+            if(!inp.val()) {
                 $(this).addClass("error");
                 $(this).find(".help-inline").removeClass("hide");
-                r = false;
             }
         })
-        return r;
+        $.postJSON("/a/register/", "POST", args, function(response) {
+            if (response.error){
+                return alert(response.error);
+            }
+            window.location.reload();
+        });
+        return false;
+    })
+};
+
+function cpassword() {
+    $("#change_pwd form").submit(function(){
+        $(".help-inline").addClass("hide");
+        $(".control-group").removeClass("error");
+        var args = {};
+        $("#change_pwd .control-group").each(function(){
+            var inp = $(this).find("input");
+            args[inp.attr('name')] = inp.val()
+            if(!inp.val()) {
+                $(this).addClass("error");
+                $(this).find(".help-inline").removeClass("hide");
+            }
+        })
+        $.postJSON("/a/cpassword/", "POST", args, function(response) {
+            if (response.error){
+                return alert(response.error);
+            }
+            window.location.reload();
+        });
+        return false;
     })
 };
 

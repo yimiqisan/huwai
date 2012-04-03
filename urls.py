@@ -28,6 +28,9 @@ handlers = [(r"/", RootHandler),
             (r"/account/cpassword/", CpasswordHandler),
             (r"/account/thirdpart/", ThirdPartHandler),
             (r"/bind/sina/", BindSinaHandler),
+            (r"/a/login/", AjaxLoginHandler),
+            (r"/a/register/", AjaxRegisterHandler),
+            (r"/a/cpassword/", AjaxCpasswordHandler),
             
             (r"/auth/", AuthHandler),
             (r"/auth/sina/", SinaLoginHandler),
@@ -75,6 +78,7 @@ handlers = [(r"/", RootHandler),
             
             (r"/check/event/", CheckEventHandler),
             (r"/check/tag/", CheckTagHandler),
+            (r"/a/check/event/", AjaxCheckEventHandler),
             
             (r"/xd.html/?", SinaXDHandler),
             (r"/google9f2d915bcc519f6e.html", GoogleWebMasterHandler),
