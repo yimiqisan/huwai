@@ -27,7 +27,7 @@ class AjaxCheckEventHandler(BaseHandler):
     @session
     def get(self):
         e = Event()
-        r = e._api.list(check=True)
+        r = e._api.list()
         if r[0]:
             htmls = []
             for i in xrange(1, len(r[1])):
@@ -39,7 +39,14 @@ class AjaxCheckEventHandler(BaseHandler):
     @addslash
     @session
     def post(self):
-        pass
+        eid = self.get_argument('eid', None)
+        check = self.get_argument('check', False)
+        e = Event()
+        r = e._api.check(eid, check, message=None)
+        if r[0]:
+            return self.write({'data':r[1]})
+        else:
+            return self.write({'error':r[1]})
 
 
 class CheckEventHandler(BaseHandler):
@@ -49,7 +56,11 @@ class CheckEventHandler(BaseHandler):
         e = Event()
         r = e._api.list(check=True)
         if r[0]:
-            return self.render("check/event.html", event_list=r[1])
+            ents = r[1]
+            for i in xrange(0, len(ents)):
+                print ents[i]
+                ents[i]['number']=i+1
+            return self.render("check/event.html", event_list=ents)
         else:
             return self.render("check/event.html", **{'warning': r[1], 'event_list':[]})
     

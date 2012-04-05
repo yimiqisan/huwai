@@ -11,10 +11,34 @@
 				var e = $('table tbody');
 				htmls = response.htmls;
 				for (var i=0; i<htmls.length; i++) {
-					$(e).append(htmls[i]);
+					//$(e).append(htmls[i]);
 				}
-				$(e).append('<tr><td colspan="4"><span class="pagination"><ul><li><a href="#">Prev</a></li><li class="active"><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">Next</a></li></ul></span><span class="pull-right"><input type="hidden" name="eid" value="eid}}"><button type="submit" class="btn btn-primary">完毕，发布</button><a class="btn" href="/event/" >取消</a></span></td></tr>');
+				//$(e).append('<tr><td colspan="4"><span class="pagination"><ul><li><a href="#">Prev</a></li><li class="active"><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">Next</a></li></ul></span><span class="pull-right"><input type="hidden" name="eid" value="eid}}"><button type="submit" class="btn btn-primary">完毕，发布</button><a class="btn" href="/event/" >取消</a></span></td></tr>');
 			});
+			var isFirst = true;
+			$('.btn-toggle').click(function () {
+				var btn = $(this);
+				btn.button('loading');
+				var uncheck = btn.hasClass("btn-primary");
+				var url = btn.attr("ajax-url");
+				var args = {};
+				args.eid = btn.attr("id").replace("btn-", "");
+				if (uncheck) {args.check = true;}
+				$.postJSON(url, "POST", args, function(response) {
+					if (response.error){
+						return alert(response.error);
+					}
+					if (isFirst) {
+						btn.button('complete');
+						isFirst = false;
+					} else {
+						btn.button('reset');
+						isFirst = true;
+					}
+					btn.toggleClass('btn-primary');
+				});
+			});
+			
 		})
 	</script>
 {% end %}
@@ -36,6 +60,29 @@
 				<th>报名信息</th>
 				<th>✓</th>
 			</tr>
+			{% for e in event_list %}
+			<tr>
+				<td rowspan="4">{{ e['number'] }}</td>
+				<td>{{ e['nick'] }}在{{ e['created'] }}发布了{{ e['title'] }}活动</td>
+				<td>报名从{{ e['fr'] }}到{{ e['to'] }}</td>
+				<td rowspan="4">
+					<button id="btn-{{ e['id'] }}" class="btn btn-toggle {% if not e['check'] %}btn-primary{% end %}" ajax-url="/a/check/event/" data-loading-text="提交中" data-complete-text="{% if e['check'] %}通过{% else %}取消通过{% end %}">{% if e['check'] %}取消通过{% else %}通过{% end %}</button>
+				</td>
+				
+			</tr>
+			<tr>
+				<td>时间{{ e['date'] }}地点{{ e['place'] }}</td>
+				<td>截止{{ e['deadline'] }}{{ e['when'] }}{{ e['where'] }}</td>
+			</tr>
+			<tr>
+				<td>{{ e['tags'] }}{{ e['level'] }}难度</td>
+				<td>声明{{ e['declare_tl'] }}</td>
+			</tr>
+			<tr>
+				<td>花费{{ e['spend_tl'] }}装备{{ e['equip'] }}日程{{ e['schedule_tl'] }}</td>
+				<td>注意{{ e['attention_tl'] }}</td>
+			</tr>
+			{% end %}
 		</thead>
 		<tbody></tbody>
 	</table>

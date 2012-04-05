@@ -191,10 +191,11 @@ class BehaviorDoc(Document):
             'created':  datetime,
             'added':    dict,
             'added_id': int,
-            'kind':  IS(u'like', u'join', u'follow'),
-            'mark':  unicode,
+            'she':      unicode,
+            'channel':  IS(u'approval', u'attention'),
+            'switch':   bool,
     }
-    required_fields = ['_id', 'created', 'kind', 'mark']
+    required_fields = ['_id', 'created', 'owner', 'she']
     default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
     
     use_schemaless = True

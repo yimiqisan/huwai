@@ -3,23 +3,26 @@
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
 			$('#nav-event').addClass("active");
-			$('.btn-ajax-toggle').click(function () {
+			var isFirst = true;
+			$('.btn-toggle').click(function () {
 				var btn = $(this);
 				btn.button('loading');
+				var uncheck = btn.hasClass("btn-primary");
 				var url = btn.attr("ajax-url");
-				var kind = btn.attr("ajax-kind");
-				
-				var args = {'kind': kind, 'mark': btn.attr("id").replace("btn-", "")};
+				var args = {};
+				args.owner = btn.attr("id").replace("btn-", "");
+				args.she = "{{ eid }}";
+				if (uncheck) {args.check = true;}
 				$.postJSON(url, "POST", args, function(response) {
 					if (response.error){
 						return alert(response.error);
 					}
-					if (btn.attr("switch")) {
+					if (isFirst) {
 						btn.button('complete');
-						btn.attr("switch", "");
+						isFirst = false;
 					} else {
-						btn.button('reset')
-						btn.attr("switch", true);
+						btn.button('reset');
+						isFirst = true;
 					}
 					btn.toggleClass('btn-primary');
 				});
@@ -37,11 +40,13 @@
 				<a class="pull-left" style="display:block;width:88%;height:28px;" data-toggle="collapse" data-parent="#accordion" href="#{{ u['id'] }}">
 					{{ u.get('nick', None) }}
 				</a>
-				<button id="btn-{{ u['id'] }}" switch={ 123 }} ajax-kind="{{ u['kind'] }}" autocomplete="off" ajax-url="/a/toggle/state" data-loading-text="提交中" data-complete-text="取消通过" class="btn btn-primary btn-ajax-toggle">通过</button>
+				<button id="btn-{{ u['id'] }}" class="btn btn-toggle {% if not u['switch'] %}btn-primary{% end %}" ajax-url="/a/event/approval/" data-loading-text="提交中" data-complete-text="{% if u['switch'] %}通过{% else %}取消通过{% end %}">
+					{% if u['switch'] %}取消通过{% else %}通过{% end %}
+				</button>
 				</div>
 			</div>
 			<div id="{{ u['id'] }}" class="accordion-body collapse" style="height: 0px;">
-				<div class="accordion-inner">
+				<div class="accordion-inner hide">
 					{{ u }}
 				</div>
 			</div>

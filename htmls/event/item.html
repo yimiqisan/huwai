@@ -6,6 +6,28 @@
 		$(document).ready(function() {
 			Weibo.init();
 			$('#nav-event').addClass("active");
+			var isFirst = true;
+			$('.btn-toggle').click(function () {
+				var btn = $(this);
+				btn.button('loading');
+				var url = btn.attr("ajax-url");
+				var args = {};
+				args.owner = btn.attr("id").replace("btn-", "");
+				args.she = "{{ eid }}";
+				$.postJSON(url, "POST", args, function(response) {
+					if (response.error){
+						return alert(response.error);
+					}
+					if (isFirst) {
+						btn.button('complete');
+						isFirst = false;
+					} else {
+						btn.button('reset');
+						isFirst = true;
+					}
+					btn.toggleClass('btn-success');
+				});
+			});
 		})
 	</script>
 	{% block static-added %}{% end %}
@@ -68,10 +90,8 @@
 		<p>报名人数：{{ fr }} 到 {{ to }}</p>
 		<p>集合时间：{{ when }}</p>
 		<p>集合地点：<a href="/map/{{ where }}/" target="_blank">点击查看</a></p>
-		{% if is_join %}
-			{% module Template("util/state_toggle.html", id=id, kind='join', switch='报名参加', value='退出活动') %}
-		{% else %}
-			{% module Template("util/state_toggle.html", id=id, kind='join', switch='退出活动', value='报名参加') %}
-		{% end %}
+		<button id="btn-{{ uid }}" class="btn btn-toggle {% if not is_join %}btn-success{% end %}" ajax-url="/a/event/join/" data-loading-text="提交中" data-complete-text="{% if is_join %}参加活动{% else %}退出活动{% end %}">
+			{% if is_join %}退出活动{% else %}参加活动{% end %}
+		</button>
 	</div>
 {% end %}

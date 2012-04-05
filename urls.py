@@ -45,6 +45,8 @@ handlers = [(r"/", RootHandler),
             (r"/event/falls/", EventFallsHandler),
             (r"/event/(.{32})/member/", EventMemberHandler),
             (r"/event/loading/", EventCheckHandler),
+            (r"/a/event/join/", AjaxEventJoinHandler),
+            (r"/a/event/approval/", AjaxEventApprovalHandler),
             
             (r"/note/", NoteHandler),
             (r"/note/write/", NoteWriteHandler),

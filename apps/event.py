@@ -122,13 +122,13 @@ class EventAPI(API):
     
     def _is_joined(self, eid, cuid=DEFAULT_CUR_UID):
         b = Behavior()
-        r = b._api.list(owner=cuid, kind=u'join', mark=eid)
+        r = b._api.list(owner=cuid, channel=u'approval', she=eid)
         return (len(r)>0)
     
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         merc_f = lambda x: u'商业性质' if x else u'非商业性质'
         club_f = lambda x: u'公开' if x==u'site' else u'xx俱乐部'
-        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'is_join':self._is_joined(i['_id'], cuid), 'nick':i['added'].get('nick', '匿名驴友'), 'created':i['created'].strftime('%Y-%m-%d %H:%M:%S'), 'logo':i['logo'], 'title':i['title'], 'members':i['members'], 'tags':i['tags'], 'club':club_f(i['club']), 'is_merc':merc_f(i['is_merc']), 'level':i['level'], 'route':i['route'], 'place':i['place'], 'date':i['date'].strftime('%Y-%m-%d %H:%M:%S'), 'schedule_tl':self._tl_get(i['schedule_tl']), 'spend_tl':self._tl_get(i['spend_tl']), 'equip':i['equip'], 'declare_tl':self._tl_get(i['declare_tl']), 'attention_tl':self._tl_get(i['attention_tl']), 'deadline':i['deadline'].strftime('%Y-%m-%d %H:%M:%S'), 'fr':i['fr'], 'to':i['to'], 'when':i['when'].strftime('%Y-%m-%d %H:%M:%S'), 'where':i['where']}
+        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'is_join':self._is_joined(i['_id'], cuid), 'nick':i['added'].get('nick', '匿名驴友'), 'created':i['created'].strftime('%Y-%m-%d %H:%M:%S'), 'logo':i['logo'], 'title':i['title'], 'members':i['members'], 'tags':i['tags'], 'club':club_f(i['club']), 'is_merc':merc_f(i['is_merc']), 'level':i['level'], 'route':i['route'], 'place':i['place'], 'date':i['date'].strftime('%Y-%m-%d %H:%M:%S'), 'schedule_tl':self._tl_get(i['schedule_tl']), 'spend_tl':self._tl_get(i['spend_tl']), 'equip':i['equip'], 'declare_tl':self._tl_get(i['declare_tl']), 'attention_tl':self._tl_get(i['attention_tl']), 'deadline':i['deadline'].strftime('%Y-%m-%d %H:%M:%S'), 'fr':i['fr'], 'to':i['to'], 'when':i['when'].strftime('%Y-%m-%d %H:%M:%S'), 'where':i['where'], 'check':i['check']}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)
@@ -138,7 +138,7 @@ class EventAPI(API):
         if r[0]:return (True, self._output_format(result=r[1], cuid=cuid))
         return r
     
-    def list(self, owner=None, tags=None, cuid=DEFAULT_CUR_UID, club=None, is_merc=None, level=None, date=None, place=None, deadline=None, fr=None, to=None, when=None, check=True):
+    def list(self, owner=None, tags=None, cuid=DEFAULT_CUR_UID, club=None, is_merc=None, level=None, date=None, place=None, deadline=None, fr=None, to=None, when=None, check=None):
         kwargs = {}
         if owner:kwargs['owner']=owner
         if tags:kwargs['tags']={'$all':tags} if isinstance(tags, list) else tags
@@ -151,7 +151,7 @@ class EventAPI(API):
         if fr:kwargs['fr']={'$gt':fr}
         if to:kwargs['to']={'$gt':to}
         if when:kwargs['when']={'$gt':when}
-        kwargs['check']=check
+        if isinstance(check, bool):kwargs['check'] = check
         r = self.find(**kwargs)
         if r[0]:
             return (True, self._output_format(result=r[1], cuid=cuid))

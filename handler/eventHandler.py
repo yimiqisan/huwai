@@ -33,7 +33,7 @@ class EventHandler(BaseHandler):
         e = Event()
         b = Behavior()
         r = e._api.get(id, uid)
-        rb = b._api.list(kind=u'join', mark=id)
+        rb = b._api.list(channel=u'approval', she=id)
         if r[0]:
             self.render("event/item.html", user_list=rb, eid=id, **r[1])
         else:
@@ -100,13 +100,19 @@ class EventPubbHandler(BaseHandler):
         else:
             return self.render("event/event_pubb.html", **{'warning': r[1]})
 
+class EventCheckHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self):
+        self.render_alert(u"发布成功，\n请耐心等待，\n我们的审核灰常快。")
+
 class EventListHandler(BaseHandler):
     @addslash
     @session
     def get(self):
         uid = self.SESSION['uid']
         e = Event()
-        r = e._api.list(cuid=uid)
+        r = e._api.list(cuid=uid, check=True)
         l = []
         if r[0]:
             es = r[1]
@@ -129,7 +135,7 @@ class EventFallsHandler(BaseHandler):
     def get(self):
         uid = self.SESSION['uid']
         e = Event()
-        r = e._api.list(cuid=uid)
+        r = e._api.list(cuid=uid, check=True)
         l = []
         if r[0]:
             t = TimeLine()
@@ -155,17 +161,57 @@ class EventMemberHandler(BaseHandler):
         r = b._api.list(kind=u'join', mark=id)
         self.render("event/member.html", userlist=r, eid=id)
 
-class EventCheckHandler(BaseHandler):
-    @addslash
-    @session
-    def get(self):
-        self.render_alert(u"发布成功，\n请耐心等待，\n我们的审核灰常快。")
-
 class EventApprovalHandler(BaseHandler):
     @addslash
     @session
     def get(self, id):
         uid = self.SESSION['uid']
         b = Behavior()
-        r = b._api.list(kind=u'join', mark=id)
+        r = b._api.list(channel=u'approval', she=id)
         self.render("event/approval.html", userlist=r, eid=id)
+
+class AjaxEventJoinHandler(BaseHandler):
+    channel = u'approval'
+    @session
+    def post(self):
+        uid = self.SESSION['uid']
+        she = self.get_argument('she', None)
+        b = Behavior()
+        r = b._api._is_contain(uid, she, self.channel)
+        rr = b._api.delete(uid, she, self.channel) if (r[0] and r[1]) else b._api.create(uid, she, self.channel, switch=False, nick=self.current_user)
+        if rr[0]:
+            return self.write({'data':rr[1]})
+        else:
+            return self.write({'error':rr[1]})
+
+class AjaxEventApprovalHandler(BaseHandler):
+    channel = u'approval'
+    @session
+    def get(self):
+        uid = self.SESSION['uid']
+        she = self.get_argument('she', None)
+        b = Behavior()
+        r = b._api.list(channel=self.channel, she=she)
+        if r[0]:
+            return self.write(json.dumps({'userlist':r[1]}))
+        else:
+            return self.write({'error':'save error'})
+    
+    @session
+    def post(self):
+        uid = self.SESSION['uid']
+        owner = self.get_argument('owner', uid)
+        she = self.get_argument('she', None)
+        check = self.get_argument('check', False)
+        b = Behavior()
+        if check:
+            r = b._api.on(uid, she, self.channel)
+        else:
+            r = b._api.off(uid, she, self.channel)
+        if r[0]:
+            return self.write({'data':r[1]})
+        else:
+            return self.write({'error':r[1]})
+    
+    
+    

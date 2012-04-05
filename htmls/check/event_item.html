@@ -2,7 +2,10 @@
 	<td rowspan="4">{{ number }}</td>
 	<td>{{ e['nick'] }}在{{ e['created'] }}发布了{{ e['title'] }}活动</td>
 	<td>报名从{{ e['fr'] }}到{{ e['to'] }}</td>
-	<td rowspan="4"><input type="checkbox" name="{{ e['id'] }}" value="1"></td>
+	<td rowspan="4">
+		<button id="btn-{{ e['id'] }}" class="btn btn-toggle {% if not e['check'] %}btn-primary{% end %}" ajax-url="/a/check/event/" data-loading-text="提交中" data-complete-text="{% if e['check'] %}通过{% else %}取消通过{% end %}">{% if e['check'] %}取消通过{% else %}通过{% end %}</button>
+	</td>
+	
 </tr>
 <tr>
 	<td>时间{{ e['date'] }}地点{{ e['place'] }}</td>
