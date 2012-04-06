@@ -35,8 +35,9 @@ class LoginHandler(BaseHandler):
         u = User()
         r = u.login(n, p)
         if r[0]:
-            self.set_secure_cookie("user", n, 1)
+#            self.set_secure_cookie("user", n, 1)
             self.SESSION['uid']=u._id
+            self.SESSION['nick']=n
             self.redirect(nt) if nt else self.redirect('/account/profile')
         else:
             return self.render('profile/login.html', **{'warning': r[1], 'n':n})
@@ -80,8 +81,9 @@ class RegisterHandler(BaseHandler):
         u = User()
         r = u.register(n, p, email=e)
         if r[0]:
-            self.set_secure_cookie("user", n, 1)
+#            self.set_secure_cookie("user", n, 1)
             self.SESSION['uid']=r[1]
+            self.SESSION['nick']=n
             self.redirect('/account/profile')
         else:
             return self.render('profile/register.html', **{'warning': r[1], 'email':e})
@@ -90,8 +92,8 @@ class LogoutHandler(BaseHandler):
     @addslash
     @session
     def get(self):
-        self.clear_cookie("user")
-        del self.SESSION['uid']
+#        self.clear_cookie("user")
+        del self.SESSION['uid'], self.SESSION['nick']
         nt = self.get_argument('next', None)
         self.redirect('/')
 
@@ -100,7 +102,7 @@ class ProfileHandler(BaseHandler):
     @session
     def get(self):
         if self.current_user:
-            title = self.current_user+'的主页'
+            title = self.current_user+u'的主页'
             return self.redirect('/weibo/')
             self.render('profile/profile.html', title=title)
         else:
@@ -108,7 +110,6 @@ class ProfileHandler(BaseHandler):
     
 class SettingHandler(BaseHandler):
     KEYS = ["nick", "domain", "avanta", "live", "mail", "phone"]
-    
     @addslash
     @session
     def get(self):
@@ -229,9 +230,10 @@ class AjaxLoginHandler(BaseHandler):
         u = User()
         r = u.login(n, p)
         if r[0]:
-            self.set_secure_cookie("user", n, 1)
+#            self.set_secure_cookie("user", n, 1)
             self.SESSION['uid']=u._id
-            self.write({'ret':'ok'})
+            self.SESSION['nick']=n
+            self.write({'uid':u._id})
         else:
             self.write({'error':r[1]})
 
@@ -248,11 +250,21 @@ class AjaxRegisterHandler(BaseHandler):
         u = User()
         r = u.register(n, p, email=e)
         if r[0]:
-            self.set_secure_cookie("user", n, 1)
+#            self.set_secure_cookie("user", n, 1)
             self.SESSION['uid']=r[1]
-            self.write({'ret':'ok'})
+            self.SESSION['nick']=n
+            self.write({'uid':u._id})
         else:
             self.write({'error':r[1]})
+
+class AjaxLogoutHandler(BaseHandler):
+    @addslash
+    @session
+    def post(self):
+#        self.clear_cookie("user")
+        del self.SESSION['uid'], self.SESSION['nick']
+        nt = self.get_argument('next', None)
+        self.write({'ret':'ok'})
 
 class AjaxCpasswordHandler(BaseHandler):
     @addslash
@@ -271,6 +283,3 @@ class AjaxCpasswordHandler(BaseHandler):
         if (n != c):return self.write({'error':'新密码不匹配？'})
         u._api.edit(uid, password=unicode(md5(n).hexdigest()))
         return self.write({'ret':'ok'})
-
-
-

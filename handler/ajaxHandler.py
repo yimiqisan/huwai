@@ -48,11 +48,13 @@ class AjaxReplyHandler(BaseHandler):
         else:
             self.write(json.dumps(reply))
     
+    @session
     def preserve(self, uid):
+        uid = self.SESSION['uid']
         to = self.get_argument("to")
         c = self.get_argument("content")
         tl = TimeLine()
-        nick = self.current_user if self.current_user else '匿名驴友'
+        nick = self.current_user if uid else '匿名驴友'
         kwargs = {'nick':nick}
         r = tl._api.save(c, owner=uid, tid=to, channel=self.CHANNEL, **kwargs)
         if r[0]:

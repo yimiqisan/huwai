@@ -1,11 +1,19 @@
 var Weibo = {
     init: function(){
         $("#weiboform").live("submit", function() {
+            if (!$.cookie("uid")) {
+                $('#login').modal();
+                return false;
+            }
             Weibo.new($(this));
             return false;
         });
         Weibo.getLen();
         $("#weibo-content").live('focus', function(){
+            if (!$.cookie("uid")) {
+                $('#login').modal();
+                return false;
+            }
             $("#weiboform input[type=submit]").addClass("btn-primary");
             return false;
         });

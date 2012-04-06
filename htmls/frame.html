@@ -9,6 +9,7 @@
 		<script src="{{ static_url('js/bs/html5.js') }}"></script>
 		<script src="{{ static_url('js/jquery.min.js') }}" type="text/javascript"></script>
 		<script src="{{ static_url('js/jquery.own.js') }}" type="text/javascript"></script>
+		<script src="{{ static_url('js/jquery.cookie.js') }}" type="text/javascript"></script>
 		<script src="{{ static_url('js/utility.js') }}" type="text/javascript"></script>
 		<script src="{{ static_url('js/jquery.lazyload.js') }}" type="text/javascript"></script>
 		<script src="{{ static_url('js/jquery.noty.js') }}" type="text/javascript"></script>
@@ -60,7 +61,7 @@
 									<li class="hide"><a href="/account/plugin/"><i class="icon-pencil"></i> &nbsp&nbsp&nbsp&nbsp订制应用</a></li>
 									<li class="hide"><a href="/account/carte/"><i class="icon-book"></i> &nbsp&nbsp&nbsp&nbsp户外名片</a></li>
 									<li class="divider"></li>
-									<li><a href="/account/logout/"><i class="icon-off"></i> &nbsp&nbsp&nbsp&nbsp退出</a></li>
+									<li><a onclick="logout(this);return false;"><i class="icon-off"></i> &nbsp&nbsp&nbsp&nbsp退出</a></li>
 								</ul>
 							</li>
 							{% else %}

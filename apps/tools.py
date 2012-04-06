@@ -22,7 +22,6 @@ class SessionManager(object):
     """
     Session manager class, used to manage the various session objects and talk with Redis.
     """
-
     class _instance_():
         def __init__(self, session_expire_time=SESSION_SET["SESSION_EXPIRE_TIME"], redis_url=SESSION_SET["REDIS_URL"], on_delete=None):
             self._rd = redis.Redis(host=redis_url['ip'], port=redis_url['port'], db=redis_url['db'])
@@ -114,7 +113,8 @@ class Session(object):
         return SessionManager().delete_session(self)
 
     def __delitem__(self, key):
-        del self.data[key]
+        if self.data.has_key(key):
+            del self.data[key]
         self.save()
         return True
 

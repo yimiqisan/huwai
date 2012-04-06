@@ -8,6 +8,10 @@
 			$('#nav-event').addClass("active");
 			var isFirst = true;
 			$('.btn-toggle').click(function () {
+				if (!$.cookie("uid")) {
+					$('#login').modal();
+					return false;
+				}
 				var btn = $(this);
 				btn.button('loading');
 				var url = btn.attr("ajax-url");

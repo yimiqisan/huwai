@@ -48,6 +48,7 @@ function login() {
             if (response.error){
                 return alert(response.error);
             }
+            $.cookie("uid", response.uid, {path: '/', expires: 10});
             window.location.reload();
         });
         return false;
@@ -71,10 +72,23 @@ function reg() {
             if (response.error){
                 return alert(response.error);
             }
+            $.cookie("uid", response.uid, {path: '/', expires: 10});
             window.location.reload();
         });
         return false;
     })
+};
+
+function logout(e) {
+    var args = {};
+    $.postJSON("/a/logout/", "POST", args, function(response) {
+        if (response.error){
+            return alert(response.error);
+        }
+        $.cookie("uid", null, {path: '/', expires: 10});
+        window.location.reload();
+    });
+    return false;
 };
 
 function cpassword() {

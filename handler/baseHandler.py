@@ -9,6 +9,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 
 from tornado.web import RequestHandler
 from huwai.apps.tools import session
+from huwai.config import DB_CON
 
 class BaseHandler(RequestHandler):
     @property
@@ -18,9 +19,10 @@ class BaseHandler(RequestHandler):
     @property
     def cache(self):
         return self.settings["cache_engine"]
-        
+    
+    @session
     def get_current_user(self):
-        return self.get_secure_cookie("user")
+        return self.SESSION['nick']
     
     @session
     def render(self, template_name, **kwargs):

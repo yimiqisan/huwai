@@ -30,6 +30,7 @@ handlers = [(r"/", RootHandler),
             (r"/bind/sina/", BindSinaHandler),
             (r"/a/login/", AjaxLoginHandler),
             (r"/a/register/", AjaxRegisterHandler),
+            (r"/a/logout/", AjaxLogoutHandler),
             (r"/a/cpassword/", AjaxCpasswordHandler),
             
             (r"/auth/", AuthHandler),
