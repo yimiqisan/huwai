@@ -40,7 +40,7 @@ class AjaxCheckEventHandler(BaseHandler):
     @session
     def post(self):
         eid = self.get_argument('eid', None)
-        check = self.get_argument('check', False)
+        check = True if self.get_argument('check', None) else False
         e = Event()
         r = e._api.check(eid, check, message=None)
         if r[0]:
@@ -54,11 +54,11 @@ class CheckEventHandler(BaseHandler):
     @session
     def get(self):
         e = Event()
-        r = e._api.list(check=True)
+        r = e._api.list()
         if r[0]:
             ents = r[1]
             for i in xrange(0, len(ents)):
-                print ents[i]
+                print type(ents[i]['check'])
                 ents[i]['number']=i+1
             return self.render("check/event.html", event_list=ents)
         else:

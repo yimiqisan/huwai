@@ -202,7 +202,7 @@ class AjaxEventApprovalHandler(BaseHandler):
         uid = self.SESSION['uid']
         owner = self.get_argument('owner', uid)
         she = self.get_argument('she', None)
-        check = self.get_argument('check', False)
+        check = True if self.get_argument('check', None) else False
         b = Behavior()
         if check:
             r = b._api.on(uid, she, self.channel)

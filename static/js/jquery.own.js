@@ -48,7 +48,7 @@ function login() {
             if (response.error){
                 return alert(response.error);
             }
-            $.cookie("uid", response.uid, {path: '/', expires: 10});
+            $.cookie("uid", response.uid, {path: '/', expires: 1});
             window.location.reload();
         });
         return false;
@@ -72,7 +72,7 @@ function reg() {
             if (response.error){
                 return alert(response.error);
             }
-            $.cookie("uid", response.uid, {path: '/', expires: 10});
+            $.cookie("uid", response.uid, {path: '/', expires: 1});
             window.location.reload();
         });
         return false;
@@ -85,7 +85,7 @@ function logout(e) {
         if (response.error){
             return alert(response.error);
         }
-        $.cookie("uid", null, {path: '/', expires: 10});
+        $.cookie("uid", null, {path: '/', expires: 1});
         window.location.reload();
     });
     return false;

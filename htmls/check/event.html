@@ -3,7 +3,7 @@
 {% block static %}
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
-			var args = {};
+/*			var args = {};
 			$.postJSON("/a/check/event/", "GET", args, function(response) {
 				if (response.error){
 					return alert(response.error);
@@ -15,11 +15,12 @@
 				}
 				//$(e).append('<tr><td colspan="4"><span class="pagination"><ul><li><a href="#">Prev</a></li><li class="active"><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">Next</a></li></ul></span><span class="pull-right"><input type="hidden" name="eid" value="eid}}"><button type="submit" class="btn btn-primary">完毕，发布</button><a class="btn" href="/event/" >取消</a></span></td></tr>');
 			});
-			var isFirst = true;
+*/			
 			$('.btn-toggle').click(function () {
 				var btn = $(this);
 				btn.button('loading');
 				var uncheck = btn.hasClass("btn-primary");
+				var isFirst = !btn.hasClass("first");
 				var url = btn.attr("ajax-url");
 				var args = {};
 				args.eid = btn.attr("id").replace("btn-", "");
@@ -30,10 +31,10 @@
 					}
 					if (isFirst) {
 						btn.button('complete');
-						isFirst = false;
+						btn.addClass('first');
 					} else {
 						btn.button('reset');
-						isFirst = true;
+						btn.removeClass('first');
 					}
 					btn.toggleClass('btn-primary');
 				});
