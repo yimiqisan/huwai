@@ -51,9 +51,10 @@ class AjaxNoteHandler(BaseHandler):
     def post(self):
         uid = self.SESSION['uid']
         t = self.get_argument("note_title", None)
-        e = self.get_argument("note_text", None)
+        c = self.get_argument("note_text", None)
         n = Note()
-        r = n._api.save(uid, t, e)
+        c = unicode(c.replace('\r\n', '</br>').replace('\n', '</br>').replace('\r', '</br>'))
+        r = n._api.save(uid, t, c)
         if r[0]:
             return self.write({'info':r[1]})
         else:
