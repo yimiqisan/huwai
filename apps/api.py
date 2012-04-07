@@ -51,11 +51,12 @@ class Mapping(object):
         self.collection = self.datastore[MappingDoc.__collection__]
         self.doc = self.collection.MappingDoc()
     
-    def do(self, image):
-        r = self.get(image=image)
+    def do(self, channel, image):
+        r = self.get(channel=channel, image=image)
         if (not r[0])or r[1]:return r
         mid = get_uuid()
         self.doc['_id'] = mid
+        self.doc['channel'] = channel
         self.doc['image'] = image
         try:
             self.doc.save(uuid=True, validate=True)
@@ -64,14 +65,14 @@ class Mapping(object):
             return (False, unicode(e))
         return (True, mid)
     
-    def get(self, id=None, image=None):
+    def get(self, id=None, channel=None, image=None):
         try:
             i = None
             if id and (not image):
                 r = self.collection.one({"_id":id})["image"]
                 if r:i=r["image"]
             elif (not id) and image:
-                r = self.collection.one({"image":image})
+                r = self.collection.one({"image":image, "channel":channel})
                 if r:i=r["_id"]
             return (True, i)
         except Exception, e:

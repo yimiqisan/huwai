@@ -86,7 +86,7 @@ function logout(e) {
             return alert(response.error);
         }
         $.cookie("uid", null, {path: '/', expires: 1});
-        window.location.reload();
+        window.location = '/';
     });
     return false;
 };

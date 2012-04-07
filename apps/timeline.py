@@ -44,7 +44,7 @@ class TimeLineAPI(API):
             for i in l:
                 if (i!=''):t = i;break
             m = Mapping()
-            r = m.do(t)
+            r = m.do(u'event', t)
             if not r[0]:return r
             tid = r[1]
         return tid

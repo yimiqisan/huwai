@@ -153,12 +153,13 @@ class EventFallsHandler(BaseHandler):
             self.render("event/falls.html", event_list=l, warning=r[1])
 
 class EventMemberHandler(BaseHandler):
+    channel = u'approval'
     @addslash
     @session
     def get(self, id):
         uid = self.SESSION['uid']
         b = Behavior()
-        r = b._api.list(kind=u'join', mark=id)
+        r = b._api.list(cuid=uid, she=id, channel=self.channel)
         self.render("event/member.html", userlist=r, eid=id)
 
 class EventApprovalHandler(BaseHandler):

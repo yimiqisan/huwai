@@ -18,8 +18,8 @@ class IdDoc(Document):
     __database__ = DB_NAME
     
     structure = {
-                '_id':unicode,
-                'id':int,
+            '_id':unicode,
+            'id':int,
     }
     use_schemaless = True
     use_dot_notation=True
@@ -29,8 +29,9 @@ class MappingDoc(Document):
     __database__ = DB_NAME
     
     structure = {
-                '_id':  unicode,
-                'image':unicode,
+            '_id':      unicode,
+            'channel':  IS(u'event', u'note'),
+            'image':    unicode,
     }
     use_schemaless = True
     use_dot_notation=True

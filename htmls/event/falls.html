@@ -22,52 +22,21 @@
 				
 				$falls.infinitescroll({
 					navSelector  : "#nav-extend",
-					// selector for the paged navigation (it will be hidden)
 					nextSelector : "#nav-extend a",
-					// selector for the NEXT link (to page 2)
 					itemSelector : ".item",          
-					// selector for all items you'll retrieve
 					debug        : false,
-					// enable debug messaging ( to console.log )
 					loadingImg   : "http://www.infinite-scroll.com/loading.gif",
-					// loading image.
-					// default: "http://www.infinite-scroll.com/loading.gif"
 					loadingText  : "加载中...",      
-					// text accompanying loading image
-					// default: "<em>Loading the next set of posts...</em>"
 					animate      : true,      
-					// boolean, if the page will do an animated scroll when new content loads
-					// default: false
 					extraScrollPx: 50,      
-					// number of additonal pixels that the page will scroll 
-					// (in addition to the height of the loading div)
-					// animate must be true for this to matter
-					// default: 150
 					donetext     : "加载完毕" ,
-					// text displayed when all items have been retrieved
-					// default: "<em>Congratulations, you've reached the end of the internet.</em>"
 					bufferPx     : 40,
-					// increase this number if you want infscroll to fire quicker
-					// (a high number means a user will not see the loading message)
-					// new in 1.2
-					// default: 40
 					errorCallback: function(e){},
-					// called when a requested page 404's or when there is no more content
-					// new in 1.2                   
 					localMode    : true
-					// enable an overflow:auto box to have the same functionality
-					// demo: http://paulirish.com/demo/infscr
-					// instead of watching the entire window scrolling the element this plugin
-					//   was called on will be watched
-					// new in 1.2
-					// default: false
 					},
-					// trigger Masonry as a callback
 					function( newElements ) {
 						var $newElems = $( newElements ).css({ opacity: 0 });
-						// ensure that images load before adding to masonry layout
 						$newElems.imagesLoaded(function(){
-							// show elems now they're ready
 							$newElems.animate({ opacity: 1 });
 							$container.masonry( 'appended', $newElems, true ); 
 							$container.find('.item').fadeIn('slow');
@@ -93,7 +62,7 @@
 		</li>
 	</ul>
 
-	<ul id="falls" class="thumbnails">
+	<ul id="falls" class="thumbnails bg-white">
 		{% for e in event_list %}
 			<li class="span3 item">
 				<div class="thumbnail">
