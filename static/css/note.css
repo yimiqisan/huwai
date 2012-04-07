@@ -1,1 +1,29 @@
 #note_text {height:400px;}
+pre p, pre .p {
+font-size: 13px;
+line-height: 1.62;
+font-family: Arial,Helvetica,sans-serif;
+word-wrap: break-word;
+white-space: pre-wrap;
+}
+.PICR {
+float: right;
+margin-left: 14px;
+}
+.PICL {
+float: left;
+margin-right: 14px;
+}
+.PIC {
+text-align: center;
+margin: 14px 0;
+}
+.PIC img, .PICL img, .PICR img {
+max-width: 100%;
+display: block;
+margin: auto;
+border: 1;
+}
+.PIC div, .PICR div, .PICL div {
+margin-top: 7px;
+}

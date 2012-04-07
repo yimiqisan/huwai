@@ -58,7 +58,6 @@ class CheckEventHandler(BaseHandler):
         if r[0]:
             ents = r[1]
             for i in xrange(0, len(ents)):
-                print type(ents[i]['check'])
                 ents[i]['number']=i+1
             return self.render("check/event.html", event_list=ents)
         else:

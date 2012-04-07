@@ -6,38 +6,7 @@
 			$('#nav-note').addClass("active");
 		})
 	</script>
-	<style type="text/css">
-/*
-.c, .G {
-display: block;
-}
-pre p, pre .p {
-font-size: 13px;
-line-height: 1.62;
-font-family: Arial,Helvetica,sans-serif;
-word-wrap: break-word;
-white-space: pre-wrap;
-}
-.PICR {
-float: right;
-margin-left: 14px;
-}
-.PICL {
-float: left;
-margin-right: 14px;
-}
-.PIC {
-text-align: center;
-margin: 14px 0;
-}
-img {
-max-width: 100%;
-display: block;
-margin: auto;
-border: 1;
-}
-*/
-	</style>
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/note.css') }}"/>
 {% end %}
 {% autoescape None %}
 {% block bodyleft %}
@@ -56,14 +25,6 @@ border: 1;
 			</div>
 		</div>
 		{% end %}
-<div class="c hide">
-	<div class="p">似懂非懂 
-		<div class="PICR"><img src="http://p4.42qu.us/721/944/198576.jpg"></div> 
-		<div class="PICL"><img src="http://p4.42qu.us/721/944/198576.jpg"></div> 
-		<div class="PIC"><img src="http://p4.42qu.us/721/944/198576.jpg"></div> 上的发生地方 
-	</div>
-</div>
-
 	</div>
 {% end %}
 {% block bodyright %}

@@ -35,6 +35,8 @@
         };
         function i() {
             b("#form_note").submit(function(){
+                alert(b('#thumbnails').find("input[name='pos1'][checked]").val());
+                return false;
                 if (!h()) {return false};
                 j();
                 window.location.reload();
@@ -49,18 +51,9 @@
             });
         };
         function j() {
-            var w = b('#note_title').val();
-            var x = b("#thumbnails li").length;
-            var y = b('#note_text').val();
-            for (var i=1; i<x+1; i++) {
-                var pnm = "图:"+i,
-                reg = new RegExp(pnm,"g"),
-                pid = "pic"+i;
-                var src = b("#"+pid+" img").attr('src');
-                var img = '<img src='+src+'>';
-                y = y.replace(reg, img);
-            }
-            var message = {'note_title': w, 'note_text': y};
+            var u = b('#note_title').val();
+            var v = k();
+            var message = {'note_title': u, 'note_text': v};
             $.postJSON("/a/note/", 'POST', message, function(response) {
                 if (response.error){
                     alert(response.error);
@@ -68,12 +61,38 @@
                 }
             });
         };
+        function k() {
+            var u = b('#note_text').val();
+            b("#thumbnails li").each(function(index, object){
+                var i = index+1;
+                var pic = "图:"+i,
+                reg = new RegExp(pic,"g"),
+                pid = "pic"+i,
+                rdo = b(this).find('input[type=radio][checked]').val(),
+                dtl = b(this).find('textarea').val();
+                var src = b("#"+pid+" img").attr('src');
+                var img = '<img src='+src+'>';
+                if (dtl) {img=img+'<div>'+dtl+'</div>';}
+                if (rdo == '-1') {
+                    img = '<div class="PICL">'+img+'</div>';
+                }else if (rdo == '0') {
+                    img = '<div class="PIC">'+img+'</div>';
+                }else if (rdo == '1') {
+                    img = '<div class="PICR">'+img+'</div>';
+                }
+                u = u.replace(reg, img);
+            });
+            return '<div class="p">'+u+'</div>';
+        };
         return {
             check: function() {
                 return h();
             },
             init:function() {
                 return i();
+            },
+            delPic: function() {
+                return l();
             }
         }
     })();

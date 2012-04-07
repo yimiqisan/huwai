@@ -17,9 +17,10 @@
 				onUploadSuccess : function (file, data, response) {
 					var pic_num = $("#thumbnails li").length+1;
 					var pic_name = " 图:"+pic_num+" ";
-					$('#thumbnails').append('<li id="pic'+pic_num+'" class="span3"><div class="thumbnail" style="min-height:100px;"><div style="float:left; clear:right;margin-right:10px;"><img src="/image/attach/'+data+'" style="width:80px;height:80px;margin-bottom:5px;" width=100 height=100 /></div><div class="span1" style="margin:10px 10px;display:block;width:100px;"><a href="#">删除</a><p class="pull-right">'+pic_name+'</p></div><br/><br/><br/><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" id="RadioLeft" value="-1" checked="">左</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" id="RadioMiddle" value="0">中</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" id="RadioRight" value="1">右</label><textarea style="width:200px;"></textarea></div></li>');
+					$('#thumbnails').append('<li id="pic'+pic_num+'" class="span3 bg-white"><div class="thumbnail" style="min-height:100px;"><div style="float:left; clear:right;margin-right:10px;"><img src="/image/attach/'+data+'" style="width:80px;height:80px;margin-bottom:5px;" width=100 height=100 /></div><div class="span1" style="margin:10px 10px;display:block;width:100px;"><a rel="'+pic_num+'" href="" onclick="yhui.iNote.delPic(this);return false;">删除</a><p class="pull-right">'+pic_name+'</p></div><br/><br/><br/><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" id="RadioLeft" value="-1">左</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" id="RadioMiddle" value="0" checked>中</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" id="RadioRight" value="1">右</label><textarea style="width:200px;"></textarea></div></li>');
 					var note_text = $('#note_text').val()+pic_name;
-					$('#note_text').val(note_text);
+					$('#note_text').val(note_text).focus();
+					$('#image').modal('hide');
 				},
 				onError			: function (event, queueID, fileObj){alert("文件:" + fileObj.name + " 上传失败");}
 			});
@@ -83,4 +84,8 @@
 	<input type="text" data-provide="typeahead" class="hide"/>
 	<ul id="thumbnails" class="thumbnails"></ul>
 {% end %}
+
+
+
+
 
