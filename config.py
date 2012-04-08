@@ -16,6 +16,32 @@ import uimethods
 SITE_ID = u'917d450c728b4f62b6ac9bac1beb01ba'
 DEFAULT_CUR_UID = '948a55d68e1b4317804e4650a9505641'
 
+PERM_CLASS = {
+    'FOUNDER':      0x01,
+    'VERIFIER':     0x02,
+    
+    'cFOUNDER':     0x10,
+    'cMANAGER':     0x11,
+    'cMEMBER':      0x12,
+    
+    'eSPONSOR':     0x20,
+    'eASSISTANT':   0x21,
+    'ePARICIPANT':  0x22,
+    
+    'aFOUNDER':     0x30,
+    'aEDITER':      0x31,
+    
+    'wFOUNDER':     0x40,
+    
+    'NORMAL':       0X90,
+}
+
+FOUNDER_LIST = [
+    u'2d40119715674d82a38216009efe528e',
+    u'53ea291bfa3e4d7dbb97fe367dab385e',
+]
+
+
 #config settings
 settings = dict(
         template_path=os.path.join(os.path.dirname(__file__), "htmls"),

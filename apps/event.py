@@ -12,12 +12,13 @@ import uuid
 from datetime import datetime
 import time
 
-from huwai.config import DB_CON, DB_NAME, DB_SCRAPY_NAME, SITE_ID, DEFAULT_CUR_UID, CLUB_WEBSITE
+from huwai.config import DB_CON, DB_NAME, DB_SCRAPY_NAME, SITE_ID, DEFAULT_CUR_UID, CLUB_WEBSITE, PERM_CLASS
 from modules import EventDoc, EventScrapyDoc
 from api import API, Mapping
 from behavior import Behavior
 from timeline import TimeLine
 from imap import Map
+from perm import Permission
 
 
 class Event(object):
@@ -114,9 +115,6 @@ class EventAPI(API):
         where = self._map_save(id, owner, where)
         return self.edit(id, deadline=deadline, fr=fr, to=to, when=when, where=where, check=False, **kwargs)
     
-    def save_scrapy(self, owner, logo=None, title=None, created=None, tags=None, date=None, place=None, club=None, where=None):
-        return super(EventAPI, self).create(owner=owner, logo=logo, title=title, tags=tags, date=date, place=place, club=club, where=where, created=created)
-    
     def check(self, id, check, message=None):
         return self.edit(id, check=check)
     
@@ -125,11 +123,27 @@ class EventAPI(API):
         r = b._api.list(owner=cuid, channel=u'approval', she=eid)
         return (len(r)>0)
     
+    def _perm(self, eid, cuid, owner, members):
+        p = Permission()
+        r = p._api.site_perm(cuid)
+        if r:
+            return r
+        if cuid == owner:
+            return PERM_CLASS['eSPONSOR']
+        elif cuid in members.values():
+            return PERM_CLASS['eASSISTANT']
+        b = Behavior()
+        r = b._api.list(owner=cuid, channel=u'approval', she=eid)
+        if len(r)>0:
+            return PERM_CLASS['ePARICIPANT']
+        else:
+            return PERM_CLASS['NORMAL']
+    
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         if cuid is None:cuid = DEFAULT_CUR_UID
         merc_f = lambda x: u'商业性质' if x else u'非商业性质'
         club_f = lambda x: u'公开' if x==u'site' else u'xx俱乐部'
-        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'is_join':self._is_joined(i['_id'], cuid), 'nick':i['added'].get('nick', '匿名驴友'), 'created':i['created'].strftime('%Y-%m-%d %H:%M:%S'), 'logo':i['logo'], 'title':i['title'], 'members':i['members'], 'tags':i['tags'], 'club':club_f(i['club']), 'is_merc':merc_f(i['is_merc']), 'level':i['level'], 'route':i['route'], 'place':i['place'], 'date':i['date'].strftime('%Y-%m-%d %H:%M:%S'), 'schedule_tl':self._tl_get(i['schedule_tl']), 'spend_tl':self._tl_get(i['spend_tl']), 'equip':i['equip'], 'declare_tl':self._tl_get(i['declare_tl']), 'attention_tl':self._tl_get(i['attention_tl']), 'deadline':i['deadline'].strftime('%Y-%m-%d %H:%M:%S'), 'fr':i['fr'], 'to':i['to'], 'when':i['when'].strftime('%Y-%m-%d %H:%M:%S'), 'where':i['where'], 'check':i['check']}
+        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'perm':self._perm(i['_id'], cuid, i['owner'], i['members']), 'is_join':self._is_joined(i['_id'], cuid), 'nick':i['added'].get('nick', '匿名驴友'), 'created':i['created'].strftime('%Y-%m-%d %H:%M:%S'), 'logo':i['logo'], 'title':i['title'], 'members':i['members'], 'tags':i['tags'], 'club':club_f(i['club']), 'is_merc':merc_f(i['is_merc']), 'level':i['level'], 'route':i['route'], 'place':i['place'], 'date':i['date'].strftime('%Y-%m-%d %H:%M:%S'), 'schedule_tl':self._tl_get(i['schedule_tl']), 'spend_tl':self._tl_get(i['spend_tl']), 'equip':i['equip'], 'declare_tl':self._tl_get(i['declare_tl']), 'attention_tl':self._tl_get(i['attention_tl']), 'deadline':i['deadline'].strftime('%Y-%m-%d %H:%M:%S'), 'fr':i['fr'], 'to':i['to'], 'when':i['when'].strftime('%Y-%m-%d %H:%M:%S'), 'where':i['where'], 'check':i['check']}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)

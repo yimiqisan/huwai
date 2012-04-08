@@ -79,6 +79,7 @@ handlers = [(r"/", RootHandler),
             (r"/a/image", AjaxImageHandler),
             (r"/a/image/check", AjaxImageCheckHandler),
             
+            (r"/check/", CheckHandler),
             (r"/check/event/", CheckEventHandler),
             (r"/check/tag/", CheckTagHandler),
             (r"/a/check/event/", AjaxCheckEventHandler),

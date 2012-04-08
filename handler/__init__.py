@@ -16,7 +16,7 @@ from eventHandler import EventHandler, EventPubaHandler, EventPubbHandler, Event
 from noteHandler import NoteHandler, NoteWriteHandler, AjaxNoteHandler
 from imageHandler import UploadImageHandler, AvatarHandler, AttachHandler, AjaxAvatarHandler, AjaxImageHandler, AjaxImageCheckHandler
 from ajaxHandler import AjaxReplyHandler, AjaxRemoveHandler, AjaxToggleStateHandler, AjaxToggleInputHandler
-from checkHandler import CheckEventHandler, CheckTagHandler, AjaxCheckEventHandler
+from checkHandler import CheckHandler, CheckEventHandler, CheckTagHandler, AjaxCheckEventHandler
 from alertHandler import AlertHandler, AlertListHandler, AjaxAlertHandler
 from mapHandler import MapHandler, MapItemHandler, MapEventHandler, MapWeiboHandler, AjaxMapHandler
 from tagHandler import AjaxTagHandler

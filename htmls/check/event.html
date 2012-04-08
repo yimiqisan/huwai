@@ -91,6 +91,7 @@
 {% block bodyright %}
 <div class="tabbable tabs-right">
 	<ul class="nav nav-tabs">
+		{% if verify(pm, 0x01) %}<li><a href="/check/">网站审核</a></li>{% end %}
 		<li class="active"><a>活动审核</a></li>
 		<li><a href="/check/tag/">标签管理</a></li>
 		<li style="display:none;"><a href="/check/people/">驴友审核</a></li>

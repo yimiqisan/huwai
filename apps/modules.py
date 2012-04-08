@@ -67,6 +67,27 @@ class UserDoc(Document):
     use_schemaless = True
     use_dot_notation=True
 
+class PermissionDoc(Document):
+    __collection__ = 'permission'
+    __database__ = DB_NAME
+    
+    structure = {
+            '_id':      unicode,
+            'owner':    unicode,
+            'created':  datetime,
+            'added':    dict,
+            'added_id': int,
+            'channel':  IS(u'site', u'club', u'event'),
+            'cid':      unicode,
+            'value':    int,
+    }
+    required_fields = ['_id', 'created']
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
+    
+    use_schemaless = True
+    use_dot_notation=True
+
+
 class TimeLineDoc(Document):
     __collection__ = 'timeline'
     __database__ = DB_NAME

@@ -1,0 +1,39 @@
+{% extends ../box102.html %}
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {})
+	</script>
+{% end %}
+
+{% block bodyleft %}
+	<h1>网站管理员</h1></br>
+	<form method="post" action="/check/">
+		<input type="text" name="she"/>
+		<input type="submit" class="btn btn-warning"/>
+	</form>
+	
+	<ul class="thumbnails">
+		{% for p in plist %}
+		<li class="span3 bg-white">
+			<a href="/weibo/she/{{p.get('owner', None)}}/" class="thumbnail" style="min-height:100px;">
+				<div style="float:left; clear:right; margin-right:10px;"><img src="/image/avatar/{{p.get('owner', None)}}_100" style="width:80px;height:80px;" width=80 height=80 /></div>
+				<h3>{{ p.get('nick', None) }}</h3><i style="color:gray;font-size:10px;">{{ p['created'] }}</i>
+			</a>
+		</li>
+		{% end %}
+	</ul>
+
+{% end %}
+{% block bodyright %}
+<div class="tabbable tabs-right">
+	<ul class="nav nav-tabs">
+		<li class="active"><a>网站审核</a></li>
+		<li><a href="/check/event/">活动审核</a></li>
+		<li><a href="/check/tag/">标签管理</a></li>
+		<li style="display:none;"><a href="/check/people/">驴友审核</a></li>
+		<li style="display:none;"><a href="/check/weibo/">微博审核</a></li>
+		<li style="display:none;"><a href="/check/club/">俱乐部审核</a></li>
+	</ul>
+</div>
+{% end %}

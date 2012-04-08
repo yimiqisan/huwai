@@ -8,7 +8,7 @@
 		<p class="wb_item_content"><a href="/weibo/she/{{ message['owner'] }}/" title="{{ message['nick'] }}" href="">{{ message['nick'] }}</a>：{{ message['content'] }}</p>
 		<p class="wb_opt">
 			<span>
-				{% if message['is_own'] %}<a onclick="delItem(this);return false;" id="d-{{ message['id'] }}" class="remove">删除</a><i class="wb_vline">|</i>{% end %}
+				{% if verify(message['perm'], 0x40) %}<a onclick="delItem(this);return false;" id="d-{{ message['id'] }}" class="remove">删除</a><i class="wb_vline">|</i>{% end %}
 				{% if uid %}<a onclick="Reply.toggle(this);return false;" id="r-{{ message['id'] }}" class="wb_reply">回复{% if message['count']>0 %}({{message['count']}}){% end %}</a>{% end %}
 			</span>
 			<d title="{{ message['created'] }}" class="date">{{ message['created'] }}</d>

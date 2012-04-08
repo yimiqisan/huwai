@@ -12,10 +12,11 @@ import uuid
 from datetime import datetime
 import time
 
-from huwai.config import DB_CON, DB_NAME, DEFAULT_CUR_UID
+from huwai.config import DB_CON, DB_NAME, DEFAULT_CUR_UID, PERM_CLASS
 from modules import TimeLineDoc
 from api import API, Mapping, Added_id
 import case
+from perm import Permission
 
 class TimeLine(object):
     def __init__(self, api=None):
@@ -102,9 +103,17 @@ class TimeLineAPI(API):
         c = a.count()
         return c if (c>0) else 0
     
+    def _perm(self, cuid, owner):
+        if cuid == owner:
+            return PERM_CLASS['wFOUNDER']
+        p = Permission()
+        r = p._api.site_perm(cuid)
+        if r:return r
+        return PERM_CLASS['NORMAL']
+    
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         now = datetime.now()
-        output_map = lambda i: {'id':i['_id'], 'added_id':i['added_id'], 'owner':i['owner'], 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', '匿名驴友'), 'tid':i.get('topic', None), 'content':i['content'], 'channel':i['channel'], 'count': self._count(i['_id']), 'created':self._escape_created(now, i['created'])}
+        output_map = lambda i: {'id':i['_id'], 'added_id':i['added_id'], 'owner':i['owner'], 'perm':self._perm(cuid, i['owner']), 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', '匿名驴友'), 'tid':i.get('topic', None), 'content':i['content'], 'channel':i['channel'], 'count': self._count(i['_id']), 'created':self._escape_created(now, i['created'])}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)
