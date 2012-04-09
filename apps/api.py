@@ -96,6 +96,45 @@ class API(object):
             logging.info(e)
             raise Exception
     
+    def _escape_year(self, n, c):
+        if n.year == c.year:
+            return c.strftime('%m-%d %H:%M')
+        else:
+            return c.strftime('%Y-%m-%d %H:%M')
+    
+    def _escape_date(self, n, c):
+        e = unicode(c-n)
+        if ',' in e:
+            a, x = e.split(',', 1)
+            d = a.split(' ')[0]
+            if int(d) < 0:
+                e = unicode(n-c)
+                if ',' in e:
+                    a, x = e.split(',', 1)
+                    d = a.split(' ')[0]
+                    if int(d) > 30:
+                        r = u'早已结束'
+                    elif int(d) > 7:
+                        r = u'已结束 '+unicode(int(d)/7)+u'周'
+                    elif int(d) > 1:
+                        r = u'已结束 '+unicode(int(d))+u'天'
+                    else:
+                        r = u'刚刚结束'
+                else:
+                    r = u'刚刚结束'
+            else:
+                if int(d) > 10:
+                    r = c.strftime('%m-%d %H:%M') if (n.year == c.year) else c.strftime('%Y-%m-%d %H:%M')
+                else:
+                    r = u'还有 '+unicode(int(d))+u'天'
+        else:
+            h, m, s = e.split(':')
+            if int(h) != 0:
+                r = u'还有 '+unicode(int(h))+u'小时开始'
+            else:
+                r = u'即将开始'
+        return r
+    
     def _escape_created(self, n, c):
         e = unicode(n-c)
         if ',' in e:

@@ -53,6 +53,9 @@ handlers = [(r"/", RootHandler),
             (r"/note/write/", NoteWriteHandler),
             (r"/a/note/", AjaxNoteHandler),
             
+            (r"/tag/", TagHandler),
+            (r"/tag/(.{32})/", TagItemHandler),
+            
             (r"/map/", MapHandler),
             (r"/map/(.{32})/", MapItemHandler),
             (r"/map/event/", MapEventHandler),

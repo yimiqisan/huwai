@@ -9,6 +9,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 
 from tornado import template
 #from huwai.apps.perm import PERM_CLASS
+#from huwai.apps.tag import Tag
 
 def ifNone(handler, v=None):
     return v if v else ''
@@ -26,3 +27,21 @@ def verify(handler, perm, reference):
         e=reference.get('end', 0x99)
         return (s <= perm <= e)
     return False
+
+def list2txt(handler, v=None):
+    if isinstance(v, list):
+        if None in v:v.remove(None)
+        return ','.join(v)
+    elif isinstance(v, unicode) or isinstance(v, str):
+        return v
+    return ''
+
+def cntDict(handler, l, **kwargs):
+    cnt = 0
+    for i in l:
+        plus = True
+        for k, v in kwargs.items():
+            if i.get(k, None) != v:
+                plus = False
+        if plus:cnt += 1
+    return cnt

@@ -47,20 +47,19 @@
 			</a>
 		</li>
 		<li class="span5" style="margin-left:8px;color:black;padding:10px 0 0 10px;">
-			<h4>活动信息</h4>
 			<p>发起人：{{ nick }}</p>
 			<p>发布日期：{{ created }}</p>
 			<p style="display:none;">户外标签：{{ tags }}</p>
-			<p>性质：{{ is_merc }}、{{ club }}、{{ level }}</p>
+			<p>性质：{{ is_merc }}、{{ club }}、<a href="/event/difficulty/1.5/">难度{{ level }}</a></p>
 			<p style="display:none;">路线：{{ route }}</p>
-			<p>活动地点：{{ place }}</p>
+			{% if list2txt(place) %}<p>活动地点：{{ list2txt(place) }}</p>{% end %}
 			<p>活动开始时间：{{ date }}</p>
 			<p>花费统计：{{ spend_tl }}</p>
-			<p>装备要求：{{ equip }}</p>
+			{% if list2txt(equip) %}<p>装备要求：{{ list2txt(equip) }}</p>{% end %}
 			<p>{% if members %}<a href="">人员配置</a>{% end %}</p>
 		</li>
 		<li class="span8">
-			<p>计划安排：{{ schedule_tl }}</p>
+			<p>计划安排：{{ schedule_tl }}<a href="" onclick="$('#schedule_tl').modal();return false;">&nbsp;详细&nbsp;>></a></p>
 		</li>
 	</ul>
 	<div style="clear:both;"></div>
@@ -77,6 +76,50 @@
 			<div id="wb_bottom" class="bottom wb_item"><a href="#" style="display:block;text-align:center;" onclick="Weibo.extend(this);return false;"></a><input type="hidden" value="0"></div>
 		</div>
 	</div>
+{% if schedule_tl %}
+<div id="schedule_tl" class="modal hide fade">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>计划安排</h3>
+	</div>
+	<div class="modal-body">
+		<p>
+			{{ schedule_tl }}
+		</p>
+		</form>
+	</div>
+</div>
+{% end %}
+
+{% if declare_tl %}
+<div id="declare_tl" class="modal hide fade">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>免责声明</h3>
+	</div>
+	<div class="modal-body">
+		<p>
+			{{ declare_tl }}
+		</p>
+		</form>
+	</div>
+</div>
+{% end %}
+{% if attention_tl %}
+<div id="attention_tl" class="modal hide fade">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>注意事项</h3>
+	</div>
+	<div class="modal-body">
+		<p>
+			{{ attention_tl }}
+		</p>
+		</form>
+	</div>
+</div>
+{% end %}
+
 {% end %}
 {% block bodyright %}
 	{% if user_list %}
@@ -84,19 +127,18 @@
 		<a class="btn btn-info" href="/event/{{ eid }}/member/">报名列表</a>
 	</div>
 	{% end %}
-	
 	{% if uid == owner %}<div class="well"><a class="btn btn-warning" href="/event/{{ eid }}/approval/">报名审核</a></div>{% end %}
 	
 	<div class="well">
-		<h4>报名信息</h4>
-		<p>报名截止时间：{{ deadline }}</p>
+		<h4>报名信息</h4><br/>
+		<p>报名截止：{{ deadline }}</p>
 		<p>报名人数：{{ fr }} 到 {{ to }}</p>
 		<p>集合时间：{{ when }}</p>
 		<p>集合地点：<a href="/map/{{ where }}/" target="_blank">点击查看</a></p>
-		<p>{% if declare_tl %}<a href="">免责声明</a>{% end %}</p>
-		<p>{% if attention_tl %}<a href="">注意事项</a>{% end %}</p>
+		<p>{% if declare_tl %}<a href="" onclick="$('#declare_tl').modal();return false;">免责声明</a>{% end %}</p>
+		<p>{% if attention_tl %}<a href="" onclick="$('#attention_tl').modal();return false;">注意事项</a>{% end %}</p>
 		<button id="btn-{{ uid }}" class="btn btn-toggle {% if not is_join %}btn-success{% end %}" ajax-url="/a/event/join/" data-loading-text="提交中" data-complete-text="{% if is_join %}参加活动{% else %}退出活动{% end %}">
 			{% if is_join %}退出活动{% else %}参加活动{% end %}
-		</button>
+		</button>&nbsp;&nbsp;还有{{to-cntDict(user_list, switch=True)}}个名额
 	</div>
 {% end %}

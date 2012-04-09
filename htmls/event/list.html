@@ -22,9 +22,9 @@
 		<thead>
 			<tr>
 				<th width=50%>活动名称</th>
-				<th>开始时间</th>
-				<th>报名截止</th>
-				<th>补充</th>
+				<th width=13%>开始时间</th>
+				<th>活动地点</th>
+				<th width=12%>补充</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,11 +32,11 @@
 			<tr>
 				<td>
 					{% if e.has_key('href') %}<a target="_blank" href="{{e['href']}}">{% else %}<a href="/event/{{e['id']}}/">{% end %}
-						{{e['title']}}
+						{{e['title']}}<i style="color:#CCCCCC;">({{e['nick']}})</i>
 					</a>
 				</td>
 				<td>{{e['date']}}</td>
-				<td>{{e['deadline']}}</td>
+				<td>{{e['place']}}</td>
 				<td>{% if not e.has_key('href') %}<a href="/event/{{e['id']}}/">{{e['tl'][1]}}</a>{% end %}</td>
 			</tr>
 			{% end %}

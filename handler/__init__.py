@@ -19,4 +19,4 @@ from ajaxHandler import AjaxReplyHandler, AjaxRemoveHandler, AjaxToggleStateHand
 from checkHandler import CheckHandler, CheckEventHandler, CheckTagHandler, AjaxCheckEventHandler
 from alertHandler import AlertHandler, AlertListHandler, AjaxAlertHandler
 from mapHandler import MapHandler, MapItemHandler, MapEventHandler, MapWeiboHandler, AjaxMapHandler
-from tagHandler import AjaxTagHandler
+from tagHandler import TagHandler, TagItemHandler, AjaxTagHandler
