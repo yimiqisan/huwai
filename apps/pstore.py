@@ -34,6 +34,9 @@ class Pstore(object):
     def put(self, data, **kwargs):
         return self.fs.put(data, **kwargs)
     
+    def delete(self, id):
+        return self.fs.delete(id)
+    
     def get_by_id(self, id):
         if not isinstance(id, ObjectId):id=ObjectId(id)
         return self.fs.get(id)
@@ -112,4 +115,3 @@ class AvatarProcessor(ImageProcessor):
 
 class AttachProcessor(ImageProcessor):
     pass
-

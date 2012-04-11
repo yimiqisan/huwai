@@ -44,7 +44,7 @@ class AjaxTagHandler(BaseHandler):
         t = Tag()
         r = t._api.list(rels=rel, content=search)
         if r[0]:
-            return self.write(json.dumps({"data":self._flt_content(r[1])}))
+            return self.write(json.dumps({"data":r[1]}))
         else:
             return self.write({'error':'save error'})
     
@@ -57,6 +57,19 @@ class AjaxTagHandler(BaseHandler):
         r = t._api.madd(uid, c, relation_l=e)
         if r[0]:
             return self.write(json.dumps({'id':r[1]}))
+        else:
+            return self.write({'error':'save error'})
+    
+class AjaxTagListHandler(BaseHandler):
+    @session
+    def get(self):
+        uid = self.SESSION['uid']
+        rel = self.get_argument("rel", None)
+        search = self.get_argument("search", None)
+        t = Tag()
+        r = t._api.list(rels=rel, content=search)
+        if r[0]:
+            return self.write(json.dumps({"data":self._flt_content(r[1])}))
         else:
             return self.write({'error':'save error'})
     

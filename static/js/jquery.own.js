@@ -1,5 +1,5 @@
 jQuery.postJSON = function(url, type, args, callback) {
-    $.ajax({url: url, data: $.param(args), dataType: "text", type: type,
+    $.ajax({url: url, data: $.param(args), dataType: "text", type: type, async: false,
             success: function(response) {
         if (callback) callback(eval("(" + response + ")"));
     }, error: function(response) {

@@ -57,7 +57,8 @@
             singleField: false,
 
             singleFieldDelimiter: ',',
-
+            
+            editAble: true,
             // Set this to an input DOM node to use an existing form field.
             // Any text in it will be erased on init. But it will be
             // populated with the text of tags as they are created,
@@ -96,8 +97,7 @@
             } else {
                 this.tagList = this.element.find('ul, ol').andSelf().last();
             }
-
-            this._tagInput = $('<input type="text" />').addClass('ui-widget-content');
+            this._tagInput = $(this.options.editAble ? '<input type="text" />':'<input type="hidden" />').addClass('ui-widget-content');
             if (this.options.tabIndex) {
                 this._tagInput.attr('tabindex', this.options.tabIndex);
             }
@@ -136,7 +136,7 @@
                         that._tagInput.focus();
                     }
                 });
-
+            
             // Add existing tags from the list, if any.
             this.tagList.children('li').each(function() {
                 if (!$(this).hasClass('tagit-new')) {
@@ -144,7 +144,7 @@
                     $(this).remove();
                 }
             });
-
+            
             // Single field support.
             if (this.options.singleField) {
                 if (this.options.singleFieldNode) {
@@ -160,7 +160,7 @@
                     this.options.singleFieldNode = this.tagList.after('<input type="hidden" style="display:none;" value="" name="' + this.options.fieldName + '" />');
                 }
             }
-
+            
             // Events.
             this._tagInput
                 .keydown(function(event) {
@@ -212,7 +212,7 @@
                     that.createTag(that._cleanedInput());
                 });
                 
-
+            
             // Autocomplete.
             if (this.options.availableTags || this.options.tagSource) {
                 this._tagInput.autocomplete({
@@ -304,7 +304,7 @@
             return $.trim(str.toLowerCase());
         },
 
-        createTag: function(value, additionalClass) {
+        createTag: function(value, additionalClass, id) {
             var that = this;
             // Automatically trims the value of leading and trailing whitespace.
             value = $.trim(value);
@@ -320,19 +320,14 @@
                 .addClass('tagit-choice ui-widget-content ui-state-default ui-corner-all')
                 .addClass(additionalClass)
                 .append(label);
-
+            if (id) {$(tag).attr('id', id)};
+            
             // Button for removing the tag.
-            var removeTagIcon = $('<span></span>')
-                .addClass('ui-icon ui-icon-close');
-            var removeTag = $('<a><span class="text-icon">\xd7</span></a>') // \xd7 is an X
-                .addClass('tagit-close')
-                .append(removeTagIcon)
-                .click(function(e) {
-                    // Removes a tag when the little 'x' is clicked.
-                    that.removeTag(tag);
-                });
-            tag.append(removeTag);
-
+//            var removeTagIcon = $('<span></span>').addClass('ui-icon ui-icon-close');
+            
+            var removeTag = this.options.editAble ? $('<a><span class="text-icon">\xd7</span></a>').addClass('tagit-close').click(function(e) {that.removeTag(tag);}) : $('<a><span class="text-icon">●</span></a>').addClass('tagit-close')
+            tag.prepend(removeTag);
+//            tag.append(removeTag);
             // Unless options.singleField is set, each tag has a hidden input field inline.
             if (this.options.singleField) {
                 var tags = this.assignedTags();

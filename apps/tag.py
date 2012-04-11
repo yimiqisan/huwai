@@ -73,6 +73,35 @@ class TagAPI(API):
         if (r[0] and r[1]):return (True, self._output_format(result=r[1]))
         return r
     
+    def getID(self, content):
+        if not content:return None
+        r = self.one(content=content)
+        if (r[0] and r[1]):return r[1]['_id']
+        return None
+    
+    def id2content(self, ids):
+        l = []
+        if ids is None:
+            return []
+        elif not isinstance(ids, list):
+            ids = [ids]
+        for i in ids:
+            r = self.get(i)
+            if (r[1] is not None):
+                tp = (i, r[1]['content'])
+                l.append(tp)
+        return l
+    
+    def content2id(self, content):
+        l = []
+        if content is None:return l
+        ts = content.split(',')
+        for t in ts:
+            r = self.getID(t)
+            if (r is not None) and (r not in l):
+                l.append(r)
+        return l
+    
     def contact(self, rel, id=None, content=None):
         pass
     
@@ -81,7 +110,7 @@ class TagAPI(API):
     
     def list(self, cuid=DEFAULT_CUR_UID, owner=None, content=None, rels=None, hot=-1):
         kwargs = {}
-        if owner:kwargs['owner']=owner
+        if owner:kwargs['owner']={'$in':owner} if isinstance(owner, list) else owner
         if content:kwargs['content']=re.compile('.*'+content+'.*')
         if rels:kwargs['relation_l'] = {'$all':rels} if isinstance(rels, list) else rels
         r = self.find(**kwargs)

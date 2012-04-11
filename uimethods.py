@@ -36,6 +36,20 @@ def list2txt(handler, v=None):
         return v
     return ''
 
+def list2url(handler, v=None):
+    if isinstance(v, list):
+        if None in v:v.remove(None)
+        l = []
+        for i, c in v:
+            href, txt = '/tag/'+i, c
+            l.append(u'<a href="%s">%s</a>' % (href, txt))
+        return ' '.join(l)
+    elif isinstance(v, tuple):
+        href = '/tag/'+v[0]
+        txt = v[1]
+        return u'<a href="%s">%s</a>' % (href, txt)
+    return ''
+
 def cntDict(handler, l, **kwargs):
     cnt = 0
     for i in l:

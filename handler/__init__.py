@@ -14,9 +14,9 @@ from weiboHandler import WeiboHandler, WeiboItemHandler, WeiboSheHandler, AjaxWe
 from peopleHandler import PeopleHandler
 from eventHandler import EventHandler, EventPubaHandler, EventPubbHandler, EventCheckHandler, EventListHandler, EventFallsHandler, EventMemberHandler, EventApprovalHandler, AjaxEventJoinHandler, AjaxEventApprovalHandler
 from noteHandler import NoteHandler, NoteWriteHandler, AjaxNoteHandler
-from imageHandler import UploadImageHandler, AvatarHandler, AttachHandler, AjaxAvatarHandler, AjaxImageHandler, AjaxImageCheckHandler
+from imageHandler import UploadImageHandler, AvatarHandler, AttachHandler, AjaxAvatarHandler, AjaxImageHandler, AjaxImageDeleteHandler, AjaxImageCheckHandler
 from ajaxHandler import AjaxReplyHandler, AjaxRemoveHandler, AjaxToggleStateHandler, AjaxToggleInputHandler
 from checkHandler import CheckHandler, CheckEventHandler, CheckTagHandler, AjaxCheckEventHandler
 from alertHandler import AlertHandler, AlertListHandler, AjaxAlertHandler
 from mapHandler import MapHandler, MapItemHandler, MapEventHandler, MapWeiboHandler, AjaxMapHandler
-from tagHandler import TagHandler, TagItemHandler, AjaxTagHandler
+from tagHandler import TagHandler, TagItemHandler, AjaxTagHandler, AjaxTagListHandler

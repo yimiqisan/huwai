@@ -9,6 +9,7 @@ ul.tagit {
     background: inherit;
 }
 ul.tagit li.tagit-choice {
+    padding: .2em .5em .2em .5em;
     -moz-border-radius: 6px;
     border-radius: 6px;
     -webkit-border-radius: 6px;
@@ -25,6 +26,7 @@ ul.tagit li.tagit-choice a.tagit-close {
 }
 ul.tagit li.tagit-choice .tagit-close {
     right: .4em;
+    margin-right: .3em;
 }
 ul.tagit li.tagit-choice .ui-icon {
     display: none;

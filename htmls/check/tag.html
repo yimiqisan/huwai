@@ -9,16 +9,31 @@
 	<script language="javascript" src="{{ static_url('js/tags.js') }}" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
+			yhui.iTag.create($('#stagList'), {
+				id:'siteTags',
+				eclass: 'span10',
+				initTags: true,
+				panelControl:true,
+				addedAble:false,
+				editAble:false,
+				relations:$('.tabbable .active a').attr('href').replace('#', ''),
+				onTagClicked: function(evt, tag) {
+					window.location.href = '/tag/'+$(tag).attr('id');
+				},
+			});
 			yhui.iTag.create($('#etag'), {
 				id:'eventTags',
 				eclass: 'span9',
-				panelControl:true,
-				tagSource:function(search, showChoices) {
+				initTags: false,
+				panelControl: true,
+				addedAble: true,
+				editAble: true,
+				tagSource: function(search, showChoices) {
 					var that = this;
 					var args = {'search': search.term};
 					var z = $('.tabbable .active a').attr('href').replace('#', '');
 					if (z){args.rel=z;}
-					$.postJSON("/a/tag/", 'GET', args, function(response) {
+					$.postJSON("/a/tag/list/", 'GET', args, function(response) {
 						if (response.error){
 							return alert(response.error);
 						}
@@ -26,7 +41,12 @@
 					});
 				}
 			});
-			$('a[data-toggle="tab"]').on('shown', function (e) {yhui.iTag.tab({id:'eventTags'});});
+			$('a[data-toggle="tab"]').on('shown', function (e) {
+				yhui.iTag.tab({
+					id:'siteTags', 
+					relations: $('.tabbable .active a').attr('href').replace('#', ''),
+				});
+			});
 		})
 	</script>
 {% end %}
@@ -41,6 +61,8 @@
 		<li><a href="#brand" data-toggle="tab">品牌推广</a></li>
 	</ul>
 </div>
+<div id="stagList"></div>
+<div id="utagList"></div>
 <div id="etag"></div>
 {% end %}
 {% block bodyright %}

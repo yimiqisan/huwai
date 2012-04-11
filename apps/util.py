@@ -7,7 +7,7 @@ Created by 刘 智勇 on 2011-12-19.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 
-import os, re, subprocess, sys 
+import os, re, subprocess, sys, urllib
 import logging
 import atexit
 
@@ -15,6 +15,8 @@ from logging import DEBUG, INFO, WARN, ERROR, FATAL
 from time import time
 from collections import defaultdict
 import tempfile as tf
+
+
 
 logging.basicConfig(stream=sys.stderr, level=logging.INFO, 
                     format="%(levelname).1s %(filename)s:%(lineno)s -- %(message)s ")
@@ -210,3 +212,100 @@ def clean_string(v):
   v = str(v)
   v = re.sub('[^a-zA-Z0-9_]', '', v)
   return v.lower()[:30]
+
+def multi_get_letter(str_input):
+    
+    if isinstance(str_input, unicode):
+        unicode_str = str_input
+    else:
+        try:
+            unicode_str = str_input.decode('utf8')
+        except:
+            try:
+                unicode_str = str_input.decode('gbk')
+            except:
+                print 'unknown coding'
+                return
+    
+    return_list = []
+    for one_unicode in unicode_str:
+        print single_get_first(one_unicode)
+        return_list.append(single_get_first(one_unicode))
+    return "".join(return_list)    
+    
+def single_get_first(unicode1):
+    str1 = unicode1.encode('gbk')
+    try:        
+        ord(str1)
+        return str1
+    except:
+        asc = ord(str1[0]) * 256 + ord(str1[1]) - 65536
+        if asc >= -20319 and asc <= -20284:
+            return 'a'
+        if asc >= -20283 and asc <= -19776:
+            return 'b'
+        if asc >= -19775 and asc <= -19219:
+            return 'c'
+        if asc >= -19218 and asc <= -18711:
+            return 'd'
+        if asc >= -18710 and asc <= -18527:
+            return 'e'
+        if asc >= -18526 and asc <= -18240:
+            return 'f'
+        if asc >= -18239 and asc <= -17923:
+            return 'g'
+        if asc >= -17922 and asc <= -17418:
+            return 'h'
+        if asc >= -17417 and asc <= -16475:
+            return 'j'
+        if asc >= -16474 and asc <= -16213:
+            return 'k'
+        if asc >= -16212 and asc <= -15641:
+            return 'l'
+        if asc >= -15640 and asc <= -15166:
+            return 'm'
+        if asc >= -15165 and asc <= -14923:
+            return 'n'
+        if asc >= -14922 and asc <= -14915:
+            return 'o'
+        if asc >= -14914 and asc <= -14631:
+            return 'p'
+        if asc >= -14630 and asc <= -14150:
+            return 'q'
+        if asc >= -14149 and asc <= -14091:
+            return 'r'
+        if asc >= -14090 and asc <= -13119:
+            return 's'
+        if asc >= -13118 and asc <= -12839:
+            return 't'
+        if asc >= -12838 and asc <= -12557:
+            return 'w'
+        if asc >= -12556 and asc <= -11848:
+            return 'x'
+        if asc >= -11847 and asc <= -11056:
+            return 'y'
+        if asc >= -11055 and asc <= -10247:
+            return 'z'
+        return ''
+
+def weather(provice, major):
+    url="http://qq.ip138.com/weather/"+provice+'/'+major+'.htm'
+    wetherhtml=urllib.urlopen(url)
+    result=wetherhtml.read().decode('GB2312')#.encode('utf-8')
+    #result=result.replace("gb2312","utf-8")
+    f=file('weather.txt','w')
+    f.write(result.encode('GB2312'))
+    f.close()
+    
+    pattern='Title.+<b>(.+)</b>'
+    Title=re.search(pattern,result).group(1)
+    pattern='>(\d*-\d*-\d*.+?)<'
+    date=re.findall(pattern,result)
+    pattern='alt="(.+?)"'
+    weather=re.findall(pattern,result)
+    pattern='<td>([-]?\d{1,2}.+)</td>'
+    temperature=re.findall(pattern,result)
+    print "%35.30s"%Title,""
+    length=len(date)
+    for i in range(length):
+        print '%30.20s'%date[i],'\t%s'%weather[i],'\t%s'%temperature[i]

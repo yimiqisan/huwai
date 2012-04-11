@@ -17,6 +17,7 @@ from modules import EventDoc, EventScrapyDoc
 from api import API, Mapping
 from behavior import Behavior
 from timeline import TimeLine
+from tag import Tag
 from imap import Map
 from perm import Permission
 
@@ -80,7 +81,7 @@ class EventAPI(API):
     
     def _get_tid(self, t):
         m = Mapping()
-        r = m.do(t)
+        r = m.do(u'event', t)
         return r[1] if r[0] else r
     
     def save_step_one(self, owner, logo, title, tags, is_merc, level, date, place, schedule_tl, nick=None, members=None, club=None, route=None, spend_tl=None, equip=None, declare_tl=None, attention_tl=None):
@@ -144,7 +145,8 @@ class EventAPI(API):
         if cuid is None:cuid = DEFAULT_CUR_UID
         merc_f = lambda x: u'商业性质' if x else u'非商业性质'
         club_f = lambda x: u'公开' if x==u'site' else u'xx俱乐部'
-        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'perm':self._perm(i['_id'], cuid, i['owner'], i['members']), 'is_join':self._is_joined(i['_id'], cuid), 'nick':i['added'].get('nick', '匿名驴友'), 'created':i['created'].strftime('%Y-%m-%d %H:%M:%S'), 'logo':i['logo'], 'title':i['title'], 'members':i['members'], 'tags':i['tags'], 'club':club_f(i['club']), 'is_merc':merc_f(i['is_merc']), 'level':i['level'], 'route':i['route'], 'place':i['place'], 'date':self._escape_date(now, i['date']), 'schedule_tl':self._tl_get(i['schedule_tl']), 'spend_tl':self._tl_get(i['spend_tl']), 'equip':i['equip'], 'declare_tl':self._tl_get(i['declare_tl']), 'attention_tl':self._tl_get(i['attention_tl']), 'deadline':self._escape_date(now, i['deadline']), 'fr':i['fr'], 'to':i['to'], 'when':self._escape_year(now, i['when']), 'where':i['where'], 'check':i['check']}
+        t = Tag()
+        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'perm':self._perm(i['_id'], cuid, i['owner'], i['members']), 'is_join':self._is_joined(i['_id'], cuid), 'nick':i['added'].get('nick', '匿名驴友'), 'created':i['created'].strftime('%Y-%m-%d %H:%M:%S'), 'logo':i['logo'], 'title':i['title'], 'members':i['members'], 'tags':t._api.id2content(i['tags']), 'club':club_f(i['club']), 'is_merc':merc_f(i['is_merc']), 'level':i['level'], 'route':i['route'], 'place':i['place'], 'date':self._escape_date(now, i['date']), 'schedule_tl':self._tl_get(i['schedule_tl']), 'spend_tl':self._tl_get(i['spend_tl']), 'equip':t._api.id2content(i['equip']), 'declare_tl':self._tl_get(i['declare_tl']), 'attention_tl':self._tl_get(i['attention_tl']), 'deadline':self._escape_date(now, i['deadline']), 'fr':i['fr'], 'to':i['to'], 'when':self._escape_year(now, i['when']), 'where':i['where'], 'check':i['check']}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)

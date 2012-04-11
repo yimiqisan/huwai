@@ -29,10 +29,30 @@
 			yhui.iTag.create($('#etag'), {
 				id:'eventTags',
 				eclass: 'span6',
+				initTags: false,
+				addedAble: false,
+				editAble: true,
 				tagSource:function(search, showChoices) {
 					var that = this;
 					var args = {'search': search.term, 'rel': 'event'};
-					$.postJSON("/a/tag/", 'GET', args, function(response) {
+					$.postJSON("/a/tag/list/", 'GET', args, function(response) {
+						if (response.error){
+							return alert(response.error);
+						}
+						showChoices(that._subtractArray(response.data, that.assignedTags()));
+					});
+				}
+			});
+			yhui.iTag.create($('#qtag'), {
+				id:'equipTags',
+				eclass: 'span6',
+				initTags: false,
+				addedAble: false,
+				editAble: true,
+				tagSource:function(search, showChoices) {
+					var that = this;
+					var args = {'search': search.term, 'rel': 'equip'};
+					$.postJSON("/a/tag/list/", 'GET', args, function(response) {
 						if (response.error){
 							return alert(response.error);
 						}
@@ -129,7 +149,7 @@
 			<div class="control-group">
 				<label class="control-label" for="textarea">装备要求:</label>
 				<div class="controls">
-					<textarea class="input-xlarge" name="equip" rows="3" style="width:500px;" rel="popover" data-content="俗话说得好：户外户外，拼的就是装备。" data-original-title="工欲善其事必先利其器"></textarea>
+					<div id="qtag"></div>
 				</div>
 			</div>
 			<div class="control-group">

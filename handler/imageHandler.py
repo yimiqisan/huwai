@@ -9,7 +9,7 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 from tornado.web import addslash
 
 from baseHandler import BaseHandler
-from huwai.apps.pstore import AvatarProcessor, AttachProcessor
+from huwai.apps.pstore import Pstore, AvatarProcessor, AttachProcessor
 from huwai.apps.tools import session
 
 class AvatarHandler(BaseHandler):
@@ -46,8 +46,7 @@ class UploadImageHandler(BaseHandler):
 class AjaxAvatarHandler(BaseHandler):
     @session
     def post(self):
-    #    uid = self.SESSION['uid']
-        uid = self.get_argument('uid', None)
+        uid = self.SESSION['uid']
         p=AvatarProcessor(uid)
         f=self.request.files['upload'][0]
         r = p.process(f['body'])
@@ -62,11 +61,18 @@ class AjaxImageHandler(BaseHandler):
         r = p.process(f['body'])
         return self.write(r)
 
+class AjaxImageDeleteHandler(BaseHandler):
+    @session
+    def post(self):
+        uid = self.SESSION['uid']
+        pid = self.get_argument('pid', None)
+        p=Pstore()
+        r = p.delete(pid)
+        return self.write({'ret':'ok'})
+
 class AjaxImageCheckHandler(BaseHandler):
     def post(self):
         return True
-
-
 
 
 

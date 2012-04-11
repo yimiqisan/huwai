@@ -35,8 +35,6 @@
         };
         function i() {
             b("#form_note").submit(function(){
-                alert(b('#thumbnails').find("input[name='pos1'][checked]").val());
-                return false;
                 if (!h()) {return false};
                 j();
                 window.location.reload();
@@ -68,7 +66,8 @@
                 var pic = "图:"+i,
                 reg = new RegExp(pic,"g"),
                 pid = "pic"+i,
-                rdo = b(this).find('input[type=radio][checked]').val(),
+                pos = "pos"+i,
+                rdo = b('input[name='+pos+']:checked').val(),
                 dtl = b(this).find('textarea').val();
                 var src = b("#"+pid+" img").attr('src');
                 var img = '<img src='+src+'>';
@@ -84,6 +83,23 @@
             });
             return '<div class="p">'+u+'</div>';
         };
+        function l(u) {
+            var v = b(u).attr("rel");
+            var li = b('#pic'+v);
+            reg = "\/image\/attach\/(.*)";
+            var args = {};
+            args.pid = li.find('img').attr('src').match(reg)[1];
+            $.postJSON("/a/image/delete/", 'POST', args, function(response) {
+                if (response.error){
+                    alert(response.error);
+                }
+                var w = b('#note_text')
+                w.val(w.val().replace(eval("/图:"+v+"/g"),""))
+                b('#pic'+v).fadeOut()
+                return false;
+            });
+            return false;
+        };
         return {
             check: function() {
                 return h();
@@ -91,8 +107,8 @@
             init:function() {
                 return i();
             },
-            delPic: function() {
-                return l();
+            delPic: function(u) {
+                return l(u);
             }
         }
     })();

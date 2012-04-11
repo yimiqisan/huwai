@@ -17,7 +17,11 @@ class Huwai8264Item(EventItem):
 
 class Huwai517Item(EventItem):
     pass
-    
+
+class MafengwoItem(EventItem):
+    l = ['eid', 'title', 'href']
+    for i in l:exec(i+'=Field()')
+
 class HuwailvzhouItem(EventItem):
     pass
     

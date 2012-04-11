@@ -20,6 +20,7 @@ from huwai.apps.event import Event, EventScrapyAPI
 from huwai.apps.timeline import TimeLine
 from huwai.apps.behavior import Behavior
 from huwai.apps.role import Role
+from huwai.apps.tag import Tag
 
 from baseHandler import BaseHandler
 
@@ -44,7 +45,7 @@ class EventHandler(BaseHandler):
         pass
 
 class EventPubaHandler(BaseHandler):
-    KEYS = ["logo", "title", "club", "level", "attention_tl", "declare_tl", "members", "spend_tl", "place", "equip", "route", "is_merc", "schedule_tl", "tags"]
+    KEYS = ["logo", "title", "club", "level", "attention_tl", "declare_tl", "members", "spend_tl", "place", "equipTags", "route", "is_merc", "schedule_tl", "eventTags"]
     
     @addslash
     def get(self):
@@ -63,12 +64,16 @@ class EventPubaHandler(BaseHandler):
         e = Event()
         is_merc = d['is_merc'] is u'no_merc'
         nick = self.current_user if uid else u'匿名驴友'
-        r = e._api.save_step_one(uid, d['logo'], d['title'], [d['tags']], is_merc, float(d['level']), d['date'], d['place'], d['schedule_tl'], nick=nick, members={'name':d['members']}, club=d['club'], route=u'route', spend_tl=d['spend_tl'], equip=[d['equip']], declare_tl=d['declare_tl'], attention_tl=d['attention_tl'])
+        r = e._api.save_step_one(uid, d['logo'], d['title'], self._flt_tags(d['eventTags']), is_merc, float(d['level']), d['date'], d['place'], d['schedule_tl'], nick=nick, members={'name':d['members']}, club=d['club'], route=u'route', spend_tl=d['spend_tl'], equip=self._flt_tags(d['equipTags']), declare_tl=d['declare_tl'], attention_tl=d['attention_tl'])
         if r[0]:
             return self.redirect('/event/pubb/?eid='+str(r[1]))
         else:
             d['warning'] = r[1]
             return self.render("event/publish_step_one.html", **d)
+    
+    def _flt_tags(self, content):
+        t = Tag()
+        return t._api.content2id(content)
     
 class EventPubbHandler(BaseHandler):
     @addslash

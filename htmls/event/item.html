@@ -1,5 +1,6 @@
 {% extends ../frame.html %}
 
+{% autoescape None %}
 {% block static %}
 	<script src="{{ static_url('js/weibo.js') }}" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
@@ -50,12 +51,13 @@
 			<p>发起人：{{ nick }}</p>
 			<p>发布日期：{{ created }}</p>
 			<p style="display:none;">户外标签：{{ tags }}</p>
-			<p>性质：{{ is_merc }}、{{ club }}、<a href="/event/difficulty/1.5/">难度{{ level }}</a></p>
+			<p>性质：{{ is_merc }}、{{ club }}、<a href="/event/difficulty/{{ level }}/">难度{{ level }}</a></p>
 			<p style="display:none;">路线：{{ route }}</p>
 			{% if list2txt(place) %}<p>活动地点：{{ list2txt(place) }}</p>{% end %}
 			<p>活动开始时间：{{ date }}</p>
 			<p>花费统计：{{ spend_tl }}</p>
-			{% if list2txt(equip) %}<p>装备要求：{{ list2txt(equip) }}</p>{% end %}
+			<p>户外类型：{{ list2url(tags) }}</p>
+			<p>装备要求：{{ list2url(equip) }}</p>
 			<p>{% if members %}<a href="">人员配置</a>{% end %}</p>
 		</li>
 		<li class="span8">
