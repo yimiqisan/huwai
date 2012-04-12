@@ -78,7 +78,7 @@ class AjaxWeiboHandler(BaseHandler):
         kwargs = {'nick':nick}
         r = tl._api.save(c, owner=uid, channel=u'weibo', **kwargs)
         if r[0]:
-            kwargs.update({'id':r[1], 'content':c, 'owner': uid, 'is_own':True, 'created':'刚刚', 'count':0})
+            kwargs.update({'id':r[1], 'content':c, 'owner': uid, 'perm':0x40, 'is_own':True, 'created':'刚刚', 'count':0})
             return kwargs
         else:
             return None

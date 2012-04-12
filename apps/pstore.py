@@ -79,8 +79,11 @@ class ImageProcessor(object):
         
     def _thumbnail(self, im_obj, size):
         o = StringIO.StringIO()
-        im_obj.thumbnail((size, size), Image.ANTIALIAS)
-        im_obj.save(o, 'JPEG')
+        try:
+            im_obj.thumbnail((size, size), Image.ANTIALIAS)
+            im_obj.save(o, 'JPEG')
+        except Exception, e:
+            im_obj.save(o, 'GIF')
         return o.getvalue()
         
     def process(self, data):

@@ -51,7 +51,7 @@ class AjaxAvatarHandler(BaseHandler):
         p=AvatarProcessor(uid)
         f=self.request.files['upload'][0]
         r = p.process(f['body'])
-        return self.write(r)
+        return self.write(uid)
 
 class AjaxImageHandler(BaseHandler):
     @session

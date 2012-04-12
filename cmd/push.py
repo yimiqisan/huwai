@@ -23,7 +23,9 @@ def run(argv):
             if not line:
                 break
             n, e, p= line.split('\t')
-            r = u.register(n.decode('utf-8'), password=unicode(p), email=unicode(e))
+            u.whois('nick', n)
+            u._api.remove(u._id)
+            r = u.register(n.decode('utf-8'), password=unicode(p.strip()), email=unicode(e))
             print r
     elif channel[:3] == 'tag':
         t = Tag()
