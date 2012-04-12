@@ -1,0 +1,11 @@
+{% extends ../frame.html %}
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {$('#nav-tag').addClass("active");})
+	</script>
+{% end %}
+{% block bodyleft %}
+	{{ content }}
+{% end %}
+{% block bodyright %}{% end %}

@@ -1,0 +1,13 @@
+{% extends ../frame.html %}
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {$('#nav-tag').addClass("active");})
+	</script>
+{% end %}
+{% block bodyleft %}
+	{% for t in tags %}
+		<a href="/tag/{{ t['id'] }}/">{{ t['content'] }}</a>
+	{% end %}
+{% end %}
+{% block bodyright %}{% end %}
