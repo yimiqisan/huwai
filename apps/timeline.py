@@ -15,7 +15,7 @@ import time
 from huwai.config import DB_CON, DB_NAME, DEFAULT_CUR_UID, PERM_CLASS
 from modules import TimeLineDoc
 from api import API, Mapping, Added_id
-import case
+from huwai.apps import case
 from perm import Permission
 
 class TimeLine(object):

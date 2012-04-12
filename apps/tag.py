@@ -121,8 +121,28 @@ class TagAPI(API):
             return (True, l)
         else:
             return (False, r[1])
+    
+    def page(self, cuid=DEFAULT_CUR_UID, owner=None, content=None, rels=None, hot=-1, page=1, pglen=10, cursor=None, limit=20, order_by='added_id', order=-1):
+        kwargs = {}
+        if owner:kwargs['owner']={'$in':owner} if isinstance(owner, list) else owner
+        if content:kwargs['content']=re.compile('.*'+content+'.*')
+        if rels:kwargs['relation_l'] = {'$all':rels} if isinstance(rels, list) else rels
+        kwargs['page']=page
+        kwargs['pglen']=pglen
+        if cursor:kwargs['cursor']=cursor
+        kwargs['limit']=limit
+        kwargs['order_by']=order_by
+        kwargs['order']=order
+        r = super(TagAPI, self).page(**kwargs)
+        if r[0]:
+            kw = {'result':r[1]}
+            if cuid:kw['cuid']=cuid
+            l = self._output_format(**kw)
+            return (True, l, r[2])
+        else:
+            return (False, r[1])
 
-
+            
 
 
 

@@ -67,7 +67,7 @@ class AjaxTagListHandler(BaseHandler):
         rel = self.get_argument("rel", None)
         search = self.get_argument("search", None)
         t = Tag()
-        r = t._api.list(rels=rel, content=search)
+        r = t._api.page(rels=rel, content=search)
         if r[0]:
             return self.write(json.dumps({"data":self._flt_content(r[1])}))
         else:
@@ -79,3 +79,4 @@ class AjaxTagListHandler(BaseHandler):
             c = t['content']
             if c:l.append(c)
         return l#u','.join(l)
+

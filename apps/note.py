@@ -38,7 +38,7 @@ class NoteAPI(API):
     def save(self, owner, title, content, tags=[], members=[], **kwargs):
         if not isinstance(tags, list):tags = [tags]
         if not isinstance(members, list):members = [members]
-        return super(NoteAPI, self).create(owner=owner, title=title, content=content, **kwargs)
+        return super(NoteAPI, self).create(owner=owner, title=title, content=content, tags=tags, members=members, **kwargs)
     
     def remove(self, id):
         return super(NoteAPI, self).remove(id)

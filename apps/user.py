@@ -16,7 +16,7 @@ from md5 import md5
 from huwai.config import DB_CON, DB_NAME
 from modules import UserDoc
 from api import API
-from huwai.apps import case
+#from huwai.apps import case
 
 from mail import TmpTable, Mail
 
@@ -49,8 +49,9 @@ class User(object):
         return m.send('ni hao ma', 'invite', r[1])
     
     def _fire_alert(self, owner, pwd):
-        c = case.get_case_object()
-        c.fire('a_pwd', owner=owner, pwd=pwd)
+        pass
+        #c = case.get_case_object()
+        #c.fire('a_pwd', owner=owner, pwd=pwd)
     
     def register(self, nick, password=None, **info):
         r = self._api.is_nick_exist(nick)
@@ -65,7 +66,7 @@ class User(object):
         c = self._api.create(**info)
         if c[0]:
             self.info = info
-            self._fire_alert(c[1], password)
+            #self._fire_alert(c[1], password)
         else:
             self.info = None
         return c

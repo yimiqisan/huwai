@@ -46,7 +46,8 @@ class UploadImageHandler(BaseHandler):
 class AjaxAvatarHandler(BaseHandler):
     @session
     def post(self):
-        uid = self.SESSION['uid']
+        #uid = self.SESSION['uid']
+        uid = self.get_argument('uid', None)
         p=AvatarProcessor(uid)
         f=self.request.files['upload'][0]
         r = p.process(f['body'])
@@ -55,7 +56,8 @@ class AjaxAvatarHandler(BaseHandler):
 class AjaxImageHandler(BaseHandler):
     @session
     def post(self):
-        uid = self.SESSION['uid']
+        #uid = self.SESSION['uid']
+        uid = self.get_argument('uid', None)
         p=AttachProcessor()
         f=self.request.files['upload'][0]
         r = p.process(f['body'])

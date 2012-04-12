@@ -49,9 +49,10 @@
             });
         };
         function j() {
-            var u = b('#note_title').val();
-            var v = k();
-            var message = {'note_title': u, 'note_text': v};
+            var u = b('#note_title').val(),
+            v = k(),
+            w = b('input[name=noteTags]').val();
+            var message = {'note_title': u, 'note_text': v, 'note_tag': w};
             $.postJSON("/a/note/", 'POST', message, function(response) {
                 if (response.error){
                     alert(response.error);

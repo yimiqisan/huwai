@@ -38,7 +38,7 @@ PERM_CLASS = {
 
 FOUNDER_LIST = [
     u'2d40119715674d82a38216009efe528e',
-    u'53ea291bfa3e4d7dbb97fe367dab385e',
+    u'c18db1940a5e4c00a4b29f7206bc953f',
 ]
 
 

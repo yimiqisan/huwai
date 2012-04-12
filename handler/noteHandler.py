@@ -11,6 +11,7 @@ from tornado.web import addslash, authenticated
 
 from baseHandler import BaseHandler
 from huwai.apps.note import Note
+from huwai.apps.tag import Tag
 from huwai.apps.tools import session
 from datetime import datetime
 
@@ -20,7 +21,7 @@ class NoteHandler(BaseHandler):
     def get(self):
         uid = self.SESSION['uid']
         n = Note()
-        r = n._api.list(owner=uid)
+        r = n._api.list()
         return self.render("note/index.html", note_l = r[1])
 
 class NoteWriteHandler(BaseHandler):
@@ -50,25 +51,20 @@ class AjaxNoteHandler(BaseHandler):
     @session
     def post(self):
         uid = self.SESSION['uid']
-        t = self.get_argument("note_title", None)
-        c = self.get_argument("note_text", None)
+        nt = self.get_argument("note_title", None)
+        nc = self.get_argument("note_text", None)
+        ng = self.get_argument("note_tag", None)
         n = Note()
-        c = unicode(c.replace('\r\n', '</br>').replace('\n', '</br>').replace('\r', '</br>'))
-        r = n._api.save(uid, t, c)
+        nc = unicode(nc.replace('\r\n', '</br>').replace('\n', '</br>').replace('\r', '</br>'))
+        t = Tag()
+        ng = t._api.content2id(ng)
+        r = n._api.save(uid, nt, nc, tags=ng)
         if r[0]:
             return self.write({'info':r[1]})
         else:
             return self.write({'error':'save error'})
-
     
     
     
     
-        
-        
-        
-        
-        
-        
-        
-        
+    

@@ -3,6 +3,8 @@
 
 
 from huwai.apps.user import User
+from huwai.apps.tag import Tag
+from huwai.config import SITE_ID
 from md5 import md5
 
 def run(argv):
@@ -21,11 +23,20 @@ def run(argv):
             if not line:
                 break
             n, e, p= line.split('\t')
-            r = u.register(n.decode('utf-8'), password=p, email=unicode(e))
+            r = u.register(n.decode('utf-8'), password=unicode(p), email=unicode(e))
             print r
-    elif channel == 'tag':
-        pass
+    elif channel[:3] == 'tag':
+        t = Tag()
+        while(True):
+            line=f.readline()
+            if not line:
+                break
+            h, d, c = line.split(',')
+            c = c.replace('\r\n', '').replace('\n', '').replace('\r', '').decode('utf-8')
+            r = t._api.add(SITE_ID, c, relation_l=['place'])
+            print r
     else:
         pass
+    f.close()
     print 'finish!!!'
     return True
