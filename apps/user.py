@@ -16,7 +16,7 @@ from md5 import md5
 from huwai.config import DB_CON, DB_NAME
 from modules import UserDoc
 from api import API
-import case
+from huwai.apps import case
 
 from mail import TmpTable, Mail
 

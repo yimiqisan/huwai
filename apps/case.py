@@ -8,8 +8,8 @@ Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 import logging
 
-from alert import Alert
-import sina
+from huwai.apps.alert import Alert
+from huwai.apps import sina
 
 
 class Case:
