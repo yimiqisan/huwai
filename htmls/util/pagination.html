@@ -1,0 +1,12 @@
+<span class="pagination pull-right">
+	<ul>
+		<li><a href="{{url}}?page={{pagination['start_page']}}">&lt;&lt;</a></li>
+		{% if pagination['has_pre'] %}<li><a href="{{url}}?page={{pagination['pre_page']}}">&lt;</a></li>{% end %}
+		{% for p in pagination['page_list'] %}
+			<li {% if pagination['page']==p %}class="active"{% end %}><a href="#">{{p}}</a></li>
+		{% end %}
+		{% if pagination['has_eps'] %}<li class="disabled"><a href="#">...</a></li>{% end %}
+		{% if pagination['has_next'] %}<li><a href="{{url}}?page={{pagination['next_page']}}">&gt;</a></li>{% end %}
+		<li><a href="{{url}}?page={{pagination['end_page']}}">&gt;&gt;</a></li>
+	</ul>
+</span>

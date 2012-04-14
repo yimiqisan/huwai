@@ -83,7 +83,11 @@ class ImageProcessor(object):
             im_obj.thumbnail((size, size), Image.ANTIALIAS)
             im_obj.save(o, 'JPEG')
         except Exception, e:
-            im_obj.save(o, 'GIF')
+            try:
+                im_obj.save(o, 'GIF')
+            except Exception, e:
+                print 'save eror'
+                return None
         return o.getvalue()
         
     def process(self, data):
@@ -91,6 +95,7 @@ class ImageProcessor(object):
         im = Image.open(StringIO.StringIO(data))
         if (im.size[0]>self.max_sz)or(im.size[1]>self.max_sz):
             data = self._thumbnail(im, self.max_sz)
+        if data is None:return None
         self.p.put(data, filename=ofn, size=-1)
         for sz in self.sz_l:
             fn = ofn+'_'+str(sz)

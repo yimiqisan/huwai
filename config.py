@@ -11,7 +11,7 @@ import redis
 from mongokit import Connection
 from logging import basicConfig, DEBUG
 
-import uimethods
+import uimethods, uimodules
 
 SITE_ID = u'917d450c728b4f62b6ac9bac1beb01ba'
 DEFAULT_CUR_UID = '948a55d68e1b4317804e4650a9505641'
@@ -49,7 +49,7 @@ settings = dict(
         cookie_secret="61oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo=",
         login_url="/account/login",
         autoescape="xhtml_escape",
-#        ui_modules=uimodules,
+        ui_modules=uimodules,
         ui_methods=uimethods,
 #        xsrf_cookies=True,
         debug=True,

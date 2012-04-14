@@ -117,7 +117,7 @@ class EventListHandler(BaseHandler):
     def get(self):
         uid = self.SESSION['uid']
         e = Event()
-        r = e._api.list(cuid=uid, check=True)
+        r = e._api.page(cuid=uid, check=True)
         l = []
         if r[0]:
             es = r[1]
@@ -130,7 +130,7 @@ class EventListHandler(BaseHandler):
             for i in es:
                 i['tl'] = t._api.abbr(topic=i['tid'], channel=[u'weibo'])
                 l.append(i)
-            self.render("event/list.html", event_list=l, title="活动列表")
+            self.render("event/list.html", event_list=l, title="活动列表", pagination=r[2])
         else:
             self.render("event/list.html", event_list=l, warning=r[1])
 

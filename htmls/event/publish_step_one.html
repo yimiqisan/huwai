@@ -43,6 +43,29 @@
 					});
 				}
 			});
+			yhui.iTag.create($('#etagHelp'), {
+				id:'eventHelpTags',
+				eclass: 'span6',
+				initTags: true,
+				relations: 'event',
+				addedAble: false,
+				editAble: false,
+				tagSource:function(search, showChoices) {
+					var that = this;
+					var args = {'search': search.term, 'rel': 'event'};
+					$.postJSON("/a/tag/list/", 'GET', args, function(response) {
+						if (response.error){
+							return alert(response.error);
+						}
+						showChoices(that._subtractArray(response.data, that.assignedTags()));
+					});
+				},
+				onTagClicked:function(evt, tag) {
+					var tname = $(tag).find('.tagit-label').html();
+					$("#eventTags").tagit('createTag', tname, '', 'id');
+					$("#eventHelpTags").tagit('removeTag', tag);
+				}
+			});
 			yhui.iTag.create($('#qtag'), {
 				id:'equipTags',
 				eclass: 'span6',
@@ -58,6 +81,29 @@
 						}
 						showChoices(that._subtractArray(response.data, that.assignedTags()));
 					});
+				}
+			});
+			yhui.iTag.create($('#qtagHelp'), {
+				id:'equipHelpTags',
+				eclass: 'span6',
+				initTags: true,
+				relations: 'equip',
+				addedAble: false,
+				editAble: false,
+				tagSource:function(search, showChoices) {
+					var that = this;
+					var args = {'search': search.term, 'rel': 'equip'};
+					$.postJSON("/a/tag/list/", 'GET', args, function(response) {
+						if (response.error){
+							return alert(response.error);
+						}
+						showChoices(that._subtractArray(response.data, that.assignedTags()));
+					});
+				},
+				onTagClicked:function(evt, tag) {
+					var tname = $(tag).find('.tagit-label').html();
+					$("#equipTags").tagit('createTag', tname, '', 'id');
+					$("#equipHelpTags").tagit('removeTag', tag);
 				}
 			});
 		})
@@ -120,6 +166,7 @@
 				<label class="control-label" for="multiSelect">户外标签</label>
 				<div class="controls">
 					<div id="etag"></div>
+					<div id="etagHelp"></div>
 				</div>
 			</div>
 			<div class="control-group">
@@ -150,6 +197,7 @@
 				<label class="control-label" for="textarea">装备要求:</label>
 				<div class="controls">
 					<div id="qtag"></div>
+					<div id="qtagHelp"></div>
 				</div>
 			</div>
 			<div class="control-group">

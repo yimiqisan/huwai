@@ -179,8 +179,34 @@ class EventAPI(API):
     def extend(self):
         return super(EventAPI, self).extend()
     
-    def page(self):
-        return super(EventAPI, self).page()
+    def page(self, owner=None, tags=None, cuid=DEFAULT_CUR_UID, club=None, is_merc=None, level=None, date=None, place=None, deadline=None, fr=None, to=None, when=None, check=None, page=1, pglen=10, cursor=None, limit=20, order_by='added_id', order=-1):
+        kwargs = {}
+        if owner:kwargs['owner']=owner
+        if tags:kwargs['tags']={'$all':tags} if isinstance(tags, list) else tags
+        if club:kwargs['club']=club
+        if is_merc:kwargs['is_merc']=is_merc
+        if level:kwargs['level']={'in':level}
+        if date:kwargs['date']=date
+        if place:kwargs['place']=place
+        if deadline:kwargs['deadline']={'$gt':deadline}
+        if fr:kwargs['fr']={'$gt':fr}
+        if to:kwargs['to']={'$gt':to}
+        if when:kwargs['when']={'$gt':when}
+        if isinstance(check, bool):kwargs['check'] = check
+        kwargs['page']=page
+        kwargs['pglen']=pglen
+        if cursor:kwargs['cursor']=cursor
+        kwargs['limit']=limit
+        kwargs['order_by']=order_by
+        kwargs['order']=order
+        r = super(EventAPI, self).page(**kwargs)
+        if r[0]:
+            kw = {'result':r[1]}
+            if cuid:kw['cuid']=cuid
+            l = self._output_format(**kw)
+            return (True, l, r[2])
+        else:
+            return (False, r[1])
 
 class EventScrapyAPI(API):
     def __init__(self, db_name=DB_SCRAPY_NAME):

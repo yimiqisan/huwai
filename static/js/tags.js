@@ -15,6 +15,7 @@
             addedAble:true,         //for add
             removeAble:false,       //for remove
             editAble:false,         //edit name or owner
+            pageAble:false,         //for page
             numberOpt: 0,           //to be elected 
             relations:[],          //query by this rel
             tagSource:function() {},
@@ -23,6 +24,9 @@
             onTagAdded: function(evt, tag) {},
         },
         d = {
+            page: 1,
+            pglen: 10,
+            limit: 50,
             panelControl: false,
         },
         g = b.extend(c, d);
@@ -54,6 +58,7 @@
                             return alert(response.error);
                         }
                         w.tagit("removeAll");
+                        alert("添加成功");
                     });
                     i();
                 })
@@ -63,7 +68,7 @@
         };
         function i(u) {
             var v = b.extend(g, u || {});
-            var args = {};
+            var args = {page:v.page, pglen:v.pglen, limit:v.limit};
             if (v.relations){args.rel=v.relations;}
             $.postJSON("/a/tag/", 'GET', args, function(response) {
                 if (response.error){
@@ -73,7 +78,26 @@
                 for (var i=0; i<response.data.length; i++) {
                     $("#"+v.id).tagit('createTag', response.data[i]['content'], '', response.data[i]['id']);
                 }
+                if (v.pageAble) {
+                    yhui.iPage.create($('#tpage'), {
+                        id: 'tpage',
+                        start_page: response.pagination.start_page,
+                        has_pre: response.pagination.has_pre,
+                        pre_page: response.pagination.pre_page,
+                        page: response.pagination.page,
+                        total_page: response.pagination.total_page,
+                        page_list: response.pagination.page_list,
+                        has_eps: response.pagination.has_eps,
+                        has_next: response.pagination.has_next,
+                        next_page: response.pagination.next_page,
+                        end_page: response.pagination.end_page,
+                        toPage: j,
+                    });
+                }
             });
+        };
+        function j(u) {
+            i(u);
         };
         return {
             create: function(x, u) {

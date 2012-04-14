@@ -39,12 +39,15 @@ class AjaxTagHandler(BaseHandler):
     @session
     def get(self):
         uid = self.SESSION['uid']
+        page = int(self.get_argument("page", 1))
+        pglen = int(self.get_argument("pglen", 10))
+        limit = int(self.get_argument("limit", 20))
         rel = self.get_argument("rel", None)
         search = self.get_argument("search", None)
         t = Tag()
-        r = t._api.list(rels=rel, content=search)
+        r = t._api.page(rels=rel, content=search, page=page, pglen=pglen, limit=limit)
         if r[0]:
-            return self.write(json.dumps({"data":r[1]}))
+            return self.write(json.dumps({"data":r[1], 'pagination':r[2]}))
         else:
             return self.write({'error':'save error'})
     
