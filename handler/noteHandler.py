@@ -24,6 +24,18 @@ class NoteHandler(BaseHandler):
         r = n._api.list()
         return self.render("note/index.html", note_l = r[1])
 
+class NoteItemHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self, id):
+        uid = self.SESSION['uid']
+        n = Note()
+        r = n._api.get(id, cuid=uid)
+        if r[0]:
+            return self.render("note/item.html", **r[1])
+        else:
+            return self.render("note/item.html", warning=r[1])
+
 class NoteWriteHandler(BaseHandler):
     @addslash
     @session
@@ -56,13 +68,16 @@ class AjaxNoteHandler(BaseHandler):
         ng = self.get_argument("note_tag", None)
         n = Note()
         nc = unicode(nc.replace('\r\n', '</br>').replace('\n', '</br>').replace('\r', '</br>'))
-        t = Tag()
-        ng = t._api.content2id(ng)
+        ng = self._flt_tags(ng)
         r = n._api.save(uid, nt, nc, tags=ng)
         if r[0]:
             return self.write({'info':r[1]})
         else:
             return self.write({'error':'save error'})
+    
+    def _flt_tags(self, content):
+        t = Tag()
+        return t._api.content2id(content)
     
     
     

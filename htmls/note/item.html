@@ -1,0 +1,54 @@
+{% extends ../frame.html %}
+
+{% block static %}
+	<script src="{{ static_url('js/weibo.js') }}" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$('#nav-note').addClass("active");
+			Weibo.init();
+		})
+	</script>
+	{% block static-added %}{% end %}
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/weibo.css') }}"/>
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/note.css') }}"/>
+{% end %}
+{% autoescape None %}
+{% block bodyleft %}
+	<div id="note-item">
+		<h1>{{ title }}</h1><em>{{ created }}</em>
+		<div>{{ list2url(tags) }}</div>
+		<p>
+			{{ content }}
+		</p>
+		<div class="clear"></div>
+		<div class="pull-right">{% if verify(perm, 0x30) %}<a>编辑</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a>删除</a>{% end %}</div>
+		<div class="clear"></div>
+	</div>
+	<div id="weibo" name="weibo">
+		<div class="num" style="display:block;font-size:16px;margin-bottom:5px;">还可以输入
+			<span style="font-size:24px;color:#ff9933;" id="num">140</span> 字
+		</div>
+		<form action="/weibo" method="post" id="weiboform">
+			<textarea rows="2" cols="90%" style="width:85%;" name="content" id="weibo-content">#{{ title }}#</textarea>
+			<input type="submit" class="btn-large" value="发布" style="margin-top:5px;margin-left:20px;">
+			<input type="hidden" name="_xsrf" value="ca61c7cf01cf4097bd14c959c519637a">
+		</form><br/><hr/>
+		<div class="wb_items" maintype="{{ tid }}" subtype="" title="#{{ title }}#">
+			<div id="wb_bottom" class="bottom wb_item"><a href="#" style="display:block;text-align:center;" onclick="Weibo.extend(this);return false;"></a><input type="hidden" value="0"></div>
+		</div>
+	</div>
+{% end %}
+{% block bodyright %}
+	<h3>相关活动</h3>
+{% end %}
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		

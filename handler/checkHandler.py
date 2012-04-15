@@ -96,6 +96,17 @@ class CheckTagHandler(BaseHandler):
     def post(self):
         self.redirect('/check/tag/')
 
+class CheckNoteHandler(BaseHandler):
+    @session
+    @preperm()
+    def get(self):
+        return self.render("check/note.html", pm=self.pm)
+    
+    @session
+    @preperm()
+    def post(self):
+        self.redirect('/check/note/')
+
 class AjaxCheckEventHandler(BaseHandler):
     @addslash
     @session

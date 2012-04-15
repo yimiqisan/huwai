@@ -34,13 +34,18 @@ class Pstore(object):
     def put(self, data, **kwargs):
         return self.fs.put(data, **kwargs)
     
-    def delete(self, id):
-        return self.fs.delete(id)
-    
     def get_by_id(self, id):
         if not isinstance(id, ObjectId):id=ObjectId(id)
         return self.fs.get(id)
-        
+    
+    def remove(self, fn):
+        try:
+            id = self.fs.get_version(filename=fn)._id
+            self.fs.delete(id)
+        except Exception, e:
+            return False
+        return True
+    
     def get_version(self, filename=None, version=-1, **kwargs):
         try:
             return (True, self.fs.get_version(filename=filename, **kwargs).read())
@@ -102,7 +107,14 @@ class ImageProcessor(object):
             data = self._thumbnail(im, sz)
             self.p.put(data, filename=fn)
         return ofn
-        
+    
+    def remove(self, filename):
+        self.p.remove(filename)
+        for sz in self.sz_l:
+            fn = filename+'_'+str(sz)
+            self.p.remove(fn)
+        return True
+    
     def display(self, fn, version=None, **kwargs):
         if version is None:
             r = self.p.get_last_version(filename=fn, **kwargs)

@@ -10,7 +10,7 @@
 {% end %}
 {% autoescape None %}
 {% block bodyleft %}
-	<div class="accordion bg-white" id="accordion">
+	<div class="accordion bg-white" id="note-list">
 		{% for n in note_l %}
 		<div class="accordion-group">
 			<div class="accordion-heading">
@@ -21,7 +21,9 @@
 			<div id="{{ n['id'] }}" class="accordion-body collapse" style="height: 0px;">
 				<div class="accordion-inner">
 					{{ n['content'] }}
-					<div style="clear:both;"></div>
+					<div class="clear"></div>
+					<div class="pull-right"><a target="_blank" href="/note/{{ n['id'] }}/">评论</a></div>
+					<div class="clear"></div>
 				</div>
 			</div>
 		</div>

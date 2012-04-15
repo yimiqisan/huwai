@@ -28,10 +28,12 @@ PERM_CLASS = {
     'eASSISTANT':   0x21,
     'ePARICIPANT':  0x22,
     
-    'aFOUNDER':     0x30,
-    'aEDITER':      0x31,
+    'nFOUNDER':     0x30,
     
-    'wFOUNDER':     0x40,
+    'aFOUNDER':     0x50,
+    'aEDITER':      0x51,
+    
+    'wFOUNDER':     0x70,
     
     'NORMAL':       0X90,
 }

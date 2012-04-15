@@ -196,6 +196,7 @@ class NoteDoc(Document):
             'content':  unicode,
             'tags':     list,
             'members':  list,
+            'check':    bool,
     }
     required_fields = ['_id', 'created']
     default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
