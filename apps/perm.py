@@ -72,6 +72,7 @@ class PermissionAPI(API):
             return None
     
     def site_perm(self, cuid):
+        if cuid is None: return None
         if cuid in FOUNDER_LIST:
             return PERM_CLASS['FOUNDER']
         r = self.list(owner=cuid, channel=u'site')
@@ -89,6 +90,8 @@ class preperm(object):
             pm = p._api.site_perm(cuid)
             if pm is None:decorated_cls.render_alert(u"从前有个山，\n山里有个庙，\n庙里有个页面，\n现在找不到。")
             if isinstance(self.keys, str) and (pm!=PERM_CLASS[self.keys]):
+                decorated_cls.render_alert(u"从前有个山，\n山里有个庙，\n庙里有个页面，\n现在找不到。")
+            elif isinstance(self.keys, list) and (pm not in [PERM_CLASS[k] for k in self.keys]):
                 decorated_cls.render_alert(u"从前有个山，\n山里有个庙，\n庙里有个页面，\n现在找不到。")
             decorated_cls.__setattr__('pm', pm)
             return method(decorated_cls, *args)
