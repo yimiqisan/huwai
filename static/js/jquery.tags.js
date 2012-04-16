@@ -325,7 +325,7 @@
             // Button for removing the tag.
 //            var removeTagIcon = $('<span></span>').addClass('ui-icon ui-icon-close');
             
-            var removeTag = this.options.editAble ? $('<a><span class="text-icon">\xd7</span></a>').addClass('tagit-close').click(function(e) {that.removeTag(tag);}) : $('<a><span class="text-icon">●</span></a>').addClass('tagit-close')
+            var removeTag = this.options.editAble ? $('<a href=""><span class="text-icon">\xd7</span></a>').addClass('tagit-close').click(function(e) {that.removeTag(tag);}) : $('<a><span class="text-icon">●</span></a>').addClass('tagit-close')
             tag.prepend(removeTag);
 //            tag.append(removeTag);
             // Unless options.singleField is set, each tag has a hidden input field inline.

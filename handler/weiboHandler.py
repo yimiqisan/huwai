@@ -73,9 +73,10 @@ class AjaxWeiboHandler(BaseHandler):
     
     def preserve(self, uid):
         c = self.get_argument("content")
+        k = self.get_argument("kind", None)
         tl = TimeLine()
         nick = self.current_user if uid else u'匿名驴友'
-        kwargs = {'nick':nick}
+        kwargs = {'nick':nick, 'kind':k}
         r = tl._api.save(c, owner=uid, channel=u'weibo', **kwargs)
         if r[0]:
             kwargs.update({'id':r[1], 'content':c, 'owner': uid, 'perm':0x70, 'is_own':True, 'created':'刚刚', 'count':0})

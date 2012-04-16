@@ -93,6 +93,8 @@ var Weibo = {
         var message = form.formToDict();
         var disabled = form.find("input[type=submit]");
         disabled.disable();
+        var kind = $('#weibo .wb_items').attr('kind');
+        if (kind){args.kind=kind;}
         $.postJSON("/a/weibo", 'POST', message, function(response) {
             if (response.error){
                 disabled.enable();

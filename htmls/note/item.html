@@ -17,11 +17,9 @@
 	<div id="note-item">
 		<h1>{{ title }}</h1><em>{{ created }}</em>
 		<div>{{ list2url(tags) }}</div>
-		<p>
-			{{ content }}
-		</p>
+		<div class="p">{{ content }}</div>
 		<div class="clear"></div>
-		<div class="pull-right">{% if verify(perm, 0x30) %}<a>编辑</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a>删除</a>{% end %}</div>
+		<div class="pull-right">{% if verify(perm, 0x30) %}<a href="/note/{{id}}/edit/">编辑</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/note/{{id}}/delete/">删除</a>{% end %}</div>
 		<div class="clear"></div>
 	</div>
 	<div id="weibo" name="weibo">
@@ -33,7 +31,7 @@
 			<input type="submit" class="btn-large" value="发布" style="margin-top:5px;margin-left:20px;">
 			<input type="hidden" name="_xsrf" value="ca61c7cf01cf4097bd14c959c519637a">
 		</form><br/><hr/>
-		<div class="wb_items" maintype="{{ tid }}" subtype="" title="#{{ title }}#">
+		<div class="wb_items" maintype="{{ tid }}" subtype="" kind="note" title="#{{ title }}#">
 			<div id="wb_bottom" class="bottom wb_item"><a href="#" style="display:block;text-align:center;" onclick="Weibo.extend(this);return false;"></a><input type="hidden" value="0"></div>
 		</div>
 	</div>

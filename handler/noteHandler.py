@@ -13,6 +13,7 @@ from baseHandler import BaseHandler
 from huwai.apps.note import Note
 from huwai.apps.tag import Tag
 from huwai.apps.tools import session
+from huwai.apps.perm import preperm
 from datetime import datetime
 
 class NoteHandler(BaseHandler):
@@ -36,12 +37,31 @@ class NoteItemHandler(BaseHandler):
         else:
             return self.render("note/item.html", warning=r[1])
 
+class NoteEditHandler(BaseHandler):
+    @addslash
+    @session
+    @preperm('NORMAL')
+    def get(self, id):
+        uid = self.SESSION['uid']
+        return self.render("note/write.html", id=id)
+
+class NoteDeleteHandler(BaseHandler):
+    @addslash
+    @session
+    @preperm()
+    def get(self, id):
+        uid = self.SESSION['uid']
+        n = Note()
+        n._api.remove(id, cuid=uid)
+        return self.redirect("/note")
+
 class NoteWriteHandler(BaseHandler):
     @addslash
     @session
+    @preperm('NORMAL')
     def get(self):
         uid = self.SESSION['uid']
-        return self.render("note/write.html")
+        return self.render("note/write.html", id="")
     
     @addslash
     @session
@@ -51,25 +71,38 @@ class NoteWriteHandler(BaseHandler):
         e = self.get_argument("note_text", None)
         n = Note()
         r = n._api.save(uid, t, e)
-        return self.render("note/write.html")
+        return self.redirect("/note")
 
 class AjaxNoteHandler(BaseHandler):
     @addslash
     @session
     def get(self):
-        pass
+        uid = self.SESSION['uid']
+        nid = self.get_argument("nid", None)
+        n = Note()
+        r = n._api.get(nid, cuid=uid)
+        if r[0]:
+            d = r[1]
+            d['content'] = d['content'].replace('</br>', '\r\n')
+            return self.write({'info':d})
+        else:
+            return self.write({'error':r[1]})
     
     @addslash
     @session
     def post(self):
         uid = self.SESSION['uid']
+        nid = self.get_argument("nid", None)
         nt = self.get_argument("note_title", None)
         nc = self.get_argument("note_text", None)
         ng = self.get_argument("note_tag", None)
         n = Note()
         nc = unicode(nc.replace('\r\n', '</br>').replace('\n', '</br>').replace('\r', '</br>'))
         ng = self._flt_tags(ng)
-        r = n._api.save(uid, nt, nc, tags=ng)
+        if nid is None:
+            r = n._api.save(uid, nt, nc, tags=ng)
+        else:
+            r = n._api.edit(nid, title=nt, content=nc, tags=ng)
         if r[0]:
             return self.write({'info':r[1]})
         else:

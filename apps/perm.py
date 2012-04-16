@@ -77,7 +77,7 @@ class PermissionAPI(API):
             return PERM_CLASS['FOUNDER']
         r = self.list(owner=cuid, channel=u'site')
         if r:return PERM_CLASS['VERIFIER']
-        return None
+        return PERM_CLASS['NORMAL']
 
 class preperm(object):
     def __init__(self, keys=['FOUNDER', 'VERIFIER']):

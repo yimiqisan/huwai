@@ -37,15 +37,16 @@ class TimeLineAPI(API):
         doc = collection.TimeLineDoc()
         API.__init__(self, col_name=col_name, collection=collection, doc=doc)
     
-    def _flt_tpc(self, c):
+    def _flt_tpc(self, c, k):
         c = c.strip()
         t = tid = None
+        if not k:k=u'weibo'
         if c.startswith('#')and(c.count('#')>1):
             l = c.split('#')
             for i in l:
                 if (i!=''):t = i;break
             m = Mapping()
-            r = m.do(u'event', t)
+            r = m.do(k, t)
             if not r[0]:return r
             tid = r[1]
         return tid
@@ -84,7 +85,8 @@ class TimeLineAPI(API):
             a = Added_id(tid)
             a.incr()
         else:
-            tid = self._flt_tpc(content)
+            kind = kwargs.get('kind', u'event')
+            tid = self._flt_tpc(content, kind)
         at_list = self._flt_at(content)
         self._fire_alert(channel, tid, at_list)
         #self._fire_sina(owner, content)

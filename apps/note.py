@@ -48,8 +48,11 @@ class NoteAPI(API):
         if not isinstance(members, list):members = [members]
         return super(NoteAPI, self).create(owner=owner, title=title, content=content, tags=tags, members=members, check=check, **kwargs)
     
-    def remove(self, id):
-        return super(NoteAPI, self).remove(id)
+    def remove(self, id, cuid=DEFAULT_CUR_UID):
+        r = self.get(id, cuid)
+        if (r[0] and r[1]) and r[1]['is_own']:
+            return super(NoteAPI, self).remove(id)
+        return None
     
     def edit(self, id, title=None, content=None, tags=None, members=None, **kwargs):
         if title:kwargs['title'] = title

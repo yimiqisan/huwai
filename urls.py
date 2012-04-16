@@ -51,6 +51,8 @@ handlers = [(r"/", RootHandler),
             
             (r"/note/", NoteHandler),
             (r"/note/(.{32})/", NoteItemHandler),
+            (r"/note/(.{32})/edit/", NoteEditHandler),
+            (r"/note/(.{32})/delete/", NoteDeleteHandler),
             (r"/note/write/", NoteWriteHandler),
             (r"/a/note/", AjaxNoteHandler),
             
