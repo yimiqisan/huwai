@@ -68,7 +68,7 @@ class AjaxImageHandler(BaseHandler):
         #uid = self.SESSION['uid']
         uid = self.get_argument('uid', None)
         p=AttachProcessor()
-        f=self.request.files['upload'][0]
+        f = self.request.files['upload'][0]
         r = p.process(f['body'])
         return self.write(r)
 

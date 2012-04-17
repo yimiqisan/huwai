@@ -40,7 +40,7 @@ class NoteItemHandler(BaseHandler):
 class NoteEditHandler(BaseHandler):
     @addslash
     @session
-    @preperm('NORMAL')
+    @preperm(keys=['FOUNDER', 'VERIFIER', 'NORMAL'])
     def get(self, id):
         uid = self.SESSION['uid']
         return self.render("note/write.html", id=id)
@@ -58,7 +58,7 @@ class NoteDeleteHandler(BaseHandler):
 class NoteWriteHandler(BaseHandler):
     @addslash
     @session
-    @preperm('NORMAL')
+    @preperm(keys=['FOUNDER', 'VERIFIER', 'NORMAL'])
     def get(self):
         uid = self.SESSION['uid']
         return self.render("note/write.html", id="")
