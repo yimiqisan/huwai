@@ -1,11 +1,17 @@
 {% extends ../frame.html %}
 
 {% block static %}
+	<script src="{{ static_url('js/jquery.alert.js') }}" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			yhui.iAlert.list($('#alert'), {});
+		})
+	</script>
 	{% block static-added %}{% end %}
 {% end %}
 {% block bodyleft %}
-<i class="icon-search"></i>
-<i class="icon-search icon-white"></i>
-
+<h2>{{title}}</h2>
 {% end %}
-{% block bodyright %}{% end %}
+{% block bodyright %}
+<div id="alert"></div>
+{% end %}

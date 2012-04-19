@@ -103,7 +103,7 @@ class ProfileHandler(BaseHandler):
     def get(self):
         if self.current_user:
             title = self.current_user+u'的主页'
-            return self.redirect('/weibo/')
+            #return self.redirect('/weibo/')
             self.render('profile/profile.html', title=title)
         else:
             self.redirect('/')

@@ -3,6 +3,12 @@
     display: block;
 }
 
+.alert-default {
+    background-color: #f5f5f5;
+    border-color: #eeeeee;
+    color: #333333;
+}
+
 .guess-warp {padding:1px;}
 .guess-list {background:#EEEBE7;padding:1px;margin-left:0px;}
 .item-a, .item-b {background:white;margin:1px;}
