@@ -45,7 +45,7 @@ class EventHandler(BaseHandler):
         pass
 
 class EventPubaHandler(BaseHandler):
-    KEYS = ["logo", "title", "club", "level", "attention_tl", "declare_tl", "members", "spend_tl", "place", "equipTags", "route", "is_merc", "schedule_tl", "eventTags"]
+    KEYS = ["logo", "title", "club", "level", "day", "attention_tl", "declare_tl", "egrid", "spend_tl", "place", "equipTags", "route", "is_merc", "schedule_tl", "eventTags"]
     
     @addslash
     def get(self):
@@ -64,7 +64,8 @@ class EventPubaHandler(BaseHandler):
         e = Event()
         is_merc = d['is_merc'] is u'no_merc'
         nick = self.current_user if uid else u'匿名驴友'
-        r = e._api.save_step_one(uid, d['logo'], d['title'], self._flt_tags(d['eventTags']), is_merc, float(d['level']), d['date'], d['place'], d['schedule_tl'], nick=nick, members={'name':d['members']}, club=d['club'], route=u'route', spend_tl=d['spend_tl'], equip=self._flt_tags(d['equipTags']), declare_tl=d['declare_tl'], attention_tl=d['attention_tl'])
+        members = dict([i.split(':') for i in d['egrid'].split(',')])
+        r = e._api.save_step_one(uid, d['logo'], d['title'], self._flt_tags(d['eventTags']), is_merc, float(d['level']), d['date'], int(d['day']), d['place'], d['schedule_tl'], nick=nick, members=members, club=d['club'], route=u'route', spend_tl=d['spend_tl'], equip=self._flt_tags(d['equipTags']), declare_tl=d['declare_tl'], attention_tl=d['attention_tl'])
         if r[0]:
             return self.redirect('/event/pubb/?eid='+str(r[1]))
         else:

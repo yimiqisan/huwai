@@ -21,6 +21,7 @@ var Weibo = {
             $("#weiboform input[type=submit]").removeClass("btn-primary");
             return false;
         });
+        $("#wb_bottom").find('input').val(0);
         Weibo.extend();
         Weibo.hover();
         Weibo.load();

@@ -7,7 +7,7 @@
 {% end %}
 {% block bodyleft %}
 	{% for t in tags %}
-		<a href="/tag/{{ t['id'] }}/">{{ t['content'] }}</a>
+		<a class="badge badge-info" href="/tag/{{ t['id'] }}/" >{{ t['content'] }}</a>
 	{% end %}
 {% end %}
 {% block bodyright %}{% end %}

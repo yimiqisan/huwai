@@ -19,7 +19,8 @@ var Event = {
             var i = parseInt($("#begin_time_minute").val());
             var sdate = new Date(y,m-1,d,h,i);
             if (now > sdate){alert('您填写的活动时间已过!');return false;}
-            //check date
+            //check days
+            if (!$("input[name=days]").val()){alert('请填写费用明细');$("input[name=days]").parent().parent().addClass('error');$("input[name=days]").select();return false;}
             $(".event-form").submit();
             return false;
         });

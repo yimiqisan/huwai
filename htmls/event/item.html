@@ -48,7 +48,9 @@
 			</a>
 		</li>
 		<li class="span5" style="margin-left:8px;color:black;padding:10px 0 0 10px;">
-			<p>发起人：{{ nick }}</p>
+			{% if members %}
+				{% for k in members %}<p>{{k}} : {{members[k]}}</p>{% end %}
+			{% end %}
 			<p>发布日期：{{ created }}</p>
 			<p style="display:none;">户外标签：{{ tags }}</p>
 			<p>性质：{{ is_merc }}、{{ club }}、<a href="/event/difficulty/{{ level }}/">难度{{ level }}</a></p>
@@ -58,7 +60,6 @@
 			<p>花费统计：{{ spend_tl }}</p>
 			<p>户外类型：{{ list2url(tags) }}</p>
 			<p>装备要求：{{ list2url(equip) }}</p>
-			<p>{% if members %}<a href="">人员配置</a>{% end %}</p>
 		</li>
 		<li class="span8">
 			<p>计划安排：{{ schedule_tl }}<a href="" onclick="$('#schedule_tl').modal();return false;">&nbsp;详细&nbsp;>></a></p>

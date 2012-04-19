@@ -84,14 +84,14 @@ class EventAPI(API):
         r = m.do(u'event', t)
         return r[1] if r[0] else r
     
-    def save_step_one(self, owner, logo, title, tags, is_merc, level, date, place, schedule_tl, nick=None, members=None, club=None, route=None, spend_tl=None, equip=None, declare_tl=None, attention_tl=None):
+    def save_step_one(self, owner, logo, title, tags, is_merc, level, date, day, place, schedule_tl, nick=None, members=None, club=None, route=None, spend_tl=None, equip=None, declare_tl=None, attention_tl=None):
         kwargs = {}
         if nick:kwargs['nick']=nick
         if members:kwargs['members']=members
         kwargs['club']=club if club else SITE_ID
         if route:kwargs['route']=route
         if equip:kwargs['equip']=equip
-        r = super(EventAPI, self).create(owner=owner, logo=logo, title=title, tags=tags, is_merc=is_merc, level=level, date=date, place=place, **kwargs)
+        r = super(EventAPI, self).create(owner=owner, logo=logo, title=title, tags=tags, is_merc=is_merc, level=level, date=date, day=int(day), place=place, **kwargs)
         if r[0]:self.after_step_one(r[1], title, schedule_tl=schedule_tl, spend_tl=spend_tl, declare_tl=declare_tl, attention_tl=attention_tl)
         return r
     

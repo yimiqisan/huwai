@@ -42,12 +42,12 @@ def list2url(handler, v=None):
         l = []
         for i, c in v:
             href, txt = '/tag/'+i, c
-            l.append(u'<a href="%s">%s</a>' % (href, txt))
+            l.append(u'<a class="badge badge-info" href="%s">%s</a>' % (href, txt))
         return ' '.join(l)
     elif isinstance(v, tuple):
         href = '/tag/'+v[0]
         txt = v[1]
-        return u'<a href="%s">%s</a>' % (href, txt)
+        return u'<a class="badge badge-info" href="%s">%s</a>' % (href, txt)
     return ''
 
 def cntDict(handler, l, **kwargs):
