@@ -1,0 +1,43 @@
+{% extends ../frame.html %}
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$('#nav-album').addClass("active");
+		})
+	</script>
+	{% block static-added %}{% end %}
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/album.css') }}"/>
+{% end %}
+{% block bodyleft %}
+<div id="album" class="bg-white">
+	<h1>相册</h1>
+	<ul class="sortable">
+		{% for album in album_list %}
+		<li>
+			<div class="pin pinBoard" id="">
+				<h3 class="serif"><a href="/album/{{album['id']}}/">{{album['title']}}</a></h3>
+				<h4>{{ len(album['photos']) }}张</h4>
+				<div class="board">
+					<a href="/album/{{album['id']}}/" class="link">&nbsp;</a>
+					<div class="holder">
+						<span class="cover">
+							<img src="/image/attach/{{album['photos'][0]}}_300" style="opacity: 1;height:150px;width：100%">
+						</span>
+						<span class="thumbs">
+							{% for photo in album['photos'][1:5] %}
+								{% if photo %}<img src="/image/attach/{{ photo }}_100" alt="">{% else %}<span class="empty"></span>{% end %}
+							{% end %}
+						</span>
+					</div>
+					<div class="followBoard"></div>
+				</div>
+			</div>
+		</li>
+		{% end %}
+	</ul>
+</div>
+{% end %}
+{% block bodyright %}
+	<a class="btn btn-large btn-success" onclick="if (!$.cookie('uid')) {$('#login').modal();return false;}return true;" href="/album/create/">新建相册</a>
+{% end %}

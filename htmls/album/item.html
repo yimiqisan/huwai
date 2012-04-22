@@ -1,0 +1,84 @@
+{% extends ../frame.html %}
+
+{% block static %}
+	<script language="javascript" src="{{ static_url('js/jquery.uploadify.min.js') }}" type="text/javascript"></script>
+	<script src="{{ static_url('js/jquery.masonry.min.js') }}" type="text/javascript"></script>
+	<script src="{{ static_url('js/jquery.infinitescroll.min.js') }}" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$('#nav-album').addClass("active");
+			$("#poster").uploadify({
+				swf				: '{{ static_url("js/uploadify.swf") }}',
+				uploader		: '/a/album/upload/?aid={{id}}',
+				checkExisting	: '/a/image/check/',
+				buttonText		: '点击上传',
+				cancelImage		: '{{ static_url("img/uploadify-cancel.png") }}',
+				auto			: true,
+				multi			: true,
+				fileObjName		: 'upload',
+				onUploadSuccess : function (file, data, response) {
+					$('#plist').append('<li><img src="/image/attach/'+data+'" /></li>');
+				},
+				onError			: function (event, queueID, fileObj){alert("文件:" + fileObj.name + " 上传失败");}
+			});
+			
+			var $falls = $('#plist');
+			$falls.imagesLoaded(function(){
+				$falls.find('.item').fadeIn('slow');
+				$falls.masonry({
+					columnWidth: 240,
+					isAnimated: true,
+					// 各 个 图 片 的 容 器
+					itemSelector : '.item'
+				});
+				$('#loadingPins').addClass('hide');
+			})
+			$falls.infinitescroll({
+				navSelector  : "#nav-extend",
+				nextSelector : "#nav-extend a",
+				itemSelector : ".item",
+				debug        : false,
+				loadingImg   : "http://www.infinite-scroll.com/loading.gif",
+				loadingText  : "加载中...",
+				animate      : true,
+				extraScrollPx: 50,
+				donetext     : "加载完毕" ,
+				bufferPx     : 40,
+				errorCallback: function(e){},
+				localMode    : true
+				},
+				function( newElements ) {
+					var $newElems = $( newElements ).css({ opacity: 0 });
+					$newElems.imagesLoaded(function(){
+						$newElems.animate({ opacity: 1 });
+						$container.masonry( 'appended', $newElems, true ); 
+						$container.find('.item').fadeIn('slow');
+					});
+					window.console && console.log('context: ',this);
+					window.console && console.log('returned: ', newElements);
+				}
+			);
+		})
+	</script>
+	{% block static-added %}{% end %}
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/uploadify.css') }}"/>
+{% end %}
+{% block bodyleft %}
+	<h3>{{title}}</h3><p>{{content}}</p>
+	<ul id="plist" class="thumbnails bg-white">
+	{% for p in photos %}
+		<li class="span3 item">
+			<div class="thumbnail">
+				<a style="background:#EDEDED;" target="_blank" href="/image/display/{{p}}"><img src="/image/attach/{{p}}_300" /></a>
+			</div>
+		</li>
+	{% end %}
+	</ul>
+	<div id="loadingPins" class="hide"><img src="{{ static_url('img/loading-fb.gif') }}" alt="Loading"></div>
+	<nav id="nav-extend" style="display:none;"><a href="/album/"></a></nav>
+
+{% end %}
+{% block bodyright %}
+	<a class="btn" href="/album/">相册列表</a></br></br>
+	<div id="poster">图片上传</div>
+{% end %}

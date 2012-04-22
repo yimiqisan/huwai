@@ -85,6 +85,9 @@ class AjaxImageCheckHandler(BaseHandler):
     def post(self):
         return True
 
+class DisplayHandler(BaseHandler):
+    def get(self, id):
+        return self.render("util/image_display.html", pid=id)
 
 
 

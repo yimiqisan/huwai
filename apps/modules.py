@@ -325,8 +325,28 @@ class TagDoc(Document):
     use_schemaless = True
     use_dot_notation=True
     
+class AlbumDoc(Document):
+    __collection__ = 'album'
+    __database__ = DB_NAME
     
+    structure = {
+            '_id':          unicode,
+            'owner':        unicode,
+            'title':        unicode,
+            'content':      unicode,
+            'relation':     unicode,
+            'tags':         list,
+            'allowed':      int,
+            'photos':       list,
+            'created':      datetime,
+            'added':        dict,
+            'added_id':     int,
+    }
+    required_fields = ['_id', 'created']
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
     
+    use_schemaless = True
+    use_dot_notation=True
     
     
     
