@@ -5,7 +5,7 @@
 		</a>
 	</dt>
 	<dd class="content">
-		<p class="wb_item_content"><a href="/weibo/she/{{ message['owner'] }}/" title="{{ message['nick'] }}" href="">{{ message['nick'] }}</a>：{{ message['content'] }}</p>
+		<p class="wb_item_content"><a href="/weibo/she/{{ message['owner'] }}/" title="{{ message['nick'] }}">{{ message['nick'] }}</a>：{{ message['content'] }}</p>
 		<p class="wb_opt">
 			<span>
 				{% if verify(message['perm'], 0x70) %}<a onclick="delItem(this);return false;" id="d-{{ message['id'] }}" class="remove">删除</a><i class="wb_vline">|</i>{% end %}

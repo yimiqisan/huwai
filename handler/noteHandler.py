@@ -100,7 +100,9 @@ class AjaxNoteHandler(BaseHandler):
         nc = unicode(nc.replace('\r\n', '</br>').replace('\n', '</br>').replace('\r', '</br>'))
         ng = self._flt_tags(ng)
         if nid is None:
-            r = n._api.save(uid, nt, nc, tags=ng)
+            nick = self.current_user if uid else u'匿名驴友'
+            kwargs = {'nick':nick}
+            r = n._api.save(uid, nt, nc, tags=ng, **kwargs)
         else:
             r = n._api.edit(nid, title=nt, content=nc, tags=ng)
         if r[0]:

@@ -59,3 +59,8 @@ def cntDict(handler, l, **kwargs):
                 plus = False
         if plus:cnt += 1
     return cnt
+
+def abstract(handler, c, n=100):
+    import re
+    s = re.sub(r'</?\w+[^>]*>','',c)
+    return s[:n]

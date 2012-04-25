@@ -7,6 +7,14 @@ font-family: Arial,Helvetica,sans-serif;
 word-wrap: break-word;
 white-space: pre-wrap;
 }
+#note-list .abstract{
+font-size: 14px;
+padding-bottom: 14px;
+line-height: 1.5;
+font-family: Arial,Helvetica,sans-serif;
+word-wrap: break-word;
+white-space: pre-wrap;
+}
 .PICR {
 float: right;
 margin-left: 14px;
@@ -27,4 +35,7 @@ border: 1;
 }
 .PIC div, .PICR div, .PICL div {
 margin-top: 7px;
+}
+#note-list .face {
+    width:60px;
 }

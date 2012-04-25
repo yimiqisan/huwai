@@ -258,4 +258,3 @@ class EventScrapyAPI(API):
     
     def page(self, owner=None, club=None, tags=None, date=None, place=None, deadline=None, check=True, page=1, pglen=10, cursor=None, limit=20, order_by='added_id', order=-1):
         pass
-    

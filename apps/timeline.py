@@ -123,7 +123,6 @@ class TimeLineAPI(API):
     def get(self, id):
         r = self.one(_id=id)
         if (r[0] and r[1]):return (True, self._output_format(result=r[1]))
-        print r
         return r
     
     def get_rpat_org(self, owner=None, topic=None, channel=None, at=None):

@@ -348,6 +348,27 @@ class AlbumDoc(Document):
     use_schemaless = True
     use_dot_notation=True
     
+class GuideDoc(Document):
+    __collection__ = 'guide'
+    __database__ = DB_NAME
+    
+    structure = {
+            '_id':          unicode,
+            'owner':        unicode,
+            'created':      datetime,
+            'added':        dict,
+            'added_id':     int,
+            'title':        unicode,
+            'href':         unicode,
+            'image':        unicode,
+            'tags':         list,
+            'price':        float,
+    }
+    required_fields = ['_id', 'created']
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
+    
+    use_schemaless = True
+    use_dot_notation=True
     
     
     

@@ -33,7 +33,7 @@ class CheckHandler(BaseHandler):
         uid = self.SESSION['uid']
         p = Permission()
         r = p._api.list(channel=u'site', key='VERIFIER')
-        return self.render("check/index.html", plist=r)
+        return self.render("check/index.html", plist=r, pm=self.pm)
     
     @addslash
     @session
@@ -106,6 +106,17 @@ class CheckNoteHandler(BaseHandler):
     @preperm()
     def post(self):
         self.redirect('/check/note/')
+
+class CheckGuideHandler(BaseHandler):
+    @session
+    @preperm()
+    def get(self):
+        return self.render("check/guide.html", pm=self.pm)
+    
+    @session
+    @preperm()
+    def post(self):
+        self.redirect('/check/guide/')
 
 class AjaxCheckEventHandler(BaseHandler):
     @addslash

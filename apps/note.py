@@ -11,6 +11,7 @@ import logging
 import uuid
 from datetime import datetime
 import time
+import re
 
 from huwai.config import DB_CON, DB_NAME, DEFAULT_CUR_UID, PERM_CLASS
 from modules import NoteDoc
@@ -98,7 +99,29 @@ class NoteAPI(API):
             return (True, l)
         else:
             return (False, r[1])
-
+    
+    def page(self, cuid=DEFAULT_CUR_UID, owner=None, title=None, content=None, tags=None, members=None, check=None, page=1, pglen=10, cursor=None, limit=20, order_by='added_id', order=-1):
+        kwargs = {}
+        if owner:kwargs['owner']=owner
+        if title:kwargs['title']=re.compile('.*'+title+'.*')
+        if content:kwargs['content']=re.compile('.*'+content+'.*')
+        if tags:kwargs['tags'] = {'$all':tags} if isinstance(tags, list) else tags
+        if members:kwargs['members'] = {'$all':members} if isinstance(members, list) else members
+        if check:kwargs['check']=check
+        kwargs['page']=page
+        kwargs['pglen']=pglen
+        if cursor:kwargs['cursor']=cursor
+        kwargs['limit']=limit
+        kwargs['order_by']=order_by
+        kwargs['order']=order
+        r = super(NoteAPI, self).page(**kwargs)
+        if r[0]:
+            kw = {'result':r[1]}
+            if cuid:kw['cuid']=cuid
+            l = self._output_format(**kw)
+            return (True, l, r[2])
+        else:
+            return (False, r[1])
     
     
     

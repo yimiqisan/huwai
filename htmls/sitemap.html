@@ -1,0 +1,45 @@
+{% extends frame.html %}
+
+{% block static %}{% end %}
+{% block bodyleft %}
+<h3>微博</h3>
+<ul class="unstyled">
+{% for wb in wb_list %}
+<li><a href="/weibo/{{wb['id']}}/">{{wb['content']}}</a></li>
+{% end %}
+</ul>
+{% module Template("util/pagination.html", pagination=wb_info, url='/sitemap/', param='item=weibo') %}
+<div style="clear:both;"></div>
+<h3>活动</h3>
+<ul class="unstyled">
+{% for et in et_list %}
+<li><a href="/event/{{et['id']}}/">{{et['title']}}</a></li>
+{% end %}
+</ul>
+{% module Template("util/pagination.html", pagination=et_info, url='/sitemap/', param='item=event') %}
+<div style="clear:both;"></div>
+<h3>游记</h3>
+<ul class="unstyled">
+{% for nt in nt_list %}
+<li><a href="/note/{{nt['id']}}/">{{nt['title']}}</a></li>
+{% end %}
+</ul>
+{% module Template("util/pagination.html", pagination=nt_info, url='/sitemap/', param='item=note') %}
+<div style="clear:both;"></div>
+<h3>相册</h3>
+<ul class="unstyled">
+{% for al in al_list %}
+<li><a href="/album/{{al['id']}}/">{{al['title']}}</a></li>
+{% end %}
+</ul>
+{% module Template("util/pagination.html", pagination=al_info, url='/sitemap/', param='item=album') %}
+<div style="clear:both;"></div>
+{% end %}
+{% block bodyright %}
+<div class="tabbable tabs-right">
+	<ul class="nav nav-tabs">
+		<li><a href="/contact/">联系我们</a></li>
+		<li class="active"><a>网站地图</a></li>
+	</ul>
+</div>
+{% end %}

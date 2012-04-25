@@ -4,6 +4,14 @@
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
 			$('#nav-note').addClass("active");
+			$('.collapse').on('show', function () {
+				$(this).parent().find('.abstract').hide();
+				$(this).parent().find('.accordion-heading i').attr('class', 'icon-chevron-up');
+			})
+			$('.collapse').on('hide', function () {
+				$(this).parent().find('.abstract').show();
+				$(this).parent().find('.accordion-heading i').attr('class', 'icon-chevron-down');
+			})
 		})
 	</script>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/note.css') }}"/>
@@ -12,12 +20,19 @@
 {% block bodyleft %}
 	<div class="accordion bg-white" id="note-list">
 		{% for n in note_l %}
-		<div class="accordion-group">
+		<div class="face pull-left">
+			<a href="/weibo/she/{{ n['owner'] }}/" title="{{ n.get('nick', '') }}">
+				<img title="" alt="" width=50 height=50 src="/image/avatar/{{ n['owner'] }}_50"/>
+			</a>
+			<span>{{ n.get('nick','') }}</span>
+		</div>
+		<div class="accordion-group pull-right" style="width:630px;">
 			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#{{ n['id'] }}">
-					{{ n['title'] }}
-				</a>
+				<a target="_blank" href="/note/{{ n['id'] }}/" class="accordion-toggle pull-left">{{ n['title'] }}</a>
+				<a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion" href="#{{ n['id'] }}" style="width:30px;"><i class="icon-chevron-down"></i></a>
+				<div style="clear:both;"></div>
 			</div>
+			<div class="accordion-inner abstract">{{ abstract(n['content'], 200) }}</div>
 			<div id="{{ n['id'] }}" class="accordion-body collapse" style="height: 0px;">
 				<div class="accordion-inner">
 					<div class="p">{{ n['content'] }}</div>
@@ -27,6 +42,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="clear"></div>
 		{% end %}
 	</div>
 {% end %}
