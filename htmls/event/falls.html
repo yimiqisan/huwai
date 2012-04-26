@@ -1,5 +1,11 @@
 {% extends ../frame.html %}
 
+{% block meta %}
+	<title>活动列表_北京户外网</title>
+	<meta name="keywords" content="活动 登山 游泳 骑行 穿越 足球 篮球 驴友">
+	<meta name="description" content="北京户外网活动列表展示户外活动，方便驴友查询自己喜欢的户外活动">
+{% end %}
+
 {% block static %}
 	<script src="{{ static_url('js/jquery.masonry.min.js') }}" type="text/javascript"></script>
 	<script src="{{ static_url('js/jquery.infinitescroll.min.js') }}" type="text/javascript"></script>
@@ -49,13 +55,13 @@
 {% end %}
 {% block bodyleft %}
 	<ul class="breadcrumb" style="background:#ededed;">
-		{% if title %}<li><a href="#">{{ title }}</a></li>{% end %}
+		{% if title %}<li><a href="#" title="{{ title }}" alt="{{ title }}">{{ title }}</a></li>{% end %}
 		<li class="pull-right">
 			<div class="btn-group">
 				<button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">模式切换 <span class="caret"></span></button>
 				<ul class="dropdown-menu">
-					<li><a href="/event/"><i class="icon-pencil"></i> &nbsp&nbsp&nbsp文字模式</a></li>
-					<li style="display:none;"><a href="/event/map/"><i class="icon-map-marker"></i> &nbsp&nbsp&nbsp地图模式</a></li>
+					<li><a href="/event/" title="活动列表文字模式" alt="活动列表文字模式"><i class="icon-pencil"></i> &nbsp&nbsp&nbsp文字模式</a></li>
+					<li style="display:none;"><a href="/event/map/" title="活动列表地图模式" alt="活动列表地图模式"><i class="icon-map-marker"></i> &nbsp&nbsp&nbsp地图模式</a></li>
 				</ul>
 			</div>
 		</li>
@@ -66,19 +72,19 @@
 			<li class="span3 item">
 				<div class="thumbnail">
 					<h3>
-						{% if e.has_key('href') %}<a target="_blank" href="{{e['href']}}">{% else %}<a href="/event/{{e['id']}}/">{% end %}
+						{% if e.has_key('href') %}<a target="_blank" href="{{e['href']}}" title="{{e['title']}}" alt="{{e['title']}}">{% else %}<a href="/event/{{e['id']}}/">{% end %}
 							{{e['title']}}<i style="font-size:10px;color:#CCCCCC;">({{e['date']}})</i>
 						</a>
 					</h3>
 					{% if e.has_key('href') %}
-						<a style="background:#EDEDED;" target="_blank" href="{{e['href']}}"><img src="{{e['logo']}}"/>
+						<a style="background:#EDEDED;" target="_blank" href="{{e['href']}}" title="{{e['title']}}" alt="{{e['title']}}"><img src="{{e['logo']}}" alt="{{e['title']}}"/>
 					{% else %}
-						<a style="background:#EDEDED;" href="/event/{{e['id']}}"><img src="/image/attach/{{e['logo']}}_300"/>
+						<a style="background:#EDEDED;" href="/event/{{e['id']}}" title="{{e['title']}}" alt="{{e['title']}}"><img src="/image/attach/{{e['logo']}}_300" alt="{{e['title']}}"/>
 					{% end %}
 						</a>
 					<ul class="caption unstyled" style="color:grey;">
 						{% if e['tl'][0] %}<li>{{e['tl'][0]}}</li>{% end %}
-						<li><a href="/event/{{e['id']}}/">{{e['tl'][1]}}</a></li>
+						<li><a href="/event/{{e['id']}}/" title="{{e['tl'][1]}}" alt="{{e['tl'][1]}}">{{e['tl'][1]}}</a></li>
 						{% if e['tl'][2] %}<li>{{e['tl'][2]}}</li>{% end %}
 					</ul>
 				</div>
@@ -89,5 +95,5 @@
 	<nav id="nav-extend" style="display:none;"><a href="/event/"></a></nav>
 {% end %}
 {% block bodyright %}
-		<a class="btn btn-large btn-success" onclick="if (!$.cookie('uid')) {$('#login').modal();return false;}return true;" href="/event/puba/">发布活动</a>
+		<a class="btn btn-large btn-success" title="发布活动" alt="发布活动" onclick="if (!$.cookie('uid')) {$('#login').modal();return false;}return true;" href="/event/puba/">发布活动</a>
 {% end %}

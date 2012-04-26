@@ -1,5 +1,11 @@
 {% extends ../frame.html %}
 
+{% block meta %}
+	<title>活动发布_北京户外网</title>
+	<meta name="keywords" content="活动发布 户外活动发布 领队发活动">
+	<meta name="description" content="北京户外网最友好的户外活动发布系统">
+{% end %}
+
 {% block static %}
 	<script language="javascript" src="{{ static_url('js/jquery.uploadify.min.js') }}" type="text/javascript"></script>
 	<script language="javascript" src="{{ static_url('js/event.js') }}" type="text/javascript"></script>
@@ -192,7 +198,7 @@
 				<div class="controls">
 					<script>toggleDate("begin_time", 0,0,0)</script>
 					<div class="input-prepend input-append">
-						<span class="add-on">历时</span><input class="span1" name="day" type="text" value="1"><span class="add-on">天</span>
+						<span class="add-on">历时</span><input class="span1" name="days" type="text" value="1"><span class="add-on">天</span>
 					</div>
 				</div>
 			</div>
@@ -253,7 +259,7 @@
 		</div>
 	</div>
 	<script language="javascript" type="text/javascript">
-		$(".event-form input[name='day']").on("change", function() {
+		$(".event-form input[name='days']").on("change", function() {
 			var day = parseInt($(this).val());
 			for (var i=2; i<day+1; i++) {
 				$("#editor .nav-tabs").append('<li class=""><a href="#r'+i+'" data-toggle="tab">第'+i+'天</a></li>');

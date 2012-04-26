@@ -1,5 +1,10 @@
 {% extends ../frame.html %}
 
+{% block meta %}
+	<title>相册_北京户外网</title>
+	<meta name="keywords" content="风景 户外照片 驴友照片">
+	<meta name="description" content="北京户外网相册旨在为驴友展示户外旅游时拍下来的人物、风景、美食、风土人情等照片汇集成册，供大家欣赏、讨论 供自己回味、记录。">
+{% end %}
 {% block static %}
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
@@ -16,17 +21,19 @@
 		{% for album in album_list %}
 		<li>
 			<div class="pin pinBoard" id="">
-				<h3 class="serif"><a href="/album/{{album['id']}}/">{{album['title']}}</a></h3>
+				<h3 class="serif">
+					<a href="/album/{{album['id']}}/" title="{{album['title']}}" alt="{{album['title']}}">{{album['title']}}</a>
+				</h3>
 				<h4>{{ len(album['photos']) }}张</h4>
 				<div class="board">
-					<a href="/album/{{album['id']}}/" class="link">&nbsp;</a>
+					<a href="/album/{{album['id']}}/" title="{{album['title']}}" alt="{{album['title']}}" class="link">&nbsp;</a>
 					<div class="holder">
 						<span class="cover">
-							<img src="/image/attach/{{album['photos'][0]}}_300" style="opacity: 1;height:150px;width：100%">
+							<img src="/image/attach/{{album['photos'][0]}}_300" alt="{{album['title']}}" style="opacity: 1;height:150px;width：100%">
 						</span>
 						<span class="thumbs">
 							{% for photo in album['photos'][1:5] %}
-								{% if photo %}<img src="/image/attach/{{ photo }}_100" alt="">{% else %}<span class="empty"></span>{% end %}
+								{% if photo %}<img src="/image/attach/{{ photo }}_100" alt="{{album['title']}}">{% else %}<span class="empty"></span>{% end %}
 							{% end %}
 						</span>
 					</div>
@@ -39,5 +46,5 @@
 </div>
 {% end %}
 {% block bodyright %}
-	<a class="btn btn-large btn-success" onclick="if (!$.cookie('uid')) {$('#login').modal();return false;}return true;" href="/album/create/">新建相册</a>
+	<a class="btn btn-large btn-success" title="新建相册" alt="新建相册" onclick="if (!$.cookie('uid')) {$('#login').modal();return false;}return true;" href="/album/create/">新建相册</a>
 {% end %}

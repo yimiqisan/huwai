@@ -1,4 +1,11 @@
 {% extends ../frame.html %}
+
+{% block meta %}
+	<title>活动审核_北京户外网</title>
+	<meta name="keywords" content="活动 审核 驴友 通过">
+	<meta name="description" content="北京户外网活动审核方便领队统计规范活动的人员。">
+{% end %}
+
 {% block static %}
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
@@ -37,7 +44,7 @@
 		<div class="accordion-group">
 			<div class="accordion-heading">
 				<div class="accordion-toggle">
-				<a class="pull-left" style="display:block;width:88%;height:28px;" data-toggle="collapse" data-parent="#accordion" href="#{{ u['id'] }}">
+				<a class="pull-left" title="u.get('nick', '匿名驴友')" alt="u.get('nick', '匿名驴友')" style="display:block;width:88%;height:28px;" data-toggle="collapse" data-parent="#accordion" href="#{{ u['id'] }}">
 					{{ u.get('nick', None) }}
 				</a>
 				<button id="btn-{{ u['id'] }}" class="btn btn-toggle {% if not u['switch'] %}btn-primary{% end %}" ajax-url="/a/event/approval/" data-loading-text="提交中" data-complete-text="{% if u['switch'] %}通过{% else %}取消通过{% end %}">
@@ -55,5 +62,5 @@
 	</div>
 {% end %}
 {% block bodyright %}
-	<a class="btn" href="/event/{{ eid }}/">回到活动</a>
+	<a class="btn" href="/event/{{ eid }}/" title="返回活动列表" alt="返回活动列表">回到活动</a>
 {% end %}

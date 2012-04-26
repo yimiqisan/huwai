@@ -1,5 +1,11 @@
 {% extends ../frame.html %}
 
+{% block meta %}
+	<title>活动列表_北京户外网</title>
+	<meta name="keywords" content="活动 登山 游泳 骑行 穿越 足球 篮球 驴友">
+	<meta name="description" content="北京户外网活动列表展示户外活动，方便驴友查询自己喜欢的户外活动">
+{% end %}
+
 {% block static %}
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {$('#nav-event').addClass("active");})
@@ -7,13 +13,13 @@
 {% end %}
 {% block bodyleft %}
 	<ul class="breadcrumb" style="background:#ededed;">
-		{% if title %}<li><a href="#">{{ title }}</a></li>{% end %}
+		{% if title %}<li><a href="#" title="{{ title }}" alt="{{ title }}">{{ title }}</a></li>{% end %}
 		<li class="pull-right">
 			<div class="btn-group">
 				<button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">模式切换 <span class="caret"></span></button>
 				<ul class="dropdown-menu">
-					<li><a href="/event/falls/"><i class="icon-picture"></i> &nbsp&nbsp&nbsp图片模式</a></li>
-					<li style="display:none;"><a href="/event/map/"><i class="icon-map-marker"></i> &nbsp&nbsp&nbsp地图模式</a></li>
+					<li><a href="/event/falls/" title="活动列表图片模式" alt="活动列表图片模式"><i class="icon-picture"></i> &nbsp&nbsp&nbsp图片模式</a></li>
+					<li style="display:none;"><a href="/event/map/" title="活动列表地图模式" alt="活动列表地图模式"><i class="icon-map-marker"></i> &nbsp&nbsp&nbsp地图模式</a></li>
 				</ul>
 			</div>
 		</li>
@@ -31,13 +37,13 @@
 			{% for e in event_list %}
 			<tr>
 				<td>
-					{% if e.has_key('href') %}<a target="_blank" href="{{e['href']}}">{% else %}<a href="/event/{{e['id']}}/">{% end %}
+					{% if e.has_key('href') %}<a target="_blank" href="{{e['href']}}" title="{{e['title']}}" alt="{{e['title']}}">{% else %}<a href="/event/{{e['id']}}/" title="{{e['title']}}" alt="{{e['title']}}">{% end %}
 						{{e['title']}}<i style="color:#CCCCCC;">({{e['nick']}})</i>
 					</a>
 				</td>
 				<td>{{e['date']}}</td>
 				<td>{{e['place']}}</td>
-				<td>{% if not e.has_key('href') %}<a href="/event/{{e['id']}}/">{{e['tl'][1]}}</a>{% end %}</td>
+				<td>{% if not e.has_key('href') %}<a href="/event/{{e['id']}}/"title="{{e['tl'][1]}}" alt="{{e['tl'][1]}}">{{e['tl'][1]}}</a>{% end %}</td>
 			</tr>
 			{% end %}
 		</tbody>
@@ -45,5 +51,5 @@
 	{% module Template("util/pagination.html", pagination=pagination, url='/event/', param='') %}
 {% end %}
 {% block bodyright %}
-	<a class="btn btn-large btn-success" onclick="if (!$.cookie('uid')) {$('#login').modal();return false;}return true;" href="/event/puba/">发布活动</a>
+	<a class="btn btn-large btn-success" title="发布活动" alt="发布活动" onclick="if (!$.cookie('uid')) {$('#login').modal();return false;}return true;" href="/event/puba/">发布活动</a>
 {% end %}

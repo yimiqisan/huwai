@@ -1,5 +1,11 @@
 {% extends ../frame.html %}
 
+{% block meta %}
+	<title>地图_北京户外网</title>
+	<meta name="keywords" content="地图 活动地点">
+	<meta name="description" content="更好的展现户外活动地点、集合地点等等">
+{% end %}
+
 {% block static %}
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=geometry&sensor=false"></script>
 	<script type="text/javascript" src="{{ static_url('js/jquery.map.js') }}" ></script>

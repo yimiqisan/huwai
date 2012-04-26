@@ -1,5 +1,11 @@
 {% extends ../frame.html %}
 
+{% block meta %}
+	<title>{{title}}_北京户外网</title>
+	<meta name="keywords" content="{{title}} {{ list2txt(place) }} 户外 驴友 活动">
+	<meta name="description" content="活动{{title}}地点在{{ list2txt(place) }}给力发布">
+{% end %}
+
 {% autoescape None %}
 {% block static %}
 	<script src="{{ static_url('js/weibo.js') }}" type="text/javascript"></script>
@@ -43,8 +49,8 @@
 	<h2 class="bg-white" style="text-align:center;">{{ title }}</h2>
 	<ul class="thumbnails bg-white" style="padding-top:20px;">
 		<li class="span4">
-			<a href="#" class="thumbnail">
-				<img width="300" height="300" src="/image/attach/{{logo}}_300"/>
+			<a href="#" class="thumbnail" title="{{title}}" alt="{{title}}">
+				<img width="300" height="300" src="/image/attach/{{logo}}_300" alt="{{title}}"/>
 			</a>
 		</li>
 		<li class="span5" style="margin-left:8px;color:black;padding:10px 0 0 10px;">
@@ -53,7 +59,7 @@
 			{% end %}
 			<p>发布日期：{{ created }}</p>
 			<p style="display:none;">户外标签：{{ tags }}</p>
-			<p>性质：{{ is_merc }}、{{ club }}、<a href="/event/difficulty/{{ level }}/">难度{{ level }}</a></p>
+			<p>性质：{{ is_merc }}、{{ club }}、<a href="/event/difficulty/{{ level }}/" title="户外难度系数{{ level }}" alt="户外难度系数{{ level }}">难度{{ level }}</a></p>
 			<p style="display:none;">路线：{{ route }}</p>
 			{% if list2txt(place) %}<p>活动地点：{{ list2txt(place) }}</p>{% end %}
 			<p>活动开始时间：{{ date }}</p>
@@ -127,10 +133,10 @@
 {% block bodyright %}
 	{% if user_list %}
 	<div class="well">
-		<a class="btn btn-info" href="/event/{{ eid }}/member/">报名列表</a>
+		<a class="btn btn-info" title="报名列表" alt="报名列表" href="/event/{{ eid }}/member/">报名列表</a>
 	</div>
 	{% end %}
-	{% if uid == owner %}<div class="well"><a class="btn btn-warning" href="/event/{{ eid }}/approval/">报名审核</a></div>{% end %}
+	{% if uid == owner %}<div class="well"><a class="btn btn-warning" title="报名审核" alt="报名审核" href="/event/{{ eid }}/approval/">报名审核</a></div>{% end %}
 	
 	<div class="well">
 		<h4>报名信息</h4><br/>
@@ -138,8 +144,8 @@
 		<p>报名人数：{{ fr }} 到 {{ to }}</p>
 		<p>集合时间：{{ when }}</p>
 		<p>集合地点：<a href="/map/{{ where }}/" target="_blank">点击查看</a></p>
-		<p>{% if declare_tl %}<a href="" onclick="$('#declare_tl').modal();return false;">免责声明</a>{% end %}</p>
-		<p>{% if attention_tl %}<a href="" onclick="$('#attention_tl').modal();return false;">注意事项</a>{% end %}</p>
+		<p>{% if declare_tl %}<a href="" title="{{title}}免责声明" alt="{{title}}免责声明" onclick="$('#declare_tl').modal();return false;">免责声明</a>{% end %}</p>
+		<p>{% if attention_tl %}<a href="" title="{{title}}注意事项" alt="{{title}}注意事项" onclick="$('#attention_tl').modal();return false;">注意事项</a>{% end %}</p>
 		<button id="btn-{{ uid }}" class="btn btn-toggle {% if not is_join %}btn-success{% end %}" ajax-url="/a/event/join/" data-loading-text="提交中" data-complete-text="{% if is_join %}参加活动{% else %}退出活动{% end %}">
 			{% if is_join %}退出活动{% else %}参加活动{% end %}
 		</button>&nbsp;&nbsp;还有{{to-cntDict(user_list, switch=True)}}个名额

@@ -1,5 +1,11 @@
 {% extends ../frame.html %}
 
+{% block meta %}
+	<title>提醒_北京户外网</title>
+	<meta name="keywords" content="活动提醒 游记通知 驴友微博提醒">
+	<meta name="description" content="北京户外网提醒旨在为驴友提供全面儿友好的提示以便驴友更好交流 参加活动 游记、攻略讨论 发布活动 等等操作。">
+{% end %}
+
 {% block static %}
 	{% block static-added %}{% end %}
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/alert.css') }}"/>
@@ -16,7 +22,7 @@
 			{% for a in alert_list %}
 			<tr>
 				<td>{{a['nick']}}：{{ a['content'] }}</td>
-				<td><a href="/weibo/{{ a['id'] }}/">查看</a></td>
+				<td><a href="/weibo/{{ a['id'] }}/" title="{{a['content']}}" alt="{{a['content']}}">查看</a></td>
 			</tr>
 			{% end %}
 		</tbody>

@@ -1,5 +1,11 @@
 {% extends ../frame.html %}
 
+{% block meta %}
+	<title>游记_北京户外网</title>
+	<meta name="keywords" content="游记列表 户外游记 游记 攻略 见闻 旅游记录">
+	<meta name="description" content="北京户外网游记功能旨在为驴友提供记录户外点滴、行程、见闻等等以文字、图片、视频等形式展现出来的">
+{% end %}
+
 {% block static %}
 	<script language="javascript" type="text/javascript">
 		$(document).ready(function() {
@@ -36,8 +42,6 @@
 			<div id="{{ n['id'] }}" class="accordion-body collapse" style="height: 0px;">
 				<div class="accordion-inner">
 					<div class="p">{{ n['content'] }}</div>
-					<div class="clear"></div>
-					<div class="pull-right"><a target="_blank" href="/note/{{ n['id'] }}/">评论</a></div>
 					<div class="clear"></div>
 				</div>
 			</div>

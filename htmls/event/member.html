@@ -1,5 +1,10 @@
 {% extends ../frame.html %}
 
+{% block meta %}
+	<title>活动人员_北京户外网</title>
+	<meta name="keywords" content="驴友 参加 户外活动">
+	<meta name="description" content="北京户外网参加户外人员列表">
+{% end %}
 
 {% block static %}
 	<script language="javascript" type="text/javascript">
@@ -12,8 +17,8 @@
 	<ul class="thumbnails">
 		{% for u in userlist %}
 		<li class="span3 bg-white">
-			<a href="/weibo/she/{{u.get('owner', None)}}/" class="thumbnail" style="min-height:100px;">
-				<div style="float:left; clear:right; margin-right:10px;"><img src="/image/avatar/{{u.get('owner', None)}}_100" style="width:80px;height:80px;" width=80 height=80 /></div>
+			<a href="/weibo/she/{{u.get('owner', None)}}/" title="{{ u.get('nick', '匿名驴友') }}" alt="{{ u.get('nick', '匿名驴友') }}" class="thumbnail" style="min-height:100px;">
+				<div style="float:left; clear:right; margin-right:10px;"><img src="/image/avatar/{{u.get('owner', None)}}_100" alt="{{ u.get('nick', '匿名驴友') }}" style="width:80px;height:80px;" width=80 height=80 /></div>
 				<h3>{{ u.get('nick', None) }}</h3><i style="color:gray;font-size:10px;">{{ u['created'] }}</i>
 				{% if u['switch'] %}<em style="color:red;">已通过</em>{% end %}
 			</a>
@@ -22,5 +27,5 @@
 	</ul>
 {% end %}
 {% block bodyright %}
-	<a class="btn" href="/event/{{ eid }}/">回到活动</a>
+	<a class="btn" href="/event/{{ eid }}/" title="返回活动" alt="返回活动">回到活动</a>
 {% end %}

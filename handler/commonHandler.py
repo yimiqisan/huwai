@@ -90,7 +90,7 @@ class SiteMapHandler(BaseHandler):
         t = TimeLine()
         rt = t._api.page(channel=[u'normal', u'reply', u'weibo', u'club', u'event', u'album'], **wb_args)
         e = Event()
-        re = e._api.page(**et_args)
+        re = e._api.page(check=True, **et_args)
         n = Note()
         rn = n._api.page(**nt_args)
         a = Album()
