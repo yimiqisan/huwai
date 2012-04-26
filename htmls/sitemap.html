@@ -8,38 +8,51 @@
 
 {% block static %}{% end %}
 {% block bodyleft %}
-<h3>微博</h3>
-<ul class="unstyled">
-{% for wb in wb_list %}
-<li><a href="/weibo/{{wb['id']}}/" title="{{nt['title']}}" alt="{{nt['title']}}">{{wb['content']}}</a></li>
-{% end %}
-</ul>
-{% module Template("util/pagination.html", pagination=wb_info, url='/sitemap/', param='item=weibo') %}
-<div style="clear:both;"></div>
-<h3>活动</h3>
-<ul class="unstyled">
-{% for et in et_list %}
-<li><a href="/event/{{et['id']}}/" title="{{nt['title']}}" alt="{{nt['title']}}">{{et['title']}}</a></li>
-{% end %}
-</ul>
-{% module Template("util/pagination.html", pagination=et_info, url='/sitemap/', param='item=event') %}
-<div style="clear:both;"></div>
-<h3>游记</h3>
-<ul class="unstyled">
-{% for nt in nt_list %}
-<li><a href="/note/{{nt['id']}}/" title="{{nt['title']}}" alt="{{nt['title']}}">{{nt['title']}}</a></li>
-{% end %}
-</ul>
-{% module Template("util/pagination.html", pagination=nt_info, url='/sitemap/', param='item=note') %}
-<div style="clear:both;"></div>
-<h3>相册</h3>
-<ul class="unstyled">
-{% for al in al_list %}
-<li><a href="/album/{{al['id']}}/" title="{{nt['title']}}" alt="{{nt['title']}}">{{al['title']}}</a></li>
-{% end %}
-</ul>
-{% module Template("util/pagination.html", pagination=al_info, url='/sitemap/', param='item=album') %}
-<div style="clear:both;"></div>
+
+	{% if wb_list %}
+	<h3>微博</h3>
+	<ul class="unstyled">
+		{% for wb in wb_list %}
+		<li><a href="/weibo/{{wb['id']}}/" title="{{wb['content']}}" alt="{{wb['content']}}">{{wb['content']}}</a></li>
+		{% end %}
+	</ul>
+	{% module Template("util/pagination.html", pagination=wb_info, url='/sitemap/', param='item=weibo') %}
+	<div style="clear:both;"></div>
+	{% end %}
+	
+	{% if et_list %}
+	<h3>活动</h3>
+	<ul class="unstyled">
+		{% for et in et_list %}
+		<li><a href="/event/{{et['id']}}/" title="{{et['title']}}" alt="{{et['title']}}">{{et['title']}}</a></li>
+		{% end %}
+	</ul>
+	{% module Template("util/pagination.html", pagination=et_info, url='/sitemap/', param='item=event') %}
+	<div style="clear:both;"></div>
+	{% end %}
+	
+	{% if nt_list %}
+	<h3>游记</h3>
+	<ul class="unstyled">
+		{% for nt in nt_list %}
+		<li><a href="/note/{{nt['id']}}/" title="{{nt['title']}}" alt="{{nt['title']}}">{{nt['title']}}</a></li>
+		{% end %}
+	</ul>
+	{% module Template("util/pagination.html", pagination=nt_info, url='/sitemap/', param='item=note') %}
+	<div style="clear:both;"></div>
+	{% end %}
+	
+	{% if al_list %}
+	<h3>相册</h3>
+	<ul class="unstyled">
+		{% for al in al_list %}
+		<li><a href="/album/{{al['id']}}/" title="{{al['title']}}" alt="{{al['title']}}">{{al['title']}}</a></li>
+		{% end %}
+	</ul>
+	{% module Template("util/pagination.html", pagination=al_info, url='/sitemap/', param='item=album') %}
+	<div style="clear:both;"></div>
+	{% end %}
+	
 {% end %}
 {% block bodyright %}
 <div class="tabbable tabs-right">
