@@ -1,9 +1,9 @@
 {% extends ../frame.html %}
 
 {% block meta %}
-	<title></title>
-	<meta name="keywords" content="">
-	<meta name="description" content="">
+	<title>{{current_user}}的微博</title>
+	<meta name="keywords" content="{{current_user}} 户外 微博">
+	<meta name="description" content="{{message['nick']}}说{{message['content']}}">
 {% end %}
 
 {% block static %}

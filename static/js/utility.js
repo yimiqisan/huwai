@@ -145,7 +145,7 @@ function togglePopup(e) {
 
 function toggleDate(a,b,c,d){
     var e=new Date,f=new Date;
-    e.setDate(e.getDate()+5);
+    e.setDate(e.getDate()+1);
     var g=f.getFullYear(),h=f.getMonth()+1;
     select_date(a,b,g+100,g-1,!0,function(a,b){return a==g&&b==h?f.getDay():1},!0);
     var i="#"+a,j=$(i+"_year"),k=$(i+"_month"),l=$(i+"_day");

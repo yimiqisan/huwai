@@ -1,9 +1,9 @@
 {% extends frame.html %}
 
 {% block meta %}
-	<title></title>
-	<meta name="keywords" content="">
-	<meta name="description" content="">
+	<title>网站地图</title>
+	<meta name="keywords" content="户外 驴友 登山 游泳 骑行 微博 相册 游记 标签 攻略">
+	<meta name="description" content="北京户外网网组织结构">
 {% end %}
 
 {% block static %}{% end %}
@@ -11,7 +11,7 @@
 <h3>微博</h3>
 <ul class="unstyled">
 {% for wb in wb_list %}
-<li><a href="/weibo/{{wb['id']}}/">{{wb['content']}}</a></li>
+<li><a href="/weibo/{{wb['id']}}/" title="{{nt['title']}}" alt="{{nt['title']}}">{{wb['content']}}</a></li>
 {% end %}
 </ul>
 {% module Template("util/pagination.html", pagination=wb_info, url='/sitemap/', param='item=weibo') %}
@@ -19,7 +19,7 @@
 <h3>活动</h3>
 <ul class="unstyled">
 {% for et in et_list %}
-<li><a href="/event/{{et['id']}}/">{{et['title']}}</a></li>
+<li><a href="/event/{{et['id']}}/" title="{{nt['title']}}" alt="{{nt['title']}}">{{et['title']}}</a></li>
 {% end %}
 </ul>
 {% module Template("util/pagination.html", pagination=et_info, url='/sitemap/', param='item=event') %}
@@ -27,7 +27,7 @@
 <h3>游记</h3>
 <ul class="unstyled">
 {% for nt in nt_list %}
-<li><a href="/note/{{nt['id']}}/">{{nt['title']}}</a></li>
+<li><a href="/note/{{nt['id']}}/" title="{{nt['title']}}" alt="{{nt['title']}}">{{nt['title']}}</a></li>
 {% end %}
 </ul>
 {% module Template("util/pagination.html", pagination=nt_info, url='/sitemap/', param='item=note') %}
@@ -35,7 +35,7 @@
 <h3>相册</h3>
 <ul class="unstyled">
 {% for al in al_list %}
-<li><a href="/album/{{al['id']}}/">{{al['title']}}</a></li>
+<li><a href="/album/{{al['id']}}/" title="{{nt['title']}}" alt="{{nt['title']}}">{{al['title']}}</a></li>
 {% end %}
 </ul>
 {% module Template("util/pagination.html", pagination=al_info, url='/sitemap/', param='item=album') %}
@@ -44,7 +44,7 @@
 {% block bodyright %}
 <div class="tabbable tabs-right">
 	<ul class="nav nav-tabs">
-		<li><a href="/contact/">联系我们</a></li>
+		<li><a href="/contact/" title="联系我们" alt="联系我们">联系我们</a></li>
 		<li class="active"><a>网站地图</a></li>
 	</ul>
 </div>
