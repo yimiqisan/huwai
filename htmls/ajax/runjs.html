@@ -1,0 +1,12 @@
+{% extends ../box93.html %}
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$.cookie("uid", '{{uid}}', {path: '/', expires: 1});
+			window.location.href = '/account/profile/';
+		})
+	</script>
+{% end %}
+{% block bodyleft %}{% end %}
+{% block bodyright %}{% end %}

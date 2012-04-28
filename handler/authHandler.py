@@ -38,12 +38,11 @@ class AuthHandler(BaseHandler):
         if u._api.is_nick_exist(n):return self.render('profile/auth.html', **{'warning': '名称已存在', 'nick': n, 'extra': extra})
         r = u.register(n, **extra)
         if r[0]:
-            self.set_secure_cookie("user", n, 1)
-            uid = r[1]
-            self.SESSION['uid']=uid
+            self.SESSION['uid']=u._id
+            self.SESSION['nick']=n
             if extra.has_key('photo'):self.save_avatar(extra['photo'])
-            u._api.edit(uid, **extra)
-            self.redirect('/account/profile')
+            u._api.edit(u._id, **extra)
+            return self.render('ajax/runjs.html', uid=u._id)
         else:
             return self.render('profile/auth.html', **{'warning': r[1], 'nick': n, 'extra': extra})
     
@@ -80,6 +79,9 @@ class AuthHandler(BaseHandler):
         p=AvatarProcessor(uid)
         r = p.process(response.body)
         self.finish()
+    
+    def get(self):
+        self.render('profile/auth.html', nick='yisan', extra={}, warning=None)
 
 class SinaLoginHandler(AuthHandler):
     @addslash
