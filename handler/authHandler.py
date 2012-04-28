@@ -64,9 +64,9 @@ class AuthHandler(BaseHandler):
         if u.uid is None:
             return False
         else:
-            self.set_secure_cookie("user", u.nick, 1)
             self.SESSION['uid']=u._id
-            self.redirect('/account/profile')
+            self.SESSION['nick']=u.nick
+            self.render('ajax/runjs.html', uid=u._id)
             return True
     
     def save_avatar(self, photo_url):
