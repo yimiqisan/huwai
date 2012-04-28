@@ -27,7 +27,7 @@ class AuthHandler(BaseHandler):
         u = User()
         r = u._api.edit(uid, **extra)
         if r[0]:
-            self.redirect('/account/profile')
+            self.redirect('/account/profile/')
         else:
             return self.redirect('/account/setting/thirdpart/', **{'warning': r[1]})
     
