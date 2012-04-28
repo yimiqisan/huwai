@@ -128,9 +128,9 @@ class QQLoginHandler(AuthHandler, QQGraphMixin):
     def _on_login(self, response):
         u = self.is_authed('qqid', response['openid'])
         if u:
-            self.set_secure_cookie("user", u.nick, 1)
             self.SESSION['uid']=u._id
-            self.redirect('/account/profile')
+            self.SESSION['uid']=u.nick
+            self.render('ajax/runjs.html', uid=u._id)
         else:
             self.qq_request(path="/user/get_user_info", callback=self.async_callback(self._on_get_user_info, self._on_register, response['fields'], response['openid']), access_token=response['session']["access_token"], openid=response['openid'], oauth_consumer_key=response['client_id'], fields=",".join(response['fields']))
     
