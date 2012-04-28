@@ -127,6 +127,13 @@
 				<form class="form-horizontal" action="/account/register/" method="post">
 					<fieldset>
 						<div class="control-group">
+							<label class="control-label" for="nick">已有</label>
+							<div class="controls">
+								<a href="/auth/sina/"><img src="{{static_url('img/sina24.png')}}"/></a>&nbsp;&nbsp;
+								<a href="/auth/qq/"><img src="{{static_url('img/qq24.png')}}"/></a>
+							</div>
+						</div>
+						<div class="control-group">
 							<label class="control-label" for="nick">绰号</label>
 							<div class="controls">
 								<input name="nick" type="text">
@@ -164,6 +171,13 @@
 				<form class="form-horizontal" action="/account/login/" method="post">
 					<fieldset>
 						<div class="control-group">
+							<label class="control-label" for="nick">已有</label>
+							<div class="controls">
+								<a href="/auth/sina/"><img src="{{static_url('img/sina24.png')}}"/></a>&nbsp;&nbsp;
+								<a href="/auth/qq/"><img src="{{static_url('img/qq24.png')}}"/></a>
+							</div>
+						</div>
+						<div class="control-group">
 							<label class="control-label" for="nick">绰号</label>
 							<div class="controls">
 								<input name="nick" type="text">
@@ -177,7 +191,6 @@
 								<span class="help-inline hide">必填</span>
 							</div>
 						</div>
-						<img src="{{static_url('img/sina_24x24.png')}}"/>
 						<div class="form-actions">
 							<a class="btn pull-right" onclick="$('#login').modal('hide');$('#register').modal();return false;">注册</a>
 							<input type="submit" class="btn btn-primary" value="提交"/>
