@@ -47,6 +47,7 @@
                 onTagAdded: v.onTagAdded
             });
             if (v.addedAble) {
+                alert(v.id);
                 y = b('<a id="'+v.id+'Submit" class="btn btn-primary pull-right">加上去</a>');
                 y.click(function(){
                     var za = $('#'+v.id+'Single').val();

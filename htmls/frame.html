@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		{% block meta %}{% end %}
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta property="wb:webmaster" content="98499125f4d97e8f" />
 		<script src="{{ static_url('js/bs/html5.js') }}"></script>
 		<script src="{{ static_url('js/jquery.min.js') }}" type="text/javascript"></script>
 		<script src="{{ static_url('js/jquery.own.js') }}" type="text/javascript"></script>
@@ -176,6 +177,7 @@
 								<span class="help-inline hide">必填</span>
 							</div>
 						</div>
+						<img src="{{static_url('img/sina_24x24.png')}}"/>
 						<div class="form-actions">
 							<a class="btn pull-right" onclick="$('#login').modal('hide');$('#register').modal();return false;">注册</a>
 							<input type="submit" class="btn btn-primary" value="提交"/>
