@@ -22,3 +22,4 @@ from mapHandler import MapHandler, MapItemHandler, MapEventHandler, MapWeiboHand
 from tagHandler import TagHandler, TagItemHandler, AjaxTagHandler, AjaxTagListHandler
 from albumHandler import AlbumHandler, AlbumCreateHandler, AlbumItemHandler, AjaxAlbumUploadHandler, AjaxAlbumDeleteHandler
 from guideHandler import GuideHandler
+from searchHandler import SearchHandler

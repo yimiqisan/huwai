@@ -79,9 +79,6 @@ class AuthHandler(BaseHandler):
         p=AvatarProcessor(uid)
         r = p.process(response.body)
         self.finish()
-    
-    def get(self):
-        self.render('profile/auth.html', nick='yisan', extra={}, warning=None)
 
 class SinaLoginHandler(AuthHandler):
     @addslash
@@ -141,7 +138,7 @@ class QQLoginHandler(AuthHandler, QQGraphMixin):
             kwargs = {'qqid':unicode(response['qqid'])}
             self.bind_user(**kwargs)
         else:
-            kwargs = {'nick':unicode(response['nickname']), 'photo':response['figureurl_2'], 'qqid':unicode(response['qqid'])}
+            kwargs = {'nick':response['nickname'], 'photo':response['figureurl_2'], 'qqid':unicode(response['qqid'])}
             self.add_user(**kwargs)
 
 class QQHandler(BaseHandler, QQGraphMixin):

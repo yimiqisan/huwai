@@ -1,0 +1,96 @@
+@charset "UTF-8";
+/* CSS Document */
+.header {
+/*	background:url(../images/header.png) repeat-x #f0f0f0; */
+}
+.footer{
+	background:#f0f0f0;
+	border-color:#e1e1e1;
+	color:#999;
+	}
+.footer a{
+	color:#666;
+	}
+/*导航*/
+.nav li a.active {
+	background:url(../images/active_icon_white.png) center bottom no-repeat;
+}
+.nav_child {
+/*	background:url(../images/header.png) 0 -67px repeat-x #f0f0f0; */
+	background:#ffffff;
+	padding: 0 15px;
+	-webkit-box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+	-moz-box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+	box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+	border-radius:4px;
+	margin-left:10px;
+	margin-right:10px;
+}
+/*子级导航*/
+.nav_child li a {
+/*	color:#fff; */
+	color:#ff6666;
+}
+.nav_child li a:hover,.nav_child li a.active {
+	background:#ff6666;
+	color:#ffffff;
+}
+/*tag列表*/
+.tag {
+	border-top:#ff6666 solid 3px;
+}
+.taglist li a {
+	border: 1px solid #d5d5d5;
+	color: #ff6666;
+	background-color: #f6f6f6;
+}
+.taglist li a:hover, .taglist li.active a {
+	border-color:#ff6666;
+	background:#ff6666;
+	color:#fff;
+}
+.taglist li a.disabled {
+	border-color:#e1e1e1;
+	color:#999;
+}
+/**/
+.side_content .side_content_pic .txt_wrap{
+	color:#666;
+	}
+.buy_price{
+	color:#999;
+	}
+.buy_link{
+	color:#f60;
+	}
+/*上一张 下一张*/
+.next_prev a{  background:#f0f0f0; color:#111;}
+.next_prev a:hover{ background:#f80; color:#fff;}
+
+/*首页模块*/
+.item{ 
+background:#fff;
+-webkit-box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+-moz-box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+border-radius:4px;
+}
+.item_header{border-bottom-color:#e1e1e1;}
+.item_header h3{color:#ff6666;}
+.item_header li a{ border-right-color:#e1e1e1; color:#999;}
+.item_header li a:hover{color:#666;}
+.item_header .more{ color:#ff6666;}
+.item_content a{ color:#444;}
+.item_content a:hover{ color:#111;}
+.item_content li .share_item_txt{ color:#444;}
+.num-pl,.pic-des a:hover,.pic-des a{ color:#FFF;line-height: 25px;}
+/*瀑布流色彩定义*/
+
+.pin,.pin .image {background-color:#fff;}
+.likenum, .sharenum {color:#999;}
+.share_people{background:#f5f5f5;}
+.shareinfo p {color:#75868e;}
+.shareinfo, .shareinfo2, .share_like {color:#666;}
+.shareinfo p a,.share_like a{color:#777;}
+.share_comment,.share_people,.share_txa{background:#f1f1f1;}
+.pic_home,.pic_home_170_350,.pic_home_170_170,.pic_home_350_170 {background-color: #f0f0f0;}

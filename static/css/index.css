@@ -1,0 +1,207 @@
+.content_wrap {
+	padding: 10px 30px 10px 10px;
+	margin-left: 0px;
+	margin-right: 0px;
+	background: white;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+	-webkit-box-shadow: 1px 1px 3px rgba(162, 162, 162, .8);
+	-moz-box-shadow: 1px 1px 3px rgba(162, 162, 162, .8);
+	box-shadow: 1px 1px 3px rgba(162, 162, 162, .8);
+	border-radius: 4px;
+}
+.content_wrap_left {
+	width: 640px;
+	height: 290px;
+	float: left;
+}
+.content_wrap_right {
+	width: 240px;
+	height: 290px;
+	margin-left: 20px;
+	float: left;
+}
+#slideshow #next, #slideshow #prev {
+	position: absolute;
+	top: 120px;
+	left: 5px;
+	width: 40px;
+	height: 0px;
+	padding-top: 40px;
+	overflow: hidden;
+	z-index: 101;
+}
+#slideshow #prev {
+	background: url(/static/img/arrow-prev.png);
+	opacity: .4;
+}
+#slideshow #next {
+	left: 595px;
+	background: url(/static/img/arrow-next.png);
+	opacity: .4;
+}
+#slideshow #prev:hover {
+	opacity: .9;
+}
+#slideshow #next:hover {
+	opacity: .9;
+}
+#slideshow {
+	position: relative;
+}
+#slideshow div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 8;
+}
+#slideshow div.active {
+	z-index: 10;
+}
+#slideshow div.last-active {
+	z-index: 9;
+}
+.contentbox {
+	height: 280px;
+	overflow: hidden;
+}
+.contentbox li {
+	font-size: 12px;
+	line-height: 21px;
+	position: relative;
+	min-height: 50px;
+	padding: 10px 65px 10px 0px;
+	text-align: justify;
+	border-top: #F2F2F2 solid 1px;
+}
+.contentbox img {
+	position: absolute;
+	right: 0;
+}
+.contentbox .sendtime {
+	color: #999999;
+}
+.contentbox p {
+	color: #666;
+}
+.item {
+	padding: 5px;
+}
+.item_header {
+    height:21px;
+    font-size: 14px;
+    line-height:21px;
+	margin: 5px;
+	padding: 5px 0;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+.item_header h3 {
+    float: left;
+    font-size: 14px;
+    line-height:21px;
+	margin-right: 10px;
+}
+.item_header strong {
+    font-size:14px;
+    line-height:21px;
+}
+.item_header ul {
+    margin:0px;
+}
+.item_header li {
+    font-size:14px;
+    line-height:21px;
+    float: left;
+}
+.item_header li a {
+	padding: 0 8px;
+	border-left-style: solid;
+	border-left-width: 1px;
+}
+.item_header li.last a {
+	border-right-width: 0;
+}
+.item_header .more {
+    font-size:14px;
+    line-height:21px;
+    width:76px;
+    float: right;
+}
+.item_content {
+	margin-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.share_item_list li {
+	width: 220px;
+	margin: 6px;
+	float: left;
+}
+.share_item_list li:hover img {
+	opacity: 0.8;
+}
+.share_item_list li .item_txt {
+	padding: 10px 0;
+	line-height: 18px;
+}
+
+
+.pic-des {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 25px;
+	border-bottom: 1px solid #333;
+	background: url(/static/img/bg-pic-des.png) left top repeat-x;
+	_background: url(/static/img/bg-pic-des.png) left top repeat-x;
+	filter: alpha(opacity =               70);
+}
+.pic_home, .pic_home_170_350, .pic_home_170_170, .pic_home_350_170 {
+	overflow: hidden;
+	position: relative;
+	float: left;
+	_display: inline;
+	margin-right: 10px;
+	margin-top: 10px;
+	background-color: #f0f0f0;
+}
+.pic_home_170_350 {
+	width: 200px;
+	height: 300px;
+}
+.pic_home_170_170 {
+	width: 160px;
+	height: 145px;
+}
+.pic_home_350_170 {
+	width: 330px;
+	height: 145px;
+}
+.pic-des a, .pic-des a:hover {
+	float: left;
+	font: 12px/1.5 arial, helvetica, sans-serif;
+	margin-left: 9px;
+}
+.pic-des a:hover {
+	text-decoration: underline;
+}
+.pic-des .num-pl {
+	margin-right: 9px;
+}
+.num-pl {
+	float: right;
+	bottom: 0;
+	right: 0;
+	background: url(../images/ico_love.png) 0 center no-repeat;
+	padding-left: 13px;
+}
+/*infscr-loading*/
+#infscr-loading {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	margin-left: -100px;
+}

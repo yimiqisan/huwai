@@ -9,21 +9,18 @@
 		<script src="{{ static_url('js/bs/html5.js') }}"></script>
 		<script src="{{ static_url('js/jquery.min.js') }}" type="text/javascript"></script>
 		<script src="{{ static_url('js/jquery.own.js') }}" type="text/javascript"></script>
-		<script src="{{ static_url('js/jquery.cookie.js') }}" type="text/javascript"></script>
-		<script src="{{ static_url('js/utility.js') }}" type="text/javascript"></script>
-		<script src="{{ static_url('js/jquery.lazyload.js') }}" type="text/javascript"></script>
 		<script language="javascript" type="text/javascript">
 			$(document).ready(function() {
-				//$("img").lazyload({});
 				login();
 				reg();
 			})
+			var base_url = 'http://www.niaolin.com/';
 		</script>
 		<link href="{{ static_url('css/bootstrap.css') }}" rel="stylesheet">
 		<link href="{{ static_url('css/doc.css') }}" rel="stylesheet">
 		<link href="{{ static_url('css/ie6.css') }}" rel="stylesheet">
 		<link href="{{ static_url('css/mybootstrap.css') }}" rel="stylesheet">
-		<link rel="shortcut icon" href="{{ static_url('img/favicon') }}" type="image/x-icon">
+		<link rel="shortcut icon" href="{{ static_url('img/favicon.ico') }}" type="image/x-icon">
 		{% block static %}{% end %}
 	</head>
 	<body data-spy="scroll" data-target=".subnav" data-offset="50">
@@ -62,7 +59,7 @@
 							<li class="divider-vertical"></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									<img src="/image/avatar/{{ uid }}_30" style="width:24px;height:24px;" width=24 height=24 onerror="this.src='/static/img/default_avatar.gif';" />&nbsp{{ current_user }}<b class="caret"></b>
+									<img src="/image/avatar/{{ uid }}_30" style="width:24px;height:24px;" width=24 height=24 />&nbsp{{ current_user }}<b class="caret"></b>
 								</a>
 								<ul class="nav-list dropdown-menu">
 									<li><a href="/account/profile/"><i class="icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;个人主页</a></li>
@@ -87,40 +84,34 @@
 				</div>
 			</div>
 		</div>
-		
 		<div class="container">
-			<div class="row">
-				<div class="span9">
-					{% block bodyleft %}{% end %}
-				</div>
-				<div class="span3">
-					{% if warning %}<div class="well"><span class="label label-important">{{ warning }}</span></div>{% end %}
-					{% block bodyright %}{% end %}
-				</div>
-			</div>
-			<footer class="footer">
-				{% block foot %}{% end %}
-				<p class="pull-right"><a href="">回到顶部</a></p>
-				<p class="pull-left"><a href="/contact/">&nbsp;&nbsp;联系我们</a></p>
-				<p class="pull-left"><a href="/sitemap/">&nbsp;&nbsp;网站地图</a></p>
-			</footer>
-		</div><!-- /container -->
-		<script type="text/javascript" src="{{ static_url('js/bs/widgets.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/prettify.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-alert.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-modal.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-transition.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-dropdown.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-scrollspy.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-tab.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-tooltip.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-popover.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-button.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-collapse.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-carousel.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-typeahead.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/application.js') }}"></script>
-		<script type="text/javascript">
+			<div class="row">{% block body %}{% end %}</div>
+		<footer class="footer">
+			{% block foot %}{% end %}
+			<p class="pull-right"><a href="">回到顶部</a></p>
+			<p class="pull-left"><a href="/contact/">&nbsp;&nbsp;联系我们</a></p>
+			<p class="pull-left"><a href="/sitemap/">&nbsp;&nbsp;网站地图</a></p>
+		</footer>
+    </div><!-- /container -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="{{ static_url('js/bs/widgets.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/prettify.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-transition.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-alert.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-modal.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-dropdown.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-scrollspy.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-tab.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-tooltip.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-popover.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-button.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-collapse.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-carousel.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/bootstrap-typeahead.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bs/application.js') }}"></script>
+	<script type="text/javascript">
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-31261475-1']);
 		_gaq.push(['_trackPageview']);
@@ -129,7 +120,7 @@
 			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
-		</script>
+	</script>
 		<div id="register" class="modal hide fade">
 			<div class="modal-header">
 				<a class="close" data-dismiss="modal">×</a>

@@ -15,6 +15,7 @@ from huwai.apps.timeline import TimeLine
 from huwai.apps.event import Event
 from huwai.apps.note import Note
 from huwai.apps.album import Album
+from huwai.apps.tag import Tag
 from huwai.apps.pstore import Pstore
 from huwai.apps.tools import session
 
@@ -23,7 +24,11 @@ class RootHandler(BaseHandler):
         if self.current_user:
             self.redirect('/account/profile/')
         else:
-            self.render("index.html")
+            t = TimeLine()
+            rt = t._api.list(channel=[u'normal', u'weibo', u'club', u'event', u'album'])
+            g = Tag()
+            rg = g._api.list(rels='place')
+            self.render("index.html", weibo_l=rt[1], tag_l=rg[1][:10])
 
 class TestHandler(BaseHandler):
     @addslash

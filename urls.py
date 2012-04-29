@@ -65,6 +65,8 @@ handlers = [(r"/", RootHandler),
             (r"/tag/", TagHandler),
             (r"/tag/(.{32})/", TagItemHandler),
             
+            (r"/search/", SearchHandler),
+            
             (r"/guide/", GuideHandler),
             
             (r"/map/", MapHandler),

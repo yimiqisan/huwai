@@ -1,0 +1,200 @@
+@charset "UTF-8";
+/* CSS Document */
+.header {
+/*	background:url(../images/header.png) repeat-x #f0f0f0; */
+}
+/*全局颜色*/
+body{
+	color:#666;
+}
+a {
+	color:#ff6666;
+}
+a:hover {
+	color:#ff6666;
+	text-decoration: none;
+}
+.cgray {
+	color: #CCC;
+}
+.footer{
+	background:#f0f0f0;
+	border-color:#e1e1e1;
+	color:#999;
+	}
+.footer a{
+	color:#666;
+	}
+/*导航*/
+.nav li a.active {
+	background:url(../images/active_icon_white.png) center bottom no-repeat;
+}
+.nav_child {
+/*	background:url(../images/header.png) 0 -67px repeat-x #f0f0f0; */
+	background:#ffffff;
+	padding: 0 15px;
+	-webkit-box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+	-moz-box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+	box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+	border-radius:4px;
+	margin-left:10px;
+	margin-right:10px;
+}
+/*子级导航*/
+.nav_child li a {
+/*	color:#fff; */
+	color:#ff6666;
+}
+.nav_child li a:hover,.nav_child li a.active {
+	background:#ff6666;
+	color:#ffffff;
+}
+/*tag列表*/
+.tag {
+	border-top:#ff6666 solid 3px;
+}
+.taglist li a {
+	border: 1px solid #d5d5d5;
+	color: #ff6666;
+	background-color: #f6f6f6;
+}
+.taglist li a:hover, .taglist li.active a {
+	border-color:#ff6666;
+	background:#ff6666;
+	color:#fff;
+}
+.taglist li a.disabled {
+	border-color:#e1e1e1;
+	color:#999;
+}
+/*价签*/
+.share_img .goods_price {
+	background: #ff6666;
+	color:#fff;
+}
+.share_price{
+background: url(../images/prices_bg.png) no-repeat;
+color: #fff;
+}
+
+/**/
+.side_content .side_content_pic .txt_wrap a{
+	color:#666;
+	}
+.buy_price{
+	color:#999;
+	}
+
+/*上一张 下一张*/
+a.steam_next{
+background: url(../images/right_botton.png) no-repeat;
+}
+a.steam_next.none{
+background: url(../images/right_botton_1.png) no-repeat;
+}
+a.steam_prev{
+background: url(../images/left_botton.png) no-repeat;
+}
+a.steam_prev.none{
+background: url(../images/left_botton_1.png) no-repeat;
+}
+/*首页模块*/
+.item{ 
+background:#fff;
+-webkit-box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+-moz-box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+box-shadow:1px 1px 3px rgba(162, 162, 162, .8);
+border-radius:4px;
+}
+.item_header{border-bottom-color:#e1e1e1;}
+.item_header h3{color:#ff6666;}
+.item_header li a{ border-left-color:#e1e1e1; color:#999;}
+.item_header li a:hover{color:#666;}
+.item_header .more{ color:#ff6666;}
+.item_content a{ color:#444;}
+.item_content a:hover{ color:#111;}
+.item_content li .share_item_txt{ color:#444;}
+.num-pl,.pic-des a:hover,.pic-des a{ color:#FFF;line-height: 25px;}
+/*瀑布流色彩定义*/
+
+.pin,.pin .image {background-color:#fff;}
+.likenum, .sharenum {color:#999;}
+.share_people{background:#f5f5f5;}
+.shareinfo p {color:#75868e;}
+.shareinfo, .shareinfo2, .share_like {color:#666;}
+.shareinfo p a,.share_like a{color:#777;}
+.share_comment,.share_people,.share_txa{background:#f1f1f1;}
+.pic_home,.pic_home_170_350,.pic_home_170_170,.pic_home_350_170 {background-color: #f0f0f0;}
+
+/*弹出框色彩定义*/
+.dialog_tools .tool_tips {color: #ff6666;background-color: #FFFFED;}
+.ui-dialog .hd,.ui-dialog .ui-close{color:#ff6666;};
+.ui-dialog {background-color:#E8E7E3;}
+
+/*button色彩定义*/
+#profile a.follow, #user_profile_pop .operate a.follow {
+background: #AA2003;
+}
+#profile a.follow, #user_profile_pop .operate a.follow {
+color: white;
+background: #D3310F;
+}
+span.error,span.ajax_error {
+	font-size: 90%;
+    color:red;
+    display: block;
+    padding-left: 5px;
+}
+.buy{
+background: #D3310F;
+color: #fff;
+}
+.buy:hover{
+background: #AA2003;
+color: #fff;
+}
+/*按钮*/
+.btn_red{color:#fff;background: #d3310f;}
+.btn_red:hover{color:#fff;background: #AA2003;}
+
+/*侧面数字信息*/
+.side_info .info_num{
+background: #848484;
+color: #fff;
+}
+.side_info .info_num:hover{
+background: #666;
+}
+.info_num.red{
+background: #fa6398;
+}
+.info_num.red:hover{
+background: #db306c;
+}
+.info_num.green{
+background: #5dab37;
+}
+.info_num.green:hover{
+background: #489522;
+}
+.info_num.blue{
+background: #63adf9;
+}
+.info_num.blue:hover{
+background: #3489e0;
+}
+/*side*/
+.side_bd{
+background: #f7f7f7;
+border: #f0f0f0 solid 1px;
+}
+
+/*用户信息*/
+.share_user h4 a{color: #ce3400;}
+.share_user p{color: #999}
+
+/*icon*/
+.icon_like{background:url(../images/icon_like.png) right center no-repeat;}
+.icon_click{background:url(../images/icon_click.png) right center no-repeat;}
+.icon_comment{background:url(../images/icon_comment.png) right center no-repeat;}
+.icon_share{background:url(../images/icon_share.png) center center no-repeat;}

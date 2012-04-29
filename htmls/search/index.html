@@ -1,0 +1,30 @@
+{% extends ../frame.html %}
+
+{% block meta %}
+	<title>搜索_北京户外网</title>
+	<meta name="keywords" content="活动搜索 游记搜索 景点搜索 ">
+	<meta name="description" content="北京户外网搜索，让驴友们更精确的找到户外活动，户外游记等等">
+{% end %}
+
+{% block static %}
+	<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$('#nav-search').addClass("active");
+		})
+	</script>
+	<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />
+	<link href="{{ static_url('css/search.css') }}" rel="stylesheet">
+{% end %}
+{% block bodyleft %}
+	<div id="cse" style="width: 100%;">加载中...</div>
+	<script language="javascript" type="text/javascript">
+		google.load('search', '1', {language : 'zh-CN'});
+			google.setOnLoadCallback(function() {
+				var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl('000471135523793451601:WMX-1732778293', customSearchOptions);
+				customSearchControl.setResultSetSize(google.search.Search.LARGE_RESULTSET);
+				customSearchControl.draw('cse');
+			}, true);
+	</script>
+{% end %}
+{% block bodyright %}{% end %}
