@@ -4,5 +4,11 @@
 #event form{display:block;font-size:16px;margin:5px 5px;padding:20px 20px;width:700px;}
 
 /* event show */
-//#showdetail{float:left;border-top:3px solid white;width:100%;padding:10px;background:#FDFFD3;}
-#showdetail img{float:left;clear:left;margin-right:25px;margin-bottom:15px;}
+#event-item p, #event-item .p {
+font-size: 15px;
+padding-bottom: 5px;
+line-height: 1.0;
+font-family: Arial,Helvetica,sans-serif;
+word-wrap: break-word;
+white-space: pre-wrap;
+}

@@ -12,6 +12,7 @@
 	</script>
 {% end %}
 {% block bodyleft %}
+<div class="box">
 	<ul class="breadcrumb" style="background:#ededed;">
 		{% if title %}<li><a href="#" title="{{ title }}" alt="{{ title }}">{{ title }}</a></li>{% end %}
 		<li class="pull-right">
@@ -49,6 +50,7 @@
 		</tbody>
 	</table>
 	{% module Template("util/pagination.html", pagination=pagination, url='/event/', param='') %}
+</div>
 {% end %}
 {% block bodyright %}
 	<a class="btn btn-large btn-success" title="发布活动" alt="发布活动" onclick="if (!$.cookie('uid')) {$('#login').modal();return false;}return true;" href="/event/puba/">发布活动</a>

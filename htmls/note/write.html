@@ -25,6 +25,7 @@
 				fileObjName		: 'upload',
 				onUploadSuccess : function (file, data, response) {
 					var pic_num = $("#thumbnails li").length+1;
+					alert(pic_num);
 					var pic_name = " 图:"+pic_num+" ";
 					yhui.iNote.insertPic('PIC', data, '');
 					var note_text = $('#note_text').val()+pic_name;
@@ -60,27 +61,28 @@
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/tagit.ui-zendesk.css') }}"/>
 {% end %}
 {% block bodyleft %}
-<form id="form_note" method="post" action="/note/write/">
-	<div class="control-group">
-		<label>题目:</label>
-		<div><input id="note_title" name="note_title" type="text" class="span9" /></div>
-	</div>
-	<div class="control-group">
-		<label class="pull-left">正文:</label>
-		<div class="btn-group pull-right">
-			<a class="btn" data-toggle="modal" href="#image" title="插入图片">图片</a>
+<div class="box" style="padding:10px;">
+	<form id="form_note" method="post" action="/note/write/">
+		<div class="control-group">
+			<label>题目:</label>
+			<div><input id="note_title" name="note_title" type="text" style="width:670px;"/></div>
 		</div>
-		<a class="btn hide" data-toggle="modal" href="#video" title="插入视频">视频</a>
-		<a class="btn hide" data-toggle="modal" href="#href" title="插入链接">链接</a>
-		<textarea id="note_text" name="note_text" class="span9" style="margin-top:3px;"></textarea>
-	</div>
-	<div class="">
-		<a id="cancel_note" class="btn pull-left" href="/note/">取消</a>
-		<input id="publish_note" class="btn btn-success pull-right" style="margin-left:10px;" value="发表" type="submit" name="note_submit" />
-		<input id="preview_note" class="btn pull-right hide" value="预览" type="button" />
-    </div>
-</form>
-
+		<div class="control-group">
+			<label class="pull-left">正文:</label>
+			<div class="btn-group pull-right">
+				<a class="btn" data-toggle="modal" href="#image" title="插入图片">图片</a>
+			</div>
+			<a class="btn hide" data-toggle="modal" href="#video" title="插入视频">视频</a>
+			<a class="btn hide" data-toggle="modal" href="#href" title="插入链接">链接</a>
+			<textarea id="note_text" name="note_text" style="width:670px;margin-top:3px;"></textarea>
+		</div>
+		<div class="form-actions">
+			<a id="cancel_note" class="btn pull-left" href="/note/">取消</a>
+			<input id="publish_note" class="btn btn-success pull-right" style="margin-left:10px;" value="发表" type="submit" name="note_submit" />
+			<input id="preview_note" class="btn pull-right hide" value="预览" type="button" />
+    	</div>
+	</form>
+</div>
 <div id="image" class="modal hide fade">
 	<div class="modal-header">
 		<a class="close" data-dismiss="modal">×</a>
@@ -110,9 +112,12 @@
 </div>
 {% end %}
 {% block bodyright %}
+<div>
 	<h3>游记标签:</h3>
 	<div id="ntag"></div>
-	<ul id="thumbnails" class="thumbnails"></ul>
+	<div class="clear"></div>
+</div>
+<ul id="thumbnails" class="thumbnails"></ul>
 {% end %}
 
 

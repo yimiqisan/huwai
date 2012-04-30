@@ -17,7 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/weibo.css') }}"/>
 {% end %}
 {% block bodyleft %}
-	<div id="weibo_item" class="wb_items">
+	<div id="weibo_item" class="wb_items box">
 		{% if message %}
 			{% module Template("weibo/message.html", message=message, uid=uid) %}
 		{% end %}

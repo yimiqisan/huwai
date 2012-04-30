@@ -14,6 +14,7 @@
 {% end %}
 
 {% block bodyleft %}
+<div class="box">
 	<ul class="thumbnails">
 		{% for u in userlist %}
 		<li class="span3 bg-white">
@@ -25,6 +26,7 @@
 		</li>
 		{% end %}
 	</ul>
+</div>
 {% end %}
 {% block bodyright %}
 	<a class="btn" href="/event/{{ eid }}/" title="返回活动" alt="返回活动">回到活动</a>

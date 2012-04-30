@@ -33,17 +33,18 @@
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/tagit.ui-zendesk.css') }}"/>
 {% end %}
 {% block bodyleft %}
-<form id="form_album" class="form-horizontal album-form bg-white" method="post" action="/album/create/">
+<div class="box">
+	<form id="form_album" class="form-horizontal album-form" method="post" action="/album/create/">
 	<fieldset>
 		<legend>新建相册</legend>
 		<div class="control-group">
 			<label class="control-label" for="focusedInput">名称(必填):</label>
-			<div class="controls"><input id="title" name="title" type="text" class="span7" /></div>
+			<div class="controls"><input id="title" name="title" type="text" class="span6" /></div>
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="focusedInput">描述:</label>
 			<div class="controls">
-				<textarea id="content" name="content" rows="10" class="span7" style="margin-top:3px;"></textarea>
+				<textarea id="content" name="content" rows="10" class="span6" style="margin-top:3px;"></textarea>
 			</div>
 		</div>
 		<div class="control-group hide">
@@ -55,12 +56,12 @@
 			</div>
 		</div>
 		<div class="">
-			<a id="cancel_album" class="btn pull-left" href="/album/">取消</a>
-			<input id="build_album" class="btn btn-success pull-right" style="margin-left:10px;" value="建立相册" type="submit" name="album_submit" />
+			<a id="cancel_album" class="btn pull-left" style="margin-left:70px;" href="/album/">取消</a>
+			<input id="build_album" class="btn btn-success pull-right" style="margin-right:70px;" value="建立相册" type="submit" name="album_submit" />
 		</div>
 	</fieldset>
-</form>
-
+	</form>
+</div>
 {% end %}
 {% block bodyright %}
 	<h3 class="hide">相册标签:</h3>

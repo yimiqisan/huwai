@@ -73,7 +73,7 @@ class NoteAPI(API):
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         now = datetime.now()
         t = Tag()
-        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'perm':self._perm(cuid, i['owner']), 'is_own':(cuid==i['owner'] if i['owner'] else True), 'added_id':i['added_id'], 'title':i['title'], 'content':i['content'], 'tags':t._api.id2content(i['tags']), 'members':i.get('members', []), 'created':i['created'].strftime('%Y-%m-%d %H:%M'), 'check':i.get('check', True)}
+        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'perm':self._perm(cuid, i['owner']), 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', ''), 'added_id':i['added_id'], 'title':i['title'], 'content':i['content'], 'tags':t._api.id2content(i['tags']), 'members':i.get('members', []), 'created':self._escape_created(now, i['created']), 'check':i.get('check', True)}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)

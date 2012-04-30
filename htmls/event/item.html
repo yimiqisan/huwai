@@ -46,14 +46,15 @@
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/weibo.css') }}"/>
 {% end %}
 {% block bodyleft %}
-	<h2 class="bg-white" style="text-align:center;">{{ title }}</h2>
-	<ul class="thumbnails bg-white" style="padding-top:20px;">
+<div id="event-item" class="box" style="padding:0px;background:#F2F0F0;">
+	<h2 style="text-align:center;">{{ title }}</h2>
+	<ul class="thumbnails" style="padding-top:20px;">
 		<li class="span4">
 			<a href="#" class="thumbnail" title="{{title}}" alt="{{title}}">
 				<img width="300" height="300" src="/image/attach/{{logo}}_300" alt="{{title}}"/>
 			</a>
 		</li>
-		<li class="span5" style="margin-left:8px;color:black;padding:10px 0 0 10px;">
+		<li class="span5 bg-white" style="margin-left:8px;color:black;padding:10px 0 0 10px;border-radius:5px;">
 			{% if members %}
 				{% for k in members %}<p>{{k}} : {{members[k]}}</p>{% end %}
 			{% end %}
@@ -67,11 +68,13 @@
 			<p>户外类型：{{ list2url(tags) }}</p>
 			<p>装备要求：{{ list2url(equip) }}</p>
 		</li>
-		<li class="span8">
+		<li class="span8" style="margin-left:60px;">
 			<p>计划安排：{{ schedule_tl }}<a href="" onclick="$('#schedule_tl').modal();return false;">&nbsp;详细&nbsp;>></a></p>
 		</li>
 	</ul>
 	<div style="clear:both;"></div>
+</div>
+<div class="box">
 	<div id="weibo" name="weibo">
 		<div class="num" style="display:block;font-size:16px;margin-bottom:5px;">还可以输入
 			<span style="font-size:24px;color:#ff9933;" id="num">140</span> 字
@@ -85,6 +88,7 @@
 			<div id="wb_bottom" class="bottom wb_item"><a href="#" style="display:block;text-align:center;" onclick="Weibo.extend(this);return false;"></a><input type="hidden" value="0"></div>
 		</div>
 	</div>
+</div>
 {% if schedule_tl %}
 <div id="schedule_tl" class="modal hide fade">
 	<div class="modal-header">

@@ -15,12 +15,12 @@
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/album.css') }}"/>
 {% end %}
 {% block bodyleft %}
-<div id="album" class="bg-white">
+<div id="album" class="box">
 	<h1>相册</h1>
 	<ul class="sortable">
 		{% for album in album_list %}
 		<li>
-			<div class="pin pinBoard" id="">
+			<div class="pin pinBoard">
 				<h3 class="serif">
 					<a href="/album/{{album['id']}}/" title="{{album['title']}}" alt="{{album['title']}}">{{album['title']}}</a>
 				</h3>
@@ -43,6 +43,7 @@
 		</li>
 		{% end %}
 	</ul>
+	<div class="clear"></div>
 </div>
 {% end %}
 {% block bodyright %}

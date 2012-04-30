@@ -70,8 +70,9 @@
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/uploadify.css') }}"/>
 {% end %}
 {% block bodyleft %}
+<div class="box" style="padding:0px;">
 	<h3>{{title}}</h3><p>{{content}}</p>
-	<ul id="plist" class="thumbnails bg-white">
+	<ul id="plist" class="thumbnails">
 	{% for p in photos %}
 		<li class="span3 item">
 			<div class="thumbnail">
@@ -82,7 +83,7 @@
 	</ul>
 	<div id="loadingPins" class="hide"><img src="{{ static_url('img/loading-fb.gif') }}" alt="Loading"></div>
 	<nav id="nav-extend" style="display:none;"><a href="/album/"></a></nav>
-
+</div>
 {% end %}
 {% block bodyright %}
 	<a class="btn" href="/album/" title="相册列表" alt="相册列表" >相册列表</a></br></br>

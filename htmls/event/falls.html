@@ -54,6 +54,7 @@
 	</script>
 {% end %}
 {% block bodyleft %}
+<div class="box" style="padding:0px;">
 	<ul class="breadcrumb" style="background:#ededed;">
 		{% if title %}<li><a href="#" title="{{ title }}" alt="{{ title }}">{{ title }}</a></li>{% end %}
 		<li class="pull-right">
@@ -67,7 +68,7 @@
 		</li>
 	</ul>
 
-	<ul id="falls" class="thumbnails bg-white">
+	<ul id="falls" class="thumbnails">
 		{% for e in event_list %}
 			<li class="span3 item">
 				<div class="thumbnail">
@@ -93,6 +94,7 @@
 	</ul>
 	<div id="loadingPins" class="hide"><img src="{{ static_url('img/loading-fb.gif') }}" alt="Loading"></div>
 	<nav id="nav-extend" style="display:none;"><a href="/event/"></a></nav>
+</div>
 {% end %}
 {% block bodyright %}
 		<a class="btn btn-large btn-success" title="发布活动" alt="发布活动" onclick="if (!$.cookie('uid')) {$('#login').modal();return false;}return true;" href="/event/puba/">发布活动</a>

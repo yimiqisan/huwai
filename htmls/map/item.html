@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="{{ static_url('js/jquery.map.js') }}" ></script>
 {% end %}
 {% block bodyleft %}
-	<div id="map_canvas" ipLocID="location" ipRouteID="route" style="width:600px; height:600px"></div>
+	<div id="map_canvas" class="box" ipLocID="location" ipRouteID="route" style="width:600px; height:600px"></div>
 	<script type="text/javascript">
 		var map = yhui.iMap.createMap($('#map_canvas'), {width: 700, height: 550, panControl: false, mapTypeControl: false,
 			zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL},
