@@ -55,7 +55,7 @@ class CheckEventHandler(BaseHandler):
     @preperm()
     def get(self):
         e = Event()
-        r = e._api.list(check=False)
+        r = e._api.list()
         if r[0]:
             ents = r[1]
             for i in xrange(0, len(ents)):
