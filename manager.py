@@ -27,4 +27,6 @@ if __name__ == "__main__":
     tornado.options.parse_command_line()
     http_server = HTTPServer(Application())
     http_server.listen(options.port)
-    IOLoop.instance().start()
+    loop = IOLoop.instance()
+    tornado.autoreload.start(loop)
+    loop.start()
