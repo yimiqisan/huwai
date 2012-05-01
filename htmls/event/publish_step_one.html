@@ -206,7 +206,8 @@
 			<div class="control-group">
 				<label class="control-label" for="textarea">行程安排:</label>
 				<div class="controls">
-					<textarea class="input-xlarge" name="schedule_tl" rows="6" style="width:500px;" rel="popover" data-content="亲爱的领队，有了行程安排您的活动将一切尽在掌握！<a data-toggle='modal' href='#editor'>弹出编辑&nbsp;&gt;&gt;</a>" data-original-title="好的计划是成功的一半"></textarea>
+					<textarea class="input-xlarge" name="schedule_tl" rows="6" style="width:500px;" rel="popover" data-content="亲爱的领队，有了行程安排您的活动将一切尽在掌握" data-original-title="好的计划是成功的一半"></textarea>
+					<a class='pull-right' data-toggle='modal' href='#editor'>弹出编辑&nbsp;&nbsp;&nbsp;&nbsp;</a>
 				</div>
 			</div>
 			<div class="control-group">
@@ -262,6 +263,7 @@
 	<script language="javascript" type="text/javascript">
 		$(".event-form input[name='days']").on("change", function() {
 			var day = parseInt($(this).val());
+			$("#editor .nav-tabs").html();
 			for (var i=2; i<day+1; i++) {
 				$("#editor .nav-tabs").append('<li class=""><a href="#r'+i+'" data-toggle="tab">第'+i+'天</a></li>');
 				$("#editor .tab-content").append('<div class="tab-pane" id="r'+i+'"><textarea rows=20 class="span7" >第'+i+'天</textarea></div>');

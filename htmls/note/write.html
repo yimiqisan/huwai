@@ -25,7 +25,6 @@
 				fileObjName		: 'upload',
 				onUploadSuccess : function (file, data, response) {
 					var pic_num = $("#thumbnails li").length+1;
-					alert(pic_num);
 					var pic_name = " 图:"+pic_num+" ";
 					yhui.iNote.insertPic('PIC', data, '');
 					var note_text = $('#note_text').val()+pic_name;

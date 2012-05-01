@@ -109,7 +109,7 @@
         };
         function m(u) {
             var args ={'nid': u};
-            $.postJSON("/a/note/", 'GET', args, function(response) {
+            $.postJSON("/a/note/?r="+Math.random(), 'GET', args, function(response) {
                 if (response.error){
                     alert(response.error);
                     return ;
