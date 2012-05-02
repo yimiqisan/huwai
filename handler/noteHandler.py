@@ -12,7 +12,7 @@ from tornado.web import addslash, authenticated
 from baseHandler import BaseHandler
 from huwai.apps.note import Note
 from huwai.apps.tag import Tag
-from huwai.apps.tools import session
+from huwai.apps.tools import session, calc
 from huwai.apps.perm import preperm
 from datetime import datetime
 
@@ -28,7 +28,9 @@ class NoteHandler(BaseHandler):
 class NoteItemHandler(BaseHandler):
     @addslash
     @session
+    @calc('note')
     def get(self, id):
+        print self.calc
         uid = self.SESSION['uid']
         n = Note()
         r = n._api.get(id, cuid=uid)
@@ -36,6 +38,7 @@ class NoteItemHandler(BaseHandler):
             return self.render("note/item.html", **r[1])
         else:
             return self.render("note/item.html", warning=r[1])
+    
 
 class NoteEditHandler(BaseHandler):
     @addslash

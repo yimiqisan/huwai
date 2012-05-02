@@ -173,3 +173,16 @@ def trans_64(s):
     except ValueError:
         return int(urlsafe_b64decode(s))
 
+class calc(object):
+    def __init__(self, name):
+        self.name = name
+    
+    def __call__(self, method):
+        def wapper(decorated_cls, *args):
+            nm = self.name
+            if ((len(args) > 0) and (len(args[0]) == 32)):nm = nm + '_' + args[0]
+            decorated_cls.__setattr__('calc', decorated_cls.cache.incr(nm))
+            return method(decorated_cls, *args)
+        return wapper
+
+
