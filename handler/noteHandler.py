@@ -28,9 +28,8 @@ class NoteHandler(BaseHandler):
 class NoteItemHandler(BaseHandler):
     @addslash
     @session
-    @calc('note')
+    #@calc('note')
     def get(self, id):
-        print self.calc
         uid = self.SESSION['uid']
         n = Note()
         r = n._api.get(id, cuid=uid)

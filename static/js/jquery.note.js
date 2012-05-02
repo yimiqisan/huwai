@@ -59,7 +59,7 @@
             w = b('input[name=noteTags]').val();
             var message = {'note_title': u, 'note_text': v, 'note_tag': w};
             if (x) {message.nid=x;}
-            $.postJSON("/a/note/", 'POST', message, function(response) {
+            $.postJSON("/a/note/?r="+Math.random(), 'POST', message, function(response) {
                 if (response.error){
                     alert(response.error);
                     return ;
@@ -78,7 +78,7 @@
                 dtl = b(this).find('textarea').val();
                 var src = b("#"+pid+" img").attr('src');
                 var img = '<img src='+src+'>';
-                if (dtl) {img=img+'<div>'+dtl+'</div>';}
+                img=img+'<div>'+dtl+'</div>';
                 if (rdo == '-1') {
                     img = '<div class="PICL">'+img+'</div>';
                 }else if (rdo == '0') {
@@ -96,7 +96,7 @@
             reg = "\/image\/attach\/(.*)";
             var args = {};
             args.pid = li.find('img').attr('src').match(reg)[1];
-            $.postJSON("/a/image/delete/", 'POST', args, function(response) {
+            $.postJSON("/a/image/delete/?r="+Math.random(), 'POST', args, function(response) {
                 if (response.error){
                     alert(response.error);
                 }
