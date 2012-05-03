@@ -10,21 +10,21 @@ input.gsc-input {
   border-color: #BCCDF0;
 }
 input.gsc-search-button {
-  border-color: #666666;
+  border-color: #CECECE;
   background-color: #CECECE;
 }
 .gsc-tabHeader.gsc-tabhInactive {
-  border-color: #A9DA92;
-  background-color: #FFFFFF;
+  border-color: #E9E9E9;
+  background-color: #E9E9E9;
 }
 .gsc-tabHeader.gsc-tabhActive {
-  border-top-color: #B5C9AB;
-  border-left-color: #A9DA92;
-  border-right-color: #A9DA92;
-  background-color: #A9DA92;
+  border-top-color: #FF9900;
+  border-left-color: #E9E9E9;
+  border-right-color: #E9E9E9;
+  background-color: #FFFFFF;
 }
 .gsc-tabsArea {
-  border-color: #A9DA92;
+  border-color: #E9E9E9;
 }
 .gsc-webResult.gsc-result,
 .gsc-results .gsc-imageResult {
@@ -98,18 +98,18 @@ a.gsc-trailing-more-results:link {
   border-color: #FFFFFF;
 }
 .gsc-results .gsc-cursor-box .gsc-cursor-page {
-  border-color: #A9DA92;
+  border-color: #E9E9E9;
   background-color: #FFFFFF;
   color: #0000CC;
 }
 .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
-  border-color: #B5C9AB;
-  background-color: #A9DA92;
+  border-color: #FF9900;
+  background-color: #FFFFFF;
   color: #0000CC;
 }
 .gsc-webResult.gsc-result.gsc-promotion {
-  border-color: #94CC7A;
-  background-color: #CBE8B4;
+  border-color: #336699;
+  background-color: #FFFFFF;
 }
 .gsc-completion-title {
   color: #0000CC;
@@ -120,29 +120,29 @@ a.gsc-trailing-more-results:link {
 .gs-promotion a.gs-title:link,
 .gs-promotion a.gs-title:link *,
 .gs-promotion .gs-snippet a:link {
-  color: #0066CC;
+  color: #0000CC;
 }
 .gs-promotion a.gs-title:visited,
 .gs-promotion a.gs-title:visited *,
 .gs-promotion .gs-snippet a:visited {
-  color: #0066CC;
+  color: #0000CC;
 }
 .gs-promotion a.gs-title:hover,
 .gs-promotion a.gs-title:hover *,
 .gs-promotion .gs-snippet a:hover {
-  color: #0066CC;
+  color: #0000CC;
 }
 .gs-promotion a.gs-title:active,
 .gs-promotion a.gs-title:active *,
 .gs-promotion .gs-snippet a:active {
-  color: #0066CC;
+  color: #0000CC;
 }
 .gs-promotion .gs-snippet,
 .gs-promotion .gs-title .gs-promotion-title-right,
 .gs-promotion .gs-title .gs-promotion-title-right *  {
-  color: #454545;
+  color: #000000;
 }
 .gs-promotion .gs-visibleUrl,
 .gs-promotion .gs-visibleUrl-short {
-  color: #815FA7;
+  color: #008000;
 }
