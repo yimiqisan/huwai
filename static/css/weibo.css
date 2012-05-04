@@ -3,7 +3,7 @@
 .remove{display:none;}
 #weibo hr{background:#DDD;color:#DDD;clear:both;float:none;width:100%;height:1px;margin:0 0 17px;border:none;}
 .wb_items{border-color: #F1F1F1;color:#444;cursor:default;margin:-3px 0 0;overflow:hidden;}
-.wb_items a:hover{color:#F5F5F5;background:#0078B6;}
+.wb_items a:hover{color:#005580;}
 .wb_item{border-color: #E1E4E5;padding: 13px 5px 15px 5px;margin:0;zoom: 1;border-bottom-width: 1px;border-bottom-style: dotted;}
 .wb_item:hover{background:#F5F5F5;}
 .wb_item .face {float: left;display: inline;width: 50px;padding: 3px 0 6px;}

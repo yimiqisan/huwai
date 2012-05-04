@@ -1,4 +1,4 @@
-{% extends ../frame.html %}
+{% extends ../frame93.html %}
 
 {% block meta %}
 	<title>写游记_深呼吸</title>
@@ -22,6 +22,7 @@
 				buttonText		: '点击上传',
 				cancelImage		: '{{ static_url("img/uploadify-cancel.png") }}',
 				auto			: true,
+				multi			: true,
 				fileObjName		: 'upload',
 				onUploadSuccess : function (file, data, response) {
 					var pic_num = $("#thumbnails li").length+1;
@@ -29,6 +30,9 @@
 					yhui.iNote.insertPic('PIC', data, '');
 					var note_text = $('#note_text').val()+pic_name;
 					$('#note_text').val(note_text).focus();
+					//$('#thumbnails li').animate({scrollBottom:0}, 'slow');
+				},
+				onQueueComplete : function (queueData) {
 					$('#image').modal('hide');
 				},
 				onError			: function (event, queueID, fileObj){alert("文件:" + fileObj.name + " 上传失败");}
@@ -50,7 +54,7 @@
 					});
 				}
 			});
-			yhui.iNote.init('{{ id }}');
+			yhui.iNote.init('{{ id }}', '{{ channel }}');
 		})
 	</script>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/note.css') }}"/>
@@ -75,7 +79,7 @@
 			<a class="btn hide" data-toggle="modal" href="#href" title="插入链接">链接</a>
 			<textarea id="note_text" name="note_text" style="width:670px;margin-top:3px;"></textarea>
 		</div>
-		<div class="form-actions">
+		<div class="form-actions bg-white" style="border-top-width:0px;margin:0px;">
 			<a id="cancel_note" class="btn pull-left" href="/note/">取消</a>
 			<input id="publish_note" class="btn btn-success pull-right" style="margin-left:10px;" value="发表" type="submit" name="note_submit" />
 			<input id="preview_note" class="btn pull-right hide" value="预览" type="button" />
@@ -88,6 +92,7 @@
 		<h3>插图</h3>
 	</div>
 	<div class="modal-body">
+		<span style="color:orange;">友情提示：按住 shift 键 或 ctrl&lt;command&gt; 键，可以多图上传哦</span>
 		<div id="poster">图片上传</div>
 	</div>
 </div>

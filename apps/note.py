@@ -44,10 +44,20 @@ class NoteAPI(API):
         return r[1] if r[0] else r
     
     def save(self, owner, title, content, tags=[], members=[], check=False, **kwargs):
-        kwargs['tid'] = self._get_tid(title)
+        tid = self._get_tid(title)
+        kwargs['tid'] = tid
         if not isinstance(tags, list):tags = [tags]
         if not isinstance(members, list):members = [members]
-        return super(NoteAPI, self).create(owner=owner, title=title, content=content, tags=tags, members=members, check=check, **kwargs)
+        return super(NoteAPI, self).create(owner=owner, title=title, content=content, tags=tags, members=members, check=check, channel=u'origin', **kwargs)
+    
+    def append(self, id, owner, title, content, tags=[], members=[], check=False, **kwargs):
+        tid = self._get_tid(title)
+        kwargs['tid'] = tid
+        if not isinstance(tags, list):tags = [tags]
+        if not isinstance(members, list):members = [members]
+        r = super(NoteAPI, self).create(owner=owner, title=title, content=content, tags=tags, members=members, check=check, channel=u'append', **kwargs)
+        if r[0]: self.edit(id, pid=r[1])
+        return r
     
     def remove(self, id, cuid=DEFAULT_CUR_UID):
         r = self.get(id, cuid)
@@ -73,23 +83,25 @@ class NoteAPI(API):
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         now = datetime.now()
         t = Tag()
-        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'perm':self._perm(cuid, i['owner']), 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', ''), 'added_id':i['added_id'], 'title':i['title'], 'content':i['content'], 'tags':t._api.id2content(i['tags']), 'members':i.get('members', []), 'created':self._escape_created(now, i['created']), 'check':i.get('check', True)}
+        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'perm':self._perm(cuid, i['owner']), 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', ''), 'pid':i['added'].get('pid', None), 'added_id':i['added_id'], 'title':i['title'], 'content':i['content'], 'tags':t._api.id2content(i['tags']), 'members':i.get('members', []), 'created':self._escape_created(now, i['created']), 'check':i.get('check', True)}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)
     
     def get(self, id, cuid=DEFAULT_CUR_UID):
         r = self.one(_id=id)
-        if (r[0] and r[1]):return (True, self._output_format(result=r[1], cuid=cuid))
+        if (r[0] and r[1]):
+            return (True, self._output_format(result=r[1], cuid=cuid))
         return r
     
-    def list(self, cuid=DEFAULT_CUR_UID, owner=None, title=None, content=None, tags=None, members=None, check=None):
+    def list(self, cuid=DEFAULT_CUR_UID, owner=None, title=None, content=None, tags=None, members=None, channel=None, check=None):
         kwargs = {}
         if owner:kwargs['owner']=owner
         if title:kwargs['title']=re.compile('.*'+title+'.*')
         if content:kwargs['content']=re.compile('.*'+content+'.*')
         if tags:kwargs['tags'] = {'$all':tags} if isinstance(tags, list) else tags
         if members:kwargs['members'] = {'$all':members} if isinstance(members, list) else members
+        if channel:kwargs['channel']=channel
         if check:kwargs['check']=check
         r = self.find(**kwargs)
         if r[0]:
@@ -100,13 +112,14 @@ class NoteAPI(API):
         else:
             return (False, r[1])
     
-    def page(self, cuid=DEFAULT_CUR_UID, owner=None, title=None, content=None, tags=None, members=None, check=None, page=1, pglen=10, cursor=None, limit=20, order_by='added_id', order=-1):
+    def page(self, cuid=DEFAULT_CUR_UID, owner=None, title=None, content=None, tags=None, members=None, channel=None, check=None, page=1, pglen=10, cursor=None, limit=20, order_by='added_id', order=-1):
         kwargs = {}
         if owner:kwargs['owner']=owner
         if title:kwargs['title']=re.compile('.*'+title+'.*')
         if content:kwargs['content']=re.compile('.*'+content+'.*')
         if tags:kwargs['tags'] = {'$all':tags} if isinstance(tags, list) else tags
         if members:kwargs['members'] = {'$all':members} if isinstance(members, list) else members
+        if channel:kwargs['channel']=channel
         if check:kwargs['check']=check
         kwargs['page']=page
         kwargs['pglen']=pglen

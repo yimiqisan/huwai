@@ -1,4 +1,4 @@
-{% extends ../frame.html %}
+{% extends ../frame12.html %}
 
 {% block meta %}
 	<title>{{title}}_游记_深呼吸</title>
@@ -14,30 +14,41 @@
 			Weibo.init();
 		})
 	</script>
-	{% block static-added %}{% end %}
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/weibo.css') }}"/>
 	<link rel="stylesheet" type="text/css" href="{{ static_url('css/note.css') }}"/>
 {% end %}
 {% autoescape None %}
-{% block bodyleft %}
-<div class="box">
-	<div id="note-item">
-		<h1>{{ title }}</h1><br/>
-		<span><a href="/weibo/she/{{owner}}" title="{{nick}}">{{ nick }}</a></span>
-		<span>于&nbsp;{{ created }}&nbsp;发表</span>
-		<span>标签:{{ list2url(tags) }}</span>
-		<br/><br/><br/>
-		<div class="p">{{ content }}</div>
-		<div class="clear"></div>
-		<div class="pull-right">{% if verify(perm, 0x30) %}<a href="/note/{{id}}/edit/">编辑</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/note/{{id}}/delete/">删除</a>{% end %}</div>
+{% block bodytop %}
+	<div id="note-item" class="box">
+		<h2 class="title_center mt20">{{ title }}</h2>
+		<div class="info">
+			<div class="pull-left">
+				<span><a href="/weibo/she/{{owner}}" title="{{nick}}">{{ nick }}</a></span>
+				<span>于&nbsp;{{ created }}&nbsp;发表</span>
+				{% if tags %}<span>标签:{{ list2url(tags) }}</span>{% end %}
+			</div>
+			<div class="pull-right">
+				<a class="hide" data-toggle="modal" href="#discuss">评论</a>
+				{% if verify(perm, 0x30) %}
+				<i class="wb_vline">|</i><a href="/note/{{id}}/append/">追加</a>
+				<i class="wb_vline">|</i><a href="/note/{{id}}/edit/">编辑</a>
+				<i class="wb_vline">|</i><a href="/note/{{id}}/delete/" onclick="return delconfirm(this);">删除</a>
+				{% end %}
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="p" style="padding:10px;">{{ content }}</div>
 		<div class="clear"></div>
 	</div>
-	<div id="weibo" name="weibo">
+{% end %}
+{% block bodybottom %}
+<div class="span8 mt10">
+	<div id="weibo" name="weibo" class="box">
 		<div class="num" style="display:block;font-size:16px;margin-bottom:5px;">还可以输入
 			<span style="font-size:24px;color:#ff9933;" id="num">140</span> 字
 		</div>
 		<form action="/weibo" method="post" id="weiboform">
-			<textarea rows="2" cols="90%" style="width:85%;" name="content" id="weibo-content">#{{ title }}#</textarea>
+			<textarea rows="2" style="width:80%;" name="content" id="weibo-content">#{{ title }}#</textarea>
 			<input type="submit" class="btn-large" value="发布" style="margin-top:5px;margin-left:20px;">
 			<input type="hidden" name="_xsrf" value="ca61c7cf01cf4097bd14c959c519637a">
 		</form><br/><hr/>
@@ -46,18 +57,21 @@
 		</div>
 	</div>
 </div>
+<div class="span4 mt10">
+	<div class="box">
+		<h3>相关活动</h3>
+	</div>
+</div>
 {% end %}
-{% block bodyright %}
-	<h3>相关活动</h3>
+{% block hidden %}
+	<div id="discuss" class="modal hide fade">
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">×</a>
+			<h3>评论</h3>
+		</div>
+		<div class="modal-body">
+			<div id="m-388d75ebaefb4ab1b4d3f781604a4176" class="wb_reply"><a class="content"></a></div>
+			<script language="javascript" type="text/javascript">Reply.toggle($('#m-388d75ebaefb4ab1b4d3f781604a4176'));</script>
+		</div>
+	</div>
 {% end %}
-
-
-		
-		
-		
-		
-		
-		
-		
-		
-		

@@ -36,6 +36,10 @@ def list2txt(handler, v=None):
         return v
     return ''
 
+def dict2txt(handler, v=None):
+    if isinstance(v, dict):
+        return ''.join(v.values())
+
 def list2url(handler, v=None):
     if isinstance(v, list):
         if None in v:v.remove(None)
@@ -63,4 +67,8 @@ def cntDict(handler, l, **kwargs):
 def abstract(handler, c, n=100):
     import re
     s = re.sub(r'</?\w+[^>]*>','',c)
-    return s[:n]
+    s = s.replace(' ', '')
+    if (len(s) > n):
+        return s[:n-3] + '...'
+    else:
+        return s[:n]

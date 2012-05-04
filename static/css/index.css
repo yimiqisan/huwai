@@ -49,6 +49,7 @@
 }
 #slideshow {
 	position: relative;
+	overflow:hidden;
 }
 #slideshow div {
 	position: absolute;
@@ -131,8 +132,8 @@
 }
 .item_content {
 	margin-bottom: 10px;
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 25px;
+	padding-right: 15px;
 }
 .share_item_list li {
 	width: 220px;

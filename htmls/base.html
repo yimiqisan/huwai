@@ -9,7 +9,6 @@
 		<script src="{{ static_url('js/jquery.own.js') }}" type="text/javascript"></script>
 		<script src="{{ static_url('js/jquery.cookie.js') }}" type="text/javascript"></script>
 		<script src="{{ static_url('js/utility.js') }}" type="text/javascript"></script>
-		<script src="{{ static_url('js/jquery.lazyload.js') }}" type="text/javascript"></script>
 		<script language="javascript" type="text/javascript">
 			$(document).ready(function() {
 				login();
@@ -84,24 +83,7 @@
 				</div>
 			</div>
 		</div>
-		
-		<div class="container">
-			<div class="row">
-				<div class="span9">
-					{% block bodyleft %}{% end %}
-				</div>
-				<div class="span3">
-					{% if warning %}<div class="well"><span class="label label-important">{{ warning }}</span></div>{% end %}
-					{% block bodyright %}{% end %}
-				</div>
-			</div>
-			<footer class="footer">
-				{% block foot %}{% end %}
-				<p class="pull-right"><a href="">回到顶部</a></p>
-				<p class="pull-left"><a href="/contact/">&nbsp;&nbsp;联系我们</a></p>
-				<p class="pull-left"><a href="/sitemap/">&nbsp;&nbsp;网站地图</a></p>
-			</footer>
-		</div><!-- /container -->
+		{% block body %}{% end %}
 		<script type="text/javascript" src="{{ static_url('js/bs/widgets.js') }}"></script>
 		<script type="text/javascript" src="{{ static_url('js/bs/prettify.js') }}"></script>
 		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-alert.js') }}"></script>
@@ -116,7 +98,6 @@
 		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-collapse.js') }}"></script>
 		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-carousel.js') }}"></script>
 		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-typeahead.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/application.js') }}"></script>
 		<script type="text/javascript">
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-31387623-1']);
@@ -127,6 +108,7 @@
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
 		</script>
+		{% block hidden %}{% end %}
 		<div id="register" class="modal hide fade">
 			<div class="modal-header">
 				<a class="close" data-dismiss="modal">×</a>

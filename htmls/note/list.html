@@ -31,38 +31,36 @@
 				<div class="btn-group">
 					<button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">模式切换 <span class="caret"></span></button>
 					<ul class="dropdown-menu">
-						<li><a href="/note/abstract/" title="活动列表图片模式" alt="活动列表图片模式"><i class="icon-picture"></i> &nbsp;&nbsp;&nbsp;摘要模式</a></li>
+						<li><a href="/note/abstract/" title="游记列表摘要模式" alt="游记列表摘要模式"><i class="icon-list-alt"></i> &nbsp;&nbsp;&nbsp;摘要模式</a></li>
 					</ul>
 				</div>
 			</li>
 		</ul>
-		{% for n in note_l %}
-		<div class="face pull-left">
-			<a href="/weibo/she/{{ n['owner'] }}/" title="{{ n.get('nick', '') }}">
-				<img title="" alt="" width=50 height=50 src="/image/avatar/{{ n['owner'] }}_50"  onerror="this.src='/static/img/default_avatar.gif';"/>
-			</a>
-			<span><a href="/weibo/she/{{ n['owner'] }}/" title="{{ n.get('nick', '') }}">{{ n.get('nick','') }}</a></span>
-		</div>
-		<div class="accordion-group pull-right" style="width:620px;border-width:0px;">
-			<div class="accordion-heading" style="background:#F0FFF0;">
-				<a target="_blank" href="/note/{{ n['id'] }}/" class="accordion-toggle pull-left">{{ n['title'] }}</a>
-				<a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion" href="#{{ n['id'] }}" style="width:30px;"><i class="icon-chevron-down"></i></a>
-				<div style="clear:both;"></div>
-			</div>
-			<div class="accordion-inner abstract" style="border-top-width:0px;">
-				{{ abstract(n['content'], 180) }}
-				<div style="margin:8px 0px;font-size:13px;">{{ n['created'] }}</div>
-			</div>
-			<div id="{{ n['id'] }}" class="accordion-body collapse" style="height: 0px;">
-				<div class="accordion-inner">
-					<div class="p">{{ n['content'] }}</div>
-					<div class="clear"></div>
-				</div>
-				<div style="margin:10px 0px;font-size:13px;">{{ n['created'] }}</div>
-			</div>
-		</div>
-		<div class="clear"></div>
-		{% end %}
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+					<th width=50%>游记名称</th>
+					<th width=13%>发布时间</th>
+					<th>回复</th>
+					<th width=12%>补充</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for n in note_l %}
+				<tr>
+					<td>
+						{% if n.has_key('href') %}<a target="_blank" href="{{n['href']}}" title="{{n['title']}}" alt="{{n['title']}}">{% else %}<a href="/note/{{n['id']}}/" target="_blank" title="{{n['title']}}" alt="{{n['title']}}">{% end %}
+							{{n['title']}}<i style="color:#CCCCCC;">({{n['nick']}})</i>
+						</a>
+					</td>
+					<td>{{n['created']}}</td>
+					<td>173</td>
+					<td><a>操作</a></td>
+				</tr>
+				{% end %}
+			</tbody>
+		</table>
+		{% module Template("util/pagination.html", pagination=pagination, url='/note/', param='') %}
 	</div>
 {% end %}
 {% block bodyright %}

@@ -159,12 +159,15 @@ class API(object):
     def create(self, **kwargs):
         self.doc['added'] = {}
         for k, v in kwargs.items():
-            if k in self.structure:
-                if isinstance(self.structure[k], list) and not isinstance(v, list):
-                    v = [v]
-                self.doc[k]=v
-            else:
-                self.doc['added'][k] = v
+            try:
+                if k in self.structure:
+                    if isinstance(self.structure[k], list) and not isinstance(v, list):
+                        v = [v]
+                    self.doc[k]=v
+                else:
+                    self.doc['added'][k] = v
+            except Exception, e:
+                pass
         a = Added_id(self.col_name)
         self.doc['added_id'] = a.get()
         id = get_uuid()
@@ -196,8 +199,14 @@ class API(object):
         r = self.one(_id=id)
         if r[0]:
             addeds.update(r[1].get('added', {}))
-            self.collection.update({"_id":id}, {'$set':{'added':addeds}})
-        
+            self.collection.update({"_id":id}, {'$set':{'added': addeds}})
+    
+    def _edit_dict(self, id, key, **dicts):
+        r = self.one(_id=id)
+        if r[0]:
+            dicts.update(r[1].get(key, {}))
+            self.collection.update({"_id":id}, {'$set':{key: dicts}})
+    
     def edit(self, id, *args, **kwargs):
         items=dict(args)
         items.update(kwargs)
@@ -205,11 +214,17 @@ class API(object):
         addeds = {}
         lists = {}
         for k in keyl_l:
-            if k not in self.structure:
-                addeds[k]=items.pop(k)
-            elif isinstance([], self.structure[k]):
-                li = items.pop(k, None)
-                if li:lists[k] = {"$each":li} if isinstance(li, list) else li
+            try:
+                if k not in self.structure:
+                    addeds[k]=items.pop(k)
+                elif isinstance([], self.structure[k]):
+                    li = items.pop(k, None)
+                    if li:lists[k] = {"$each":li} if isinstance(li, list) else li
+                elif isinstance({}, self.structure[k]):
+                    dicts = items.pop(k)
+                    self._edit_dict(id, k, **dicts)
+            except Exception, e:
+                pass
         try:
             if lists: self.collection.update({"_id":id}, {"$addToSet":lists})
             self.collection.update({"_id":id}, {"$set":items})

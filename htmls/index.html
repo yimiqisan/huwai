@@ -1,4 +1,4 @@
-{% extends box.html %}
+{% extends frame12.html %}
 
 {% block meta %}
 	<title>深呼吸</title>
@@ -11,21 +11,24 @@
 	<link href="{{ static_url('css/index.css') }}" rel="stylesheet">
 	<link href="{{ static_url('css/pintuxiu/color-green.css') }}" rel="stylesheet">
 	<script src="{{ static_url('js/onightjar.min.js') }}" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript">
+		var base_url = 'http://www.shenhuxi.com/';
+	</script>
 {% end %}
-{% block body %}
+{% block bodytop %}
 <div class="span12 mt20">
 	<div class="content_wrap">
 		<div class="content_wrap_left" id="slideshow">
 			<div class="slideshow">
 				<div class="active">
 					<a target="_blank" href="http://www.huwaibj.com/note/02f2aef2cd9142d0aefee903231b3c4d/">
-						<img src="http://www.huwaibj.com/image/attach/719455890fb540cf97f0f6ff21157b0f" width="640" height="280" onerror="this.src='http://www.pintuxiu.com/assets/img/blank.png';" />
+						<img src="http://www.huwaibj.com/image/attach/719455890fb540cf97f0f6ff21157b0f" width="640" height="280" onerror="this.src={{ static_url('img/blank.png') }}" />
 					</a>
 				</div>
 
 				<div>
 					<a target="_blank" href="http://www.huwaibj.com/note/15d7d63c970847588726c15a15eec9cf/">
-						<img src="http://www.huwaibj.com/image/attach/c57f9a85d4394aa08f04efe84dccaec4" width="640" height="280" onerror="this.src='http://www.pintuxiu.com/assets/img/blank.png';" />
+						<img src="http://www.huwaibj.com/image/attach/c57f9a85d4394aa08f04efe84dccaec4" width="640" height="280" onerror="this.src={{ static_url('img/blank.png') }};" />
 					</a>
 				</div>
 

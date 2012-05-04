@@ -114,6 +114,10 @@ function cpassword() {
     })
 };
 
+function delconfirm(e) {
+    if (!confirm(" 确定删除?")) return false;
+};
+
 function like(a, b, e) {
     var f_html = "<from><input type=input style='opacity:1.0;width:90%;'/></from>";
     $.popForm(b, 200, 400, f_html);

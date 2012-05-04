@@ -33,11 +33,11 @@
             }
             return true
         };
-        function i(u) {
-            if (u) {m(u);}
+        function i(u, z) {
+            if (u) {m(u, z);}
             b("#form_note").submit(function(){
                 if (!h()) {return false};
-                j(u);
+                j(u, z);
                 window.location.href = '/note/'+u;
                 return false;
             });
@@ -53,12 +53,18 @@
                 if (!confirm("离开页面 , 确定 ?")) return ! 1
             });
         };
-        function j(x) {
+        function j(x, z) {
             var u = b('#note_title').val(),
             v = k(),
             w = b('input[name=noteTags]').val();
             var message = {'note_title': u, 'note_text': v, 'note_tag': w};
-            if (x) {message.nid=x;}
+            if (x) {
+                if (z == 'append') {
+                    message.pid = x;
+                } else {
+                    message.nid = x;
+                }
+            }
             $.postJSON("/a/note/?r="+Math.random(), 'POST', message, function(response) {
                 if (response.error){
                     alert(response.error);
@@ -107,8 +113,9 @@
             });
             return false;
         };
-        function m(u) {
-            var args ={'nid': u};
+        function m(u, z) {
+            if (z == 'append') { return false; }
+            args = {'nid': u}
             $.postJSON("/a/note/?r="+Math.random(), 'GET', args, function(response) {
                 if (response.error){
                     alert(response.error);
@@ -134,7 +141,7 @@
         function n(u, v, w) {
             var pic_num = $("#thumbnails li").length+1;
             var pic_name = " 图:"+pic_num+" ";
-            z = b('<li id="pic'+pic_num+'" class="span3 bg-white"><div class="thumbnail" style="min-height:100px;"><div style="float:left; clear:right;margin-right:10px;"><img src="/image/attach/'+v+'" style="width:80px;height:80px;margin-bottom:5px;" width=100 height=100 /></div><div class="span1" style="margin:10px 10px;display:block;width:100px;"><a rel="'+pic_num+'" href="" onclick="yhui.iNote.delPic(this);return false;">删除</a><p class="pull-right">'+pic_name+'</p></div><br/><br/><br/><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="-1">左</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="0" checked>中</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="1">右</label><textarea style="width:200px;">'+w+'</textarea></div></li>');
+            z = b('<li id="pic'+pic_num+'" class="span3 box"><div class="thumbnail" style="min-height:100px;"><div style="float:left; clear:right;margin-right:10px;"><img src="/image/attach/'+v+'" style="width:80px;height:80px;margin-bottom:5px;" width=100 height=100 /></div><div class="span1" style="margin:10px 10px;display:block;width:100px;"><a rel="'+pic_num+'" href="" onclick="yhui.iNote.delPic(this);return false;">删除</a><p class="pull-right">'+pic_name+'</p></div><br/><br/><br/><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="-1">左</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="0" checked>中</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="1">右</label><textarea style="width:200px;">'+w+'</textarea></div></li>');
             b('#thumbnails').append(z);
             if (u == 'PICL') {
                 z.find('.radio input[value=-1]').attr('checked', true);
@@ -147,8 +154,8 @@
             check: function() {
                 return h();
             },
-            init:function(u) {
-                return i(u);
+            init:function(u, v) {
+                return i(u, v);
             },
             insertPic: function(u, v, w) {
                 return n(u, v, w);

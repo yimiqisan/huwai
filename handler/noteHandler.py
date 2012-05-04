@@ -20,10 +20,25 @@ class NoteHandler(BaseHandler):
     @addslash
     @session
     def get(self):
+        self.redirect('/note/abstract/')
+
+class NoteListHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self):
         uid = self.SESSION['uid']
         n = Note()
-        r = n._api.list()
-        return self.render("note/index.html", note_l = r[1])
+        r = n._api.page(channel=u'origin')
+        return self.render("note/list.html", note_l = r[1], pagination=r[2])
+
+class NoteAbsHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self):
+        uid = self.SESSION['uid']
+        n = Note()
+        r = n._api.list(channel=u'origin')
+        return self.render("note/abstract.html", note_l = r[1])
 
 class NoteItemHandler(BaseHandler):
     @addslash
@@ -45,7 +60,14 @@ class NoteEditHandler(BaseHandler):
     @preperm(keys=['FOUNDER', 'VERIFIER', 'NORMAL'])
     def get(self, id):
         uid = self.SESSION['uid']
-        return self.render("note/write.html", id=id)
+        return self.render("note/write.html", id=id, channel=u'origin')
+
+class NoteAppendHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self, id):
+        uid = self.SESSION['uid']
+        return self.render("note/write.html", id=id, channel=u'append')
 
 class NoteDeleteHandler(BaseHandler):
     @addslash
@@ -63,7 +85,7 @@ class NoteWriteHandler(BaseHandler):
     @preperm(keys=['FOUNDER', 'VERIFIER', 'NORMAL'])
     def get(self):
         uid = self.SESSION['uid']
-        return self.render("note/write.html", id="")
+        return self.render("note/write.html", id="", channel=u'origin')
     
     @addslash
     @session
@@ -95,6 +117,7 @@ class AjaxNoteHandler(BaseHandler):
     def post(self):
         uid = self.SESSION['uid']
         nid = self.get_argument("nid", None)
+        pid = self.get_argument("pid", None)
         nt = self.get_argument("note_title", None)
         nc = self.get_argument("note_text", None)
         ng = self.get_argument("note_tag", None)
@@ -103,10 +126,12 @@ class AjaxNoteHandler(BaseHandler):
         ng = self._flt_tags(ng)
         nick = self.current_user if uid else u'匿名驴友'
         kwargs = {'nick':nick}
-        if nid is None:
+        if (nid is None) and (pid is None):
             r = n._api.save(uid, nt, nc, tags=ng, **kwargs)
-        else:
+        elif nid and (pid is None):
             r = n._api.edit(nid, title=nt, content=nc, tags=ng, **kwargs)
+        elif (nid is None) and pid:
+            r = n._api.append(pid, uid, nt, nc, tags=ng, **kwargs)
         if r[0]:
             return self.write({'info':r[1]})
         else:

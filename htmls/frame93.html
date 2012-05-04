@@ -1,0 +1,20 @@
+{% extends base.html %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="span9">
+				{% block bodyleft %}{% end %}
+			</div>
+			<div class="span3">
+				{% block bodyright %}{% end %}
+			</div>
+		</div>
+		<footer class="footer">
+			{% block foot %}{% end %}
+			<p class="pull-right"><a href="">回到顶部</a></p>
+			<p class="pull-left"><a href="/contact/">&nbsp;&nbsp;联系我们</a></p>
+			<p class="pull-left"><a href="/sitemap/">&nbsp;&nbsp;网站地图</a></p>
+		</footer>
+	</div>
+{% end %}

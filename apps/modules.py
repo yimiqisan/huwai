@@ -196,6 +196,7 @@ class NoteDoc(Document):
             'content':  unicode,
             'tags':     list,
             'members':  list,
+            'channel':  IS(u'origin', u'append'),
             'check':    bool,
     }
     required_fields = ['_id', 'created']
