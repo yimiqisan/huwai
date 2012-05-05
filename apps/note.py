@@ -50,13 +50,29 @@ class NoteAPI(API):
         if not isinstance(members, list):members = [members]
         return super(NoteAPI, self).create(owner=owner, title=title, content=content, tags=tags, members=members, check=check, channel=u'origin', **kwargs)
     
+    def _clue_id(self, cid):
+        rid = cid
+        while(cid):
+            r = self.one(_id=cid)
+            if r[0] and r[1]:
+                pid = r[1]['pid']
+                rid = r[1]['_id']
+                if pid:
+                    cid = pid
+                else:
+                    break
+            else:
+                break
+        return rid
+    
     def append(self, id, owner, title, content, tags=[], members=[], check=False, **kwargs):
         tid = self._get_tid(title)
         kwargs['tid'] = tid
         if not isinstance(tags, list):tags = [tags]
         if not isinstance(members, list):members = [members]
         r = super(NoteAPI, self).create(owner=owner, title=title, content=content, tags=tags, members=members, check=check, channel=u'append', **kwargs)
-        if r[0]: self.edit(id, pid=r[1])
+        cid = self._clue_id(id)
+        if r[0]: self.edit(cid, pid=r[1])
         return r
     
     def remove(self, id, cuid=DEFAULT_CUR_UID):
@@ -66,8 +82,9 @@ class NoteAPI(API):
             if r[1]['channel'] == u'origin':
                 if pid:self.edit(pid, channel=u'origin')
             elif r[1]['channel'] == u'append':
-                ra=self.find(pid=pid)
-                self.edit(ra['_id'], pid=ra['pid'])
+                ra=self.one(pid=r[1]['id'])
+                if ra[0] and ra[1]:
+                    self.edit(ra[1]['_id'], pid=r[1]['pid'])
             return super(NoteAPI, self).remove(id)
         return None
     
@@ -89,7 +106,7 @@ class NoteAPI(API):
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         now = datetime.now()
         t = Tag()
-        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'perm':self._perm(cuid, i['owner']), 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', ''), 'pid':i['pid'], 'added_id':i['added_id'], 'title':i['title'], 'content':i['content'], 'tags':t._api.id2content(i['tags']), 'members':i.get('members', []), 'created':self._escape_created(now, i['created']), 'check':i.get('check', True)}
+        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'perm':self._perm(cuid, i['owner']), 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', ''), 'pid':i['pid'], 'added_id':i['added_id'], 'title':i['title'], 'content':i['content'], 'channel':i['channel'],'tags':t._api.id2content(i['tags']), 'members':i.get('members', []), 'created':self._escape_created(now, i['created']), 'check':i.get('check', True)}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)
@@ -105,6 +122,7 @@ class NoteAPI(API):
         if (r[0] and r[1]):
             out = self._output_format(result=r[1], cuid=cuid)
             l.append(out)
+        if out['channel'] == u'append':return (True, l)
         while (out['pid']):
             r = self.one(_id=out['pid'])
             if (r[0] and r[1]):

@@ -12,7 +12,9 @@ def run(argv):
     
 def _handle_entity(obj, opts):
     n = Note()
-    n._api.edit(obj['_id'], pid=obj['added'].get('pid', None), channel=u'origin')
+    obj.pop('content')
+    print obj['channel']
+#    n._api.edit(obj['_id'], pid=obj['added'].get('pid', None), channel=u'origin')
 #    try:
 #        tid = obj['added']['tid']
 #    except:
