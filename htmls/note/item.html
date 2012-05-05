@@ -1,9 +1,9 @@
 {% extends ../frame12.html %}
 
 {% block meta %}
-	<title>{{title}}_游记_深呼吸</title>
+	<title>{{nitems[0]['title']}}_游记_深呼吸</title>
 	<meta name="keywords" content="游记 攻略 直播 驴友 旅行">
-	<meta name="description" content="深呼吸{{title}}游记记录户外行程点点滴滴，供大家借鉴、评论。">
+	<meta name="description" content="深呼吸{{nitems[0]['title']}}游记记录户外行程点点滴滴，供大家借鉴、评论。">
 {% end %}
 
 {% block static %}
@@ -20,25 +20,27 @@
 {% autoescape None %}
 {% block bodytop %}
 	<div id="note-item" class="box">
-		<h2 class="title_center mt20">{{ title }}</h2>
+		{% for idx in xrange(len(nitems)) %}
+		<h2 class="title_center mt20">{{ nitems[idx]['title'] }}</h2>
 		<div class="info">
 			<div class="pull-left">
-				<span><a href="/weibo/she/{{owner}}" title="{{nick}}">{{ nick }}</a></span>
-				<span>于&nbsp;{{ created }}&nbsp;发表</span>
-				{% if tags %}<span>标签:{{ list2url(tags) }}</span>{% end %}
+				<span><a href="/weibo/she/{{nitems[idx]['owner']}}" title="{{nitems[idx]['nick']}}">{{ nitems[idx]['nick'] }}</a></span>
+				<span>于&nbsp;{{ nitems[idx]['created'] }}&nbsp;发表</span>
+				{% if nitems[idx]['tags'] %}<span>标签:{{ list2url(nitems[idx]['tags']) }}</span>{% end %}
 			</div>
 			<div class="pull-right">
 				<a class="hide" data-toggle="modal" href="#discuss">评论</a>
-				{% if verify(perm, 0x30) %}
-				<i class="wb_vline">|</i><a href="/note/{{id}}/append/">追加</a>
-				<i class="wb_vline">|</i><a href="/note/{{id}}/edit/">编辑</a>
-				<i class="wb_vline">|</i><a href="/note/{{id}}/delete/" onclick="return delconfirm(this);">删除</a>
+				{% if verify(nitems[idx]['perm'], 0x30) %}
+				{% if idx == 0 %}<i class="wb_vline">|</i><a href="/note/{{nitems[idx]['id']}}/append/">追加</a>{% end %}
+				<i class="wb_vline">|</i><a href="/note/{{nitems[idx]['id']}}/edit/">编辑</a>
+				<i class="wb_vline">|</i><a href="/note/{{nitems[idx]['id']}}/delete/" onclick="return delconfirm(this);">删除</a>
 				{% end %}
 			</div>
 			<div class="clear"></div>
 		</div>
-		<div class="p" style="padding:10px;">{{ content }}</div>
+		<div class="p" style="padding:10px;">{{ nitems[idx]['content'] }}</div>
 		<div class="clear"></div>
+		{% end %}
 	</div>
 {% end %}
 {% block bodybottom %}
@@ -48,11 +50,11 @@
 			<span style="font-size:24px;color:#ff9933;" id="num">140</span> 字
 		</div>
 		<form action="/weibo" method="post" id="weiboform">
-			<textarea rows="2" style="width:80%;" name="content" id="weibo-content">#{{ title }}#</textarea>
+			<textarea rows="2" style="width:80%;" name="content" id="weibo-content">#{{ nitems[0]['title'] }}#</textarea>
 			<input type="submit" class="btn-large" value="发布" style="margin-top:5px;margin-left:20px;">
 			<input type="hidden" name="_xsrf" value="ca61c7cf01cf4097bd14c959c519637a">
 		</form><br/><hr/>
-		<div class="wb_items" maintype="{{ tid }}" subtype="" kind="note" title="#{{ title }}#">
+		<div class="wb_items" maintype="{{ nitems[0]['tid'] }}" subtype="" kind="note" title="#{{ nitems[0]['title'] }}#">
 			<div id="wb_bottom" class="bottom wb_item"><a href="#" style="display:block;text-align:center;" onclick="Weibo.extend(this);return false;"></a><input type="hidden" value="0"></div>
 		</div>
 	</div>

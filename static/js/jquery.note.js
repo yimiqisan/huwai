@@ -122,7 +122,7 @@
                     return ;
                 }
                 b('#note_title').val(response.info.title);
-                var reg = new RegExp('<div class="([A-Z]{3,4})"><img src=/image/attach/(.{32})><div>(.*)</div></div>',"g");
+                var reg = new RegExp('<div class="([A-Z]{3,4})"><img src=/image/attach/(.{32})><div>(.*?)</div></div>',"g");
                 var vc = response.info.content;
                 for (var i=0; i<response.info.tags.length; i++) {
                     $("#noteTags").tagit('createTag', response.info.tags[i][1], '', response.info.tags[i][0]);

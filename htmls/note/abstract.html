@@ -47,15 +47,15 @@
 			<div class="accordion-heading" style="background:#F0FFF0;">
 				<a target="_blank" href="/note/{{ n['id'] }}/" class="accordion-toggle pull-left">{{ n['title'] }}</a>
 				<a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion" href="#{{ n['id'] }}" style="width:30px;"><i class="icon-chevron-down"></i></a>
+				<div class="pull-right" style="color:#ccc;padding:8px 15px;">{{ n['created'] }}</div>
 				<div style="clear:both;"></div>
 			</div>
 			<div class="accordion-inner abstract" style="border-top-width:0px;">
-				{{ abstract(n['content'], 180) }}
-				<div style="margin:8px 0px;font-size:13px;">{{ n['created'] }}</div>
+				{{ abstract(n['content'], 90) }}
 			</div>
 			<div id="{{ n['id'] }}" class="accordion-body collapse" style="height: 0px;">
 				<div class="accordion-inner">
-					<div class="p">{{ n['content'] }}</div>
+					<div class="">{{ n['content'] }}</div>
 					<div class="clear"></div>
 				</div>
 				<div style="margin:10px 0px;font-size:13px;">{{ n['created'] }}</div>

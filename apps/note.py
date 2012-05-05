@@ -62,6 +62,12 @@ class NoteAPI(API):
     def remove(self, id, cuid=DEFAULT_CUR_UID):
         r = self.get(id, cuid)
         if (r[0] and r[1]) and r[1]['is_own']:
+            pid = r[1].get('pid', None)
+            if r[1]['channel'] == u'origin':
+                if pid:self.edit(pid, channel=u'origin')
+            elif r[1]['channel'] == u'append':
+                ra=self.find(pid=pid)
+                self.edit(ra['_id'], pid=ra['pid'])
             return super(NoteAPI, self).remove(id)
         return None
     
@@ -83,7 +89,7 @@ class NoteAPI(API):
     def _output_format(self, result=[], cuid=DEFAULT_CUR_UID):
         now = datetime.now()
         t = Tag()
-        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'perm':self._perm(cuid, i['owner']), 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', ''), 'pid':i['added'].get('pid', None), 'added_id':i['added_id'], 'title':i['title'], 'content':i['content'], 'tags':t._api.id2content(i['tags']), 'members':i.get('members', []), 'created':self._escape_created(now, i['created']), 'check':i.get('check', True)}
+        output_map = lambda i: {'id':i['_id'], 'owner':i['owner'], 'tid':i['added'].get('tid', None), 'perm':self._perm(cuid, i['owner']), 'is_own':(cuid==i['owner'] if i['owner'] else True), 'nick':i['added'].get('nick', ''), 'pid':i['pid'], 'added_id':i['added_id'], 'title':i['title'], 'content':i['content'], 'tags':t._api.id2content(i['tags']), 'members':i.get('members', []), 'created':self._escape_created(now, i['created']), 'check':i.get('check', True)}
         if isinstance(result, dict):
             return output_map(result)
         return map(output_map, result)
@@ -92,7 +98,21 @@ class NoteAPI(API):
         r = self.one(_id=id)
         if (r[0] and r[1]):
             return (True, self._output_format(result=r[1], cuid=cuid))
-        return r
+    
+    def get_list(self, id, cuid=DEFAULT_CUR_UID):
+        l = []
+        r = self.one(_id=id)
+        if (r[0] and r[1]):
+            out = self._output_format(result=r[1], cuid=cuid)
+            l.append(out)
+        while (out['pid']):
+            r = self.one(_id=out['pid'])
+            if (r[0] and r[1]):
+                out = self._output_format(result=r[1], cuid=cuid)
+                l.append(out)
+            else:
+                break
+        return (True, l)
     
     def list(self, cuid=DEFAULT_CUR_UID, owner=None, title=None, content=None, tags=None, members=None, channel=None, check=None):
         kwargs = {}

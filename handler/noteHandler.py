@@ -47,12 +47,11 @@ class NoteItemHandler(BaseHandler):
     def get(self, id):
         uid = self.SESSION['uid']
         n = Note()
-        r = n._api.get(id, cuid=uid)
+        r = n._api.get_list(id, cuid=uid)
         if r[0]:
-            return self.render("note/item.html", **r[1])
+            return self.render("note/item.html", nitems=r[1])
         else:
             return self.render("note/item.html", warning=r[1])
-    
 
 class NoteEditHandler(BaseHandler):
     @addslash
