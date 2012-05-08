@@ -7,7 +7,7 @@
     };
     a.iNote = (function() {
         var c = {
-            id: 'tags',
+            id: 'note',
             eclass: 'span3',
             placeholderText: '输入后按 < Enter > 键',
             removeConfirmation: true,
@@ -74,8 +74,9 @@
         };
         function k() {
             var u = b('#note_text').val();
+            var tlength = b("#thumbnails li").length;
             b("#thumbnails li").each(function(index, object){
-                var i = index+1;
+                var i = tlength - index;
                 var pic = "图:"+i,
                 reg = new RegExp(pic,"g"),
                 pid = "pic"+i,
@@ -107,7 +108,8 @@
                     alert(response.error);
                 }
                 var w = b('#note_text')
-                w.val(w.val().replace(eval("/图:"+v+"/g"),""))
+                //w.val(w.val().replace(eval("/图:"+v+"/g"),""))
+                w.val(w.val().replace("图:"+v,""))
                 b('#pic'+v).fadeOut()
                 return false;
             });

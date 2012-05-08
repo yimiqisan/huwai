@@ -31,7 +31,7 @@
 			<div class="pull-right">
 				<a class="hide" data-toggle="modal" href="#discuss">评论</a>
 				{% if verify(nitems[idx]['perm'], 0x30) %}
-				{% if idx == 0 %}<i class="wb_vline">|</i><a href="/note/{{nitems[idx]['id']}}/append/">追加</a>{% end %}
+				{% if nitems[idx]['channel'] == 'origin' %}<i class="wb_vline">|</i><a href="/note/{{nitems[idx]['id']}}/append/">追加</a>{% end %}
 				<i class="wb_vline">|</i><a href="/note/{{nitems[idx]['id']}}/edit/">编辑</a>
 				<i class="wb_vline">|</i><a href="/note/{{nitems[idx]['id']}}/delete/" onclick="return delconfirm(this);">删除</a>
 				{% end %}
