@@ -9,12 +9,6 @@
 		<script src="{{ static_url('js/jquery.own.js') }}" type="text/javascript"></script>
 		<script src="{{ static_url('js/jquery.cookie.js') }}" type="text/javascript"></script>
 		<script src="{{ static_url('js/utility.js') }}" type="text/javascript"></script>
-		<script language="javascript" type="text/javascript">
-			$(document).ready(function() {
-				login();
-				reg();
-			})
-		</script>
 		<link href="{{ static_url('css/bootstrap.css') }}" rel="stylesheet">
 		<link href="{{ static_url('css/doc.css') }}" rel="stylesheet">
 		<link href="{{ static_url('css/ie6.css') }}" rel="stylesheet">
@@ -84,20 +78,10 @@
 			</div>
 		</div>
 		{% block body %}{% end %}
-		<script type="text/javascript" src="{{ static_url('js/bs/widgets.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/prettify.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-alert.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-modal.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-transition.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-dropdown.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-scrollspy.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-tab.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-tooltip.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-popover.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-button.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-collapse.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-carousel.js') }}"></script>
-		<script type="text/javascript" src="{{ static_url('js/bs/bootstrap-typeahead.js') }}"></script>
+		<script type="text/javascript" src="{{ static_url('js/bootstrap.min.js') }}"></script>
+		<script language="javascript" type="text/javascript">
+			login();reg();
+		</script>
 		<script type="text/javascript">
 			var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 			document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F6b34ad8e29d35b0144d58d00906f3ef9' type='text/javascript'%3E%3C/script%3E"));
