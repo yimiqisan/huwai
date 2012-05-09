@@ -53,7 +53,8 @@ class TagAPI(API):
         if not isinstance(relation_l, list):
             relation_l = [relation_l]
         for t in tl:
-            r = self.add(owner, t, relation_l, **kwargs)
+            print t
+            r = (True, None)#self.add(owner, t, relation_l, **kwargs)
             if not r[0]:return r
         return (True, None)
     

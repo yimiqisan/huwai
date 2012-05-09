@@ -82,9 +82,9 @@
                 pid = "pic"+i,
                 pos = "pos"+i,
                 rdo = b('input[name='+pos+']:checked').val(),
-                dtl = b(this).find('textarea').val();
+                dtl = b('#'+pid).find('textarea').val() || pic;
                 var src = b("#"+pid+" img").attr('src');
-                var img = '<img src='+src+'>';
+                var img = '<img src='+src+' alt='+dtl+' title='+dtl+'>';
                 img=img+'<div>'+dtl+'</div>';
                 if (rdo == '-1') {
                     img = '<div class="PICL">'+img+'</div>';
@@ -124,7 +124,7 @@
                     return ;
                 }
                 b('#note_title').val(response.info.title);
-                var reg = new RegExp('<div class="([A-Z]{3,4})"><img src=/image/attach/(.{32})><div>(.*?)</div></div>',"g");
+                var reg = new RegExp('<div class="([A-Z]{3,4})"><img src=/image/attach/(.{32}) alt=.*? title=.*?><div>(.*?)</div></div>',"g");
                 var vc = response.info.content;
                 for (var i=0; i<response.info.tags.length; i++) {
                     $("#noteTags").tagit('createTag', response.info.tags[i][1], '', response.info.tags[i][0]);
@@ -142,8 +142,8 @@
         };
         function n(u, v, w) {
             var pic_num = $("#thumbnails li").length+1;
-            var pic_name = " 图:"+pic_num+" ";
-            z = b('<li id="pic'+pic_num+'" class="span3 box"><div class="thumbnail" style="min-height:100px;"><div style="float:left; clear:right;margin-right:10px;"><img src="/image/attach/'+v+'" style="width:80px;height:80px;margin-bottom:5px;" width=100 height=100 /></div><div class="span1" style="margin:10px 10px;display:block;width:100px;"><a rel="'+pic_num+'" href="" onclick="yhui.iNote.delPic(this);return false;">删除</a><p class="pull-right">'+pic_name+'</p></div><br/><br/><br/><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="-1">左</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="0" checked>中</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="1">右</label><textarea style="width:200px;">'+w+'</textarea></div></li>');
+            var pic_name = "图:"+pic_num;
+            z = b('<li id="pic'+pic_num+'" class="span3 box"><div class="thumbnail" style="min-height:100px;"><div style="float:left; clear:right;margin-right:10px;"><img src="/image/attach/'+v+'" alt="" title="" style="width:80px;height:80px;margin-bottom:5px;" width=100 height=100 /></div><div class="span1" style="margin:10px 10px;display:block;width:100px;"><a rel="'+pic_num+'" href="" onclick="yhui.iNote.delPic(this);return false;">删除</a><p class="pull-right">'+pic_name+'</p></div><br/><br/><br/><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="-1">左</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="0" checked>中</label><label class="radio inline" style="margin-left:5px;"><input type="radio" name="pos'+pic_num+'" value="1">右</label><textarea style="width:200px;">'+w+'</textarea></div></li>');
             b('#thumbnails').append(z);
             if (u == 'PICL') {
                 z.find('.radio input[value=-1]').attr('checked', true);

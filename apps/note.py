@@ -122,6 +122,8 @@ class NoteAPI(API):
         if (r[0] and r[1]):
             out = self._output_format(result=r[1], cuid=cuid)
             l.append(out)
+        else:
+            return (False, None)
         if out['channel'] == u'append':return (True, l)
         while (out['pid']):
             r = self.one(_id=out['pid'])

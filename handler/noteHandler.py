@@ -51,7 +51,7 @@ class NoteItemHandler(BaseHandler):
         if r[0]:
             return self.render("note/item.html", nitems=r[1])
         else:
-            return self.render("note/item.html", warning=r[1])
+            return self.render_alert(u"文章 不存在 或 已删除")
 
 class NoteEditHandler(BaseHandler):
     @addslash
