@@ -1,0 +1,21 @@
+{% extends ../frame93.html %}
+
+{% block meta %}
+	<title>路线_深呼吸</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+{% end %}
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$('#nav-wiki').addClass("active");
+		})
+	</script>
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/wiki.css') }}"/>
+{% end %}
+
+{% block bodyleft %}
+<h1>wiki</h1>
+{% end %}
+{% block bodyright %}{% end %}

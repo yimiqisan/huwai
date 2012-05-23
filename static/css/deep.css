@@ -1,0 +1,17 @@
+.reply-group {zoom:1;}
+.reply-item, .reply-url, .reply-submit {margin-bottom: 1px;padding: 6px;background-color: #F0F5F8;border-bottom: 1px solid #E6EFF7;background-repeat: no-repeat;}
+.reply-item {min-height: 30px;background-color: #F0F5F8;color: #333;padding: 6px;line-height: 1.2em;border-bottom: 1px solid #E6EFF7;clear: both;word-wrap: break-word;}
+.reply-url{text-align: center;padding:3px;}
+.reply-item::after {content: ".";display: block;clear: both;height: 0;visibility: hidden;}
+.reply-item a.photo30, .reply-item a.photo50 {float: left;display: inline-block;width: 50px;height: 50px;margin-right: 8px;overflow: hidden;}
+.reply-item a.photo30 {background-position: center center;width: 30px;height: 30px;}
+.reply-item span.time {font-size: 10px;color: #ccc;}
+.reply-item .content {margin-left: 38px;line-height: 1.4em;}
+
+.reply-url a{color:#aaa;}
+.reply-url a:hover{color:#777;}
+
+.reply-submit textarea {width:98%;margin-right:10px;}
+.reply-submit a, .reply-submit div {display:none;}
+.reply-group .activing a, .reply-group .activing div {display:block;}
+.reply-group .activing textarea {height:50px;width:86%; float:right; margin-right:0px;}

@@ -12,6 +12,7 @@ from tornado.web import addslash, authenticated
 from baseHandler import BaseHandler
 from huwai.apps.pstore import AttachProcessor
 from huwai.apps.album import Album
+from huwai.apps.timeline import TimeLine
 from huwai.apps.tools import session
 
 class AlbumHandler(BaseHandler):
@@ -95,4 +96,21 @@ class AjaxAlbumHandler(BaseHandler):
             return self.write(json.dumps({'id':r[1]}))
         else:
             return self.write({'error':'save error'})
+
+class AlbumPictureHandler(BaseHandler):
+    @session
+    def get(self, id):
+        uid = self.SESSION['uid']
+        tl = TimeLine()
+#        r = tl._api.pack(cuid=uid, topic=id, channel=[u'reply'], order=-1)
+#        if r[0]:
+#            return self.render('album/picture.html', pid=id, title="", oldest=r[1], newest=r[2], num=r[3])
+#        else:
+#            return self.redirest('/404/')
+        r = tl._api.topN(cuid=uid, channel=[u'reply'], topic=id, limit=5)
+        rl = r[1] if r[0] else []
+        return self.render('album/picture.html', pid=id, title="", rl=rl, added_id=r[2], num=r[3])
     
+        
+        
+        

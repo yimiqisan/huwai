@@ -238,4 +238,50 @@ class TimeLineAPI(API):
             rb = self.extend(cuid=cuid, topic=topic, channel=channel, limit=1, order=-1)
             return (rt[1][0]['content'], '共'+str(c)+'条留言', rb[1][0]['content'])
         else:
-            return c
+            return (False, u'抢沙发啦', False)
+    
+    def pack(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None, order_by='added_id', order=-1):
+        kwargs = {}
+        if topic:kwargs['topic'] = {'$in':topic} if isinstance(topic, list) else topic
+        if channel:kwargs['channel']={'$in':channel}
+        c = super(TimeLineAPI, self).count(**kwargs)
+        if c == 0:
+            return (True, False, False, 0)
+        elif c == 1:
+            rt = self.extend(cuid=cuid, topic=topic, channel=channel, limit=1, order=1)
+            return (True, rt[1][0], False, 0)
+        elif c== 2:
+            rt = self.extend(cuid=cuid, topic=topic, channel=channel, limit=2, order=1)
+            return (True, rt[1][0], rt[1][1], 0)
+        elif c>2:
+            rt = self.extend(cuid=cuid, topic=topic, channel=channel, limit=1, order=1)
+            rb = self.extend(cuid=cuid, topic=topic, channel=channel, limit=1, order=-1)
+            return (True, rt[1][0], rb[1][0], c-2)
+        else:
+            return (False, False, False, 0)
+    
+    def topN(self, cuid=DEFAULT_CUR_UID, owner=None, topic=None, channel=None, at=None, cursor=None, limit=5, order_by='added_id', order=-1):
+        kwargs = {}
+        if owner:kwargs['owner']=owner
+        if topic:kwargs['topic'] = {'$in':topic} if isinstance(topic, list) else topic
+        if at:kwargs['at_list']=at
+        if channel:kwargs['channel']={'$in':channel}
+        if cursor:kwargs['cursor']=cursor
+        c = super(TimeLineAPI, self).count(**kwargs)
+        left = c-limit
+        kwargs['limit']=limit
+        kwargs['order_by']=order_by
+        kwargs['order']=order
+        r = super(TimeLineAPI, self).extend(**kwargs)
+        if r[0]:
+            kw = {'result':r[1]}
+            if cuid:kw['cuid']=cuid
+            l = self._output_format(**kw)
+            l.reverse()
+            if left>0:
+                added_id = min(l[0]['added_id'], l[-1]['added_id']) if len(l)!=0 else -1
+            else:
+                added_id = -1
+            return (True, l, added_id, left)
+        else:
+            return (False, r[1], -1, 0)

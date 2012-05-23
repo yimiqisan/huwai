@@ -19,6 +19,7 @@
 		<link href="{{ static_url('css/doc.css') }}" rel="stylesheet">
 		<link href="{{ static_url('css/ie6.css') }}" rel="stylesheet">
 		<link href="{{ static_url('css/mybootstrap.css') }}" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{{ static_url('css/deep.css') }}"/>
 		<link rel="shortcut icon" href="{{ static_url('img/favicon') }}" type="image/x-icon">
 		{% block static %}{% end %}
 	</head>
@@ -41,6 +42,7 @@
 							<li id="nav-tag" class=""><a href="/tag/">标签</a></li>
 							<li id="nav-album" class=""><a href="/album/">相册</a></li>
 							<li id="nav-search" class=""><a href="/search/">搜索</a></li>
+							<li id="nav-wiki" class=""><a href="/wiki/">路线库</a></li>
 							<li id="nav-second" style="display:none;"><a href="/second/">二手</a></li>
 						</ul>
 						<ul class="nav user_log pull-right">
@@ -86,9 +88,9 @@
 		{% block body %}{% end %}
 		<script type="text/javascript" src="{{ static_url('js/bootstrap.min.js') }}"></script>
 		<script type="text/javascript">
-			var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+/*			var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 			document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F6b34ad8e29d35b0144d58d00906f3ef9' type='text/javascript'%3E%3C/script%3E"));
-		</script>
+*/		</script>
 		<script type="text/javascript">
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-31387623-1']);

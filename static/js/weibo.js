@@ -110,6 +110,7 @@ var Weibo = {
             $("#weiboform input[type=submit]").removeClass("btn-primary");
             $("#num").text(140);
             disabled.enable();
+            $('#weibo-content').trigger('focus');
         });
     },
 
