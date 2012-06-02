@@ -1,6 +1,6 @@
 <dl id="m-{{ reply['id'] }}" class="comment_list">
 	<dt><a href="" title="{{ reply['nick'] }}" alt="{{ reply['nick'] }}" style="display:block;width:30px;height:30px;overflow-x:hidden;overflow-y:hidden;">
-		<img width="30" height="30" alt="{{ reply['nick'] }}" src="/image/avatar/{{ reply['owner'] }}_30">
+		<img width="30" height="30" alt="{{ reply['nick'] }}" src="/image/avatar/{{ reply['owner'] }}_30" onerror="this.src='/static/img/default_avatar.gif';">
 	</a></dt>
 	<dd>
 		<a href="" title="{{ reply['nick'] }}" alt="{{ reply['nick'] }}">{{ reply['nick'] }}</a>: {{ reply['content'] }} ({{ reply['created'] }})
