@@ -61,6 +61,7 @@ handlers = [(r"/", RootHandler),
             
             (r"/wiki/", WikiHandler),
             (r"/wiki/(.{32})/", WikiItemHandler),
+            (r"/wiki/(.{32})/edit/", WikiEditHandler),
             
             (r"/album/", AlbumHandler),
             (r"/album/create/", AlbumCreateHandler),

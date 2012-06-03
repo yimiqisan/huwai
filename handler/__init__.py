@@ -23,4 +23,4 @@ from tagHandler import TagHandler, TagItemHandler, AjaxTagHandler, AjaxTagListHa
 from albumHandler import AlbumHandler, AlbumCreateHandler, AlbumItemHandler, AjaxAlbumUploadHandler, AjaxAlbumDeleteHandler, AlbumPictureHandler
 from guideHandler import GuideHandler
 from searchHandler import SearchHandler
-from wikiHandler import WikiHandler, WikiItemHandler
+from wikiHandler import WikiHandler, WikiItemHandler, WikiEditHandler

@@ -1,0 +1,137 @@
+{% extends ../frame12.html %}
+
+{% block meta %}
+	<title>_路线编辑_深呼吸</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+{% end %}
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$('#nav-wiki').addClass("active");
+		})
+	</script>
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/wiki.css') }}"/>
+{% end %}
+
+{% block bodytop %}
+	<div id="wiki-edit" class="box" style="position:fixed;z-index:999;top:40px;width:930px;border:1px solid #CCC;">
+		<ul class="wiki-edit-opt pull-left">
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_100_font.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_101_italic.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_102_bold.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_103_text_underline.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_104_text_strike.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_105_text_height.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_106_text_width.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_107_text_resize.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_108_left_indent.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_109_right_indent.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_110_align_left.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_111_align_center.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_112_align_right.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_113_justify.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_114_list.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_115_text_smaller.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_116_text_bigger.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_117_embed.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_118_embed_close.png') }}"/></li>
+		</ul>
+		<ul class="wiki-edit-opt pull-right">
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_212_down_arrow.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_213_up_arrow.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_086_display.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_214_resize_small.png') }}"/></li>
+			<li class="divider-vertical"></li>
+			<li><img src="{{ static_url('img/glyphicons/glyphicons_215_resize_full.png') }}"/></li>
+		</ul>
+		<div class="clear"></div>
+		<div>
+			<textarea rows=10 style="width:920px;"></textarea>
+			<div class="title_center"><i class="icon-resize-vertical"></i></div>
+		</div>
+	</div>
+	<div id="wiki-preview" class="box mt20">
+		<div class="wiki-detail">
+			<div class="wiki-detail-header">
+				<div id="123" class="wiki-detail-title">1香八拉路线</div>
+				<div class="wiki-detail-opt">
+					<span class="opt"><a href="">编辑</a></span>
+					<i class="opt-vline">|</i>
+					<span class="opt"><a href="">帮助</a></span>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="wiki-detail-bodier">
+				<img style="float:right;width:100px;height:100px;" src="" />
+				女王公园巡游者足球俱乐部成立于1882年，由两家地区性足球俱乐部合并而成，  女王公园巡游者而合并后还获得新名字，为“Queens Park Rangers”，以表示大多数球员是来自伦敦西北部的女王公园区（Queens Park）。女王公园巡游者于1889年成为职业俱乐部，但长期以来都是处于地区联赛范围。在1917年拥有自己主场地前，甚至前后借用了共二十个球场作为自己的主场。
+58/59年在联赛改制下被编入丙组。1966/67年赛季以丙组球队身份赢得英格兰联赛杯，是首支丙组队获得此殊荣。其后再于1968/69年赛季升级至甲组，但只打了一季便降回乙组。迄今最好成绩为1975/76年赛季赢得甲级联赛亚军。随后一直都只在升级降级边缘里挣扎，只有在1981/82年赛季获得英格兰足总杯亚军才值得一提。
+92年为英超创始成员，但在1996年因在英超排第十九位而降级至甲组（第二级）；随后更降至乙组（第三级）。直至2003/04年赛季才升回甲组。2010/11年获得英冠联赛冠军，再度升回英超。
+公园巡游者近年曾经被易手。2007年11月7日由意大利商人弗拉维奥·布里亚托利获得俱乐部拥有权，正式入主女王公园巡游者。至2011年8月18日，俱乐部又再转售予马来西亚商人托尼·费尔南德斯（Tony Fernandes）。
+			</div>
+		</div>
+		<hr/>
+		<div class="wiki-detail">
+			<div class="wiki-detail-header">
+				<div id="456" class="wiki-detail-title">1香八拉路线</div>
+				<div class="wiki-detail-opt">
+					<span class="opt"><a href="">编辑</a></span>
+					<i class="opt-vline">|</i>
+					<span class="opt"><a href="">帮助</a></span>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="wiki-detail-bodier">
+				<img style="float:right;width:100px;height:100px;" src="" />
+				女王公园巡游者足球俱乐部成立于1882年，由两家地区性足球俱乐部合并而成，  女王公园巡游者而合并后还获得新名字，为“Queens Park Rangers”，以表示大多数球员是来自伦敦西北部的女王公园区（Queens Park）。女王公园巡游者于1889年成为职业俱乐部，但长期以来都是处于地区联赛范围。在1917年拥有自己主场地前，甚至前后借用了共二十个球场作为自己的主场。
+58/59年在联赛改制下被编入丙组。1966/67年赛季以丙组球队身份赢得英格兰联赛杯，是首支丙组队获得此殊荣。其后再于1968/69年赛季升级至甲组，但只打了一季便降回乙组。迄今最好成绩为1975/76年赛季赢得甲级联赛亚军。随后一直都只在升级降级边缘里挣扎，只有在1981/82年赛季获得英格兰足总杯亚军才值得一提。
+92年为英超创始成员，但在1996年因在英超排第十九位而降级至甲组（第二级）；随后更降至乙组（第三级）。直至2003/04年赛季才升回甲组。2010/11年获得英冠联赛冠军，再度升回英超。
+公园巡游者近年曾经被易手。2007年11月7日由意大利商人弗拉维奥·布里亚托利获得俱乐部拥有权，正式入主女王公园巡游者。至2011年8月18日，俱乐部又再转售予马来西亚商人托尼·费尔南德斯（Tony Fernandes）。
+			</div>
+		</div>
+		<hr/>
+		<div class="wiki-detail">
+			<div class="wiki-detail-header">
+				<div id="789" class="wiki-detail-title">1香八拉路线</div>
+				<div class="wiki-detail-opt">
+					<span class="opt"><a href="">编辑</a></span>
+					<i class="opt-vline">|</i>
+					<span class="opt"><a href="">帮助</a></span>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="wiki-detail-bodier">
+				<img style="float:right;width:100px;height:100px;" src="" />
+				女王公园巡游者足球俱乐部成立于1882年，由两家地区性足球俱乐部合并而成，  女王公园巡游者而合并后还获得新名字，为“Queens Park Rangers”，以表示大多数球员是来自伦敦西北部的女王公园区（Queens Park）。女王公园巡游者于1889年成为职业俱乐部，但长期以来都是处于地区联赛范围。在1917年拥有自己主场地前，甚至前后借用了共二十个球场作为自己的主场。
+58/59年在联赛改制下被编入丙组。1966/67年赛季以丙组球队身份赢得英格兰联赛杯，是首支丙组队获得此殊荣。其后再于1968/69年赛季升级至甲组，但只打了一季便降回乙组。迄今最好成绩为1975/76年赛季赢得甲级联赛亚军。随后一直都只在升级降级边缘里挣扎，只有在1981/82年赛季获得英格兰足总杯亚军才值得一提。
+92年为英超创始成员，但在1996年因在英超排第十九位而降级至甲组（第二级）；随后更降至乙组（第三级）。直至2003/04年赛季才升回甲组。2010/11年获得英冠联赛冠军，再度升回英超。
+公园巡游者近年曾经被易手。2007年11月7日由意大利商人弗拉维奥·布里亚托利获得俱乐部拥有权，正式入主女王公园巡游者。至2011年8月18日，俱乐部又再转售予马来西亚商人托尼·费尔南德斯（Tony Fernandes）。
+			</div>
+		</div>
+		<hr/>
+	</div>
+{% end %}
+{% block bodybottom %}{% end %}
+{% block hidden %}{% end %}

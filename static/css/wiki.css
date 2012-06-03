@@ -1,0 +1,20 @@
+#wiki-item hr {margin:12px 0px;}
+#wiki-item .opt a{color:#aaa;}
+#wiki-item .opt a:hover{color:#777;}
+#wiki-item .opt-vline {margin: 0 5px;color: #E1E4E5;}
+
+.wiki-header-title, .wiki-detail-title {width:700px;padding:5px 10px;float:left;}
+.wiki-header-title {font-size:24px;font-weight:bold;line-height:30px;}
+.wiki-detail-title {font-size:18px;font-weight:bold;line-height:24px;}
+.wiki-header-opt, .wiki-detail-opt {padding:5px 10px;float:right;}
+.wiki-header-opt {font-size:16px;line-height:30px;}
+.wiki-detail-opt {font-size:12px;line-height:24px;}
+
+.wiki-detail-bodier {padding:10px;}
+
+.wiki-nav {width:300px; margin:10px; border:2px solid #aaa; padding:5px;float:left;}
+
+#wiki-edit ul {margin:3px;}
+#wiki-edit ul, #wiki-edit ul li {display:inline;}
+#wiki-edit ul li {float:left;}
+#wiki-edit .divider-vertical {display:block;height: 30px;width: 1px;margin: 0 5px;overflow: hidden;background-color: #ddd;}

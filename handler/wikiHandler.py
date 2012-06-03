@@ -28,3 +28,8 @@ class WikiItemHandler(BaseHandler):
     def get(self, id):
         self.render('wiki/item.html')
 
+class WikiEditHandler(BaseHandler):
+    @addslash
+    @session
+    def get(self, id):
+        self.render('wiki/edit.html')
