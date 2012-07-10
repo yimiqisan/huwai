@@ -1,0 +1,21 @@
+{% extends ../frame93.html %}
+
+{% block meta %}
+	<title>投票_深呼吸</title>
+	<meta name="keywords" content="深呼吸 投票">
+	<meta name="description" content="投票 驴友">
+{% end %}
+
+{% block static %}
+	<script language="javascript" type="text/javascript">
+		$(document).ready(function() {
+			$('#nav-vote').addClass("active");
+		})
+	</script>
+	<link rel="stylesheet" type="text/css" href="{{ static_url('css/vote.css') }}"/>
+{% end %}
+
+{% block bodyleft %}
+<h1>wiki</h1>
+{% end %}
+{% block bodyright %}{% end %}
