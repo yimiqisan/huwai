@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>深呼吸户外网</title>
+	<link href="{{ static_url('css/askform.css') }}" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="{{ static_url('js/askform.js') }}"></script>
+	<script type="text/javascript" src="http://www.askform.cn/script/Scriptaculous/scriptaculous.js?load=builder,effects,dragdrop"></script>
+</head>
+<body>
+ <form action="http://www.askform.cn/UTF-8CustomFormSubmit.aspx?FormID=284410&UserID=146937" method="post">
+<div id="formBackground">
+        <div id="formArea">
+            <div id="form-logo">
+                 <a rel="home" href="http://www.askform.cn/default.aspx" style="display:none">
+                <img src="http://www.askform.cn/Images/logo.gif" style="border-width: 0px;" /></a>
+            </div>
+            <div id="formHeader">
+                <h1 id="title">
+                    深呼吸户外网 用户体验调查</h1>
+            </div>
+            <div id="formBody">
+                <div id="formPager" class="pager" style="float: right;">
+                </div>
+                <div style="clear: both;">
+                </div>
+                <div class="description">
+                    <asp:Label ID="lblDescription" EnableViewState="false" runat="server"></asp:Label>
+                </div>
+               <div id="fields">
+                    <div class="field"><div class='itemTitle'>1.您经常去的户外网站是哪些？：</div><div class="fieldItems" style="padding-left:20px;" id="2216035" maximum='3' minimum='1'><input type='checkbox' name='2216035' value='1'>8264<br><input type='checkbox' name='2216035' value='2'>517户外<br><input type='checkbox' name='2216035' value='3'>磨坊<br><input type='checkbox' name='2216035' value='4'>其它 <input type='text' maxlength='128' name='2216035-4' /><br><label style='color:red'></label></div></div><div class="field"><div class='itemTitle'>2.您登录户外网站的频率是怎样？：</div><div class="fieldItems" style="padding-left:20px;" id="2216038"><input type='radio' name='2216038' id='2216038_1' onclick='redirectDisplay(2,2,0)' value='1'>每天<br><input type='radio' name='2216038' id='2216038_2' onclick='redirectDisplay(2,2,0)' value='2'>参加活动才登陆<br><input type='radio' name='2216038' id='2216038_3' onclick='redirectDisplay(2,2,0)' value='3'>每周<br><input type='radio' name='2216038' id='2216038_4' onclick='redirectDisplay(2,2,0)' value='4'>偶尔<br><input type='radio' name='2216038' id='2216038_5' onclick='redirectDisplay(2,2,0)' value='5'>从不<br><label style='color:red'></label></div></div><div class="field"><div class='itemTitle'>3.您经常登录一个户外网站是因为？：</div><div class="fieldItems" style="padding-left:20px;" id="2216039" maximum='3' minimum='1'><input type='checkbox' name='2216039' value='1'>查看游记<br><input type='checkbox' name='2216039' value='2'>查看活动<br><input type='checkbox' name='2216039' value='3'>漫无目的随便看看<br><input type='checkbox' name='2216039' value='4'>其它 <input type='text' maxlength='128' name='2216039-4' /><br><label style='color:red'></label></div></div><div class="field"><div class='itemTitle'>4.您认为深呼吸和您经常登录的户外网站相比都有哪些不足？：<label style='color:red'>*</label></div><div class="fieldItems" style="padding-left:20px;" id="2216040" required='true' maximum='4' minimum='1'><input type='checkbox' name='2216040' value='1'>功能较少<br><input type='checkbox' name='2216040' value='2'>没有内容<br><input type='checkbox' name='2216040' value='3'>没有活动<br><input type='checkbox' name='2216040' value='4'>没有论坛<br><input type='checkbox' name='2216040' value='5'>人气不足<br><input type='checkbox' name='2216040' value='6'>其它 <input type='text' maxlength='128' name='2216040-6' /><br><label style='color:red'></label></div></div><div class="field"><div class='itemTitle'>5.您希望深呼吸网做哪些改进?：<label style='color:red'>*</label></div><div class="fieldItems" style="padding-left:20px;" id="2216046" required='true'><textarea  rows=10 style="width:500px;" class='form-field' name='2216046'></textarea><label style='color:red'></label></div></div>
+                </div>
+            </div>
+            <input type="hidden" id="categoryorder" name="categoryorder" />
+            <div class="clear">
+            </div>
+            <div id="actionArea" style="text-align: center;">
+                <input type="submit" onclick="return checkSubmit();" class="button" value="提交" />
+            </div>
+            <asp:HiddenField ID="hfPassword" runat="server" />
+        </div>
+    </div>
+    </form>
+</body>
+</html>
+
+<script type="text/javascript">
+window.load = initLightBox();
+function initLightBox()
+{
+    if(window.location.href.indexOf("Msg=")>0)
+    {       
+        DvWnd.open('',decodeURI(window.location.href.substring(window.location.href.indexOf("Msg=")+4)),300,200,2); 
+    }
+}
+
+function redirectDisplay(current, start, end) {
+    if (start > 0) {
+        var lis = $('fields').immediateDescendants();
+        for (var i = current; i < start; i++) {
+            lis[i].style.display = 'none';
+            clearValue(lis[i]);
+            var val = lis[i].immediateDescendants()[lis[i].immediateDescendants().length - 1];
+            val.style.display='none';
+        }
+        if (end == 0) {
+            end = lis.length;
+        }
+        for (var i = start - 1; i < end; i++) {
+            lis[i].style.display = '';
+            var val = lis[i].immediateDescendants()[lis[i].immediateDescendants().length - 1];
+            val.style.display = '';
+        }
+        for (var i = end; i < lis.length; i++) {
+            lis[i].style.display = 'none';
+            clearValue(lis[i]);
+            var val = lis[i].immediateDescendants()[lis[i].immediateDescendants().length - 1];
+            val.style.display = 'none';
+        }
+
+    }
+
+}
+function clearValue(obj) {
+    var inputs = obj.getElementsByTagName("input");
+    for (var i = 0; i < inputs.length; i++) {
+        switch (inputs[i].type) {
+            case "text":
+                inputs[i].value = "";
+                break;
+            case "radio":
+            case "checkbox":
+                inputs[i].checked = false;
+                break;
+        }
+    }
+    var textareas = obj.getElementsByTagName("textarea");
+    for (var i = 0; i < textareas.length; i++) {
+        textareas.value = "";
+    }
+}
+function checkSubmit() {
+    var div
+    var fields = $("fields");
+    var fieldDivs = fields.immediateDescendants();
+    var result = true;
+    var checked = 0;
+    for(var i =0;i<fieldDivs.length;i++) {
+        var div = fieldDivs[i].immediateDescendants()[fieldDivs[i].immediateDescendants().length-1];
+        var hasValue = false;
+        var checkedCount = 0;
+        checked = 0;
+        var inputs = div.getElementsByTagName("input");
+        var textareas = div.getElementsByTagName("textarea");
+         var info = fieldDivs[i].getElementsByTagName("label");
+         info = info[info.length - 1];
+
+         if (inputs.length > 0 || textareas.length > 0)
+        {
+            for (var k = 0; k < textareas.length; k++) {
+                if (textareas[k].value != "" || !div.getAttribute("required") || div.style.display == 'none') {
+                    hasValue = true;
+                    info.innerHTML = "";
+                }
+
+            }
+            for(var j =0;j<inputs.length;j++)
+            {
+                switch(inputs[j].type)
+                {
+                    case "text":
+                        if( inputs[j].value != "" || !div.getAttribute("required") || div.style.display=='none' )
+                        {
+                            hasValue = true;
+                            info.innerHTML = "";
+                        }
+                        var regex = inputs[j].getAttribute("regex");
+                        if( regex && div.getAttribute("required") )
+                        {
+                            var re = new RegExp(regex,"ig");
+                            if( !re.test(inputs[j].value) )
+                            {
+                                 info.innerHTML = "输入不正确！";
+                                 result = false;
+                            }
+                            else
+                            {
+                                info.innerHTML = "";
+                            }
+                        }
+                        break;
+
+                    case "checkbox":
+                        if (inputs[j].checked || !div.getAttribute("required") || div.style.display == 'none') {
+                            hasValue = true;
+                            info.innerHTML = "";
+                            checkedCount++;
+                        }
+                        break;
+
+                    case "radio":
+                        if (!div.getAttribute("required") || div.style.display == 'none') {
+                            hasValue = true;
+                            info.innerHTML = "";
+                        }
+                        else {
+                            if (inputs[j].checked) {
+                                hasValue = true;
+                                info.innerHTML = "";
+                                checked++;
+                            }
+                        }
+                        break;
+                }
+            }
+
+            if (div.getAttribute("required") && div.style.display != 'none') {
+                var trs = div.getElementsByTagName("tr");
+                if (trs.length > 0) {
+                    if (checked >= trs.length - 1) {
+                        //result = true;
+                    }
+                    else {
+                        info.innerHTML = "此矩阵题所有行必选";
+                        result = false;
+                    }
+                }
+                else if( !hasValue )
+                {
+                    info.innerHTML = "此项必填";
+                    result = false;
+                }
+                
+                if (div.getAttribute("maximum") || div.getAttribute("minimum")) {
+
+                    if (checkedCount < Number(div.getAttribute("minimum")) || checkedCount > Number(div.getAttribute("maximum"))) {
+                        info.innerHTML = "请选择多于" + div.getAttribute("minimum") + "项，少于" + div.getAttribute("maximum") + "项！";
+                        result = false;
+                    }
+                }
+            }
+        }
+    }
+    
+    return result;
+}
+</script>
+

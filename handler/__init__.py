@@ -24,3 +24,4 @@ from albumHandler import AlbumHandler, AlbumCreateHandler, AlbumItemHandler, Aja
 from guideHandler import GuideHandler
 from searchHandler import SearchHandler
 from wikiHandler import WikiHandler, WikiItemHandler, WikiEditHandler
+from voteHandler import VoteHandler

@@ -410,5 +410,24 @@ class WikiSectionDoc(Document):
     use_schemaless = True
     use_dot_notation=True
     
+class VoteDoc(Document):
+    __collection__ = 'vote'
+    __database__ = DB_NAME
     
+    structure = {
+            '_id':          unicode,
+            'owner':        unicode,
+            'created':      datetime,
+            'added':        dict,
+            'added_id':     int,
+            'title':        unicode,
+            'content':      unicode,
+            'revise':       unicode,
+            'oid':          unicode,
+    }
+    required_fields = ['_id', 'created']
+    default_values = {'_id':uuid.uuid4().hex, 'created':datetime.now()}
+    
+    use_schemaless = True
+    use_dot_notation=True
     
