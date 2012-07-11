@@ -29,7 +29,11 @@
 					<a href="/album/{{album['id']}}/" title="{{album['title']}}" alt="{{album['title']}}" class="link">&nbsp;</a>
 					<div class="holder">
 						<span class="cover">
-							<img src="/image/attach/{{album['photos'][0]}}_300" alt="{{album['title']}}" style="opacity: 1;height:150px;width：100%">
+							{% if len(album['photos'])>0 %}
+								<img src="/image/attach/{{album['photos'][0]}}_300" alt="{{album['title']}}" style="opacity: 1;height:150px;width：100%">
+							{% else %}
+								<img src="" alt="{{album['title']}}" style="opacity: 1;height:150px;width：100%">
+							{% end %}
 						</span>
 						<span class="thumbs">
 							{% for photo in album['photos'][1:5] %}

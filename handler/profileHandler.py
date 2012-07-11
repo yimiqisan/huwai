@@ -14,6 +14,7 @@ from tornado.web import addslash
 from baseHandler import BaseHandler
 
 from huwai.apps.user import User
+from huwai.apps.tag import Tag
 from huwai.apps.tools import session
 from huwai.apps.oauth2 import APIClient
 
@@ -103,8 +104,9 @@ class ProfileHandler(BaseHandler):
     def get(self):
         if self.current_user:
             title = self.current_user+u'的主页'
-            #return self.redirect('/weibo/')
-            self.render('profile/profile.html', title=title)
+            g = Tag()
+            rg = g._api.list(rels='place')
+            self.render('profile/profile.html', title=title, tag_l=rg[1][:10])
         else:
             self.redirect('/')
     
