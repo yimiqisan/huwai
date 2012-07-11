@@ -7,7 +7,7 @@ Created by 刘 智勇 on 2011-09-24.
 Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 """
 
-from commonHandler import RootHandler, TestHandler, FeedbackHandler, Error404Handler, SinaXDHandler, GoogleWebMasterHandler, CDNZZHandler, SiteMapHandler, ContactHandler
+from commonHandler import RootHandler, Vote0710Handler, TestHandler, FeedbackHandler, Error404Handler, SinaXDHandler, GoogleWebMasterHandler, CDNZZHandler, SiteMapHandler, ContactHandler
 from profileHandler import LoginHandler, InviteHandler, RegisterHandler, LogoutHandler, ProfileHandler, SettingHandler, SettingAlertHandler, SettingThirdPartHandler, CpasswordHandler, BindSinaHandler, AjaxLoginHandler, AjaxRegisterHandler, AjaxLogoutHandler, AjaxCpasswordHandler
 from authHandler import AuthHandler, SinaLoginHandler, QQLoginHandler, RenrenLoginHandler, ThirdPartHandler
 from weiboHandler import WeiboHandler, WeiboItemHandler, WeiboSheHandler, AjaxWeiboHandler

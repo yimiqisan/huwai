@@ -21,7 +21,6 @@ from huwai.apps.tools import session
 
 class RootHandler(BaseHandler):
     def get(self):
-        return self.render("index_vote.html")
         if self.current_user:
             self.redirect('/account/profile/')
         else:
@@ -30,6 +29,10 @@ class RootHandler(BaseHandler):
             g = Tag()
             rg = g._api.list(rels='place')
             self.render("index.html", weibo_l=rt[1], tag_l=rg[1][:10])
+
+class Vote0710Handler(BaseHandler):
+    def get(self):
+        return self.render("index_vote.html")
 
 class TestHandler(BaseHandler):
     @addslash

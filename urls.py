@@ -119,6 +119,7 @@ handlers = [(r"/", RootHandler),
             
             (r"/sitemap/", SiteMapHandler),
             (r"/contact/", ContactHandler),
+            (r"/vote0710/", Vote0710Handler),
             (r"/xd.html/?", SinaXDHandler),
             (r"/google9f2d915bcc519f6e.html", GoogleWebMasterHandler),
             (r"/306e81119936619cbfb5e703cca43e84.html", CDNZZHandler),
